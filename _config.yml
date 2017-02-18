@@ -7,10 +7,10 @@
 
 # Site Settings
 locale                   : "en"
-title                    : "Site Title"
+title                    : "CodeNotFound.com"
 title_separator          : "-"
 name                     : "Your Name"
-description              : "An amazing website."
+description              : "Talk is cheap. Show me the code." ― Linus Torvalds"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
