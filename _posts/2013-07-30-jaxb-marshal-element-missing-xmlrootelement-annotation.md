@@ -54,3 +54,64 @@ public class Car {
     }
 }
 ~~~
+
+# Marshal when @XMLRootElement is missing
+
+Marshalling is the process of transforming the memory representation of an object to a data format suitable for storage or transmission. In the case of JAXB it means converting a Java object into XML. The below code snippet shows the creation of a new `Car` instance.
+
+~~~ java
+car = new Car();
+    car.setMake("Passat");
+    car.setManufacturer("Volkswagen");
+    car.setId("ABC-123");
+~~~
+
+The method below takes as input the above car object and tries to marshal it using JAXB.
+
+~~~ java
+public static String marshalError(Car car) throws JAXBException {
+    StringWriter stringWriter = new StringWriter();
+
+    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+    // format the XML output
+    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+    jaxbMarshaller.marshal(car, stringWriter);
+
+    String result = stringWriter.toString();
+    LOGGER.info(result);
+    return result;
+}
+~~~
+
+When running the above method, the runtime returns an error as the `Car` class is missing the required `@XMLRootElement` annotation.
+
+~~~ bash
+unable to marshal type "com.codenotfound.jaxb.model.Car" as an
+element because it is missing an @XmlRootElement annotation
+~~~
+
+In order to be able to marshal the car object we need to provide a root XML element. This is done as shown below by first creating a qualified name which contains the name and namespace of the root XML element. In a next step we create a new `JAXBElement` and pass the qualified name, class and object. Using the created `JAXBElement` we call the `marshal()` method.
+
+~~~ bash
+public static String marshal(Car car) throws JAXBException {
+    StringWriter stringWriter = new StringWriter();
+
+    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+    // format the XML output
+    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+    QName qName = new QName("com.codenotfound.jaxb.model", "car");
+    JAXBElement<Car> root = new JAXBElement<Car>(qName, Car.class, car);
+
+    jaxbMarshaller.marshal(root, stringWriter);
+
+    String result = stringWriter.toString();
+    LOGGER.info(result);
+    return result;
+}
+~~~
