@@ -1,6 +1,6 @@
 ---
 title: JAXB - Marshal Element Missing @XmlRootElement Annotation
-tags: [XmlRootElement, Java, JAXB, Marshal, Unmarshal, XML]
+tags: [@@XmlRootElement, Java, JAXB, Marshal, Unmarshal, XML]
 ---
 
 Information on the root XML element is required when **marshalling** to or **unmarshalling** from a Java object. JAXB provides this information via the `@XmlRootElement` annotation which contains the name and namespace of the root XML element.
@@ -184,6 +184,8 @@ This time JAXB is able to successfully unmarshal the object and the result is th
 ~~~ html
 Car [make=Golf, manufacturer=Volkswagen, id=DEF-456]
 ~~~
+
+* * *
 
 If you would like to run the above code sample you can get the full source code here.
 
