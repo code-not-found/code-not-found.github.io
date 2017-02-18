@@ -6,11 +6,11 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-locale                   : "en-US"
+locale                   : "en"
 title                    : "CodeNotFound.com"
 title_separator          : "-"
 name                     : "Your Name"
-description              : "Talk is cheap. Show me the code." ― Linus Torvalds"
+description              : "'Talk is cheap. Show me the code.' ― Linus Torvalds"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
