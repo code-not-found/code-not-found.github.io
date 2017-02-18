@@ -55,6 +55,8 @@ public class Car {
 }
 ~~~
 
+* * *
+
 # Marshal when @XMLRootElement is missing
 
 Marshalling is the process of transforming the memory representation of an object to a data format suitable for storage or transmission. In the case of JAXB it means converting a Java object into XML. The below code snippet shows the creation of a new `Car` instance.
@@ -95,7 +97,7 @@ element because it is missing an @XmlRootElement annotation
 
 In order to be able to marshal the car object we need to provide a root XML element. This is done as shown below by first creating a qualified name which contains the name and namespace of the root XML element. In a next step we create a new `JAXBElement` and pass the qualified name, class and object. Using the created `JAXBElement` we call the `marshal()` method.
 
-~~~ bash
+~~~ java
 public static String marshal(Car car) throws JAXBException {
     StringWriter stringWriter = new StringWriter();
 
@@ -114,4 +116,14 @@ public static String marshal(Car car) throws JAXBException {
     LOGGER.info(result);
     return result;
 }
+~~~
+
+~~~ xml
+This time JAXB is able to successfully marshal the object and the result is the following:
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:car id="ABC-123" xmlns:ns2="com.codenotfound.jaxb.model">
+    <make>Passat</make>
+    <manufacturer>Volkswagen</manufacturer>
+</ns2:car>
 ~~~
