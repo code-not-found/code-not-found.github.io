@@ -9,7 +9,7 @@ When trying to marshal a class which does not have a `@XMLRootElement` annotatio
 
 For this example let's use following class representing a car with a basic structure. Note that a `XmlRootElement` is not defined!
 
-{% highlight java %}
+~~~ java
 package com.codenotfound.jaxb.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -53,4 +53,4 @@ public class Car {
                 + ", id=" + id + "]";
     }
 }
-{% endhighlight %}
+~~~
