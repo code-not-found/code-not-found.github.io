@@ -9,7 +9,7 @@
 locale                   : "en"
 title                    : "CodeNotFound.com"
 title_separator          : "-"
-name                     : "Your Name"
+name                     : "codenotfound.com"
 description              : "'Talk is cheap. Show me the code.' ― Linus Torvalds"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
