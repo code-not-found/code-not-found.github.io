@@ -7,3 +7,12 @@ Information on the root XML element is required when **marshalling** to or **unm
 When trying to marshal a class which does not have a `@XMLRootElement` annotation defined, following error will be thrown: *"unable to marshal as an element because it is missing an @XmlRootElement annotation"*. Alternatively when trying to unmarshal, the Java runtime will report that an *"unsuspected element"* is found.
 
 For this example let’s use following class representing a car with a basic structure. Note that a `XmlRootElement` is not defined!
+
+~~~ java
+package com.codenotfound.jaxb.model;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+
+public class Car {
+~~~
