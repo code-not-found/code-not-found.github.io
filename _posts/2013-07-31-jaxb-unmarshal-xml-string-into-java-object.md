@@ -6,7 +6,9 @@ date: 2013-07-31 21:00
 tags: [Java, JAXB, Object, String, Unmarshal, XML]
 ---
 
-![jaxb logo]({{ site.url }}/assets/images/logos/jaxb_logo.jpg)
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/jaxb-logo.png" alt="jaxb logo">
+</figure>
 
 When trying to unmarshal XML to a Java object using JAXB you might want to pass the XML as a `String`. However the `unmarshal()` method of the `Unmarshaller` interface does not support passing an XML String. Following code sample illustrates how to solve this.
 
