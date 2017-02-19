@@ -91,9 +91,12 @@ ins.adsbygoogle {
 .custom-sidebar {
   margin-top: 40px;
 }
-.page__title {
-  text-shadow: none !important;
+.page__hero--overlay .page__title {
+  text-shadow: none;
 }
 .page__hero--overlay .page__lead {
   text-shadow: none;
+}
+masthead__menu-item {
+  color: #03af6c;
 }
