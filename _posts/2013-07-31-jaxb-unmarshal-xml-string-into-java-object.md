@@ -39,6 +39,9 @@ JAXB is now able to unmarshal the `StringReader` object and the result is the fo
 Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]
 ~~~
 
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/github-mark.png" alt="github mark">
+</figure>
 If you would like to run the above code sample you can get the full source code here.
 {: .notice--info}
 
