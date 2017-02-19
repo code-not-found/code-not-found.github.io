@@ -82,7 +82,7 @@ author:
   bio              :
   location         :
   email            :
-  uri              : http://codenotfound.com
+  uri              : "http://codenotfound.com"
   bitbucket        :
   codepen          :
   dribbble         :
