@@ -89,7 +89,7 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           :
+  github           : "https://github.com/code-not-found"
   google_plus      :
   keybase          :
   instagram        :
@@ -97,7 +97,7 @@ author:
   linkedin         :
   pinterest        :
   soundcloud       :
-  stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
+  stackoverflow    : "4201470/codenotfound"
   steam            :
   tumblr           :
   twitter          :
