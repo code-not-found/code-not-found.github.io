@@ -92,5 +92,8 @@ ins.adsbygoogle {
   margin-top: 40px;
 }
 .page__title {
+  text-shadow: none !important;
+}
+.page__hero--overlay .page__lead {
   text-shadow: none;
 }
