@@ -40,6 +40,7 @@ Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]
 ~~~
 
 If you would like to run the above code sample you can get the full source code here.
+{: .notice--info}
 
 This concludes the short example on how to unmarshal an XML `String`. If you found this post helpful or have any questions or remarks, please leave a comment. 
 
