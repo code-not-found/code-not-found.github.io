@@ -11,7 +11,7 @@ tags: [Java, JAXB, Object, String, Unmarshal, XML]
 
 When trying to unmarshal XML to a Java object using JAXB you might want to pass the XML as a `String`. However the `unmarshal()` method of the `Unmarshaller` interface does not support passing an XML String. Following code sample illustrates how to solve this.
 
-Wrap the XML String in a `StringReader` object and pass this to the `unmarshal()` method as shown below. Note that an even shorter one-liner notation is also possible.
+Wrap the XML String in a `StringReader` object and pass this to the `unmarshal()` method as shown below. Note that an even [shorter one-liner notation](http://stackoverflow.com/a/9794300/4201470)  is also possible.
 ~~~ java
 public static Car unmarshal(String xml) throws JAXBException {
     JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
@@ -39,10 +39,6 @@ JAXB is now able to unmarshal the `StringReader` object and the result is the fo
 Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]
 ~~~
 
-<figure>
-    <img src="{{ site.url }}/assets/images/logos/github-mark.png" alt="github mark">
-</figure>
-{: .align-left}
 If you would like to run the above code sample you can get the full source code here.
 {: .notice--info}
 
