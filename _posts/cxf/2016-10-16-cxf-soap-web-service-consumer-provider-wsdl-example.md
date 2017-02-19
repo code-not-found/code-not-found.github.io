@@ -1,7 +1,7 @@
 ---
 title: CXF - SOAP Web Service Consumer & Provider WSDL Example
 excerpt: How to handle element missing @XmlRootElement annotation errors when trying to marshal a Java object using JAXB.
-date: 2013-07-30 21:00
+date: 2016-10-16 21:00
 tags: [Apache CXF, Client, Consumer, Contract First, CXF, Endpoint, Example, Hello World, Maven, Provider, Spring Boot, Tutorial, WSDL]
 ---
 
@@ -98,3 +98,11 @@ In this example we will start from an existing WSDL file (contract-first) which 
 ~~~
 
 Maven is used to build and run the example. The Hello World service endpoint will be hosted on an embedded Apache Tomcat server that ships directly with [Spring Boot](https://projects.spring.io/spring-boot/). To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) are used which are a set of convenient dependency descriptors that you can include in your application.
+
+To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
+
+There is actually a [Spring Boot starter specifically for CXF](http://cxf.apache.org/docs/springboot.html) that takes care of importing the needed Spring Boot dependencies. In addition it automatically registers `CXFServlet` with a '/services/*' URL pattern for serving CXF JAX-WS endpoints and it offers some properties for configuration of the `CXFServlet`. In order to use the starter we declare a dependency to `cxf-spring-boot-starter-jaxws` in our Maven POM file.
+
+For Unit testing our Spring Boot application we also include the `spring-boot-starter-test` dependency.
+
+To take advantage of Spring Boot's capability to create a single, runnable "über-jar", we also include the `spring-boot-maven-plugin` Maven plugin. This also allows quickly starting the web service via a Maven command.
