@@ -39,7 +39,7 @@ JAXB is now able to unmarshal the `StringReader` object and the result is the fo
 Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]
 ~~~
 
-If you would like to run the above code sample you can get the full source code here.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxb/tree/master/jaxb-unmarshal-string).
 {: .notice--info}
 
 This concludes the short example on how to unmarshal an XML `String`. If you found this post helpful or have any questions or remarks, please leave a comment. 
