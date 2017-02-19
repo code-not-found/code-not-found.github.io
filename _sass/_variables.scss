@@ -131,4 +131,6 @@ $global-transition          : all 0.2s ease-in-out !default;
 /*
    codenotfound
    ========================================================================== */
-$ins.adsbygoogle            : border-bottom: none !important;
+ins.adsbygoogle {
+  border-bottom: none !important;
+}
