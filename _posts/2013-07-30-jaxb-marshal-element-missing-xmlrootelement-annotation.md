@@ -1,5 +1,7 @@
 ---
 title: JAXB - Marshal Element Missing @XmlRootElement Annotation
+excerpt: How to handle element missing @XmlRootElement annotation errors when trying to marshal a Java object using JAXB.
+date: 2013-07-30 21:00
 tags: [XmlRootElement, Java, JAXB, Marshal, Unmarshal, XML]
 ---
 
@@ -62,7 +64,7 @@ public class Car {
 Marshalling is the process of transforming the memory representation of an object to a data format suitable for storage or transmission. In the case of JAXB it means converting a Java object into XML. The below code snippet shows the creation of a new `Car` instance.
 
 ~~~ java
-car = new Car();
+    car = new Car();
     car.setMake("Passat");
     car.setManufacturer("Volkswagen");
     car.setId("ABC-123");
