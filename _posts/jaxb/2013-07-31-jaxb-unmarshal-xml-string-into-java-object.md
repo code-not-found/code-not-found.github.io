@@ -42,5 +42,12 @@ Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]
 If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxb/tree/master/jaxb-unmarshal-string).
 {: .notice--info}
 
+{% capture notice-2 %}
+![github mark](/assets/images/logos/github-mark.png){: .align-left}
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxb/tree/master/jaxb-unmarshal-string).
+{% endcapture %}
+<div class="notice">{{ notice-2 | markdownify }}</div>
+
+
 This concludes the short example on how to unmarshal an XML `String`. If you found this post helpful or have any questions or remarks, please leave a comment. 
 
