@@ -1,5 +1,4 @@
 ---
-layout: post
 title: JAXB - Unmarshal XML String into Java Object
 excerpt: A short code sample on how to unmarshal an XML String into a Java Object using JAXB.
 date: 2013-07-31 21:00

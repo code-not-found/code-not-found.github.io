@@ -1,5 +1,4 @@
 ---
-layout: post
 title: JAXB - Marshal Element Missing @XmlRootElement Annotation
 excerpt: How to handle element missing @XmlRootElement annotation errors when trying to marshal a Java object using JAXB.
 date: 2013-07-30 21:00
