@@ -60,8 +60,6 @@ public class Car {
 }
 ~~~
 
-* * *
-
 # Marshal when @XMLRootElement is missing
 
 Marshalling is the process of transforming the memory representation of an object to a data format suitable for storage or transmission. In the case of JAXB it means converting a Java object into XML. The below code snippet shows the creation of a new `Car` instance.
@@ -128,8 +126,6 @@ This time JAXB is able to successfully marshal the object and the result is the 
 </ns2:car>
 ~~~
 
-* * *
-
 # Unmarshal when @XMLRootElement is missing
 
 Unmarshalling in JAXB is the process of converting XML content into a Java object. Lets reuse the XML representation of a car that we generated in the previous section.
@@ -141,7 +137,7 @@ Unmarshalling in JAXB is the process of converting XML content into a Java objec
 </ns2:car>
 ~~~
 
-In the method below we pass the above XML file and try to unmarshal it to an instance of the `Car` class. Note that it is also possible to use JAXB to create an object from an XML String instead of using a file.
+In the method below we pass the above XML file and try to unmarshal it to an instance of the `Car` class. Note that it is also possible to [use JAXB to create an object from an XML String](http://www.codenotfound.com/2013/07/jaxb-unmarshal-xml-string-into-java-object.html) instead of using a file.
 ~~~ java
 public static Car unmarshalError(File file) throws JAXBException {
     JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
@@ -180,9 +176,7 @@ This time JAXB is able to successfully unmarshal the object and the result is th
 Car [make=Golf, manufacturer=Volkswagen, id=DEF-456]
 ~~~
 
-* * *
-
-If you would like to run the above code sample you can get the full source code here.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxb/tree/master/jaxb-missing-rootelement).
 {: .notice--info}
 
 This concludes the marshal & unmarshal with missing `@XmlRootElement` annotation code samples. If you found this post helpful or have any questions or remarks, please leave a comment below. 
