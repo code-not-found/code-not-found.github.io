@@ -176,7 +176,10 @@ This time JAXB is able to successfully unmarshal the object and the result is th
 Car [make=Golf, manufacturer=Volkswagen, id=DEF-456]
 ~~~
 
+{% capture notice-github %}
+![github mark](/assets/images/logos/github-mark.png){: .align-left}
 If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxb/tree/master/jaxb-missing-rootelement).
-{: .notice--info}
+{% endcapture %}
+<div class="notice--info">{{ notice-github | markdownify }}</div>
 
 This concludes the marshal & unmarshal with missing `@XmlRootElement` annotation code samples. If you found this post helpful or have any questions or remarks, please leave a comment below. 

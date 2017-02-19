@@ -39,9 +39,6 @@ JAXB is now able to unmarshal the `StringReader` object and the result is the fo
 Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]
 ~~~
 
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxb/tree/master/jaxb-unmarshal-string).
-{: .notice--info}
-
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
 If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxb/tree/master/jaxb-unmarshal-string).
