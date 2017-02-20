@@ -1,5 +1,6 @@
 ---
 title: CXF - SOAP Web Service Consumer & Provider WSDL Example
+permalink: /2016/10/cxf-soap-web-service-consumer-provider-wsdl-example.html
 excerpt: How to handle element missing @XmlRootElement annotation errors when trying to marshal a Java object using JAXB.
 date: 2016-10-16 21:00
 tags: [Apache CXF, Client, Consumer, Contract First, CXF, Endpoint, Example, Hello World, Maven, Provider, Spring Boot, Tutorial, WSDL]
@@ -23,7 +24,8 @@ The below code is organized in such a way that you can choose to only run the cl
 # General Project Setup
 
 In this example we will start from an existing WSDL file (contract-first) which is shown below. The content represent a SOAP service in which a person is sent as input and a greeting is received as a response.
-~~~ xml
+
+``` xml
 <?xml version="1.0"?>
 <wsdl:definitions name="HelloWorld"
 
@@ -95,14 +97,147 @@ In this example we will start from an existing WSDL file (contract-first) which 
     </wsdl:service>
 
 </wsdl:definitions>
-~~~
+```
 
 Maven is used to build and run the example. The Hello World service endpoint will be hosted on an embedded Apache Tomcat server that ships directly with [Spring Boot](https://projects.spring.io/spring-boot/). To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) are used which are a set of convenient dependency descriptors that you can include in your application.
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
-There is actually a [Spring Boot starter specifically for CXF](http://cxf.apache.org/docs/springboot.html) that takes care of importing the needed Spring Boot dependencies. In addition it automatically registers `CXFServlet` with a '/services/*' URL pattern for serving CXF JAX-WS endpoints and it offers some properties for configuration of the `CXFServlet`. In order to use the starter we declare a dependency to `cxf-spring-boot-starter-jaxws` in our Maven POM file.
+There is actually a [Spring Boot starter specifically for CXF](http://cxf.apache.org/docs/springboot.html) that takes care of importing the needed Spring Boot dependencies. In addition it automatically registers `CXFServlet` with a <ins>/services/<ins> URL pattern for serving CXF JAX-WS endpoints and it offers some properties for configuration of the `CXFServlet`. In order to use the starter we declare a dependency to `cxf-spring-boot-starter-jaxws` in our Maven POM file.
 
 For Unit testing our Spring Boot application we also include the `spring-boot-starter-test` dependency.
 
 To take advantage of Spring Boot's capability to create a single, runnable "über-jar", we also include the `spring-boot-maven-plugin` Maven plugin. This also allows quickly starting the web service via a Maven command.
+
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.codenotfound</groupId>
+    <artifactId>jaxws-cxf-helloworld-example</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>jaxws-cxf-helloworld-example</name>
+    <description>CXF - SOAP Web Service Consumer & Provider WSDL Example</description>
+    <url>http://</url>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.1.RELEASE</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <cxf.version>3.1.7</cxf.version>
+    </properties>
+
+    <dependencies>
+        <!-- Apache CXF -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>${project.basedir}/src/main/resources/wsdl/helloworld.wsdl</wsdl>
+                                    <wsdlLocation>classpath:wsdl/helloworld.wsdl</wsdlLocation>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+```
+
+CXF includes a Maven `cxf-codegen-plugin plugin` which can [generate java artifacts from a WSDL file](http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html). In the above plugin configuration we're running the <ins>wsdl2java<ins> goal in the <ins>generate-sources<ins> phase. When executing following Maven command, CXF will generate artifacts in the `<sourceRoot>` directory that we have specified. 
+
+``` bash
+mvn generate-sources
+```
+
+After running above command you should be able to find back a number of auto generated classes among which the `HelloWorldPortType` interface in addition to `Person` and `Greeting` as shown below. 
+
+<figure>
+    <img src="{{ site.url }}/assets/images/cxf/hello-world-jaxb-generated-java-classes.png" alt="helloworld jaxb generated java classes">
+</figure>
+
+Next we create a `SpringCxfApplication` class. It contain a `main()` method that delegates to Spring Boot’s `SpringApplication` class by calling run. `SpringApplication` will bootstrap our application, starting Spring which will in turn start the auto-configured Tomcat web server.
+
+ The `@SpringBootApplication` is a convenience annotation that adds all of the following: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`. Checkout the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/) for more details.
+
+``` java
+package com.codenotfound;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringCxfApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringCxfApplication.class, args);
+    }
+}
+```
+
+# Creating the Endpoint (Provider)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
