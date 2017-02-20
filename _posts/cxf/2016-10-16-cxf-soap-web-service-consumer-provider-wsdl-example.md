@@ -103,7 +103,7 @@ Maven is used to build and run the example. The Hello World service endpoint wil
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
-There is actually a [Spring Boot starter specifically for CXF](http://cxf.apache.org/docs/springboot.html) that takes care of importing the needed Spring Boot dependencies. In addition it automatically registers `CXFServlet` with a <ins>/services/<ins> URL pattern for serving CXF JAX-WS endpoints and it offers some properties for configuration of the `CXFServlet`. In order to use the starter we declare a dependency to `cxf-spring-boot-starter-jaxws` in our Maven POM file.
+There is actually a [Spring Boot starter specifically for CXF](http://cxf.apache.org/docs/springboot.html) that takes care of importing the needed Spring Boot dependencies. In addition it automatically registers `CXFServlet` with a <ins>/services/</ins> URL pattern for serving CXF JAX-WS endpoints and it offers some properties for configuration of the `CXFServlet`. In order to use the starter we declare a dependency to `cxf-spring-boot-starter-jaxws` in our Maven POM file.
 
 For Unit testing our Spring Boot application we also include the `spring-boot-starter-test` dependency.
 
@@ -189,7 +189,7 @@ To take advantage of Spring Boot's capability to create a single, runnable "übe
 </project>
 ```
 
-CXF includes a Maven `cxf-codegen-plugin plugin` which can [generate java artifacts from a WSDL file](http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html). In the above plugin configuration we're running the <ins>wsdl2java<ins> goal in the <ins>generate-sources<ins> phase. When executing following Maven command, CXF will generate artifacts in the `<sourceRoot>` directory that we have specified. 
+CXF includes a Maven `cxf-codegen-plugin plugin` which can [generate java artifacts from a WSDL file](http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html). In the above plugin configuration we're running the <ins>wsdl2java</ins> goal in the <ins>generate-sources</ins> phase. When executing following Maven command, CXF will generate artifacts in the `<sourceRoot>` directory that we have specified. 
 
 ``` bash
 mvn generate-sources
@@ -224,7 +224,10 @@ public class SpringCxfApplication {
 
 In order for the CXF framework to be able to process incoming SOAP request over HTTP, we need to setup a `CXFServlet`. In our previous [CXF SOAP Web Service tutorial](http://www.source4code.info/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) we did this by using a deployment descriptor file ('web.xml' file under the 'WEB-INF' directory) or an alternative with Spring is to use a `ServletRegistrationBean`. In this example there is nothing to be done as the `cxf-spring-boot-starter-jaxws` automatically register the `CXFServlet` for us, great!
 
- In this example we want the `CXFServlet` to listen for incoming requests on the following URI: <var>/codenotfound/services</var>, instead of the default value which is: <var>/services/*</var>. This can be achieved by setting the <ins>cxf.path</ins> property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder. 
+ In this example we want the `CXFServlet` to listen for incoming requests on the following URI: <var>/codenotfound/services</var>, instead of the default value which is: <var>/services/*</var>. This can be achieved by setting the <ins>cxf.path</ins> property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder.
+
+
+
 
 
 
