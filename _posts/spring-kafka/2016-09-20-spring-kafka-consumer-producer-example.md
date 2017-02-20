@@ -162,7 +162,7 @@ public class Sender {
 
 The creation of the `KafkaTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
-In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template’s constructor. The producer factory needs to be set with a number of properties amongst which the `BOOTSTRAP_SERVERS_CONFIG` property that is fetched from the <ins>application.properties<ins> configuration file. For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
+In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template’s constructor. The producer factory needs to be set with a number of properties amongst which the `BOOTSTRAP_SERVERS_CONFIG` property that is fetched from the <ins>application.properties</ins> configuration file. For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
 
 ``` java
 package com.codenotfound.producer;
@@ -326,7 +326,7 @@ public class ReceiverConfig {
 
 > When executing below test case, make sure you have a running instance of Apache Kafka on port '9092' of your local machine. Note that it is also possible to [use Spring Kafka to automatically start an embedded Kafka broker as part of a unit test case](http://www.source4code.info/2016/10/spring-kafka-embedded-server-unit-test.html).
 
-In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <ins>helloworld.t<ins> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received. 
+In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <ins>helloworld.t</ins> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received. 
 
 ``` java
 package com.codenotfound;
