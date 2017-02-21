@@ -41,6 +41,38 @@ The editor window will now jump the end of the HTML header tag where we will add
 3. The specific brush(es) needed for the blog
 4. The configuration script
 
+## 1) The core files
+
+The core files consist out of the following JavaScript file and style sheet:
+
+``` xml
+    <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css"></link>
+```
+
+## 2) The SyntaxHighlighter theme
+
+There are a number of themes available for SyntaxHighlighter, for the complete list please check following [link](http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/). The style sheet below is the default theme. 
+
+``` xml
+    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+```
+
+## 3) The specific brush(es) needed for the blog
+Depending on the structured language that needs to be highlighted, the corresponding brush needs to be imported. For a complete list of all available brushes please check following [link](http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/). In this example we will add the brushes for '<var>Java</var>' and '<var>XML</var>'.
+
+``` xml
+    <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJava.js" type="text/javascript"></scrip>
+    <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushXml.js" type="text/javascript"></script>
+```
+
+> Only add the needed brushes as for each page the brushes are retrieved from alexgorbatchev.com (the SyntaxHighlighter site) and this increases your blog page load times!
+
+## 4) The configuration script
+
+After all needed dependencies have been added we need to enable a specific mode for Blogger and instruct SyntaxHighlighter to highlight all code blocks found on the web page. This is done by adding a JavaScript snippet as shown below. 
+
+
 
 
 

@@ -18,11 +18,14 @@ Priority levels are a powerful instrument on JMS messages which allow building r
 Message priority levels can be used to instruct the JMS provider to deliver urgent messages first. The message’s priority is contained in the [JMSPriority header](http://codenotfound.com/2014/01/jms-message-structure-overview.html). There are ten levels of priority, ranging from 0 (lowest) to 9 (highest). If you do not specify a priority level, the default level is set to 4.
 
 You can set the priority level in either of two ways:
-1. You can use the `setPriority()` method of the `MessageProducer` interface to set the priority level for all messages sent by that producer. For example, the following call sets a priority level of '7' for a producer:
+* You can use the `setPriority()` method of the `MessageProducer` interface to set the priority level for all messages sent by that producer. For example, the following call sets a priority level of '7' for a producer:
+
 ``` java
     producer.setPriority(7);
 ```
-2. You can use the long form of the `send()` or the `publish()` method to set the priority level for a specific message. The third argument sets the priority level. For example, the following send call sets the priority level for message to '3':
+
+* You can use the long form of the `send()` or the `publish()` method to set the priority level for a specific message. The third argument sets the priority level. For example, the following send call sets the priority level for message to '3':
+
 ``` java
     producer.send(message, DeliveryMode.NON_PERSISTENT, 3, 0);
 ```
