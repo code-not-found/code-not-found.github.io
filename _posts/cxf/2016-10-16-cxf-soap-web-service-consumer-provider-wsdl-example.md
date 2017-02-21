@@ -192,7 +192,7 @@ To take advantage of Spring Boot's capability to create a single, runnable "übe
 
 CXF includes a Maven `cxf-codegen-plugin plugin` which can [generate java artifacts from a WSDL file](http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html). In the above plugin configuration we're running the <var>wsdl2java</var> goal in the <var>generate-sources</var> phase. When executing following Maven command, CXF will generate artifacts in the <ins>&lt;sourceRoot&gt;</ins> directory that we have specified. 
 
-``` powershell
+``` plaintext
 mvn generate-sources
 ```
 
@@ -240,7 +240,7 @@ helloworld.service.address=http://localhost:9090/codenotfound/ws/helloworld
 
 Next we create a configuration file that contains the definition of our `Endpoint` at which our Hello World SOAP service will be exposed. The `Endpoint` gets created by passing the [CXF bus, which is the backbone of the CXF architecture](http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-Bus) that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. We use the default CXF bus and get a reference to it via Spring's `@Autowired` annotation.
 
-In addition to the bus we also specify the `HelloWorldImpl` class which contains the actual implementation of the service. Finally we set the URI on which the endpoint will be exposed to "<kbd>/helloworld<kbd>". Together with the <ins>cxf.path</ins> configuration in the <ins>application.properties</ins> file this result into following URL that clients will need to call: [http://localhost:9090/codenotfound/ws/helloworld](http://localhost:9090/codenotfound/ws/helloworld).
+In addition to the bus we also specify the `HelloWorldImpl` class which contains the actual implementation of the service. Finally we set the URI on which the endpoint will be exposed to "<kbd>/helloworld</kbd>". Together with the <ins>cxf.path</ins> configuration in the <ins>application.properties</ins> file this result into following URL that clients will need to call: [http://localhost:9090/codenotfound/ws/helloworld](http://localhost:9090/codenotfound/ws/helloworld).
 
 ``` java
 package com.codenotfound.endpoint;
@@ -432,13 +432,13 @@ public class SpringCxfApplicationTests {
 
 In order to run the above test, open a command prompt in the projects root folder and execute following Maven command: 
 
-``` powershell
+``` plaintext
 mvn test
 ```
 
 Maven will download the needed dependencies, compile the code and run the unit test case during which Tomcat is started and a service call is made. If all went well the build is reported as a success: 
 
-``` powershell
+``` plaintext
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -495,12 +495,12 @@ If you just want to start Spring Boot so that the endpoint is up and running, ex
 mvn spring-boot:run
 ```
 
+---
+
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
 If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxws-cxf/tree/master/jaxws-cxf-helloworld-example).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
-
----
 
 This concludes our example on how to use CXF together with Spring Boot in order to consume and produce a Web Service starting from a WSDL file. Drop a line in case something was unclear or if you just liked the tutorial.
