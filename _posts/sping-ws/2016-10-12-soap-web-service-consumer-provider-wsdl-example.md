@@ -11,20 +11,19 @@ tags: [Client, Consumer, Endpoint, Example, Hello World, Maven, Provider, Spring
     <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
 </figure>
 
-{% include toc title="Unique Title" icon="file-text" %}
-
-[Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads. The following step by step tutorial illustrates a basic example in which we will configure, build and run a Hello World contract first client and endpoint using a WSDL, Spring-WS, Spring Boot and Maven. 
+[Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads. The following step by step tutorial illustrates a basic example in which we will configure, build and run a Hello World contract first client and endpoint using a WSDL, Spring-WS, Spring Boot and Maven.
 
 Tools used:
 * Spring-WS 2.3
 * Spring Boot 1.4
 * Maven 3
 
-The tutorial code is organized in such a way that you can choose to only run the client (consumer) or endpoint (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
+The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}//2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (consumer) or [endpoint]({{ site.url }}//2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 # General Project Setup
 
-As Spring Web Services is contract first only, we need to start from a contract definition. In this tutorial we will use a Hello World service that is defined by below WSDL. The service takes as input a person's first and last name and returns a greeting. 
+As Spring Web Services is contract first only, we need to start from a contract definition. In this tutorial we will use a Hello World service that is defined by below WSDL. The service takes as input a person's first and last name and returns a greeting.
+
 ~~~ xml
 <?xml version="1.0"?>
 <wsdl:definitions name="HelloWorld"
@@ -103,11 +102,12 @@ We will be building and running our example using [Maven](https://maven.apache.o
 
 In order to expose the Hello World service endpoint we will use the [Spring Boot](https://projects.spring.io/spring-boot/) project that comes with an embedded Apache Tomcat server. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) are used which are a set of convenient dependency descriptors that you can include in your application.
 
-The `spring-boot-starter-web-services` dependency includes the needed dependencies for using Spring Web Services. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include _JUnit_, _Hamcrest_ and _Mockito_.
+The `spring-boot-starter-web-services` dependency includes the needed dependencies for using Spring Web Services. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include <ins>JUnit</ins>, <ins>Hamcrest</ins> and <ins>Mockito</ins>.
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
 In the plugins section we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "über-jar". This will also allow us to start the web service via a Maven command.
+
 ~~~ xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -180,17 +180,18 @@ In the plugins section we included the `spring-boot-maven-plugin` Maven plugin s
 </project>
 ~~~
 
-In order to directly use the _person_ and _greeting_ elements (defined in the _types_ section of the Hello World WSDL) in our Java code, we will use JAXB to generate the corresponding Java classes. The above POM file configures the `maven-jaxb2-plugin` that will handle the generation.
+In order to directly use the <var>person</var> and <var>greeting</var> elements (defined in the <var>types</var> section of the Hello World WSDL) in our Java code, we will use JAXB to generate the corresponding Java classes. The above POM file configures the `maven-jaxb2-plugin` that will handle the generation.
 
-The plugin will look into the defined *schemaDirectory* in order to find any WSDL files for which it needs to generate the the Java classes. IN order to trigger the generation via Maven, executed following command: 
-~~~ bash
+The plugin will look into the defined <ins>&lt;schemaDirectory&gt;</ins> in order to find any WSDL files for which it needs to generate the the Java classes. In order to trigger the generation via Maven, executed following command:
+
+~~~ plaintext
 mvn generate-sources
 ~~~
 
-This results in a number of generated classes amongst which the `Person` and `Greeting` that we will use when implementing the client and provider of the Hello World service. 
+This results in a number of generated classes amongst which the `Person` and `Greeting` that we will use when implementing the client and provider of the Hello World service.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/2016-10-12-soap-web-service-consumer-provider-wsdl-example/jaxb-generated-java-classes.png" alt="jaxb generated java classes">
+    <img src="{{ site.url }}/assets/images/spring-ws/hello-world-jaxb-generated-java-classes.png" alt="helloworld jaxb generated java classes">
 </figure>
 
 We start by creating an `SpringWsApplication` that contains a `main()` method that uses Spring Boot’s `SpringApplication.run()` method to bootstrap the application, starting Spring. For more information on Spring Boot we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
@@ -215,9 +216,9 @@ The server-side of Spring-WS is designed around a central class called `MessageD
 
 Spring Web Services supports multiple transport protocols. The most common is the HTTP transport, for which a custom `MessageDispatcherServlet` servlet is supplied. This is a standard `Servlet` which extends from the standard Spring Web `DispatcherServlet` ([=central dispatcher for HTTP request handlers/controllers](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html)), and wraps a `MessageDispatcher`. 
 
-In other words: the `MessageDispatcherServlet` combines the attributes of the `MessageDispatcher` and `DispatcherServlet` and as a result allows the handling of XML messages over HTTP.
+> In other words: the `MessageDispatcherServlet` combines the attributes of the `MessageDispatcher` and `DispatcherServlet` and as a result allows the handling of XML messages over HTTP.
 
-In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean 'messageDispatcherServlet', it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
+In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>messageDispatcherServlet<var>, it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
 
 The servlet mapping URI pattern on the `ServletRegistrationBean` is set to *'/codenotfound/ws/*'*. The web container will use this path to map incoming HTTP requests to the servlet.
 

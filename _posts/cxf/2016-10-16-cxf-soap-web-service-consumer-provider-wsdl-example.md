@@ -11,8 +11,6 @@ tags: [Apache CXF, Client, Consumer, Contract First, CXF, Endpoint, Example, Hel
     <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo">
 </figure>
 
-{% include toc title="Unique Title" icon="file-text" %}
-
 [Apache CXF](http://cxf.apache.org/) is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS. In this tutorial we will take a look at how we can integrate CXF with Spring Boot in order to build and run a Hello World SOAP service. Throughout the example, we will be creating a contract first client and endpoint using a WSDL, CXF, Spring Boot and Maven.
 
 Tools used:
