@@ -11,9 +11,9 @@ tags: [Add, Git, Git GUI, GitHub, Remote, Repository, Setup, Tutorial, upload co
     <img src="{{ site.url }}/assets/images/logos/git-logo.png" alt="git logo">
 </figure>
 
+[GitHub](https://github.com/) is a web-based hosting service for software development projects that use the Git revision control system. It is used to share code with other people and a GitHub account is free for open source projects. Following tutorial will show you how to setup and configure Git Gui on your Windows computer so you can upload code towards a remote GitHub repository.
 
-
-
+# Git GUI Install
 
 
 
