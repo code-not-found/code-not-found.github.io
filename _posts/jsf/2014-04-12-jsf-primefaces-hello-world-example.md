@@ -145,7 +145,7 @@ public class HelloWorld {
 }
 ```
 
-The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <p:inputText> fields, that will be used to enter a first and last name, surrounded by a '<var>&lt;p:panel&gt;</var>'. There is also a `&lt;p:dialog&gt;` component that shows a greeting message. The dialog is triggered by a `&lt;p:commandButton&gt;` that is part of the panel.
+The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <p:inputText> fields, that will be used to enter a first and last name, surrounded by a '<var>&lt;p:panel&gt;</var>'. There is also a '<var>&lt;p:dialog&gt;</var>' component that shows a greeting message. The dialog is triggered by a '<var>&lt;p:commandButton&gt;</var>' that is part of the panel.
 
 In order to use the PrimeFaces components, following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
 

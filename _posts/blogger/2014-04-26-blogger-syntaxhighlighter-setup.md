@@ -26,13 +26,20 @@ First thing to do is to open the dashboard of your Blogger blog as shown below. 
 This will open the template page of your blog. Click on the button that says <file>Edit HTML</file> in order to open up the HTML editor as shown below.
 
 <figure>
+    <img src="{{ site.url }}/assets/images/blogger/blogger-template.png" alt="blogger template">
+</figure>
+
+Click anywhere inside the editor window and press <kbd>CTRL+F</kbd>. A search box should now appear in the upper right hand corner as shown below. In the search box enter "<kbd>&lt;/head&gt;<kbd>" (without quotes) and press <kbd>ENTER</kbd>.
+
+<figure>
     <img src="{{ site.url }}/assets/images/blogger/blogger-edit-html-head.png" alt="blogger edit html head">
 </figure>
 
-
-
-
-
+The editor window will now jump the end of the HTML header tag where we will add the needed style sheets and JavaScript files. The SyntaxHighlighter configuration consists out of four parts:
+1. The core files
+2. The SyntaxHighlighter theme
+3. The specific brush(es) needed for the blog
+4. The configuration script
 
 
 
