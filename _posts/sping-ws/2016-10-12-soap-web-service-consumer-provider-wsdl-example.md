@@ -11,6 +11,8 @@ tags: [Client, Consumer, Endpoint, Example, Hello World, Maven, Provider, Spring
     <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
 </figure>
 
+{% include toc title="Unique Title" icon="file-text" %}
+
 [Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads. The following step by step tutorial illustrates a basic example in which we will configure, build and run a Hello World contract first client and endpoint using a WSDL, Spring-WS, Spring Boot and Maven. 
 
 Tools used:
@@ -18,7 +20,7 @@ Tools used:
 * Spring Boot 1.4
 * Maven 3
 
-The tutorial code is organized in such a way that you can choose to only run the [client](http://codenotfound.com/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#client) (consumer) or [endpoint](http://codenotfound.com/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#endpoint) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
+The tutorial code is organized in such a way that you can choose to only run the client (consumer) or endpoint (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 # General Project Setup
 
