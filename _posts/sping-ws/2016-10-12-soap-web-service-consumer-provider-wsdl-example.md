@@ -18,7 +18,7 @@ Tools used:
 * Spring Boot 1.4
 * Maven 3
 
-The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}//2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (consumer) or [endpoint]({{ site.url }}//2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
+The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (consumer) or [endpoint]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 # General Project Setup
 
@@ -218,9 +218,9 @@ Spring Web Services supports multiple transport protocols. The most common is th
 
 > In other words: the `MessageDispatcherServlet` combines the attributes of the `MessageDispatcher` and `DispatcherServlet` and as a result allows the handling of XML messages over HTTP.
 
-In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>messageDispatcherServlet</var>, it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
+In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean '<var>messageDispatcherServlet</var>', it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
 
-The servlet mapping URI pattern on the `ServletRegistrationBean` is set to <kbd>"/codenotfound/ws/*"<kbd>. The web container will use this path to map incoming HTTP requests to the servlet.
+The servlet mapping URI pattern on the `ServletRegistrationBean` is set to "<kbd>/codenotfound/ws/*</kbd>". The web container will use this path to map incoming HTTP requests to the servlet.
 
 The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified Hello World WSDL file. The URL location at which this WSDL is available is determined by it's `Bean` name in combination with the URI mapping of the `MessageDispatcherServlet`. For the example below this is: <ins>[host]</ins>=<kbd>http://localhost:9090</kbd>+<ins>[servlet mapping uri]</ins>=<kbd>/codenotfound/ws/</kbd>+<ins>[WsdlDefinition bean name]</ins>=<kbd>helloworld</kbd>+<ins>[WSDL postfix]</ins>=<kbd>.wsdl</kbd> or [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl).
 
@@ -274,9 +274,69 @@ To indicate what sort of messages a method can handle, it is annotated with the 
 
 The `@ResponsePayload` annotation makes Spring WS map the returned value to the response payload which in our example is the JAXB `Greeting` object.
 
-The @RequestPayload annotation on the sayHello method parameter indicates that the incoming message will be mapped to the method’s request parameter. In our case this is the JAXB Person object.
+The `@RequestPayload` annotation on the `sayHello()` method parameter indicates that the incoming message will be mapped to the method’s request parameter. In our case this is the JAXB Person object.
 
-The implementation of the sayHello service simply logs the name of the received Person and then uses this name to construct a Greeting that is also logged and then returned. 
+The implementation of the `sayHello` service simply logs the name of the received `Person` and then uses this name to construct a `Greeting` that is also logged and then returned. 
+
+``` java
+package com.codenotfound.endpoint;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+
+import com.codenotfound.types.helloworld.Greeting;
+import com.codenotfound.types.helloworld.ObjectFactory;
+import com.codenotfound.types.helloworld.Person;
+
+@Endpoint
+public class HelloWorldEndpoint {
+
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(HelloWorldEndpoint.class);
+
+    private static final String NAMESPACE_URI = "http://codenotfound.com/types/helloworld";
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "person")
+    @ResponsePayload
+    public Greeting sayHello(@RequestPayload Person request) {
+
+        LOGGER.info(
+                "Endpoint received person=[firstName:{},lastName:{}]",
+                request.getFirstName(), request.getLastName());
+
+        String greeting = "Hello " + request.getFirstName() + " "
+                + request.getLastName() + "!";
+
+        ObjectFactory factory = new ObjectFactory();
+        Greeting response = factory.createGreeting();
+        response.setGreeting(greeting);
+
+        LOGGER.info("Endpoint sending greeting='{}'",
+                response.getGreeting());
+        return response;
+    }
+}
+```
+
+# Creating the Client (Consumer)
+
+The `WebServiceTemplate` is the core class for client-side Web service access in Spring-WS. It contains methods for sending requests and receiving response messages. Additionally, it can marshal objects to XML before sending them across a transport, and unmarshal any response XML into an object again.
+
+As we will use JAXB to marshal our `Person` to a request XML and in turn unmarshal the response XML to our `Greeting` we need an instance of Spring's `Jaxb2Marshaller`. This class requires a context path to operate, which you can set using the <ins>contextPath<ins> property. The context path is a list of colon (:) separated Java package names that contain schema derived classes. In our example this is the package name of the generated Person and `Greeting` classes which is: <var>com.codenotfound.types.helloworld</var>.
+
+The below ClientConfig configuration class specifies the WebServiceTemplate bean that uses the above Jaxb2Marshaller for marshalling and unmarshalling. We also set the default service URI (note that the helloworld at the end can actually be ommited as we had specified '/codenotfound/ws/*' as URI of our endpoint servlet).
+
+Note that the class is annoted with @Configuration which indicates that the class can be used by the Spring IoC container as a source of bean definitions. 
+
+```
+
+```
+
+
 
 
 
