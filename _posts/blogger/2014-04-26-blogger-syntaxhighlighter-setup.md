@@ -108,7 +108,7 @@ In order to use SyntaxHighlighter we need to wrap the section to be highlighted 
 
 For this example we will add a `HelloWorld` Java class to a &lt;pre&gt; tag with a '<var>Java</var>' brush and a Hello World XML file to a <pre> tag with a '<var>XML</var>' brush. Copy the below code and paste it inside a Blogger post as shown.
 
-> Make sure all right angle brackets within the <pre> tags are HTML escaped, in other words all "&lt;" (less than character) must be replaced with "&lt;" (without quotes, as shown below)!
+> Make sure all right angle brackets within the <pre> tags are HTML escaped, in other words all < (less than character) must be replaced with "&lt;" (without quotes, as shown below)!
 
 ``` xml
 <pre class="brush: java">
