@@ -18,7 +18,7 @@ Tools used:
 * Spring Boot 1.4
 * Maven 3
 
-The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (consumer) or [endpoint]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
+The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 # General Project Setup
 
@@ -102,7 +102,7 @@ We will be building and running our example using [Maven](https://maven.apache.o
 
 In order to expose the Hello World service endpoint we will use the [Spring Boot](https://projects.spring.io/spring-boot/) project that comes with an embedded Apache Tomcat server. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) are used which are a set of convenient dependency descriptors that you can include in your application.
 
-The `spring-boot-starter-web-services` dependency includes the needed dependencies for using Spring Web Services. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include <ins>JUnit</ins>, <ins>Hamcrest</ins> and <ins>Mockito</ins>.
+The `spring-boot-starter-web-services` dependency includes the needed dependencies for using Spring Web Services. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/), [Hamcrest](http://hamcrest.org/JavaHamcrest/) and [Mockito](http://site.mockito.org/).
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
@@ -182,7 +182,7 @@ In the plugins section we included the `spring-boot-maven-plugin` Maven plugin s
 
 In order to directly use the '<var>person</var>' and '<var>greeting</var>' elements (defined in the '<var>types</var>' section of the Hello World WSDL) in our Java code, we will use JAXB to generate the corresponding Java classes. The above POM file configures the `maven-jaxb2-plugin` that will handle the generation.
 
-The plugin will look into the defined <ins>&lt;schemaDirectory&gt;</ins> in order to find any WSDL files for which it needs to generate the the Java classes. In order to trigger the generation via Maven, executed following command:
+The plugin will look into the defined '<var>&lt;schemaDirectory&gt;</var>' in order to find any WSDL files for which it needs to generate the the Java classes. In order to trigger the generation via Maven, executed following command:
 
 ``` plaintext
 mvn generate-sources
@@ -222,7 +222,7 @@ In the below `WebServiceConfig` configuration class we use a `ServletRegistratio
 
 The servlet mapping URI pattern on the `ServletRegistrationBean` is set to "<kbd>/codenotfound/ws/*</kbd>". The web container will use this path to map incoming HTTP requests to the servlet.
 
-The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified Hello World WSDL file. The URL location at which this WSDL is available is determined by it's `Bean` name in combination with the URI mapping of the `MessageDispatcherServlet`. For the example below this is: <ins>[host]</ins>="<kbd>http://localhost:9090</kbd>"+<ins>[servlet mapping uri]</ins>="<kbd>/codenotfound/ws/</kbd>"+<ins>[WsdlDefinition bean name]</ins>="<kbd>helloworld</kbd>"+<ins>[WSDL postfix]</ins>="<kbd>.wsdl</kbd>" or [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl).
+The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified Hello World WSDL file. The URL location at which this WSDL is available is determined by it's `Bean` name in combination with the URI mapping of the `MessageDispatcherServlet`. For the example below this is: [host]="<kbd>http://localhost:9090</kbd>"+[servlet mapping uri]="<kbd>/codenotfound/ws/</kbd>"+[WsdlDefinition bean name]="<kbd>helloworld</kbd>"+[WSDL postfix]="<kbd>.wsdl</kbd>" or [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl).
 
 To enable the support for `@Endpoint` annotation that we will use in the next section we need to annotate our configuration class with `@EnableWs`.
 
@@ -270,7 +270,7 @@ Now that our `MessageDispatcherServlet` is defined it will try to match incoming
 
 The `HelloWorldEndpoint` POJO is annotated with the `@Endpoint` annotation which registers the class with Spring WS as a potential candidate for processing incoming SOAP messages. It contains a `sayHello()` method that receives a `Person` and returns a `Greeting`. Note that these are the Java classes that we generated earlier using JAXB.
 
-To indicate what sort of messages a method can handle, it is annotated with the `@PayloadRoot` annotation that specifies a qualified name that is defined by a <ins>namespace</ins> and a local name (=<ins>localPart</ins>). Whenever a message comes in which has this qualified name for the payload root element, the method will be invoked.
+To indicate what sort of messages a method can handle, it is annotated with the `@PayloadRoot` annotation that specifies a qualified name that is defined by a '<var>namespace</var>' and a local name (='<var>localPart</var>'). Whenever a message comes in which has this qualified name for the payload root element, the method will be invoked.
 
 The `@ResponsePayload` annotation makes Spring WS map the returned value to the response payload which in our example is the JAXB `Greeting` object.
 
@@ -326,7 +326,7 @@ public class HelloWorldEndpoint {
 
 The `WebServiceTemplate` is the core class for client-side Web service access in Spring-WS. It contains methods for sending requests and receiving response messages. Additionally, it can marshal objects to XML before sending them across a transport, and unmarshal any response XML into an object again.
 
-As we will use JAXB to marshal our `Person` to a request XML and in turn unmarshal the response XML to our `Greeting` we need an instance of Spring's `Jaxb2Marshaller`. This class requires a context path to operate, which you can set using the <ins>contextPath</ins> property. The context path is a list of colon (:) separated Java package names that contain schema derived classes. In our example this is the package name of the generated Person and `Greeting` classes which is: '<var>com.codenotfound.types.helloworld</var>'.
+As we will use JAXB to marshal our `Person` to a request XML and in turn unmarshal the response XML to our `Greeting` we need an instance of Spring's `Jaxb2Marshaller`. This class requires a context path to operate, which you can set using the '<var>contextPath</var>' property. The context path is a list of colon (:) separated Java package names that contain schema derived classes. In our example this is the package name of the generated Person and `Greeting` classes which is: '<var>com.codenotfound.types.helloworld</var>'.
 
 The below `ClientConfig` configuration class specifies the `WebServiceTemplate` bean that uses the above `Jaxb2Marshaller` for marshalling and unmarshalling. We also set the default service URI (note that the '<var>helloworld</var>' at the end can actually be omitted as we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet).
 
@@ -421,7 +421,7 @@ We will create a basic unit test case in which the above client is used to send 
 
 The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced with Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications), are used to tell JUnit to run using Spring’s testing support and bootstrap with Spring Boot’s support.
 
-By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the <ins>server.port</ins> property defined in the <ins>application.properties</ins> file. 
+By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the '<var>server.port</var>' property defined in the <ins>application.properties</ins> file. 
 
 ``` java
 package com.codenotfound;
@@ -521,9 +521,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven commmand: 
 
 ``` plaintext
-
-```
 mvn spring-boot:run
+```
+
 ---
 
 {% capture notice-github %}

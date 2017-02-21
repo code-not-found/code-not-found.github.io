@@ -20,7 +20,7 @@ Tools used:
 
 This tutorial is actually a newer version of an previous [example in which we used Jetty to host a Hello World CXF web service](http://www.source4code.info/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html). This time we will be using the embedded Tomcat server that ships with Spring Boot as a runtime for the service.
 
-The below code is organized in such a way that you can choose to only run the client (consumer) or endpoint (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
+The below code is organized in such a way that you can choose to only run the [client]({{ site.url }}/2016/10/cxf-soap-web-service-consumer-provider-wsdl-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/2016/10/cxf-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 # General Project Setup
 
@@ -104,7 +104,7 @@ Maven is used to build and run the example. The Hello World service endpoint wil
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
-There is actually a [Spring Boot starter specifically for CXF](http://cxf.apache.org/docs/springboot.html) that takes care of importing the needed Spring Boot dependencies. In addition it automatically registers `CXFServlet` with a <var>/services/</var> URL pattern for serving CXF JAX-WS endpoints and it offers some properties for configuration of the `CXFServlet`. In order to use the starter we declare a dependency to `cxf-spring-boot-starter-jaxws` in our Maven POM file.
+There is actually a [Spring Boot starter specifically for CXF](http://cxf.apache.org/docs/springboot.html) that takes care of importing the needed Spring Boot dependencies. In addition it automatically registers `CXFServlet` with a '<var>/services/</var>' URL pattern for serving CXF JAX-WS endpoints and it offers some properties for configuration of the `CXFServlet`. In order to use the starter we declare a dependency to `cxf-spring-boot-starter-jaxws` in our Maven POM file.
 
 For Unit testing our Spring Boot application we also include the `spring-boot-starter-test` dependency.
 
@@ -190,7 +190,7 @@ To take advantage of Spring Boot's capability to create a single, runnable "übe
 </project>
 ```
 
-CXF includes a Maven `cxf-codegen-plugin plugin` which can [generate java artifacts from a WSDL file](http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html). In the above plugin configuration we're running the <var>wsdl2java</var> goal in the <var>generate-sources</var> phase. When executing following Maven command, CXF will generate artifacts in the <ins>&lt;sourceRoot&gt;</ins> directory that we have specified. 
+CXF includes a Maven `cxf-codegen-plugin plugin` which can [generate java artifacts from a WSDL file](http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html). In the above plugin configuration we're running the '<var>wsdl2java</var>' goal in the '<var>generate-sources</var>' phase. When executing following Maven command, CXF will generate artifacts in the '<var>&lt;sourceRoot&gt;</var>' directory that we have specified. 
 
 ``` plaintext
 mvn generate-sources
@@ -225,7 +225,7 @@ public class SpringCxfApplication {
 
 In order for the CXF framework to be able to process incoming SOAP request over HTTP, we need to setup a `CXFServlet`. In our previous [CXF SOAP Web Service tutorial](http://www.source4code.info/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) we did this by using a deployment descriptor file ('web.xml' file under the 'WEB-INF' directory) or an alternative with Spring is to use a `ServletRegistrationBean`. In this example there is nothing to be done as the `cxf-spring-boot-starter-jaxws` automatically register the `CXFServlet` for us, great!
 
-In this example we want the `CXFServlet` to listen for incoming requests on the following URI: "<kbd>/codenotfound/ws</kbd>", instead of the default value which is: "<kbd>/services/*</kbd>". This can be achieved by setting the <ins>cxf.path</ins> property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder.
+In this example we want the `CXFServlet` to listen for incoming requests on the following URI: "<kbd>/codenotfound/ws</kbd>", instead of the default value which is: "<kbd>/services/*</kbd>". This can be achieved by setting the '<var>cxf.path</var>' property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder.
 
 ``` properties
 # server HTTP port
@@ -240,7 +240,7 @@ helloworld.service.address=http://localhost:9090/codenotfound/ws/helloworld
 
 Next we create a configuration file that contains the definition of our `Endpoint` at which our Hello World SOAP service will be exposed. The `Endpoint` gets created by passing the [CXF bus, which is the backbone of the CXF architecture](http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-Bus) that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. We use the default CXF bus and get a reference to it via Spring's `@Autowired` annotation.
 
-In addition to the bus we also specify the `HelloWorldImpl` class which contains the actual implementation of the service. Finally we set the URI on which the endpoint will be exposed to "<kbd>/helloworld</kbd>". Together with the <ins>cxf.path</ins> configuration in the <ins>application.properties</ins> file this result into following URL that clients will need to call: [http://localhost:9090/codenotfound/ws/helloworld](http://localhost:9090/codenotfound/ws/helloworld).
+In addition to the bus we also specify the `HelloWorldImpl` class which contains the actual implementation of the service. Finally we set the URI on which the endpoint will be exposed to "<kbd>/helloworld</kbd>". Together with the '<var>cxf.path</var>' configuration in the <ins>application.properties</ins> file this result into following URL that clients will need to call: [http://localhost:9090/codenotfound/ws/helloworld](http://localhost:9090/codenotfound/ws/helloworld).
 
 ``` java
 package com.codenotfound.endpoint;
@@ -398,7 +398,7 @@ In order to wrap up the tutorial we will create a basic test case that will use 
 
 The new `@RunWith` and `@SpringBootTest` testing annotations, [that are available as of Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications), are used to tell `JUnit` to run using Spring’s testing support and bootstrap with Spring Boot’s support.
 
-By default the embedded HTTP server will be started on a random port. As we have defined the URL which the client needs to call with a specific port number, we need to set the `DEFINED_PORT` web environment. This will cause Spring to use the <ins>server.port</ins> property from the <ins>application.properties</ins> file instead of a random one.
+By default the embedded HTTP server will be started on a random port. As we have defined the URL which the client needs to call with a specific port number, we need to set the `DEFINED_PORT` web environment. This will cause Spring to use the '<var>server.port</var>' property from the <ins>application.properties</ins> file instead of a random one.
 
 ``` java
 package com.codenotfound;
