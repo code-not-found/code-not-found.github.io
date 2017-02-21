@@ -3,6 +3,7 @@ title: Spring Kafka - Consumer & Producer Example
 permalink: /2016/09/spring-kafka-consumer-producer-example.html
 excerpt: A detailed step-by-step tutorial on how to implement an Apache Kafka Consumer and Producer using Spring Kafka and Spring Boot.
 date: 2016-09-20 21:00
+categories: [Spring Kafka]
 tags: [Apache Kafka, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring Kafka, Tutorial]
 ---
 
@@ -23,7 +24,7 @@ Tools used:
 
 We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter` and `spring-boot-starter-test` starters.
 
-A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was _'1.1.1.RELEASE'_.
+A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was <var>'1.1.1.RELEASE'</var>.
 
 We also include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "über-jar", which is convenient to execute and transport the written code.
 
@@ -326,7 +327,7 @@ public class ReceiverConfig {
 
 > When executing below test case, make sure you have a running instance of Apache Kafka on port '9092' of your local machine. Note that it is also possible to [use Spring Kafka to automatically start an embedded Kafka broker as part of a unit test case](http://www.source4code.info/2016/10/spring-kafka-embedded-server-unit-test.html).
 
-In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <ins>helloworld.t</ins> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received. 
+In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>helloworld.t</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received. 
 
 ``` java
 package com.codenotfound;
@@ -366,13 +367,13 @@ public class SpringKafkaApplicationTests {
 
 In order to run the above example open a command prompt and execute following Maven command: 
 
-``` bash
+``` plaintext
 mvn test
 ```
 
 Maven will download the needed dependencies, compile the code and run the unit test case. The result should be a successful build during which following logs are generated:
 
-``` html
+``` plaintext
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -410,12 +411,12 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
+---
+
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
 If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-helloworld-example).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
-
----
 
 This wraps up our example in which we used a Spring Kafka template to create a producer and Spring Kafka listener to create a consumer. If you found this sample useful or have a question you would like to ask, drop a line below!

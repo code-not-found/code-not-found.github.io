@@ -238,7 +238,7 @@ public class SpringKafkaSenderTests {
 }
 ```
 
-The second test class focuses on the Receiver which listens to a '<var>helloworld-receiver.t</var>' topic as defined in the applications.properties file. In order to check the correct working we will use a producer to send a message to this topic. The producer properties are created using the static method provided by `KafkaUtils` and used to create a `KafkaTemplate`. 
+The second test class focuses on the `Receiver` which listens to a '<var>helloworld-receiver.t</var>' topic as defined in the applications.properties file. In order to check the correct working we will use a producer to send a message to this topic. The producer properties are created using the static method provided by `KafkaUtils` and used to create a `KafkaTemplate`. 
 
 We need to ensure that the `Receiver` is initialized before sending the test message. We again use the `waitForAssignment()` of `ContainerTestUtils`. The link to the message listener container is acquired by autowiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually. We check that the message was received by asserting that the latch of the `Receiver` was lowered to zero. 
 
