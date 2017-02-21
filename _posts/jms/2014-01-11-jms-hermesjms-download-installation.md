@@ -15,11 +15,11 @@ tags: [Configuration, Download, Hermes JMS, HermesJMS, Installation, Java, JMS, 
 
 In this guide we will be covering following steps:
 * [Prerequisite & Downloading the Installer]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#prerequisites--downloading-the-installer)
-* [Installation Procedure for Windows & Unix]({ site.url }}/2014/01/jms-hermesjms-download-installation.html#installation-procedure-for-windows--unix)
+* [Installation Procedure for Windows & Unix]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#installation-procedure-for-windows--unix)
 * [Startup & Exit on Windows]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#startup--exit-on-windows)
 * [Startup & Exit on Unix]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#startup--exit-on-unix)
-* [Changing the Default Configuration Location on Windows]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#)
-* [Changing the Default Configuration File on Unix]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#)
+* [Changing the Default Configuration Location on Windows]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#changing-the-default-configuration-location-on-windows)
+* [Changing the Default Configuration File on Unix]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#changing-the-default-configuration-file-on-unix)
 
 # Prerequisites & Downloading the Installer
 
@@ -50,13 +50,13 @@ A HermesJMS installation window will open as shown below:
     <img src="{{ site.url }}/assets/images/jms/hermesjms-welcome.png" alt="hermesjms welcome">
 </figure>
 
-Clicking "<kbd>Next</kbd>" will show some best practices on how to use HermesJMS configuration files (which we will cover later in this tutorial). Click "<kbd>Next</kbd>" again and review the license agreement. Select the <ins>I accept the terms of this license agreement</ins> radio button in order to be able to continue the installation.
+Clicking <kbd>Next</kbd> will show some best practices on how to use HermesJMS configuration files (which we will cover later in this tutorial). Click <kbd>Next</kbd> again and review the license agreement. Select the <ins>I accept the terms of this license agreement</ins> radio button in order to be able to continue the installation.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/hermesjms-license.png" alt="hermesjms license">
 </figure>
 
-Click "<kbd>Next</kbd>" and change the default installation path (if needed). If prompted to create the target directory, click "<kbd>OK</kbd>". From now on we will refer to this directory as: '<var>[hermesjms_install_dir]</var>'. 
+Click <kbd>Next</kbd> and change the default installation path (if needed). If prompted to create the target directory, click <kbd>OK</kbd>. From now on we will refer to this directory as: '<var>[hermesjms_install_dir]</var>'. 
 
 > Do **not** install Hermes with a **path with spaces** in, some JNDI implementations bundled with JMS providers have problems with this.
 
@@ -64,13 +64,13 @@ Click "<kbd>Next</kbd>" and change the default installation path (if needed). If
     <img src="{{ site.url }}/assets/images/jms/hermesjms-path.png" alt="hermesjms path">
 </figure>
 
-Click "<kbd>Next</kbd>" twice and review the installation settings (there should be a single HermesJMS installation pack that is selected by default). If the settings are correct click "<kbd>Next</kbd>" to start the installation. The progress of the installation will be indicated by a progress bar as shown below.
+Click <kbd>Next</kbd> twice and review the installation settings (there should be a single HermesJMS installation pack that is selected by default). If the settings are correct click <kbd>Next</kbd> to start the installation. The progress of the installation will be indicated by a progress bar as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/hermesjms-installation-progress.png" alt="hermesjms installation progress">
 </figure>
 
-Once the '<var>Pack installation progress</var>' bar mentions mentions '<var>[Finished]</var>', click on "<kbd>Quit</kbd>" to exit the installer. Alternatively click "<kbd>Next</kbd>" twice to also create application shortcuts for starting and uninstalling HermesJMS. 
+Once the '<var>Pack installation progress</var>' bar mentions mentions '<var>[Finished]</var>', click on <kbd>Quit</kbd> to exit the installer. Alternatively click <kbd>Next</kbd> twice to also create application shortcuts for starting and uninstalling HermesJMS. 
 
 > When installing Hermes JMS on a 64-bit Windows machine, clicking next after the pack installation progress has finished will result in a "_Can't load IA 32-bit .dll on a 64-bit platform_" error being thrown. This is linked to the next step that creates the shortcuts, but does not impact the correct installation of HermesJMS. Simply click on "Quit" to exit the installer.
 
@@ -138,13 +138,13 @@ Changing the default location of the configuration on Windows can be done by set
 rundll32 sysdm.cpl,EditEnvironmentVariables
 ```
 
-This will open the <ins>Environment Variables panel</ins>. Click on "<kbd>New</kbd>" and enter "<kbd>HERMES_CONFIG</kbd>" as variable name and a location for the configuration directory as variable value. In the below screenshot the variable value is "<kbd>C:\Users\CodeNotFound\hermes_config</kbd>". Click "<kbd>OK</kbd>" to to save. 
+This will open the <ins>Environment Variables panel</ins>. Click on <kbd>New</kbd> and enter "<kbd>HERMES_CONFIG</kbd>" as variable name and a location for the configuration directory as variable value. In the below screenshot the variable value is "<kbd>C:\Users\CodeNotFound\hermes_config</kbd>". Click <kbd>OK</kbd> to to save. 
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/hermesjms-configuration-location-windows.png" alt="hermesjms configuration location windows">
 </figure>
 
-Last thing to do is to copy the <ins>hermes-config.xml<ins> from <ins>.hermes</ins> to the newly created configuration directory. Go ahead and start HermesJMS and this time the log files will appear under the configuration directory indicating the configuration was successful. You can also see the new location in the title of the HermesJMS application window. 
+Last thing to do is to copy the <ins>hermes-config.xml</ins> from <ins>.hermes</ins> to the newly created configuration directory. Go ahead and start HermesJMS and this time the log files will appear under the configuration directory indicating the configuration was successful. You can also see the new location in the title of the HermesJMS application window. 
 
 > Make sure the <ins>hermes-config.xml</ins> is copied otherwise a "_NoConfigurationException_" will be thrown in the logs and the application will not start.
 
