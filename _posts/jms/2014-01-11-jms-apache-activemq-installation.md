@@ -56,7 +56,7 @@ Open a terminal and navigate to <ins>[activemq_unix_install_dir]</ins>. Change t
 ./activemq console
 ```
 
-The ActiveMQ broker can also be started as a background process (note that the corresponding process identifier is stored in the <ins>[activemq_unix_install_dir]/data</ins> directory for future reference). In order to achieve this, execute the following command instead of the above (hit <ins>CTRL+C</ins> first if you already started using a foreground process).
+The ActiveMQ broker can also be started as a background process (note that the corresponding process identifier is stored in the <ins>[activemq_unix_install_dir]/data</ins> directory for future reference). In order to achieve this, execute the following command instead of the above (hit "<kbd>CTRL+C</kbd>" first if you already started using a foreground process).
 
 ``` plaintext
 ./activemq start
@@ -102,10 +102,10 @@ Click on the <ins>Manage ActiveMQ broker</ins> link and enter following default 
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-console-welcome.png" alt="apache activemq console welcome">
 </figure>
 
-Let's finish this tutorial by stopping the running ActiveMQ instance. Switch back to the console in which ActiveMQ was started and press <kbd>CTRL+C</kbd> (note that if ActiveMQ was started as a background process, the stop command needs to be run instead). If needed type "<kbd>Y</kbd>" when prompted to '<var>Terminate batch job<var>' followed by <kbd>ENTER</kbd>. The console will return to the prompt as shown below and ActiveMQ is stopped. 
+Let's finish this tutorial by stopping the running ActiveMQ instance. Switch back to the console in which ActiveMQ was started and press <kbd>"CTRL+C"</kbd> (note that if ActiveMQ was started as a background process, the stop command needs to be run instead). If needed type "<kbd>Y</kbd>" when prompted to '<var>Terminate batch job</var>' followed by "<kbd>ENTER</kbd>". The console will return to the prompt as shown below and ActiveMQ is stopped. 
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-stop.png" alt="apache activemq stop">
 </figure>
 
-This concludes setting up and configuring ActiveMQ. If you found this post helpful or have any questions or remarks, please leave a comment below.
+This concludes setting up and configuring Apache ActiveMQ. If you found this post helpful or have any questions or remarks, please leave a comment below.
