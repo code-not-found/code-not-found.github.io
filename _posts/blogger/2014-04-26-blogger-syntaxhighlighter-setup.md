@@ -29,7 +29,7 @@ This will open the template page of your blog. Click on the button that says <fi
     <img src="{{ site.url }}/assets/images/blogger/blogger-template.png" alt="blogger template">
 </figure>
 
-Click anywhere inside the editor window and press <kbd>CTRL+F</kbd>. A search box should now appear in the upper right hand corner as shown below. In the search box enter "<kbd>&lt;/head&gt;<kbd>" (without quotes) and press <kbd>ENTER</kbd>.
+Click anywhere inside the editor window and press <kbd>CTRL+F</kbd>. A search box should now appear in the upper right hand corner as shown below. In the search box enter "<kbd>&lt;/head&gt;</kbd>" (without quotes) and press <kbd>ENTER</kbd>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/blogger/blogger-edit-html-head.png" alt="blogger edit html head">
@@ -46,8 +46,8 @@ The editor window will now jump the end of the HTML header tag where we will add
 The core files consist out of the following JavaScript file and style sheet:
 
 ``` xml
-    <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
-    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css"></link>
+<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
+<link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css"></link>
 ```
 
 ## 2) The SyntaxHighlighter theme
@@ -55,15 +55,15 @@ The core files consist out of the following JavaScript file and style sheet:
 There are a number of themes available for SyntaxHighlighter, for the complete list please check following [link](http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/). The style sheet below is the default theme. 
 
 ``` xml
-    <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
 ```
 
 ## 3) The specific brush(es) needed for the blog
 Depending on the structured language that needs to be highlighted, the corresponding brush needs to be imported. For a complete list of all available brushes please check following [link](http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/). In this example we will add the brushes for '<var>Java</var>' and '<var>XML</var>'.
 
 ``` xml
-    <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJava.js" type="text/javascript"></scrip>
-    <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushXml.js" type="text/javascript"></script>
+<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJava.js" type="text/javascript"></scrip>
+<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushXml.js" type="text/javascript"></script>
 ```
 
 > Only add the needed brushes as for each page the brushes are retrieved from alexgorbatchev.com (the SyntaxHighlighter site) and this increases your blog page load times!
@@ -71,6 +71,74 @@ Depending on the structured language that needs to be highlighted, the correspon
 ## 4) The configuration script
 
 After all needed dependencies have been added we need to enable a specific mode for Blogger and instruct SyntaxHighlighter to highlight all code blocks found on the web page. This is done by adding a JavaScript snippet as shown below. 
+
+``` xml
+<script language="javascript" type="text/javascript">
+    SyntaxHighlighter.config.bloggerMode = true;
+    SyntaxHighlighter.all();
+</script>
+```
+
+The complete script to be inserted in the Blogger template is shown below. Copy and paste right before the '<var>&lt;/head&gt;</var>' tag as shown on the screenshot.
+
+``` xml
+<!-- 'SyntaxHighlighter' additions START -->
+<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shCore.js" type="text/javascript"></script>
+<link href="http://alexgorbatchev.com/pub/sh/current/styles/shCore.css" rel="stylesheet" type="text/css" />
+<link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJava.js" type="text/javascript"></script>
+<script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushXml.js" type="text/javascript"></script>
+
+<script language="javascript" type="text/javascript">
+    SyntaxHighlighter.config.bloggerMode = true;
+    SyntaxHighlighter.all();
+</script>
+<!-- 'SyntaxHighlighter' additions END -->
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/blogger/blogger-edit-html-setup.png" alt="blogger edit html setup">
+</figure>
+
+Click the <file>Save template</file> button to save the changes made to your Blogger template. This concludes the setup, in the next section will see how to use SyntaxHighlighter.
+
+## SyntaxHighlighter Usage
+
+In order to use SyntaxHighlighter we need to wrap the section to be highlighted with an XML tag called &lt;pre&gt;. This tag has one required parameter called '<var>brush</var>' which is the same brush that was added in section 3 of the above setup.
+
+For this example we will add a `HelloWorld` Java class to a &lt;pre&gt; tag with a '<var>Java</var>' brush and a Hello World XML file to a <pre> tag with a '<var>XML</var>' brush. Copy the below code and paste it inside a Blogger post as shown.
+
+> Make sure all right angle brackets within the <pre> tags are HTML escaped, in other words all "&lt;" (less than character) must be replaced with "&lt;" (without quotes, as shown below)!
+
+``` xml
+<pre class="brush: java">
+public class HelloWorld {
+
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+</pre>
+
+<pre class="brush: xml">
+&lt;?xml version="1.0" encoding="UTF-8" ?>
+&lt;text>Hello World!&lt;/text>
+</pre>
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/blogger/blogger-edit-post.png" alt="blogger edit post">
+</figure>
+
+Save and publish the page and the result should look like:
+
+<figure>
+    <img src="{{ site.url }}/assets/images/blogger/syntaxhighlighter-example.png" alt="syntaxhighlighter example">
+</figure>
+
+# SyntaxHighlighter Options
+
+
 
 
 

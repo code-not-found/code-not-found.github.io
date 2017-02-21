@@ -21,13 +21,13 @@ You can set the priority level in either of two ways:
 * You can use the `setPriority()` method of the `MessageProducer` interface to set the priority level for all messages sent by that producer. For example, the following call sets a priority level of '7' for a producer:
 
 ``` java
-    producer.setPriority(7);
+producer.setPriority(7);
 ```
 
 * You can use the long form of the `send()` or the `publish()` method to set the priority level for a specific message. The third argument sets the priority level. For example, the following send call sets the priority level for message to '3':
 
 ``` java
-    producer.send(message, DeliveryMode.NON_PERSISTENT, 3, 0);
+producer.send(message, DeliveryMode.NON_PERSISTENT, 3, 0);
 ```
 
 > Setting the priority directly on the JMS Message using the `setJMSPriority()` method of the `Message` interface does not work as in that case the priority of the producer is taken!
