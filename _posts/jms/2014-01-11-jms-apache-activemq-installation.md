@@ -102,7 +102,7 @@ Click on the <ins>Manage ActiveMQ broker</ins> link and enter following default 
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-console-welcome.png" alt="apache activemq console welcome">
 </figure>
 
-Let's finish this tutorial by stopping the running ActiveMQ instance. Switch back to the console in which ActiveMQ was started and press <kbd>"CTRL+C"</kbd> (note that if ActiveMQ was started as a background process, the stop command needs to be run instead). If needed type "<kbd>Y</kbd>" when prompted to '<var>Terminate batch job</var>' followed by "<kbd>ENTER</kbd>". The console will return to the prompt as shown below and ActiveMQ is stopped. 
+Let's finish this tutorial by stopping the running ActiveMQ instance. Switch back to the console in which ActiveMQ was started and press "<kbd>CTRL+C</kbd>" (note that if ActiveMQ was started as a background process, the stop command needs to be run instead). If needed type "<kbd>Y</kbd>" when prompted to '<var>Terminate batch job</var>' followed by "<kbd>ENTER</kbd>". The console will return to the prompt as shown below and ActiveMQ is stopped. 
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-stop.png" alt="apache activemq stop">

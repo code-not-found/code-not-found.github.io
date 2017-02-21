@@ -46,14 +46,14 @@ Follow the below steps in order to setup a minimal working ZooKeeper configurati
 3. Open the newly created <ins>zoo.cfg<ins> in a text editor.
 4. Find the "<kbd>dataDir=/tmp/zookeeper</kbd>" entry and change it to "<kbd>dataDir=C:/temp/zookeeper</kbd>". Make sure to use forward slashes in the path name!
 5. Next, set the '<var>ZOOKEEPER_HOME</var>' and corresponding '<var>PATH</var>' environment variables. Click the Windows Start button and then type "<kbd>env</kbd>" without quotes in the search box. Select the <ins>Edit environment variables for your account</ins> entry, this will open the environment variables window. 
-    * Add a new variable using "<kbd>ZOOKEEPER_HOME</kbd>" as name and "<kbd>[zookeeper_install_dir]</kbd>" as value. Click <ins>OK</ins> to to save.
-    * Edit (or add if it doesn't exist) the variable with name "<kbd>PATH</kbd>" and add "<kbd>;%ZOOKEEPER_HOME%\bin</kbd>" to the end of the value. Click <ins>OK</ins> to save.
+    * Add a new variable using "<kbd>ZOOKEEPER_HOME</kbd>" as name and "<kbd>[zookeeper_install_dir]</kbd>" as value. Click <kbd>OK</kbd> to to save.
+    * Edit (or add if it doesn't exist) the variable with name "<kbd>PATH</kbd>" and add "<kbd>;%ZOOKEEPER_HOME%\bin</kbd>" to the end of the value. Click <kbd>OK</kbd> to save.
 
 <figure>
     <img src="{{ site.url }}/assets/images/apache-kafka/set-apache-zookeeper-environment-variables.png" alt="set apache zookeeper environment variables">
 </figure>
 
-Now that ZooKeeper is configured, let's go ahead and start it. Open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing <ins>ENTER</ins>. Use following command to startup ZooKeeper:
+Now that ZooKeeper is configured, let's go ahead and start it. Open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing <kbd>ENTER</kbd>. Use following command to startup ZooKeeper:
 
 ``` plaintext
 zkserver
@@ -84,7 +84,7 @@ Follow the below steps in order to setup a minimal working Kakfa configuration:
 
 > Make sure Zookeeper is up and running before starting Kafka. 
 
-In order to start Kafka, open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing <ins>ENTER</ins>. Navigate to the '<var>[kafka_install_dir]</var>'. Use following command to startup Kafka: 
+In order to start Kafka, open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing <kbd>ENTER</kbd>. Navigate to the '<var>[kafka_install_dir]</var>'. Use following command to startup Kafka: 
 
 ``` plaintext
 .\bin\windows\kafka-server-start.bat .\config\server.properties
