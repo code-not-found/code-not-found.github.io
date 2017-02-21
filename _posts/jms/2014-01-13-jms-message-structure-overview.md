@@ -38,17 +38,44 @@ The table below lists the JMS message header fields, indicates how their values 
 | <var>JMSType</var>          | Client                         | Defines a field for provider-specific or application-specific message types.                                                                                                                        |
 | <var>JMSRedelivered</var>   | JMS provider                   | Returns a boolean indicating if the message is being delivered again after a delivery which was not acknowledge.                                                                                    |
 
+# JMS Message Properties
+
+You can create and set properties for JMS messages if you need values in addition to those provided by the header fields. Properties are optional and stored as standard Java name/value pairs. Property fields are most often used for message selection and filtering.
+
+There are three kinds of message properties:
+1. **Application-related properties**: A Java application can assign application-related properties, which are set before the message is delivered.
+2. **Provider-related properties**: Every JMS provider can define proprietary properties that can be set either by the client or automatically by the provider. Provider-related properties are prefixed with '<var>JMS_</var>' followed by the vendor name and the specific property name; for example: `JMS_IBM_MsgType` or `JMS_SonicMQ_XQ.isMultipart`
+3. **Standard properties:** These standardized properties are set by the JMS provider (if supported) when a message is sent. Standard property names start with '<var>JMSX</var>'; for example: `JMSXUserid` or `JMSXDeliveryCount`.
+
+# JMS Message Body
+
+The message body contains the main information that is being exchanged by the JMS message. The JMS API defines five message body formats, also called message types, which allow you to send and receive data in a number of forms. JMS specifies only the interface and does not specify the implementation. This approach allows for vendor-specific implementation and transportation of messages while using a common interface.
 
 
 
 
+> Some JMS vendor implementations have added additional non-standard messages types; for example SonicMQ provides a _MultipartMessage_ message type.
 
+The JMS API provides methods for creating messages of each type and for filling in their contents. For example, to create and send a `TextMessage`, you might use the following statements:
 
+``` java
+    TextMessage message = session.createTextMessage();
+    message.setText(msg_text);  // msg_text is a String
+    producer.send(message);
+```
 
+At the consuming end, a message arrives as a generic `Message` object and must be cast to the appropriate message type. You can use one or more getter methods to extract the message contents. The following code fragment uses the `getText()` method: 
 
+``` java
+Message m = consumer.receive();
+    if (m instanceof TextMessage) {
+        TextMessage message = (TextMessage) m;
+        System.out.println("Reading message: " + message.getText());
+    } else {
+        // Handle error
+    }
+```
 
+---
 
-
-
-
-
+This concludes the overview of the JMS message structure. If you found this post helpful or have any questions or remarks, please leave a comment.
