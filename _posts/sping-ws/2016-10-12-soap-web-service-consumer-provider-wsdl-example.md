@@ -7,11 +7,11 @@ categories: [Spring-WS]
 tags: [Client, Consumer, Endpoint, Example, Hello World, Maven, Provider, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, WSDL]
 ---
 
-{% include toc title="Unique Title" icon="file-text" %}
-
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
 </figure>
+
+{% include toc title="Unique Title" icon="file-text" %}
 
 [Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads. The following step by step tutorial illustrates a basic example in which we will configure, build and run a Hello World contract first client and endpoint using a WSDL, Spring-WS, Spring Boot and Maven. 
 
