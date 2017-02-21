@@ -18,8 +18,8 @@ In this guide we will be covering following steps:
 * [Installation Procedure for Windows & Unix]({ site.url }}/2014/01/jms-hermesjms-download-installation.html#installation-procedure-for-windows--unix)
 * [Startup & Exit on Windows]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#startup--exit-on-windows)
 * [Startup & Exit on Unix]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#startup--exit-on-unix)
-* Changing the Default Configuration Location on Windows
-* Changing the Default Configuration File on Unix
+* [Changing the Default Configuration Location on Windows]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#)
+* [Changing the Default Configuration File on Unix]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#)
 
 # Prerequisites & Downloading the Installer
 
@@ -144,11 +144,28 @@ This will open the <ins>Environment Variables panel</ins>. Click on "<kbd>New</k
     <img src="{{ site.url }}/assets/images/jms/hermesjms-configuration-location-windows.png" alt="hermesjms configuration location windows">
 </figure>
 
+Last thing to do is to copy the <ins>hermes-config.xml<ins> from <ins>.hermes</ins> to the newly created configuration directory. Go ahead and start HermesJMS and this time the log files will appear under the configuration directory indicating the configuration was successful. You can also see the new location in the title of the HermesJMS application window. 
 
+> Make sure the <ins>hermes-config.xml</ins> is copied otherwise a "_NoConfigurationException_" will be thrown in the logs and the application will not start.
 
+# Changing the Default Configuration File on Unix
 
+You can change the default configuration file used by the <ins>hermes.sh</ins> shell script by by setting the '<var>HERMES_CFG</var>' environment variable.
 
+Go to your user's home directory and create (or edit if already exists) a <ins>.bashrc</ins> file. Add the below line and change the value between brackets to the path of the configuration file you want to use.
 
+``` plaintext
+export HERMES_CFG="[hermes_config_file_path]"
+```
 
+In the example below the variable value is '<var>/home/codenotfound/hermes_config/hermes-config.xml</var>'.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-configuration-location-unix.png" alt="hermesjms configuration location unix">
+</figure>
 
+Save the file and perform a user log off in order for the variable to get loaded when logging on again. Start HermesJMS and this time you should see in the title of the application window that the custom configuration file was loaded instead of the default one.
+
+---
+
+This concludes the installation and setup of the Hermes JMS. If you found this post helpful or have any questions or remarks, please leave a comment.
