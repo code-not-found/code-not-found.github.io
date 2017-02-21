@@ -1,5 +1,5 @@
 ---
-title: JSF - PrimeFaces Hello World Example 
+title: JSF - PrimeFaces Hello World Example
 permalink: /2014/04/jsf-primefaces-hello-world-example.html
 excerpt: A PrimeFaces tutorial in which we build and run a Hello World example using Jetty and Maven.
 date: 2016-04-12 21:00
@@ -145,7 +145,7 @@ public class HelloWorld {
 }
 ```
 
-The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <p:inputText> fields, that will be used to enter a first and last name, surrounded by a `&lt;p:panel&gt;`. There is also a `&lt;p:dialog&gt;` component that shows a greeting message. The dialog is triggered by a `&lt;p:commandButton&gt;` that is part of the panel.
+The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <p:inputText> fields, that will be used to enter a first and last name, surrounded by a '<var>&lt;p:panel&gt;</var>'. There is also a `&lt;p:dialog&gt;` component that shows a greeting message. The dialog is triggered by a `&lt;p:commandButton&gt;` that is part of the panel.
 
 In order to use the PrimeFaces components, following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
 
@@ -264,7 +264,7 @@ Open a web browser and enter following URL: [http://localhost:9090/codenotfound/
     <img src="{{ site.url }}/assets/images/jsf/jsf-primefaces-hello-world-example.png" alt="jsf primefaces hello world example">
 </figure>
 
-Enter a first and last name and press the <kbc>Submit</kbd> button. A pop-up dialog will be shown with a greeting message.
+Enter a first and last name and press the <kbd>Submit</kbd> button. A pop-up dialog will be shown with a greeting message.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jsf/jsf-primefaces-hello-world-example-greeting.png" alt="jsf primefaces hello world example greeting">

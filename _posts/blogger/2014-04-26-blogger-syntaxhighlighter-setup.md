@@ -17,6 +17,25 @@ One of the advantages of this highlighter is that it is purely written in JavaSc
 
 # SyntaxHighlighter Install
 
+First thing to do is to open the dashboard of your Blogger blog as shown below. On the left hand side find the menu that says <file>Template</file> and click on it.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/blogger/blogger-overview.png" alt="blogger overview">
+</figure>
+
+This will open the template page of your blog. Click on the button that says <file>Edit HTML</file> in order to open up the HTML editor as shown below.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/blogger/blogger-edit-html-head.png" alt="blogger edit html head">
+</figure>
+
+
+
+
+
+
+
+
 
 
 
