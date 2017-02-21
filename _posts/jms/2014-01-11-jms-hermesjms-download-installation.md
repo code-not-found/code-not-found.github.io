@@ -14,7 +14,7 @@ tags: [Configuration, Download, Hermes JMS, HermesJMS, Installation, Java, JMS, 
 [HermesJMS](http://hermesjms.com/) is a graphical user interface that helps you interact with with many of the popular JMS providers. It allows to publish and edit messages, browse or search queues and topics, copy messages around and delete them. Hermes JMS is an open source project hosted by [Sourceforge](https://sourceforge.net/projects/hermesjms/). Following tutorial shows how to install Hermes JMS on Windows or Unix and perform a start/stop of the application. 
 
 In this guide we will be covering following steps:
-* Prerequisite & Downloading the Installer
+* [Prerequisite & Downloading the Installer]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#prerequisites--downloading-the-installer)
 * Installation Procedure for Windows & Unix
 * Startup & Exit on Windows
 * Startup & Exit on Unix
@@ -35,12 +35,18 @@ Let's get started by downloading the HermesJMS installer Java archive (JAR). Go 
 
 # Installation Procedure for Windows & Unix
 
+Open a console window and navigate to the location of the downloaded '<var>hermes-installer-1.14.jar</var>'. Execute the following command to start the Hermes JMS installer:
 
+``` plaintext
+java -jar hermes-installer-1.14.jar
+```
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-install.png" alt="hermesjms install">
+</figure>
 
+A HermesJMS installation window will open as shown below: 
 
-
-
-
-
-
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-welcome.png" alt="hermesjms welcome">
+</figure>
 
