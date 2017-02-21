@@ -42,8 +42,38 @@ Extract the archive that was downloaded in the previous step. The extracted root
 
 Follow the below steps in order to setup a minimal working ZooKeeper configuration:
 1. Navigate to the ZooKeeper configuration directory located under <ins>[zookeeper_install_dir]/conf</ins>.
-2. Copy the file <ins>zoo_sample.cfg<ins> and rename to <ins>zoo.cfg<ins>.
-3.Open the newly created <ins>zoo.cfg<ins> in a text editor.
+2. Copy the file <ins>zoo_sample.cfg</ins> and rename to <ins>zoo.cfg</ins>.
+3. Open the newly created <ins>zoo.cfg<ins> in a text editor.
+4. Find the "<kbd>dataDir=/tmp/zookeeper</kbd>" entry and change it to "<kbd>dataDir=C:/temp/zookeeper</kbd>". Make sure to use forward slashes in the path name!
+5. Next set the '<var>ZOOKEEPER_HOME</var>' and corresponding '<var>PATH</var>' environment variables. Click the Windows Start button and then type "<kbd>env</kbd>" without quotes in the search box. Select the <ins>Edit environment variables for your account</ins> entry, this will open the environment variables window. 
+    * Add a new variable using "<kbd>ZOOKEEPER_HOME</kbd>" as name and "<kbd>[zookeeper_install_dir]</kbd>" as value. Click <ins>OK<ins> to to save.
+    * Edit (or add if it doesn't exist) the variable with name "<kbd>PATH</kbd>" and add "<kbd>;%ZOOKEEPER_HOME%\bin</kbd>" to the end of the value. Click <ins>OK</ins> to save.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/apache-kafka/set-zookeeper-environment-variables.png" alt="set zookeeper environment variables">
+</figure>
+
+Now that ZooKeeper is configured, let's go ahead and start it. Open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing <ins>ENTER<ins>. Use following command to startup ZooKeeper:
+
+``` plaintext
+zkserver
+```
+
+By default ZooKeeper will generate a number of log statements at start-up as shown below. One of the log entries will mention '<var>binding to port 0.0.0.0/0.0.0.0:2181</var>'. This indicates that ZooKeeper was successfully started.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/apache-kafka/zookeeper-startup-trace.png" alt="zookeeper startup trace">
+</figure>
+
+# Download and Setup Kafka
+
+
+
+
+
+
+
+
 
 
 
