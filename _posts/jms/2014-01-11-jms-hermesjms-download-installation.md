@@ -15,9 +15,9 @@ tags: [Configuration, Download, Hermes JMS, HermesJMS, Installation, Java, JMS, 
 
 In this guide we will be covering following steps:
 * [Prerequisite & Downloading the Installer]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#prerequisites--downloading-the-installer)
-* Installation Procedure for Windows & Unix
-* Startup & Exit on Windows
-* Startup & Exit on Unix
+* [Installation Procedure for Windows & Unix]({ site.url }}/2014/01/jms-hermesjms-download-installation.html#installation-procedure-for-windows--unix)
+* [Startup & Exit on Windows]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#startup--exit-on-windows)
+* [Startup & Exit on Unix]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html#startup--exit-on-unix)
 * Changing the Default Configuration Location on Windows
 * Changing the Default Configuration File on Unix
 
@@ -114,11 +114,35 @@ Open a terminal window and navigate to the <ins>[hermesjms_install_dir]</ins>. C
 ./hermes.sh
 ```
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-start-unix.png" alt="hermesjms start unix">
+</figure>
 
+The Hermes JMS application should startup and open as shown below: 
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-home-screen-unix.png" alt="hermesjms home screen unix">
+</figure>
 
+> If HermesJMS does not start correctly, check the 'hermes.log' file located in the <ins>[hermesjms_install_dir]/bin</ins> directory for more information on what went wrong.
 
+In order to exit HermesJMS simply select <ins>File > Exit</ins> from the console top menu (same as on Windows). 
 
+# Changing the Default Configuration Location on Windows
+
+It is recommended to keep your <ins>hermes-config.xml</ins> (by default located in a <ins>.hermes</ins> directory) separate from the installation. This way you can easily share or replicate your configuration on different machines. In addition it will allow for easier upgrades without affecting your existing configuration.
+
+Changing the default location of the configuration on Windows can be done by setting the '<var>HERMES_CONFIG</var>' environment variable. There are [a number of ways to edit the environment variables of a standard user](http://superuser.com/a/25038). One of them is to open a command prompt and enter following command:
+
+``` plaintext
+rundll32 sysdm.cpl,EditEnvironmentVariables
+```
+
+This will open the <ins>Environment Variables panel</ins>. Click on "<kbd>New</kbd>" and enter "<kbd>HERMES_CONFIG</kbd>" as variable name and a location for the configuration directory as variable value. In the below screenshot the variable value is "<kbd>C:\Users\CodeNotFound\hermes_config</kbd>". Click "<kbd>OK</kbd>" to to save. 
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-configuration-location-windows.png" alt="hermesjms configuration location windows">
+</figure>
 
 
 
