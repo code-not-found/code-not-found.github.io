@@ -1,5 +1,5 @@
 ---
-title: CXF - SOAP Web Service Consumer & Provider WSDL Example
+title: CXF - SOAP Web Service Consumer &amp; Provider WSDL Example
 permalink: /2016/10/cxf-soap-web-service-consumer-provider-wsdl-example.html
 excerpt: A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Apache CXF and Spring Boot.
 date: 2016-10-16 21:00
