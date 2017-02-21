@@ -24,6 +24,28 @@ java -version
 
 # Download and Setup Zookeeper
 
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/apache-zookeeper-logo.png" alt="apache zookeeper logo">
+</figure>
+
+Head over to the [Apache Zookeeper download](https://zookeeper.apache.org/releases.html) page and and click on the download link in the <ins>Download</ins> section. This will redirect to a mirror site, click on the suggested mirror link and from the <ins>index</ins> select the <ins>stable</ins> directory as shown below. Download the gzipped TAR file, at the moment of writing this tutorial the latest stable release was zookeeper-3.4.9.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/spring-kafka/apache-zookeeper-stable-releases.png" alt="apache zookeeper stable releases">
+</figure>
+
+Extract the archive that was downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: '<var>[zookeeper_install_dir]</var>'.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/spring-kafka/apache-zookeeper-install-directory.png" alt="apache zookeeper install directory">
+</figure>
+
+Follow the below steps in order to setup a minimal working ZooKeeper configuration:
+
+
+
+
+
 
 
 
