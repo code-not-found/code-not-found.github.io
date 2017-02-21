@@ -4,7 +4,7 @@ permalink: /2016/10/spring-kafka-embedded-server-unit-test.html
 excerpt: A detailed step-by-step tutorial on how to test your application using an embedded Apache Kafka server together with Spring Kafka and Spring Boot.
 date: 2016-10-04 21:00
 categories: [Spring Kafka]
-tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit  ]
+tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit]
 ---
 
 <figure>
@@ -102,7 +102,7 @@ The message consumer and producer classes from the Hello World example are uncha
 
 `spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a ZooKeeper and Kafka server instance on a random port before all the test cases run, and stops the instances after they are finished. In order to support multiple unit test classes (`SpringKafkaSenderTests` and `SpringKafkaReceiverTests`), we will trigger the `@ClassRule` from a `Suite` class that bundles them together. 
 
- As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the '<var>kafka.bootstrap.servers</var>' property. 
+As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the '<var>kafka.bootstrap.servers</var>' property. 
 
 ``` java
 package com.codenotfound;
