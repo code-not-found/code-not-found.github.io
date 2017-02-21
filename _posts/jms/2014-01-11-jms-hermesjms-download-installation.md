@@ -64,15 +64,63 @@ Click "<kbd>Next</kbd>" and change the default installation path (if needed). If
     <img src="{{ site.url }}/assets/images/jms/hermesjms-path.png" alt="hermesjms path">
 </figure>
 
-Click "<kbd>Next</kbd>" twice and review the installation settings (there should be a single HermesJMS installation pack that is selected by default). If the settings are correct click "<kbd>Next</kbd>" to start the installation. The progress of the installation will be indicated by a progress bar as shown below. 
+Click "<kbd>Next</kbd>" twice and review the installation settings (there should be a single HermesJMS installation pack that is selected by default). If the settings are correct click "<kbd>Next</kbd>" to start the installation. The progress of the installation will be indicated by a progress bar as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/hermesjms-installation-progress.png" alt="hermesjms installation progress">
 </figure>
 
-Once the '<var>Pack installation progress</var> bar mentions mentions '<var>[Finished]</var>', click on "<kbd>Quit</kbd>" to exit the installer. Alternatively click "<kbd>Next</kbd>" twice to also create application shortcuts for starting and uninstalling HermesJMS. 
+Once the '<var>Pack installation progress</var>' bar mentions mentions '<var>[Finished]</var>', click on "<kbd>Quit</kbd>" to exit the installer. Alternatively click "<kbd>Next</kbd>" twice to also create application shortcuts for starting and uninstalling HermesJMS. 
 
-> When installing Hermes JMS on a 64-bit Windows machine, clicking next after the pack installation progress has finished will result in a "<ins>Can't load IA 32-bit .dll on a 64-bit platform</ins>" error being thrown. This is linked to the next step that creates the shortcuts, but does not impact the correct installation of HermesJMS. Simply click on "Quit" to exit the installer.
+> When installing Hermes JMS on a 64-bit Windows machine, clicking next after the pack installation progress has finished will result in a "_Can't load IA 32-bit .dll on a 64-bit platform_" error being thrown. This is linked to the next step that creates the shortcuts, but does not impact the correct installation of HermesJMS. Simply click on "Quit" to exit the installer.
+
+An alternative way of creating a shortcut on Windows is to navigate to the <ins>[hermesjms_install_dir]\bin</ins> directory using the Windows explorer. Right click on the <ins>hermes.bat</ins> file and select <ins>Send to > Desktop(create shortcut)</ins> as shown below.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-create-shortcut-windows.png" alt="hermesjms create shortcut windows">
+</figure>
+
+# Startup & Exit on Windows
+
+Open a console window and navigate to the <ins>[hermesjms_install_dir]</ins>. Change to the <ins>bin</ins> subdirectory and execute the following command to start Hermes JMS:
+
+``` plaintext
+hermes.bat
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-start-windows.png" alt="hermesjms start windows">
+</figure>
+
+The Hermes JMS application should startup and open as shown below:
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-home-screen-windows.png" alt="hermesjms home screen windows">
+</figure>
+
+> On first startup, HermesJMS will create a <ins>.hermes</ins> directory that contains the default configuration XML, log files and a messages directory. If for some reason the application does not start as shown above, search for this directory (it will probably be located in your user's home directory or in the root where Windows is installed, typically C\:) and have a look at the <ins>hermes.log</ins> file for more information on what went wrong.
+
+In order to exit HermesJMS simply select <ins>File > Exit</ins> from the console top menu as shown below. 
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-quit-windows.png" alt="hermesjms quit windows">
+</figure>
+
+# Startup & Exit on Unix
+
+Open a terminal window and navigate to the <ins>[hermesjms_install_dir]</ins>. Change to the <ins>bin</ins> subdirectory and execute the following command to start Hermes JMS:
+
+``` plaintext
+./hermes.sh
+```
+
+
+
+
+
+
+
+
 
 
 
