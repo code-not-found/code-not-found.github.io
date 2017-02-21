@@ -7,6 +7,8 @@ categories: [Apache CXF]
 tags: [Apache CXF, Client, Consumer, Contract First, CXF, Endpoint, Example, Hello World, Maven, Provider, Spring Boot, Tutorial, WSDL]
 ---
 
+{% include toc title="Unique Title" icon="file-text" %}
+
 <figure>
     <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo">
 </figure>
