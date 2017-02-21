@@ -50,3 +50,33 @@ A HermesJMS installation window will open as shown below:
     <img src="{{ site.url }}/assets/images/jms/hermesjms-welcome.png" alt="hermesjms welcome">
 </figure>
 
+Clicking "<kbd>Next</kbd>" will show some best practices on how to use HermesJMS configuration files (which we will cover later in this tutorial). Click "<kbd>Next</kbd>" again and review the license agreement. Select the <ins>I accept the terms of this license agreement</ins> radio button in order to be able to continue the installation.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-license.png" alt="hermesjms license">
+</figure>
+
+Click "<kbd>Next</kbd>" and change the default installation path (if needed). If prompted to create the target directory, click "<kbd>OK</kbd>". From now on we will refer to this directory as: '<var>[hermesjms_install_dir]</var>'. 
+
+> Do **not** install Hermes with a **path with spaces** in, some JNDI implementations bundled with JMS providers have problems with this.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-path.png" alt="hermesjms path">
+</figure>
+
+Click "<kbd>Next</kbd>" twice and review the installation settings (there should be a single HermesJMS installation pack that is selected by default). If the settings are correct click "<kbd>Next</kbd>" to start the installation. The progress of the installation will be indicated by a progress bar as shown below. 
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/hermesjms-installation-progress.png" alt="hermesjms installation progress">
+</figure>
+
+Once the '<var>Pack installation progress</var> bar mentions mentions '<var>[Finished]</var>', click on "<kbd>Quit</kbd>" to exit the installer. Alternatively click "<kbd>Next</kbd>" twice to also create application shortcuts for starting and uninstalling HermesJMS. 
+
+> When installing Hermes JMS on a 64-bit Windows machine, clicking next after the pack installation progress has finished will result in a "<ins>Can't load IA 32-bit .dll on a 64-bit platform</ins>" error being thrown. This is linked to the next step that creates the shortcuts, but does not impact the correct installation of HermesJMS. Simply click on "Quit" to exit the installer.
+
+
+
+
+
+
+
