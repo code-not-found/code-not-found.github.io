@@ -4,7 +4,7 @@ permalink: /2016/09/apache-kafka-download-installation.html
 excerpt: A step-by-step tutorial on how to install and run Apache Kafka on Windows.
 date: 2016-09-19 21:00
 categories: [Apache Kafka]
-tags: [Apache Kafka, Download, Installation, Kafka, Windows]
+tags: [Apache Kafka, Apache Zoo=keeper, Download, Installation, Kafka, Windows, ZooKeeper]
 ---
 
 <figure>
@@ -22,13 +22,13 @@ Note that for running Kafka and ZooKeeper, a [Java Runtime Environment needs to 
 java -version
 ```
 
-# Download and Setup Zookeeper
+# Download and Setup ZooKeeper
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/apache-zookeeper-logo.png" alt="apache zookeeper logo">
 </figure>
 
-Head over to the [Apache Zookeeper download](https://zookeeper.apache.org/releases.html) page and and click on the download link in the <ins>Download</ins> section. This will redirect to a mirror site, click on the suggested mirror link and from the <ins>index</ins> select the <ins>stable</ins> directory as shown below. Download the gzipped TAR file, at the moment of writing this tutorial the latest stable release was zookeeper-3.4.9.
+Head over to the [Apache ZooKeeper download](https://zookeeper.apache.org/releases.html) page and and click on the download link in the <ins>Download</ins> section. This will redirect to a mirror site, click on the suggested mirror link and from the <ins>index</ins> select the <ins>stable</ins> directory as shown below. Download the gzipped TAR file, at the moment of writing this tutorial the latest stable release was zookeeper-3.4.9.
 
 <figure>
     <img src="{{ site.url }}/assets/images/apache-kafka/apache-zookeeper-stable-releases.png" alt="apache zookeeper stable releases">
@@ -45,15 +45,15 @@ Follow the below steps in order to setup a minimal working ZooKeeper configurati
 2. Copy the file <ins>zoo_sample.cfg</ins> and rename to <ins>zoo.cfg</ins>.
 3. Open the newly created <ins>zoo.cfg<ins> in a text editor.
 4. Find the "<kbd>dataDir=/tmp/zookeeper</kbd>" entry and change it to "<kbd>dataDir=C:/temp/zookeeper</kbd>". Make sure to use forward slashes in the path name!
-5. Next set the '<var>ZOOKEEPER_HOME</var>' and corresponding '<var>PATH</var>' environment variables. Click the Windows Start button and then type "<kbd>env</kbd>" without quotes in the search box. Select the <ins>Edit environment variables for your account</ins> entry, this will open the environment variables window. 
-    * Add a new variable using "<kbd>ZOOKEEPER_HOME</kbd>" as name and "<kbd>[zookeeper_install_dir]</kbd>" as value. Click <ins>OK<ins> to to save.
+5. Next, set the '<var>ZOOKEEPER_HOME</var>' and corresponding '<var>PATH</var>' environment variables. Click the Windows Start button and then type "<kbd>env</kbd>" without quotes in the search box. Select the <ins>Edit environment variables for your account</ins> entry, this will open the environment variables window. 
+    * Add a new variable using "<kbd>ZOOKEEPER_HOME</kbd>" as name and "<kbd>[zookeeper_install_dir]</kbd>" as value. Click <ins>OK</ins> to to save.
     * Edit (or add if it doesn't exist) the variable with name "<kbd>PATH</kbd>" and add "<kbd>;%ZOOKEEPER_HOME%\bin</kbd>" to the end of the value. Click <ins>OK</ins> to save.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/apache-kafka/set-zookeeper-environment-variables.png" alt="set zookeeper environment variables">
+    <img src="{{ site.url }}/assets/images/apache-kafka/set-apache-zookeeper-environment-variables.png" alt="set apache zookeeper environment variables">
 </figure>
 
-Now that ZooKeeper is configured, let's go ahead and start it. Open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing <ins>ENTER<ins>. Use following command to startup ZooKeeper:
+Now that ZooKeeper is configured, let's go ahead and start it. Open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing <ins>ENTER</ins>. Use following command to startup ZooKeeper:
 
 ``` plaintext
 zkserver
@@ -62,25 +62,40 @@ zkserver
 By default ZooKeeper will generate a number of log statements at start-up as shown below. One of the log entries will mention '<var>binding to port 0.0.0.0/0.0.0.0:2181</var>'. This indicates that ZooKeeper was successfully started.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/apache-kafka/zookeeper-startup-trace.png" alt="zookeeper startup trace">
+    <img src="{{ site.url }}/assets/images/apache-kafka/apache-zookeeper-startup-trace.png" alt="apache zookeeper startup trace">
 </figure>
 
 # Download and Setup Kafka
 
+Open the [Kafka releases page](http://kafka.apache.org/downloads.html) which contains the latest binary downloads. Kafka is written in [Scala](https://www.scala-lang.org/), which is programming language that has full support for functional programming. Scala source code is intended to be compiled to Java bytecode, so that the resulting executable code runs on a Java virtual machine.
 
+You'll notice that the release page contains multiple versions of Scala for a specific Kafka release. This only matters if you are using Scala yourself. If not the case, go ahead and choose the highest supported version. At the moment of writing the latest stable release was [kafka_2.11-0.10.0.1.tgz](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.1/kafka_2.11-0.10.0.1.tgz).
 
+Extract the gzipped TAR file, downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: '<var>[kafka_install_dir]</var>'.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/apache-kafka-install-directory.png" alt="apache kafka install directory">
+</figure>
 
+Follow the below steps in order to setup a minimal working Kakfa configuration: 
+1. Navigate to the Kafka configuration directory located under <ins>[kafka_install_dir]/config</ins>.
+2. Edit the file <ins>server.properties</ins> in a text editor.
+3. Find the "<kbd>log.dirs=/tmp/kafka-logs</kbd>" entry and change it to "<kbd>log.dirs=C:/temp/kafka-logs</kbd>". Make sure to use forward slashes in the path name!
 
+> Make sure Zookeeper is up and running before starting Kafka. 
 
+In order to start Kafka, open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing <ins>ENTER<ins>. Navigate to the '<var>[kafka_install_dir]</var>'. Use following command to startup Kafka: 
 
+``` plaintext
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+```
 
+Kafka will generate a number of log statements at start-up as shown below. The last log entries will mention '<var>[Kafka Server 01], started</var>'. This means that a Kafka instance is up and running.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/apache-kafka-startup-trace.png" alt="apache kafka startup trace">
+</figure>
 
+---
 
-
-
-
-
-
-
+This concludes installing ZooKeeper and Kafka on Windows. If you found this post helpful or have any questions or remarks, please leave a comment.
