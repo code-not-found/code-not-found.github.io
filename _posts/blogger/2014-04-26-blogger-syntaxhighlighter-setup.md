@@ -138,15 +138,25 @@ Save and publish the page and the result should look like:
 
 # SyntaxHighlighter Options
 
+In addition to the mandatory '<var>brush</var>' parameter, the &lt;pre&gt; tag has a number of optional parameters. For example it is possible to highlight one or more lines to focus the reader's attention by adding the '<var>highlight</var>' parameter as shown below. The full list of available parameters can be found [here](The result of above snippet:).
 
+``` xml
+<pre class="brush: java; highlight: [3,4,5]">
+public class HelloWorld {
 
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+</pre>
+```
 
+The result of above snippet:
 
+<figure>
+    <img src="{{ site.url }}/assets/images/blogger/syntaxhighlighter-highlight-example.png" alt="syntaxhighlighter highlight example">
+</figure>
 
+---
 
-
-
-
-
-
-
+This concludes setting up SyntaxHighlighter on Blogger. If you found this post helpful or have any questions or remarks, please leave a comment. 
