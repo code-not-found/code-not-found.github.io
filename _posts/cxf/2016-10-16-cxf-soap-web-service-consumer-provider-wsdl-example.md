@@ -204,7 +204,7 @@ After running above command you should be able to find back a number of auto gen
 
 Next we create a `SpringCxfApplication` class. It contain a `main()` method that delegates to Spring Boot’s `SpringApplication` class by calling run. `SpringApplication` will bootstrap our application, starting Spring which will in turn start the auto-configured Tomcat web server.
 
- The `@SpringBootApplication` is a convenience annotation that adds all of the following: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`. Checkout the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/) for more details.
+The `@SpringBootApplication` is a convenience annotation that adds all of the following: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`. Checkout the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/) for more details.
 
 ``` java
 package com.codenotfound;
@@ -225,7 +225,7 @@ public class SpringCxfApplication {
 
 In order for the CXF framework to be able to process incoming SOAP request over HTTP, we need to setup a `CXFServlet`. In our previous [CXF SOAP Web Service tutorial](http://www.source4code.info/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) we did this by using a deployment descriptor file ('web.xml' file under the 'WEB-INF' directory) or an alternative with Spring is to use a `ServletRegistrationBean`. In this example there is nothing to be done as the `cxf-spring-boot-starter-jaxws` automatically register the `CXFServlet` for us, great!
 
- In this example we want the `CXFServlet` to listen for incoming requests on the following URI: "<kbd>/codenotfound/ws</kbd>", instead of the default value which is: "<kbd>/services/*</kbd>". This can be achieved by setting the <ins>cxf.path</ins> property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder.
+In this example we want the `CXFServlet` to listen for incoming requests on the following URI: "<kbd>/codenotfound/ws</kbd>", instead of the default value which is: "<kbd>/services/*</kbd>". This can be achieved by setting the <ins>cxf.path</ins> property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder.
 
 ``` properties
 # server HTTP port
@@ -311,9 +311,9 @@ public class HelloWorldImpl implements HelloWorldPortType {
 
 CXF provides a `JaxWsProxyFactoryBean` that will create a Web Service client for you which implements a specified service class.
 
- Let's create a `ClientConfig` class with the `@Configuration` annotation which indicates that the class can be used by the Spring IoC container as a source of bean definitions. Next we create a `JaxWsProxyFactoryBean` and set `HelloWorldPortType` as service class.
+Let's create a `ClientConfig` class with the `@Configuration` annotation which indicates that the class can be used by the Spring IoC container as a source of bean definitions. Next we create a `JaxWsProxyFactoryBean` and set `HelloWorldPortType` as service class.
 
- The last thing we set is the endpoint at which the Hello World service is available. This endpoint is fetched from the <ins>application.properties</ins> file so it can easily be changed if needed.
+The last thing we set is the endpoint at which the Hello World service is available. This endpoint is fetched from the <ins>application.properties</ins> file so it can easily be changed if needed.
 
 > Don't forget to call the `create()` method on the `JaxWsProxyFactoryBean` in order to have the Factory create a JAX-WS proxy that we can then use to make remote invocations. 
 
@@ -392,5 +392,115 @@ public class HelloWorldClient {
 }
 ```
 
+# Testing the Client & Endpoint
 
+In order to wrap up the tutorial we will create a basic test case that will use our Hello World client to send a request to the CXF endpoint that is being exposed on Spring Boot's embedded Tomcat.
 
+The new `@RunWith` and `@SpringBootTest` testing annotations, [that are available as of Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications), are used to tell `JUnit` to run using Spring’s testing support and bootstrap with Spring Boot’s support.
+
+By default the embedded HTTP server will be started on a random port. As we have defined the URL which the client needs to call with a specific port number, we need to set the `DEFINED_PORT` web environment. This will cause Spring to use the <ins>server.port</ins> property from the <ins>application.properties</ins> file instead of a random one.
+
+``` java
+package com.codenotfound;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.codenotfound.client.HelloWorldClient;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
+public class SpringCxfApplicationTests {
+
+    @Autowired
+    private HelloWorldClient helloWorldClient;
+
+    @Test
+    public void testSayHello() {
+
+        assertThat(helloWorldClient.sayHello("John", "Doe"))
+                .isEqualTo("Hello John Doe!");
+    }
+}
+```
+
+In order to run the above test, open a command prompt in the projects root folder and execute following Maven command: 
+
+``` powershell
+mvn test
+```
+
+Maven will download the needed dependencies, compile the code and run the unit test case during which Tomcat is started and a service call is made. If all went well the build is reported as a success: 
+
+``` powershell
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.4.1.RELEASE)
+
+21:19:58.154 INFO  [main][SpringCxfApplicationTests] Starting SpringCxfApplicationTests on cnf-pc with PID 2656 (started by CodeNotFound in c:\code\st\jaxws-cxf\jaxws-cxf-helloworld-example)
+21:19:58.154 DEBUG [main][SpringCxfApplicationTests] Running with Spring Boot v1.4.1.RELEASE, Spring v4.3.3.RELEASE
+21:19:58.155 INFO  [main][SpringCxfApplicationTests] No active profile set, falling back to default profiles: default
+21:19:58.179 INFO  [main][AnnotationConfigEmbeddedWebApplicationContext] Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@626abbd0: startup date [Sun Oct 16 21:19:58 CEST 2016]; root of context hierarchy
+21:19:59.140 INFO  [main][XmlBeanDefinitionReader] Loading XML bean definitions from class path resource [META-INF/cxf/cxf.xml]
+21:20:00.037 INFO  [main][TomcatEmbeddedServletContainer] Tomcat initialized with port(s): 9090 (http)
+21:20:00.176 INFO  [localhost-startStop-1][ContextLoader] Root WebApplicationContext: initialization completed in 1997 ms
+21:20:00.369 INFO  [localhost-startStop-1][ServletRegistrationBean] Mapping servlet: 'dispatcherServlet' to [/]
+21:20:00.371 INFO  [localhost-startStop-1][ServletRegistrationBean] Mapping servlet: 'CXFServlet' to [/codenotfound/ws/*]
+21:20:00.375 INFO  [localhost-startStop-1][FilterRegistrationBean] Mapping filter: 'characterEncodingFilter' to: [/*]
+21:20:00.375 INFO  [localhost-startStop-1][FilterRegistrationBean] Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+21:20:00.375 INFO  [localhost-startStop-1][FilterRegistrationBean] Mapping filter: 'httpPutFormContentFilter' to: [/*]
+21:20:00.376 INFO  [localhost-startStop-1][FilterRegistrationBean] Mapping filter: 'requestContextFilter' to: [/*]
+21:20:01.367 INFO  [main][RequestMappingHandlerAdapter] Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@626abbd0: startup date [Sun Oct 16 21:19:58 CEST 2016]; root of context hierarchy
+21:20:01.432 INFO  [main][RequestMappingHandlerMapping] Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+21:20:01.434 INFO  [main][RequestMappingHandlerMapping] Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:20:01.463 INFO  [main][SimpleUrlHandlerMapping] Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+21:20:01.463 INFO  [main][SimpleUrlHandlerMapping] Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+21:20:01.499 INFO  [main][SimpleUrlHandlerMapping] Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+21:20:01.654 INFO  [main][TomcatEmbeddedServletContainer] Tomcat started on port(s): 9090 (http)
+21:20:01.659 INFO  [main][SpringCxfApplicationTests] Started SpringCxfApplicationTests in 3.963 seconds (JVM running for 4.717)
+21:20:01.676 INFO  [main][HelloWorldClient] Client sending person=[firstName:John,lastName:Doe]
+21:20:01.943 INFO  [http-nio-9090-exec-1][HelloWorldImpl] Endpoint received person=[firstName:John,lastName:Doe]
+21:20:01.944 INFO  [http-nio-9090-exec-1][HelloWorldImpl] Endpoint sending greeting=[Hello John Doe!]
+21:20:01.965 INFO  [main][HelloWorldClient] Client received greeting=[Hello John Doe!]
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.359 sec - in com.codenotfound.SpringCxfApplicationTests
+21:20:02.007 INFO  [Thread-2][AnnotationConfigEmbeddedWebApplicationContext] Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@626abbd0: startup date [Sun
+ Oct 16 21:19:58 CEST 2016]; root of context hierarchy
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 7.692 s
+[INFO] Finished at: 2016-10-16T21:20:02+02:00
+[INFO] Final Memory: 20M/227M
+[INFO] ------------------------------------------------------------------------
+```
+
+If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven commmand: 
+
+``` powershell
+mvn spring-boot:run
+```
+
+{% capture notice-github %}
+![github mark](/assets/images/logos/github-mark.png){: .align-left}
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxws-cxf/tree/master/jaxws-cxf-helloworld-example).
+{% endcapture %}
+<div class="notice--info">{{ notice-github | markdownify }}</div>
+
+---
+
+This concludes our example on how to use CXF together with Spring Boot in order to consume and produce a Web Service starting from a WSDL file. Drop a line in case something was unclear or if you just liked the tutorial.
