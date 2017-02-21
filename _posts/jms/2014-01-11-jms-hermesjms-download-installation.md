@@ -29,7 +29,7 @@ Hermes JMS is written in Java. It needs [a Java runtime environment (JRE) of ver
 java -version
 ```
 
-Let's get started by downloading the HermesJMS installer Java archive (JAR). Go the the [HermesJMS download page](http://www.hermesjms.com/confluence/display/HJMS/Home) and click on the Sourceforge link in the <flp>Downloading and Webstarting</flp> section. This will redirect to a Sourceforge page, click on the '<var>hermes-installer-X.XX.jar</var>' link and download the JAR file. Seeing as Hermes JMS is written in Java, the installer will run on both 32-bit and 64-bit systems.
+Let's get started by downloading the HermesJMS installer Java archive (JAR). Go the the [HermesJMS download page](http://www.hermesjms.com/confluence/display/HJMS/Home) and click on the Sourceforge link in the <file>Downloading and Webstarting</file> section. This will redirect to a Sourceforge page, click on the '<var>hermes-installer-X.XX.jar</var>' link and download the JAR file. Seeing as Hermes JMS is written in Java, the installer will run on both 32-bit and 64-bit systems.
 
 > Update: it looks like the HermesJMS home page is currently not available. You can however still [download the latest stable release: 'hermes-installer-1.14.jar' from SourceForge](http://sourceforge.net/projects/hermesjms/files/hermesjms/1.14/hermes-installer-1.14.jar/download).
 
@@ -50,7 +50,7 @@ A HermesJMS installation window will open as shown below:
     <img src="{{ site.url }}/assets/images/jms/hermesjms-welcome.png" alt="hermesjms welcome">
 </figure>
 
-Clicking <kbd>Next</kbd> will show some best practices on how to use HermesJMS configuration files (which we will cover later in this tutorial). Click <kbd>Next</kbd> again and review the license agreement. Select the <ins>I accept the terms of this license agreement</ins> radio button in order to be able to continue the installation.
+Clicking <kbd>Next</kbd> will show some best practices on how to use HermesJMS configuration files (which we will cover later in this tutorial). Click <kbd>Next</kbd> again and review the license agreement. Select the <file>I accept the terms of this license agreement</file> radio button in order to be able to continue the installation.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/hermesjms-license.png" alt="hermesjms license">
@@ -74,7 +74,7 @@ Once the '<var>Pack installation progress</var>' bar mentions mentions '<var>[Fi
 
 > When installing Hermes JMS on a 64-bit Windows machine, clicking next after the pack installation progress has finished will result in a "_Can't load IA 32-bit .dll on a 64-bit platform_" error being thrown. This is linked to the next step that creates the shortcuts, but does not impact the correct installation of HermesJMS. Simply click on "Quit" to exit the installer.
 
-An alternative way of creating a shortcut on Windows is to navigate to the <ins>[hermesjms_install_dir]\bin</ins> directory using the Windows explorer. Right click on the <ins>hermes.bat</ins> file and select <ins>Send to > Desktop(create shortcut)</ins> as shown below.
+An alternative way of creating a shortcut on Windows is to navigate to the <file>[hermesjms_install_dir]\bin</file> directory using the Windows explorer. Right click on the <file>hermes.bat</file> file and select <file>Send to > Desktop(create shortcut)</file> as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/hermesjms-create-shortcut-windows.png" alt="hermesjms create shortcut windows">
@@ -82,7 +82,7 @@ An alternative way of creating a shortcut on Windows is to navigate to the <ins>
 
 # Startup & Exit on Windows
 
-Open a console window and navigate to the <ins>[hermesjms_install_dir]</ins>. Change to the <ins>bin</ins> subdirectory and execute the following command to start Hermes JMS:
+Open a console window and navigate to the <file>[hermesjms_install_dir]</file>. Change to the <file>bin</file> subdirectory and execute the following command to start Hermes JMS:
 
 ``` plaintext
 hermes.bat
@@ -98,9 +98,9 @@ The Hermes JMS application should startup and open as shown below:
     <img src="{{ site.url }}/assets/images/jms/hermesjms-home-screen-windows.png" alt="hermesjms home screen windows">
 </figure>
 
-> On first startup, HermesJMS will create a <ins>.hermes</ins> directory that contains the default configuration XML, log files and a messages directory. If for some reason the application does not start as shown above, search for this directory (it will probably be located in your user's home directory or in the root where Windows is installed, typically C\:) and have a look at the <ins>hermes.log</ins> file for more information on what went wrong.
+> On first startup, HermesJMS will create a <file>.hermes</file> directory that contains the default configuration XML, log files and a messages directory. If for some reason the application does not start as shown above, search for this directory (it will probably be located in your user's home directory or in the root where Windows is installed, typically C\:) and have a look at the <file>hermes.log</file> file for more information on what went wrong.
 
-In order to exit HermesJMS simply select <ins>File > Exit</ins> from the console top menu as shown below. 
+In order to exit HermesJMS simply select <file>File > Exit</file> from the console top menu as shown below. 
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/hermesjms-quit-windows.png" alt="hermesjms quit windows">
@@ -108,7 +108,7 @@ In order to exit HermesJMS simply select <ins>File > Exit</ins> from the console
 
 # Startup & Exit on Unix
 
-Open a terminal window and navigate to the <ins>[hermesjms_install_dir]</ins>. Change to the <ins>bin</ins> subdirectory and execute the following command to start Hermes JMS:
+Open a terminal window and navigate to the <file>[hermesjms_install_dir]</file>. Change to the <file>bin</file> subdirectory and execute the following command to start Hermes JMS:
 
 ``` plaintext
 ./hermes.sh
@@ -124,13 +124,13 @@ The Hermes JMS application should startup and open as shown below:
     <img src="{{ site.url }}/assets/images/jms/hermesjms-home-screen-unix.png" alt="hermesjms home screen unix">
 </figure>
 
-> If HermesJMS does not start correctly, check the 'hermes.log' file located in the <ins>[hermesjms_install_dir]/bin</ins> directory for more information on what went wrong.
+> If HermesJMS does not start correctly, check the 'hermes.log' file located in the <file>[hermesjms_install_dir]/bin</file> directory for more information on what went wrong.
 
-In order to exit HermesJMS simply select <ins>File > Exit</ins> from the console top menu (same as on Windows). 
+In order to exit HermesJMS simply select <file>File > Exit</file> from the console top menu (same as on Windows). 
 
 # Changing the Default Configuration Location on Windows
 
-It is recommended to keep your <ins>hermes-config.xml</ins> (by default located in a <ins>.hermes</ins> directory) separate from the installation. This way you can easily share or replicate your configuration on different machines. In addition it will allow for easier upgrades without affecting your existing configuration.
+It is recommended to keep your <file>hermes-config.xml</file> (by default located in a <file>.hermes</file> directory) separate from the installation. This way you can easily share or replicate your configuration on different machines. In addition it will allow for easier upgrades without affecting your existing configuration.
 
 Changing the default location of the configuration on Windows can be done by setting the '<var>HERMES_CONFIG</var>' environment variable. There are [a number of ways to edit the environment variables of a standard user](http://superuser.com/a/25038). One of them is to open a command prompt and enter following command:
 
@@ -138,21 +138,21 @@ Changing the default location of the configuration on Windows can be done by set
 rundll32 sysdm.cpl,EditEnvironmentVariables
 ```
 
-This will open the <ins>Environment Variables panel</ins>. Click on <kbd>New</kbd> and enter "<kbd>HERMES_CONFIG</kbd>" as variable name and a location for the configuration directory as variable value. In the below screenshot the variable value is "<kbd>C:\Users\CodeNotFound\hermes_config</kbd>". Click <kbd>OK</kbd> to to save. 
+This will open the <file>Environment Variables panel</file>. Click on <kbd>New</kbd> and enter "<kbd>HERMES_CONFIG</kbd>" as variable name and a location for the configuration directory as variable value. In the below screenshot the variable value is "<kbd>C:\Users\CodeNotFound\hermes_config</kbd>". Click <kbd>OK</kbd> to to save. 
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/hermesjms-configuration-location-windows.png" alt="hermesjms configuration location windows">
 </figure>
 
-Last thing to do is to copy the <ins>hermes-config.xml</ins> from <ins>.hermes</ins> to the newly created configuration directory. Go ahead and start HermesJMS and this time the log files will appear under the configuration directory indicating the configuration was successful. You can also see the new location in the title of the HermesJMS application window. 
+Last thing to do is to copy the <file>hermes-config.xml</file> from <file>.hermes</file> to the newly created configuration directory. Go ahead and start HermesJMS and this time the log files will appear under the configuration directory indicating the configuration was successful. You can also see the new location in the title of the HermesJMS application window. 
 
-> Make sure the <ins>hermes-config.xml</ins> is copied otherwise a "_NoConfigurationException_" will be thrown in the logs and the application will not start.
+> Make sure the <file>hermes-config.xml</file> is copied otherwise a "_NoConfigurationException_" will be thrown in the logs and the application will not start.
 
 # Changing the Default Configuration File on Unix
 
-You can change the default configuration file used by the <ins>hermes.sh</ins> shell script by by setting the '<var>HERMES_CFG</var>' environment variable.
+You can change the default configuration file used by the <file>hermes.sh</file> shell script by by setting the '<var>HERMES_CFG</var>' environment variable.
 
-Go to your user's home directory and create (or edit if already exists) a <ins>.bashrc</ins> file. Add the below line and change the value between brackets to the path of the configuration file you want to use.
+Go to your user's home directory and create (or edit if already exists) a <file>.bashrc</file> file. Add the below line and change the value between brackets to the path of the configuration file you want to use.
 
 ``` plaintext
 export HERMES_CFG="[hermes_config_file_path]"
