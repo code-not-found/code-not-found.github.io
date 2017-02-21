@@ -1,8 +1,9 @@
 ---
 title: CXF - SOAP Web Service Consumer & Provider WSDL Example
 permalink: /2016/10/cxf-soap-web-service-consumer-provider-wsdl-example.html
-excerpt: How to handle element missing @XmlRootElement annotation errors when trying to marshal a Java object using JAXB.
+excerpt: A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Apache CXF and Spring Boot.
 date: 2016-10-16 21:00
+categories: [Apache CXF]
 tags: [Apache CXF, Client, Consumer, Contract First, CXF, Endpoint, Example, Hello World, Maven, Provider, Spring Boot, Tutorial, WSDL]
 ---
 
@@ -12,8 +13,7 @@ tags: [Apache CXF, Client, Consumer, Contract First, CXF, Endpoint, Example, Hel
 
 [Apache CXF](http://cxf.apache.org/) is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS. In this tutorial we will take a look at how we can integrate CXF with Spring Boot in order to build and run a Hello World SOAP service. Throughout the example, we will be creating a contract first client and endpoint using a WSDL, CXF, Spring Boot and Maven.
 
-Tools used:
-* Apache CXF 3.1
+Tools used: * Apache CXF 3.1
 * Spring Boot 1.4
 * Maven 3
 
@@ -226,11 +226,20 @@ In order for the CXF framework to be able to process incoming SOAP request over 
 
  In this example we want the `CXFServlet` to listen for incoming requests on the following URI: <var>/codenotfound/services</var>, instead of the default value which is: <var>/services/*</var>. This can be achieved by setting the <ins>cxf.path</ins> property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder.
 
+``` html
+# server HTTP port
+server.port=9090
 
+# set the CXFServlet URL pattern
+cxf.path=/codenotfound/ws
 
+# hello world service address
+helloworld.service.address=http://localhost:9090/codenotfound/ws/helloworld
+```
 
+Next we create a configuration file that contains the definition of our `Endpoint` at which our Hello World SOAP service will be exposed. The `Endpoint` gets created by passing the [CXF bus, which is the backbone of the CXF architecture](http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-Bus) that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. We use the default CXF bus and get a reference to it via Spring's `@Autowired` annotation.
 
-
+ In addition to the bus we also specify the `HelloWorldImpl` class which contains the actual implementation of the service. Finally we set the URI on which the endpoint will be exposed to <ins>/helloworld</ins>. Together with the <ins>cxf.path</ins> configuration in the <ins>application.properties</ins> file this result into following URL that clients will need to call: [http://localhost:9090/codenotfound/ws/helloworld](http://localhost:9090/codenotfound/ws/helloworld).
 
 
 
