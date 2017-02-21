@@ -29,7 +29,7 @@ Hermes JMS is written in Java. It needs [a Java runtime environment (JRE) of ver
 java -version
 ```
 
-Let's get started by downloading the HermesJMS installer Java archive (JAR). Go the the [HermesJMS download page](http://www.hermesjms.com/confluence/display/HJMS/Home) and click on the Sourceforge link in the <ins>Downloading and Webstarting</ins> section. This will redirect to a Sourceforge page, click on the '<var>hermes-installer-X.XX.jar</var>' link and download the JAR file. Seeing as Hermes JMS is written in Java, the installer will run on both 32-bit and 64-bit systems.
+Let's get started by downloading the HermesJMS installer Java archive (JAR). Go the the [HermesJMS download page](http://www.hermesjms.com/confluence/display/HJMS/Home) and click on the Sourceforge link in the <flp>Downloading and Webstarting</flp> section. This will redirect to a Sourceforge page, click on the '<var>hermes-installer-X.XX.jar</var>' link and download the JAR file. Seeing as Hermes JMS is written in Java, the installer will run on both 32-bit and 64-bit systems.
 
 > Update: it looks like the HermesJMS home page is currently not available. You can however still [download the latest stable release: 'hermes-installer-1.14.jar' from SourceForge](http://sourceforge.net/projects/hermesjms/files/hermesjms/1.14/hermes-installer-1.14.jar/download).
 
