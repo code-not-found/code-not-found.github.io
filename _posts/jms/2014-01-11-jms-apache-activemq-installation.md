@@ -28,6 +28,57 @@ Extract the Windows binaries archive that was downloaded in the previous step. T
     <img src="{{ site.url }}/assets/images/jms/windows-apache-activemq-files.png" alt="windows apache activemq files">
 </figure>
 
+Open a command prompt and navigate to <ins>[activemq_win_install_dir]</ins>. Change to the <ins>bin</ins> subdirectory and execute the following command to start ActiveMQ: 
+
+``` plaintext
+activemq start
+```
+
+By default ActiveMQ will generate a number of log statements at start-up as shown below:
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/windows-apache-activemq-startup-trace.png" alt="windows apache activemq startup trace">
+</figure>
+
+One of the latest log entries will mention '<var>ActiveMQ WebConsole available at http://0.0.0.0:8161/</var>'. This indicates that ActiveMQ was successfully started.
+
+# Install ActiveMQ on Unix
+
+Extract the Unix binaries archive downloaded in the first step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: '<var>[activemq_unix_install_dir]</var>'. 
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/unix-apache-activemq-files.png" alt="unix apache activemq files">
+</figure>
+
+Open a terminal and navigate to <ins>[activemq_unix_install_dir]</ins>. Change to the <ins>bin</ins> subdirectory and execute the following command to start ActiveMQ as a foreground process:
+
+``` plaintext
+./activemq console
+```
+
+The ActiveMQ broker can also be started as a background process (note that the corresponding process identifier is stored in the <ins>[activemq_unix_install_dir]/data</ins> directory for future reference). In order to achieve this, execute the following command instead of the above (hit <ins>CTRL+C</ins> first if you already started using a foreground process). 
+
+``` plaintext
+./activemq start
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/unix-apache-activemq-start.png" alt="unix apache activemq start">
+</figure>
+
+Once started as a background process there are a number of additional commands we can run to manage the running broker instance. For example, execute following to see if ActiveMQ is still running: 
+
+``` plaintext
+./activemq status
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/jms/unix-apache-activemq-status.png" alt="unix apache activemq status">
+</figure>
+
+The ActiveMQ web site contains a [complete overview of the available Unix commands](http://activemq.apache.org/unix-shell-script.html#UnixShellScript-Functionaloverview). In order to stop the background process, use the below command, but for now leave the broker running as we will first explorer the web console. 
+
+
 
 
 
