@@ -85,11 +85,14 @@ $susy: (
 ins.adsbygoogle {
   border-bottom: none !important;
 }
-.custom-post-footer {
-  margin-top: 30px;
-}
 .custom-sidebar {
   margin-top: 40px;
+}
+.custom-post-header {
+  margin-bottom: -20px;
+}
+.custom-post-footer {
+  margin-top: 30px;
 }
 .page__hero--overlay .page__title {
   text-shadow: none;
@@ -102,5 +105,15 @@ ins.adsbygoogle {
   color: #03af6c;
 }
 a {
+  color: #03af6c;
+}
+p code {
+  background-color: #F7F7F9;
+  border-color: #E1E1E8;
+  border-style: solid;
+  border-width: 1px;
+  color: #D14;
+}
+.pagination--pagerrgb {
   color: #03af6c;
 }
