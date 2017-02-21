@@ -532,4 +532,4 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This Spring WS example turned out a bit longer than expected but hopefully it helped to explain the core client and endpoint concepts. Feel free to leave a comment if you enjoyed reading or in case you have any additional questions. 
+This Spring WS example turned out a bit longer than expected but hopefully it helped to explain the core client and endpoint concepts. Feel free to leave a comment if you enjoyed reading or in case you have any additional questions.
