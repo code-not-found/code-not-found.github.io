@@ -25,8 +25,8 @@ The JMS message header part, contains a number of predefined fields that must be
 
 The table below lists the JMS message header fields, indicates how their values are set and describes the content of each header field.
 
-| Header Field                | Set By                         | Description                                                  |
-| --------------------------- | ------------------------------ | ------------------------------------------------------------ |
+| Header Field                | Set By                         | Description                                                                                                                                                                                         |
+| --------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <var>JMSDestination</var>   | `send()` or `publish()` method | Returns a Destination object (a Topic or a Queue, or their temporary version) describing where the message was directed.                                                                            |
 | <var>JMSDeliveryMode</var>  | `send()` or `publish()` method | Can be `DeliveryMode.NON_PERSISTENT` or `DeliveryMode.PERSISTENT`; only persistent messages guarantee delivery in case of a crash of the brokers that transport it.                                 |
 | <var>JMSExpiration</var>    | `send()` or `publish()` method | Returns a timestamp indicating the expiration time of the message; it can be 0 on a message without a defined expiration.                                                                           |
@@ -51,10 +51,15 @@ There are three kinds of message properties:
 
 The message body contains the main information that is being exchanged by the JMS message. The JMS API defines five message body formats, also called message types, which allow you to send and receive data in a number of forms. JMS specifies only the interface and does not specify the implementation. This approach allows for vendor-specific implementation and transportation of messages while using a common interface.
 
+| Message Type             | Body Contains                                                                                                                                                                                                                              |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <var>TextMessage</var>   | A java.lang.String object (for example, the contents of an XML file).                                                                                                                                                                      |
+| <var>MapMessage</var>    | A set of name-value pairs, with names as String objects and values as primitive types in the Java programming language. The entries can be accessed sequentially by enumerator or randomly by name. The order of the entries is undefined. |
+| <var>BytesMessage</var>  | A stream of uninterpreted bytes. This message type is for literally encoding a body to match an existing message format.                                                                                                                   |
+| <var>StreamMessage</var> | A stream of primitive values in the Java programming language, filled and read sequentially.                                                                                                                                               |
+| <var>ObjectMessage</var> | A Serializable object in the Java programming language.                                                                                                                                                                                    |
 
-
-
-> Some JMS vendor implementations have added additional non-standard messages types; for example SonicMQ provides a _MultipartMessage_ message type.
+> Some JMS vendor implementations have added additional non-standard messages types; for example SonicMQ provides a **MultipartMessage** message type.
 
 The JMS API provides methods for creating messages of each type and for filling in their contents. For example, to create and send a `TextMessage`, you might use the following statements:
 
@@ -67,7 +72,7 @@ The JMS API provides methods for creating messages of each type and for filling 
 At the consuming end, a message arrives as a generic `Message` object and must be cast to the appropriate message type. You can use one or more getter methods to extract the message contents. The following code fragment uses the `getText()` method: 
 
 ``` java
-Message m = consumer.receive();
+    Message m = consumer.receive();
     if (m instanceof TextMessage) {
         TextMessage message = (TextMessage) m;
         System.out.println("Reading message: " + message.getText());
