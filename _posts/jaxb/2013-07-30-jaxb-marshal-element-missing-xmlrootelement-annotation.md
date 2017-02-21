@@ -145,7 +145,7 @@ Unmarshalling in JAXB is the process of converting XML content into a Java objec
 </ns2:car>
 ```
 
-In the method below we pass the above XML file and try to unmarshal it to an instance of the `Car` class. Note that it is also possible to [use JAXB to create an object from an XML String](http://www.codenotfound.com/2013/07/jaxb-unmarshal-xml-string-into-java-object.html) instead of using a file.
+In the method below we pass the above XML file and try to unmarshal it to an instance of the `Car` class. Note that it is also possible to [use JAXB to create an object from an XML String]({{ site.url }}/2013/07/jaxb-unmarshal-xml-string-into-java-object.html) instead of using a file.
 
 ``` java
 public static Car unmarshalError(File file) throws JAXBException {
