@@ -3,7 +3,7 @@ title: Apache Kafka - Download & Installation
 permalink: /2016/09/apache-kafka-download-installation.html
 excerpt: A step-by-step tutorial on how to install and run Apache Kafka on Windows.
 date: 2016-09-19 21:00
-categories: [Spring Kafka]
+categories: [Apache Kafka]
 tags: [Apache Kafka, Download, Installation, Kafka, Windows]
 ---
 
@@ -31,18 +31,19 @@ java -version
 Head over to the [Apache Zookeeper download](https://zookeeper.apache.org/releases.html) page and and click on the download link in the <ins>Download</ins> section. This will redirect to a mirror site, click on the suggested mirror link and from the <ins>index</ins> select the <ins>stable</ins> directory as shown below. Download the gzipped TAR file, at the moment of writing this tutorial the latest stable release was zookeeper-3.4.9.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-kafka/apache-zookeeper-stable-releases.png" alt="apache zookeeper stable releases">
+    <img src="{{ site.url }}/assets/images/apache-kafka/apache-zookeeper-stable-releases.png" alt="apache zookeeper stable releases">
 </figure>
 
 Extract the archive that was downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: '<var>[zookeeper_install_dir]</var>'.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-kafka/apache-zookeeper-install-directory.png" alt="apache zookeeper install directory">
+    <img src="{{ site.url }}/assets/images/apache-kafka/apache-zookeeper-install-directory.png" alt="apache zookeeper install directory">
 </figure>
 
 Follow the below steps in order to setup a minimal working ZooKeeper configuration:
-
-
+1. Navigate to the ZooKeeper configuration directory located under <ins>[zookeeper_install_dir]/conf</ins>.
+2. Copy the file <ins>zoo_sample.cfg<ins> and rename to <ins>zoo.cfg<ins>.
+3.Open the newly created <ins>zoo.cfg<ins> in a text editor.
 
 
 
