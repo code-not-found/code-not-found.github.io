@@ -145,7 +145,7 @@ public class HelloWorld {
 }
 ```
 
-The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <p:inputText> fields, that will be used to enter a first and last name, surrounded by a `<p:panel>`. There is also a `<p:dialog>` component that shows a greeting message. The dialog is triggered by a `<p:commandButton>` that is part of the panel.
+The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <p:inputText> fields, that will be used to enter a first and last name, surrounded by a `&lt;p:panel&gt;`. There is also a `&lt;p:dialog&gt;` component that shows a greeting message. The dialog is triggered by a `&lt;p:commandButton&gt;` that is part of the panel.
 
 In order to use the PrimeFaces components, following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
 
@@ -218,18 +218,64 @@ Java web applications use a deployment descriptor file to determine how URLs map
 </web-app>
 ```
 
+In order to run the above example open a command prompt and execute following Maven command:
 
+``` plaintext
+mvn jetty:run
+```
 
+Maven will download the needed dependencies, compile the code and start a Jetty instance on which the web application will be deployed. The result should be the following Jetty startup trace ending with: '<var>Started Jetty Server</var>'.
 
+``` plaintext
+[INFO] --- jetty-maven-plugin:9.4.0.M0:run (default-cli) @ jsf-primefaces-hello-world ---
+[INFO] Logging initialized @2052ms
+[INFO] Configuring Jetty for project: JSF - PrimeFaces Hello World Example
+[INFO] webAppSourceDirectory not set. Trying src\main\webapp
+[INFO] Reload Mechanic: automatic
+[INFO] Classes = C:\codenotfound\code\jsf-primefaces\jsf-primefaces-hello-world\target\classes
+[INFO] Context path = /codenotfound
+[INFO] Tmp directory = C:\codenotfound\code\jsf-primefaces\jsf-primefaces-hello-world\target\tmp
+[INFO] Web defaults = org/eclipse/jetty/webapp/webdefault.xml
+[INFO] Web overrides =  none
+[INFO] web.xml file = file:///C:/codenotfound/code/jsf-primefaces/jsf-primefaces-hello-world/src/main/webapp/WEB-INF/web.xml
+[INFO] Webapp directory = C:\codenotfound\code\jsf-primefaces\jsf-primefaces-hello-world\src\main\webapp
+[INFO] jetty-9.4.0.M0
+[WARNING] THIS IS NOT A STABLE RELEASE! DO NOT USE IN PRODUCTION!
+[WARNING] Download a stable release from http://download.eclipse.org/jetty/
+[WARNING] No workerName configured for DefaultSessionIdManager, using node0
+[WARNING] No SessionScavenger set, using defaults
+aug 06, 2016 7:14:43 AM com.sun.faces.config.ConfigureListener contextInitialized
+INFO: Initializing Mojarra 2.2.13 ( 20160203-1910 unable to get svn info) for context '/codenotfound'
+aug 06, 2016 7:14:43 AM com.sun.faces.spi.InjectionProviderFactory createInstance
+INFO: JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+aug 06, 2016 7:14:44 AM org.primefaces.webapp.PostConstructApplicationEventListener processEvent
+INFO: Running on PrimeFaces 6.0
+[INFO] Started o.e.j.m.p.JettyWebAppContext@5965844d{/codenotfound,[file:///C:/codenotfound/code/jsf-primefaces/jsf-primefaces-hello-world/src/main/webapp/, jar:file:///C:/codenotfound/code/local-repo
+/com/sun/faces/jsf-impl/2.2.13/jsf-impl-2.2.13.jar!/META-INF/resources, jar:file:///C:/codenotfound/code/local-repo/org/primefaces/primefaces/6.0/primefaces-6.0.jar!/META-INF/resources],AVAILABLE}{fil
+e:///C:/codenotfound/code/jsf-primefaces/jsf-primefaces-hello-world/src/main/webapp/}
+[INFO] Started ServerConnector@411a5965{HTTP/1.1,[http/1.1]}{0.0.0.0:9090}
+[INFO] Started @4477ms
+[INFO] Started Jetty Server
+```
 
+Open a web browser and enter following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/). The result should be that below page is displayed:
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jsf/jsf-primefaces-hello-world-example.png" alt="jsf primefaces hello world example">
+</figure>
 
+Enter a first and last name and press the <kbc>Submit</kbd> button. A pop-up dialog will be shown with a greeting message.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jsf/jsf-primefaces-hello-world-example-greeting.png" alt="jsf primefaces hello world example greeting">
+</figure>
 
+---
 
+{% capture notice-github %}
+![github mark](/assets/images/logos/github-mark.png){: .align-left}
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-primefaces-helloworld).
+{% endcapture %}
+<div class="notice--info">{{ notice-github | markdownify }}</div>
 
-
-
-
-
-
+This concludes the PrimeFaces Hello World example. If you found this post helpful or have any questions or remarks, please leave a comment. 
