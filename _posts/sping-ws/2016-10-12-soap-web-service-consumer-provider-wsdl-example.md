@@ -24,7 +24,7 @@ The tutorial code is organized in such a way that you can choose to only run the
 
 As Spring Web Services is contract first only, we need to start from a contract definition. In this tutorial we will use a Hello World service that is defined by below WSDL. The service takes as input a person's first and last name and returns a greeting.
 
-~~~ xml
+``` xml
 <?xml version="1.0"?>
 <wsdl:definitions name="HelloWorld"
 
@@ -96,7 +96,7 @@ As Spring Web Services is contract first only, we need to start from a contract 
     </wsdl:service>
 
 </wsdl:definitions>
-~~~
+```
 
 We will be building and running our example using [Maven](https://maven.apache.org/). Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
 
@@ -108,7 +108,7 @@ To avoid having to manage the version compatibility of the different Spring depe
 
 In the plugins section we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "über-jar". This will also allow us to start the web service via a Maven command.
 
-~~~ xml
+``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -178,15 +178,15 @@ In the plugins section we included the `spring-boot-maven-plugin` Maven plugin s
     </build>
 
 </project>
-~~~
+```
 
 In order to directly use the <var>person</var> and <var>greeting</var> elements (defined in the <var>types</var> section of the Hello World WSDL) in our Java code, we will use JAXB to generate the corresponding Java classes. The above POM file configures the `maven-jaxb2-plugin` that will handle the generation.
 
 The plugin will look into the defined <ins>&lt;schemaDirectory&gt;</ins> in order to find any WSDL files for which it needs to generate the the Java classes. In order to trigger the generation via Maven, executed following command:
 
-~~~ plaintext
+``` plaintext
 mvn generate-sources
-~~~
+```
 
 This results in a number of generated classes amongst which the `Person` and `Greeting` that we will use when implementing the client and provider of the Hello World service.
 
@@ -195,7 +195,7 @@ This results in a number of generated classes amongst which the `Person` and `Gr
 </figure>
 
 We start by creating an `SpringWsApplication` that contains a `main()` method that uses Spring Boot’s `SpringApplication.run()` method to bootstrap the application, starting Spring. For more information on Spring Boot we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
-~~~ java
+``` java
 package com.codenotfound;
 
 import org.springframework.boot.SpringApplication;
@@ -208,7 +208,7 @@ public class SpringWsApplication {
         SpringApplication.run(SpringWsApplication.class, args);
     }
 }
-~~~
+```
 
 # Creating the Endpoint (Provider)
 
@@ -218,14 +218,15 @@ Spring Web Services supports multiple transport protocols. The most common is th
 
 > In other words: the `MessageDispatcherServlet` combines the attributes of the `MessageDispatcher` and `DispatcherServlet` and as a result allows the handling of XML messages over HTTP.
 
-In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>messageDispatcherServlet<var>, it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
+In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>messageDispatcherServlet</var>, it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
 
-The servlet mapping URI pattern on the `ServletRegistrationBean` is set to *'/codenotfound/ws/*'*. The web container will use this path to map incoming HTTP requests to the servlet.
+The servlet mapping URI pattern on the `ServletRegistrationBean` is set to <kbd>"/codenotfound/ws/*"<kbd>. The web container will use this path to map incoming HTTP requests to the servlet.
 
-The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified Hello World WSDL file. The URL location at which this WSDL is available is determined by it's `Bean` name in combination with the URI mapping of the `MessageDispatcherServlet`. For the example below this is: *[host]=*http://localhost:9090+*[servlet mapping uri]=*/codenotfound/ws/+[WsdlDefinition bean name]=helloworld+[WSDL postfix]=.wsdl or http://localhost:9090/codenotfound/ws/helloworld.wsdl.
+The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified Hello World WSDL file. The URL location at which this WSDL is available is determined by it's `Bean` name in combination with the URI mapping of the `MessageDispatcherServlet`. For the example below this is: <ins>[host]</ins>=<kbd>http://localhost:9090</kbd>+<ins>[servlet mapping uri]</ins>=<kbd>/codenotfound/ws/</kbd>+<ins>[WsdlDefinition bean name]</ins>=<kbd>helloworld</kbd>+<ins>[WSDL postfix]</ins>=<kbd>.wsdl</kbd> or [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl).
 
-To enable the support for `@Endpoint` annotation that we will use in the next section we need to annotate our configuration class with `@EnableWs`. 
-~~~ java
+To enable the support for `@Endpoint` annotation that we will use in the next section we need to annotate our configuration class with `@EnableWs`.
+
+``` java
 package com.codenotfound.endpoint;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -263,15 +264,15 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 }
-~~~
+```
 
-Now that our MessageDispatcherServlet is defined it will try to match incoming XML messages on the defined URI with one of the available handling methods. So all we need to do is setup an Endpoint that contains a handling method that matches the incoming request. This service endpoint can be a simple POJO with a number of Spring WS annotations as shown below.
+Now that our `MessageDispatcherServlet` is defined it will try to match incoming XML messages on the defined URI with one of the available handling methods. So all we need to do is setup an `Endpoint` that contains a handling method that matches the incoming request. This service endpoint can be a simple POJO with a number of Spring WS annotations as shown below.
 
-The HelloWorldEndpoint POJO is annotated with the @Endpoint annotation which registers the class with Spring WS as a potential candidate for processing incoming SOAP messages. It contains a sayHello method that receives a Person and returns a Greeting. Note that these are the Java classes that we generated earlier using JAXB.
+The `HelloWorldEndpoint` POJO is annotated with the `@Endpoint` annotation which registers the class with Spring WS as a potential candidate for processing incoming SOAP messages. It contains a `sayHello()` method that receives a `Person` and returns a `Greeting`. Note that these are the Java classes that we generated earlier using JAXB.
 
-To indicate what sort of messages a method can handle, it is annotated with the @PayloadRoot annotation that specifies a qualified name that is defined by a 'namespace' and a local name (='localPart'). Whenever a message comes in which has this qualified name for the payload root element, the method will be invoked.
+To indicate what sort of messages a method can handle, it is annotated with the `@PayloadRoot` annotation that specifies a qualified name that is defined by a <ins>namespace</ins> and a local name (=<ins>localPart</ins>). Whenever a message comes in which has this qualified name for the payload root element, the method will be invoked.
 
-The @ResponsePayload annotation makes Spring WS map the returned value to the response payload which in our example is the JAXB Greeting object.
+The `@ResponsePayload` annotation makes Spring WS map the returned value to the response payload which in our example is the JAXB `Greeting` object.
 
 The @RequestPayload annotation on the sayHello method parameter indicates that the incoming message will be mapped to the method’s request parameter. In our case this is the JAXB Person object.
 
