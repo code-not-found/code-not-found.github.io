@@ -1,7 +1,9 @@
 ---
 title: Spring WS - SOAP Web Service Consumer & Provider WSDL Example
-excerpt: 
+permalink: /2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html
+excerpt: A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Spring-WS and Spring Boot.
 date: 2016-10-12 21:00
+categories: [Spring-WS]
 tags: [Client, Consumer, Endpoint, Example, Hello World, Maven, Provider, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, WSDL]
 ---
 
