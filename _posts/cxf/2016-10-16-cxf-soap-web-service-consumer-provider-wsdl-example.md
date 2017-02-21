@@ -225,7 +225,7 @@ public class SpringCxfApplication {
 
 In order for the CXF framework to be able to process incoming SOAP request over HTTP, we need to setup a `CXFServlet`. In our previous [CXF SOAP Web Service tutorial](http://www.source4code.info/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) we did this by using a deployment descriptor file ('web.xml' file under the 'WEB-INF' directory) or an alternative with Spring is to use a `ServletRegistrationBean`. In this example there is nothing to be done as the `cxf-spring-boot-starter-jaxws` automatically register the `CXFServlet` for us, great!
 
- In this example we want the `CXFServlet` to listen for incoming requests on the following URI: <kbd>/codenotfound/ws</kbd>, instead of the default value which is: '<kbd>/services/*</kbd>'. This can be achieved by setting the <ins>cxf.path</ins> property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder.
+ In this example we want the `CXFServlet` to listen for incoming requests on the following URI: "<kbd>/codenotfound/ws</kbd>", instead of the default value which is: "<kbd>/services/*</kbd>". This can be achieved by setting the <ins>cxf.path</ins> property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder.
 
 ``` properties
 # server HTTP port
