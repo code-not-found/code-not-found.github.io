@@ -24,7 +24,7 @@ Tools used:
 
 We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter` and `spring-boot-starter-test` starters.
 
-A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was <var>'1.1.1.RELEASE'</var>.
+A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was '<var>1.1.1.RELEASE</var>'.
 
 We also include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "über-jar", which is convenient to execute and transport the written code.
 
