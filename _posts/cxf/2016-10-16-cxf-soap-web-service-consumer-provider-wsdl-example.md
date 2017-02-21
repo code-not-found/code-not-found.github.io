@@ -240,19 +240,157 @@ helloworld.service.address=http://localhost:9090/codenotfound/ws/helloworld
 
 Next we create a configuration file that contains the definition of our `Endpoint` at which our Hello World SOAP service will be exposed. The `Endpoint` gets created by passing the [CXF bus, which is the backbone of the CXF architecture](http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-Bus) that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. We use the default CXF bus and get a reference to it via Spring's `@Autowired` annotation.
 
-In addition to the bus we also specify the `HelloWorldImpl` class which contains the actual implementation of the service. Finally we set the URI on which the endpoint will be exposed to <ins>/helloworld</ins>. Together with the <ins>cxf.path</ins> configuration in the <ins>application.properties</ins> file this result into following URL that clients will need to call: [http://localhost:9090/codenotfound/ws/helloworld](http://localhost:9090/codenotfound/ws/helloworld).
+In addition to the bus we also specify the `HelloWorldImpl` class which contains the actual implementation of the service. Finally we set the URI on which the endpoint will be exposed to "<kbd>/helloworld<kbd>". Together with the <ins>cxf.path</ins> configuration in the <ins>application.properties</ins> file this result into following URL that clients will need to call: [http://localhost:9090/codenotfound/ws/helloworld](http://localhost:9090/codenotfound/ws/helloworld).
 
+``` java
+package com.codenotfound.endpoint;
 
+import javax.xml.ws.Endpoint;
 
+import org.apache.cxf.Bus;
+import org.apache.cxf.jaxws.EndpointImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
+public class EndpointConfig {
 
+    @Autowired
+    private Bus bus;
 
+    @Bean
+    public Endpoint endpoint() {
+        EndpointImpl endpoint = new EndpointImpl(bus,
+                new HelloWorldImpl());
+        endpoint.publish("/helloworld");
+        return endpoint;
+    }
+}
+```
 
+The service implementation is specified the `HelloWorldImpl` POJO that implements the `HelloWorldPortType` interface that was generated from the WSDL file earlier. We simply log the name of the received `Person` and then use it to construct a `Greeting` that is logged and then returned. 
 
+``` java
+package com.codenotfound.endpoint;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.codenotfound.services.helloworld.HelloWorldPortType;
+import com.codenotfound.types.helloworld.Greeting;
+import com.codenotfound.types.helloworld.ObjectFactory;
+import com.codenotfound.types.helloworld.Person;
 
+public class HelloWorldImpl implements HelloWorldPortType {
 
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(HelloWorldImpl.class);
+
+    @Override
+    public Greeting sayHello(Person request) {
+        LOGGER.info(
+                "Endpoint received person=[firstName:{},lastName:{}]",
+                request.getFirstName(), request.getLastName());
+
+        String greeting = "Hello " + request.getFirstName() + " "
+                + request.getLastName() + "!";
+
+        ObjectFactory factory = new ObjectFactory();
+        Greeting response = factory.createGreeting();
+        response.setGreeting(greeting);
+
+        LOGGER.info("Endpoint sending greeting=[{}]",
+                response.getGreeting());
+        return response;
+    }
+}
+```
+
+# Creating the Client (Consumer)
+
+CXF provides a `JaxWsProxyFactoryBean` that will create a Web Service client for you which implements a specified service class.
+
+ Let's create a `ClientConfig` class with the `@Configuration` annotation which indicates that the class can be used by the Spring IoC container as a source of bean definitions. Next we create a `JaxWsProxyFactoryBean` and set `HelloWorldPortType` as service class.
+
+ The last thing we set is the endpoint at which the Hello World service is available. This endpoint is fetched from the <ins>application.properties</ins> file so it can easily be changed if needed.
+
+> Don't forget to call the `create()` method on the `JaxWsProxyFactoryBean` in order to have the Factory create a JAX-WS proxy that we can then use to make remote invocations. 
+
+``` java
+package com.codenotfound.client;
+
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.codenotfound.services.helloworld.HelloWorldPortType;
+
+@Configuration
+public class ClientConfig {
+
+    @Value("${helloworld.service.address}")
+    private String helloworldServiceAddress;
+
+    @Bean(name = "helloWorldClientProxyBean")
+    public HelloWorldPortType opportunityPortType() {
+        JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+        jaxWsProxyFactoryBean.setServiceClass(HelloWorldPortType.class);
+        jaxWsProxyFactoryBean.setAddress(helloworldServiceAddress);
+
+        return (HelloWorldPortType) jaxWsProxyFactoryBean.create();
+    }
+
+}
+```
+
+Below `HelloWorldClient` provides a convenience `sayHello()` method that will create a `Person` object based on a first and last name. It then uses the autowired `helloWorldClientProxyBean` to invoke the Web Service. The result is a `Greeting` that is logged and returned as a `String`.
+
+Annotating our class with the `@Component` annotation will cause Spring to automatically import this bean into the container if automatic component scanning is enabled. This is the case as in the beginning we added the `@SpringBootApplication` annotation to the main `SpringWsApplication` class which is [equivalent](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html) to using `@ComponentScan`. 
+
+``` java
+package com.codenotfound.client;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.codenotfound.services.helloworld.HelloWorldPortType;
+import com.codenotfound.types.helloworld.Greeting;
+import com.codenotfound.types.helloworld.ObjectFactory;
+import com.codenotfound.types.helloworld.Person;
+
+@Component
+public class HelloWorldClient {
+
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(HelloWorldClient.class);
+
+    @Autowired
+    private HelloWorldPortType helloWorldClientProxyBean;
+
+    public String sayHello(String firstName, String lastName) {
+
+        ObjectFactory factory = new ObjectFactory();
+        Person person = factory.createPerson();
+
+        person.setFirstName(firstName);
+        person.setLastName(lastName);
+
+        LOGGER.info("Client sending person=[firstName:{},lastName:{}]",
+                person.getFirstName(), person.getLastName());
+
+        Greeting greeting = (Greeting) helloWorldClientProxyBean
+                .sayHello(person);
+
+        LOGGER.info("Client received greeting=[{}]",
+                greeting.getGreeting());
+        return greeting.getGreeting();
+    }
+}
+```
 
 
 
