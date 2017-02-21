@@ -52,10 +52,10 @@ Checkout following link if you would like to [know more on how ActiveMQ message 
 
 # ActiveMQ Message Priority Example
 
-The below example uses Maven and assumes [an ActiveMQ message broker is installed and up and running]({{ site.url }}/2014/01/jms-activemq-installation.html).
+The below example uses Maven and assumes [an ActiveMQ message broker is installed and up and running]({{ site.url }}/2014/01/jms-apache-activemq-installation.html).
 
 Tools used:
-* ActiveMq 5.13
+* ActiveMQ 5.13
 * Maven 3
 
 Let's illustrate JMS priority by creating a simple producer with two different `send()` methods. The first method will send a message to a queue with the default priority level and the second method will accept an additional parameter specifying the priority to be set on the message. We will then create a consumer to read the messages from the queue and observe in which order they are read.
@@ -199,7 +199,7 @@ public class Producer {
 }
 ```
 
-For receiving the messages, a `Consumer` class is created with two methods for opening/closing a connection to the message broker. In addition a method to create a message consumer for a specific queue and a method to receive a single message are available on the class. Note that instead of using the default connection to the ActiveMQ broker, we have specified the '<var>messagePrioritySupported<var>' property in order to assure the message are prioritized on consumer side.
+For receiving the messages, a `Consumer` class is created with two methods for opening/closing a connection to the message broker. In addition a method to create a message consumer for a specific queue and a method to receive a single message are available on the class. Note that instead of using the default connection to the ActiveMQ broker, we have specified the '<var>messagePrioritySupported</var>' property in order to assure the message are prioritized on consumer side.
 
 ``` java
 package com.codenotfound.jms.priority;
