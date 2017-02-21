@@ -190,7 +190,7 @@ To take advantage of Spring Boot's capability to create a single, runnable "übe
 </project>
 ```
 
-CXF includes a Maven `cxf-codegen-plugin plugin` which can [generate java artifacts from a WSDL file](http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html). In the above plugin configuration we're running the <var>wsdl2java</var> goal in the <var>generate-sources</var> phase. When executing following Maven command, CXF will generate artifacts in the <ins><sourceRoot></ins> directory that we have specified. 
+CXF includes a Maven `cxf-codegen-plugin plugin` which can [generate java artifacts from a WSDL file](http://cxf.apache.org/docs/maven-cxf-codegen-plugin-wsdl-to-java.html). In the above plugin configuration we're running the <var>wsdl2java</var> goal in the <var>generate-sources</var> phase. When executing following Maven command, CXF will generate artifacts in the <ins>&lt;sourceRoot&gt;</ins> directory that we have specified. 
 
 ``` powershell
 mvn generate-sources
