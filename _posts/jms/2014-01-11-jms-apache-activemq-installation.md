@@ -14,7 +14,7 @@ tags: [ActiveMQ, Apache ActiveMQ, Installation, Java, JMS, Unix, Windows]
 [Apache ActiveMQ](http://activemq.apache.org/) is an open source message broker written in Java that offers JMS, REST and WebSocket interfaces. It supports protocols like AMQP, MQTT, OpenWire and STOMP that can be used by applications in different languages. Following tutorial details how to install ActiveMQ on Windows or Unix and perform a start/stop of the installed instance.
 
 
- First thing to do is to download the ActiveMQ binaries. Go the the [ActiveMQ download page](http://activemq.apache.org/download.html) and click on the latest stable release link in the <ins>Latest Releases</ins> section. Then in the <ins>Getting the Binary Distributions</ins> section click on the download link for your operating system. At the time of writing the latest stable release was apache-activemq-5.13.3.
+ First thing to do is to download the ActiveMQ binaries. Go the the [ActiveMQ download page](http://activemq.apache.org/download.html) and click on the latest stable release link in the <file>Latest Releases</file> section. Then in the <file>Getting the Binary Distributions</file> section click on the download link for your operating system. At the time of writing the latest stable release was apache-activemq-5.13.3.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-download.png" alt="apache activemq download">
@@ -28,7 +28,7 @@ Extract the Windows binaries archive that was downloaded in the previous step. T
     <img src="{{ site.url }}/assets/images/jms/windows-apache-activemq-files.png" alt="windows apache activemq files">
 </figure>
 
-Open a command prompt and navigate to <ins>[activemq_win_install_dir]</ins>. Change to the <ins>bin</ins> subdirectory and execute the following command to start ActiveMQ: 
+Open a command prompt and navigate to <file>[activemq_win_install_dir]</file>. Change to the <file>bin</file> subdirectory and execute the following command to start ActiveMQ: 
 
 ``` plaintext
 activemq start
@@ -50,13 +50,13 @@ Extract the Unix binaries archive downloaded in the first step. The extracted ro
     <img src="{{ site.url }}/assets/images/jms/unix-apache-activemq-files.png" alt="unix apache activemq files">
 </figure>
 
-Open a terminal and navigate to <ins>[activemq_unix_install_dir]</ins>. Change to the <ins>bin</ins> subdirectory and execute the following command to start ActiveMQ as a foreground process:
+Open a terminal and navigate to <file>[activemq_unix_install_dir]</file>. Change to the <file>bin</file> subdirectory and execute the following command to start ActiveMQ as a foreground process:
 
 ``` plaintext
 ./activemq console
 ```
 
-The ActiveMQ broker can also be started as a background process (note that the corresponding process identifier is stored in the <ins>[activemq_unix_install_dir]/data</ins> directory for future reference). In order to achieve this, execute the following command instead of the above (hit "<kbd>CTRL+C</kbd>" first if you already started using a foreground process).
+The ActiveMQ broker can also be started as a background process (note that the corresponding process identifier is stored in the <file>[activemq_unix_install_dir]/data</file> directory for future reference). In order to achieve this, execute the following command instead of the above (hit "<kbd>CTRL+C</kbd>" first if you already started using a foreground process).
 
 ``` plaintext
 ./activemq start
@@ -96,7 +96,7 @@ The ActiveMQ Web Console is a web based administration tool for working with Act
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-console.png" alt="apache activemq console">
 </figure>
 
-Click on the <ins>Manage ActiveMQ broker</ins> link and enter following default credentials: User name="<kbd>admin</kbd>" and Password="<kbd>admin</kbd>". A home page will be displayed that shows some basic statistics on the ActiveMQ broker. In addition it contains a number of menus that allow you to explore the different configuration items (queues, topics, connections, ...) of the broker.
+Click on the <file>Manage ActiveMQ broker</file> link and enter following default credentials: User name="<kbd>admin</kbd>" and Password="<kbd>admin</kbd>". A home page will be displayed that shows some basic statistics on the ActiveMQ broker. In addition it contains a number of menus that allow you to explore the different configuration items (queues, topics, connections, ...) of the broker.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-console-welcome.png" alt="apache activemq console welcome">
