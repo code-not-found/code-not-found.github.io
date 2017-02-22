@@ -421,7 +421,7 @@ We will create a basic unit test case in which the above client is used to send 
 
 The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced with Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications), are used to tell JUnit to run using Spring’s testing support and bootstrap with Spring Boot’s support.
 
-By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the '<var>server.port</var>' property defined in the <ins>application.properties</ins> file. 
+By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the '<var>server.port</var>' property defined in the <file>application.properties</file> file. 
 
 ``` java
 package com.codenotfound;

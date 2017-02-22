@@ -225,7 +225,7 @@ public class SpringCxfApplication {
 
 In order for the CXF framework to be able to process incoming SOAP request over HTTP, we need to setup a `CXFServlet`. In our previous [CXF SOAP Web Service tutorial](http://www.source4code.info/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) we did this by using a deployment descriptor file ('web.xml' file under the 'WEB-INF' directory) or an alternative with Spring is to use a `ServletRegistrationBean`. In this example there is nothing to be done as the `cxf-spring-boot-starter-jaxws` automatically register the `CXFServlet` for us, great!
 
-In this example we want the `CXFServlet` to listen for incoming requests on the following URI: "<kbd>/codenotfound/ws</kbd>", instead of the default value which is: "<kbd>/services/*</kbd>". This can be achieved by setting the '<var>cxf.path</var>' property in the <ins>application.properties</ins> file located under the <ins>src/main/resources</ins> folder.
+In this example we want the `CXFServlet` to listen for incoming requests on the following URI: "<kbd>/codenotfound/ws</kbd>", instead of the default value which is: "<kbd>/services/*</kbd>". This can be achieved by setting the '<var>cxf.path</var>' property in the <file>application.properties</file> file located under the <file>src/main/resources</file> folder.
 
 ``` properties
 # server HTTP port
@@ -240,7 +240,7 @@ helloworld.service.address=http://localhost:9090/codenotfound/ws/helloworld
 
 Next we create a configuration file that contains the definition of our `Endpoint` at which our Hello World SOAP service will be exposed. The `Endpoint` gets created by passing the [CXF bus, which is the backbone of the CXF architecture](http://cxf.apache.org/docs/cxf-architecture.html#CXFArchitecture-Bus) that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. We use the default CXF bus and get a reference to it via Spring's `@Autowired` annotation.
 
-In addition to the bus we also specify the `HelloWorldImpl` class which contains the actual implementation of the service. Finally we set the URI on which the endpoint will be exposed to "<kbd>/helloworld</kbd>". Together with the '<var>cxf.path</var>' configuration in the <ins>application.properties</ins> file this result into following URL that clients will need to call: [http://localhost:9090/codenotfound/ws/helloworld](http://localhost:9090/codenotfound/ws/helloworld).
+In addition to the bus we also specify the `HelloWorldImpl` class which contains the actual implementation of the service. Finally we set the URI on which the endpoint will be exposed to "<kbd>/helloworld</kbd>". Together with the '<var>cxf.path</var>' configuration in the <file>application.properties</file> file this result into following URL that clients will need to call: [http://localhost:9090/codenotfound/ws/helloworld](http://localhost:9090/codenotfound/ws/helloworld).
 
 ``` java
 package com.codenotfound.endpoint;
@@ -313,7 +313,7 @@ CXF provides a `JaxWsProxyFactoryBean` that will create a Web Service client for
 
 Let's create a `ClientConfig` class with the `@Configuration` annotation which indicates that the class can be used by the Spring IoC container as a source of bean definitions. Next we create a `JaxWsProxyFactoryBean` and set `HelloWorldPortType` as service class.
 
-The last thing we set is the endpoint at which the Hello World service is available. This endpoint is fetched from the <ins>application.properties</ins> file so it can easily be changed if needed.
+The last thing we set is the endpoint at which the Hello World service is available. This endpoint is fetched from the <file>application.properties</file> file so it can easily be changed if needed.
 
 > Don't forget to call the `create()` method on the `JaxWsProxyFactoryBean` in order to have the Factory create a JAX-WS proxy that we can then use to make remote invocations. 
 
@@ -398,7 +398,7 @@ In order to wrap up the tutorial we will create a basic test case that will use 
 
 The new `@RunWith` and `@SpringBootTest` testing annotations, [that are available as of Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications), are used to tell `JUnit` to run using Spring’s testing support and bootstrap with Spring Boot’s support.
 
-By default the embedded HTTP server will be started on a random port. As we have defined the URL which the client needs to call with a specific port number, we need to set the `DEFINED_PORT` web environment. This will cause Spring to use the '<var>server.port</var>' property from the <ins>application.properties</ins> file instead of a random one.
+By default the embedded HTTP server will be started on a random port. As we have defined the URL which the client needs to call with a specific port number, we need to set the `DEFINED_PORT` web environment. This will cause Spring to use the '<var>server.port</var>' property from the <file>application.properties</file> file instead of a random one.
 
 ``` java
 package com.codenotfound;
