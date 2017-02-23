@@ -53,18 +53,23 @@ Environment variables can be set at account level or at system level. For this e
     <img src="{{ site.url }}/assets/images/maven/environment-variables.png" alt="environment variables">
 </figure>
 
-Click on the <kbd>New</kbd> button and enter "<kbd>M2_HOME</kbd>" as variable name and the "<kbd>[maven_install_dir]</kbd>" as variable value. In this tutorial the installation directory is <var>'C:\source4code\tools\apache-maven-3.2.2'<var>. Click <kbd>OK</kbd> to to save.
+Click on the <kbd>New</kbd> button and enter "<kbd>M2_HOME</kbd>" as variable name and the "<kbd>[maven_install_dir]</kbd>" as variable value. In this tutorial the installation directory is <var>'C:\source4code\tools\apache-maven-3.2.2'</var>. Click <kbd>OK</kbd> to to save.
 
 > Note that "M2_HOME" is used for Maven 2 and later. "MAVEN_HOME" is for Maven 1.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/maven-home-user-variable.png" alt="maven home user variable">
+</figure>
 
+Select the <var>'PATH'</var> entry and click on the <kbd>Edit</kbd> button. Add "<kbd>;%M2_HOME%\bin</kbd>" at the end of the variable value and click <kbd>OK</kbd> to save.
 
+> Note that in case a <var>'PATH'</var> variable does not exist you can create it and use "<kbd>%M2_HOME%\bin</kbd>" as the variable value.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/maven-path-user-variable.png" alt="maven path user variable">
+</figure>
 
-
-
-
-
+The result should be as shown below. Click OK to close the Environment Variables panel.
 
 
 
