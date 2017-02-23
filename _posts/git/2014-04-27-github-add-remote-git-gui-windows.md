@@ -8,7 +8,7 @@ tags: [Add, Git, Git GUI, GitHub, Remote, Repository, Setup, Tutorial, upload co
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/git-logo.png" alt="git logo" />
+    <img src="{{ site.url }}/assets/images/logos/git-logo.png" alt="git logo">
 </figure>
 
 [GitHub](https://github.com/) is a web-based hosting service for software development projects that use the Git revision control system. It is used to share code with other people and a GitHub account is free for open source projects. Following tutorial will show you how to setup and configure Git Gui on your Windows computer so you can upload code towards a remote GitHub repository.
@@ -18,20 +18,20 @@ tags: [Add, Git, Git GUI, GitHub, Remote, Repository, Setup, Tutorial, upload co
 First let's start by going to the [Git downloads page](http://git-scm.com/downloads) and download the Git installer for your operating system. In this tutorial we will use Windows.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/git/git-download-page.png" alt="git download page" />
+    <img src="{{ site.url }}/assets/images/git/git-download-page.png" alt="git download page">
 </figure>
 
 Double click to run the downloaded <var>'.exe'</var> file and click <kbd>Next</kbd> keeping the default settings on the different installer steps. At the end click <kbd>Finish</kbd> and Git should be successfully installed.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/git/git-installer.png" alt="git installer" />
+    <img src="{{ site.url }}/assets/images/git/git-installer.png" alt="git installer">
 </figure>
 
 
 Start the Git command processor by clicking on the <var>Git Bash</var> link inside the Git program group (<var>Start&gt;All Programs&gt;Git</var>). A bash window should appear as shown below.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/git/git-bash.png" alt="git bash" />
+    <img src="{{ site.url }}/assets/images/git/git-bash.png" alt="git bash">
 </figure>
 
  ## Configure Git
@@ -46,7 +46,7 @@ git config --global user.email "<user_email>"
 Shown below is the execution of the two commands.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/git/git-bash-config.png" alt="git bash config" />
+    <img src="{{ site.url }}/assets/images/git/git-bash-config.png" alt="git bash config">
 </figure>
 
 In order to verify if the values are set correctly enter following command:
@@ -57,7 +57,7 @@ git config --list
 The result is a list of configuration parameters as shown below.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/git/git-bash-config-list.png" alt="git bash config list" />
+    <img src="{{ site.url }}/assets/images/git/git-bash-config-list.png" alt="git bash config list">
 </figure>
 
 ## Generating SSH keys
@@ -71,13 +71,13 @@ ssh-keygen -t rsa -C "<user_email>"
 When asked to <var>'Enter file in which to save the key'</var> just press <kbd>ENTER</kbd> to continue. Then a passphrase is requested which acts as a password you need to enter each time you want to use your key with SSH. Enter your password twice and the result should be as shown below.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/git/git-generate-ssh-keys.png" alt="git generate ssh keys" />
+    <img src="{{ site.url }}/assets/images/git/git-generate-ssh-keys.png" alt="git generate ssh keys">
 </figure>
 
 Locate the generated keys by going to the location as shown in the console output. In the above example the location is: <var>C:\Users\source4code\.ssh</var>.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/git/git-generated-ssh-keys-location.png" alt="git generated ssh keys location" />
+    <img src="{{ site.url }}/assets/images/git/git-generated-ssh-keys-location.png" alt="git generated ssh keys location">
 </figure>
 
 The <var>id_rsa</var> file contains your private key and the <var>id_rsa.pub</var> file contains your public key.
@@ -87,12 +87,32 @@ The <var>id_rsa</var> file contains your private key and the <var>id_rsa.pub</va
 Create an account at [GitHub](https://github.com/) and sign in. Add a new remote repository by clicking the <var>+ New repository</var> button. Enter a repository name and check the <var>'Initialize this repository with a README'</var> checkbox so a <var>README.md</var> is automatically added as shown below.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/git/github-create-repo.png" alt="github create repo" />
+    <img src="{{ site.url }}/assets/images/git/github-create-repo.png" alt="github create repo">
 </figure>
 
 Next step is to add the public SSH key to your GitHub account. To do so access the GitHub account settings by clicking on the wrench/screwdriver icon in the top right hand corner. Then on the left hand side menu click on the [SSH keys](https://github.com/settings/ssh) link.
 
 Click on the <var>Add SSH key</var> button in the top right hand corner. In the <var>'Title'</var> text field enter a name for the public key that we will add (in the example below the name "<kbd>test-repo</kbd>" is used). Then open the <var>id_rsa.pub</var> file that was generated in the previous section and copy paste the contents in the <var>'Key'</var> text field as shown below. Save the SSH key by clicking the <var>Add key</var> button.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/git/github-ssh-keys.png" alt="github ssh keys">
+</figure>
+
+The newly added key is part of the SSH keys that are associated with your account as shown below.
+
+> Note that the key fingerprint shown should be the same as the one that was printed during SSH keys creation in the previous section: 41:d7:ed:23:51:e0:ac:54:b4:52:6a:cf:b4:52:02
+
+<figure>
+    <img src="{{ site.url }}/assets/images/git/github-ssh-key-added.png" alt="github ssh key added">
+</figure>
+
+
+
+
+
+
+
+
 
 
 
