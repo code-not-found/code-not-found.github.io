@@ -115,7 +115,8 @@ p code {
   color: #D14;
 }
 var {
-  color: #2274a5;
+  @extend code;
+  color: #494E52;
   font-style: normal;
 }
 kbd {
