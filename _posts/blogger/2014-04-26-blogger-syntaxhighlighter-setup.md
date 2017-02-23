@@ -2,7 +2,7 @@
 title: Blogger - SyntaxHighlighter Setup
 permalink: /2014/04/blogger-syntaxhighlighter-setup.html
 excerpt: A detailed tutorial on how to setup code syntax highlighting on your Blogger blog.
-date: 2016-04-26 21:00
+date: 2014-04-26 21:00
 categories: [PrimeFaces]
 tags: [Example, Hello World, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, Project, Tutorial]
 ---

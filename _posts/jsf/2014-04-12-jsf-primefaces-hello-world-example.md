@@ -2,7 +2,7 @@
 title: JSF - PrimeFaces Hello World Example
 permalink: /2014/04/jsf-primefaces-hello-world-example.html
 excerpt: A PrimeFaces tutorial in which we build and run a Hello World example using Jetty and Maven.
-date: 2016-04-12 21:00
+date: 2014-04-12 21:00
 categories: [PrimeFaces]
 tags: [Example, Hello World, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, Project, Tutorial]
 ---
