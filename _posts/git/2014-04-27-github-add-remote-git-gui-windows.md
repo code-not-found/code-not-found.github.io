@@ -180,12 +180,26 @@ Now the local and remote baseline need to be merged. Click on the <kbd>Merge</kb
     <img src="{{ site.url }}/assets/images/git/git-gui-local-merge.png" alt="git gui local merge">
 </figure>
 
+Click on the <kbd>Merge</kbd> button and a success status should be appear which shows that the <var>'README.md'</var> from the remote repository was successfully added.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/git/git-gui-local-merge-success.png" alt="git gui local merge success">
+</figure>
 
+The last thing left to do is to push the merged local baseline to GitHub. In order to do so select the <kbd>Remote</kbd> menu and click on the <kbd>Push</kbd> menu item. A new window is shown which shows the local master that will be pushed to the remote <var>'test-repo'</var>.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/git/git-gui-push-to-remote.png" alt="git gui push to remote">
+</figure>
 
+Click the <kbd>Push</kbd> button and enter the passphrase of the SSH keys. A success message should be shown. Close the message by clicking on the <kbd>Close</kbd> button and open your GitHub account. Select your repository and the <var>test1.txt</var> file should be present as shown below.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/git/github-file-added.png" alt="github file added">
+</figure>
 
+From now on you can add/change files on your local repository that can then be pushed to GitHub once committed.
 
+---
 
-
+This concludes our tutorial on adding a remote repository to Git GUI so that code files can be uploaded to GitHub. If you found this post helpful or have any questions or remarks, please leave a comment.
