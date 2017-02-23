@@ -31,6 +31,42 @@ Head over to the [Maven download page](https://maven.apache.org/download.cgi) an
     <img src="{{ site.url }}/assets/images/maven/maven-download-page.png" alt="maven download page">
 </figure>
 
+Extract the binaries archive downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: <var>[maven_install_dir]</var>.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/maven-install-location.png" alt="maven install location">
+</figure>
+
+# Maven Configuration
+
+Next we need to setup a <var>'M2_HOME'</var> environment variable that will point to the installed Maven runtime. In addition if we want to run Maven from a command prompt we need to setup the <var>'PATH'</var> environment variable to contain the Maven bin directory.
+
+When using Windows the above parameters can be configured on the Environment Variables panel. Click on the <kbd>Windows Start</kbd> button and enter "<kbd>env</kbd>" without quotes as shown below.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/edit-environment-variables.png" alt="edit environment variables">
+</figure>
+
+Environment variables can be set at account level or at system level. For this example click on <kbd>Edit environment variables for your account</kbd> and following panel should appear.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/environment-variables.png" alt="environment variables">
+</figure>
+
+Click on the <kbd>New</kbd> button and enter "<kbd>M2_HOME</kbd>" as variable name and the "<kbd>[maven_install_dir]</kbd>" as variable value. In this tutorial the installation directory is <var>'C:\source4code\tools\apache-maven-3.2.2'<var>. Click <kbd>OK</kbd> to to save.
+
+> Note that "M2_HOME" is used for Maven 2 and later. "MAVEN_HOME" is for Maven 1.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
