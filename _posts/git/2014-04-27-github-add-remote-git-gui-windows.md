@@ -34,10 +34,8 @@ Start the Git command processor by clicking on the <var>Git Bash</var> link insi
     <img src="{{ site.url }}/assets/images/git/git-bash.png" alt="git bash">
 </figure>
 
- ## Configure Git
+## Configure Git
  
- ## Generating SSH keys
-
 First thing that needs to be done is to setup some basic Git parameters like user name and email address. In order to do so enter following commands and replace the value between the quotes with your own values.
 
 ``` plaintext
@@ -125,7 +123,7 @@ First thing to do is to create a new local Git repository. Click on the <kbd>Cre
 A new window will open which shows the newly created Git repository.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/git/git-gui-new-repo.png" alt="git gui repo window">
+    <img src="{{ site.url }}/assets/images/git/git-gui-repo-window.png" alt="git gui repo window">
 </figure>
 
 Next step is to add the remote Git repository at GitHub. Click on the <kbd>Remote</kbd> menu and select <kbd>Add</kbd>. A new window will pop-up in which a name for the remote repository and the location need to be added. In this example we will enter "<kbd>test-repo</kbd>" as name and "<kbd>git@github.com:source4code/test-repo.git</kbd>" as location as shown below.
@@ -136,7 +134,9 @@ Next step is to add the remote Git repository at GitHub. Click on the <kbd>Remot
 
 > The location for the remote GitHub repository can be found by logging into GitHub, selecting the repository to be added and then clicking on the SSH link at the bottom right-hand side of the screen.
 
-
+<figure>
+    <img src="{{ site.url }}/assets/images/git/github-ssh-url.png" alt="github ssh url">
+</figure>
 
 
 
