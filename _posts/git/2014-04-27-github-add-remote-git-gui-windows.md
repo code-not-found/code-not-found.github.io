@@ -28,7 +28,7 @@ Double click to run the downloaded <var>'.exe'</var> file and click <kbd>Next</k
 </figure>
 
 
-Start the Git command processor by clicking on the <var>Git Bash</var> link inside the Git program group (<var>Start>All Programs>Git</var>). A bash window should appear as shown below.
+Start the Git command processor by clicking on the <var>Git Bash</var> link inside the Git program group (<var>Start&gt;All Programs&gt;Git</var>). A bash window should appear as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/git/git-bash.png" alt="git bash">
@@ -90,9 +90,9 @@ Create an account at [GitHub](https://github.com/) and sign in. Add a new remote
     <img src="{{ site.url }}/assets/images/git/github-create-repo.png" alt="github create repo">
 </figure>
 
+Next step is to add the public SSH key to your GitHub account. To do so access the GitHub account settings by clicking on the wrench/screwdriver icon in the top right hand corner. Then on the left hand side menu click on the [SSH keys](https://github.com/settings/ssh) link.
 
-
-
+Click on the <var>Add SSH key</var> button in the top right hand corner. In the <var>'Title'</var> text field enter a name for the public key that we will add (in the example below the name "test-repo" is used). Then open the 'id_rsa.pub' file that was generated in the previous section and copy paste the contents in the 'Key' text field as shown below. Save the SSH key by clicking the Add key button.
 
 
 
