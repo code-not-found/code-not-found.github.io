@@ -21,7 +21,7 @@ First let's start by going to the [Git downloads page](http://git-scm.com/downlo
     <img src="{{ site.url }}/assets/images/git/git-download-page.png" alt="git download page">
 </figure>
 
-Double click to run the downloaded <var>'.exe'</var> file and click <kbd>Next<kbd> keeping the default settings on the different installer steps. At the end click <kbd>Finish</kbd> and Git should be successfully installed.
+Double click to run the downloaded <var>'.exe'</var> file and click <kbd>Next</kbd> keeping the default settings on the different installer steps. At the end click <kbd>Finish</kbd> and Git should be successfully installed.
 
 <figure>
     <img src="{{ site.url }}/assets/images/git/git-installer.png" alt="git installer">
@@ -59,6 +59,35 @@ The result is a list of configuration parameters as shown below.
 <figure>
     <img src="{{ site.url }}/assets/images/git/git-bash-config-list.png" alt="git bash config list">
 </figure>
+
+## Generating SSH keys
+
+It is strongly recommend to use an SSH connection when interacting with GitHub. SSH keys are a way to identify trusted computers, without involving passwords. To generate a new SSH key pair, copy and paste the command below, making sure to substitute the email value between the quotes with your own.
+
+``` plaintext
+ssh-keygen -t rsa -C "<user_email>"
+```
+
+When asked to <var>'Enter file in which to save the key'</var> just press <kbd>ENTER</kbd> to continue. Then a passphrase is requested which acts as a password you need to enter each time you want to use your key with SSH. Enter your password twice and the result should be as shown below.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/git/git-generate-ssh-keys.png" alt="git generate ssh keys">
+</figure>
+
+Locate the generated keys by going to the location as shown in the console output. In the above example the location is: <var>C:\Users\source4code\.ssh</var>.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/git/git-generated-ssh-keys-location.png" alt="git generated ssh keys location">
+</figure>
+
+
+
+
+
+
+
+
+
 
 
 
