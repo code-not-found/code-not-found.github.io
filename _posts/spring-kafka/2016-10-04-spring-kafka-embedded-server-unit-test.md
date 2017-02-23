@@ -102,7 +102,7 @@ The message consumer and producer classes from the Hello World example are uncha
 
 `spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a ZooKeeper and Kafka server instance on a random port before all the test cases run, and stops the instances after they are finished. In order to support multiple unit test classes (`SpringKafkaSenderTests` and `SpringKafkaReceiverTests`), we will trigger the `@ClassRule` from a `Suite` class that bundles them together. 
 
-As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the '<var>kafka.bootstrap.servers</var>' property. 
+As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the <var>'kafka.bootstrap.servers'</var> property. 
 
 ``` java
 package com.codenotfound;
@@ -143,7 +143,7 @@ public class AllSpringKafkaTests {
 }
 ```
 
-In the first test class we will be testing the `Sender` by sending a message to a '<var>helloworld-sender.t</var>' topic. We will verify the correct sending by setting up a message listener on the topic. For creating the consumer properties we use a static method provided by `KafkaUtils`. After setting up the `KafkaMessageListenerContainer` we setup a `MessageListener` and start the container. 
+In the first test class we will be testing the `Sender` by sending a message to a <var>'helloworld-sender.t'</var> topic. We will verify the correct sending by setting up a message listener on the topic. For creating the consumer properties we use a static method provided by `KafkaUtils`. After setting up the `KafkaMessageListenerContainer` we setup a `MessageListener` and start the container. 
 
 In order to avoid that we send the message before the container has required the number of assigned partitions, we use the `waitForAssignment()` method on the `ContainerTestUtils` helper class. We then send a greeting and assert that the received value is the same as the one that was sent using an AssertJ condition that is provided by `KafkaConditions` which is also provided via `spring-kafka-test`. 
 
@@ -238,7 +238,7 @@ public class SpringKafkaSenderTests {
 }
 ```
 
-The second test class focuses on the `Receiver` which listens to a '<var>helloworld-receiver.t</var>' topic as defined in the applications.properties file. In order to check the correct working we will use a producer to send a message to this topic. The producer properties are created using the static method provided by `KafkaUtils` and used to create a `KafkaTemplate`. 
+The second test class focuses on the `Receiver` which listens to a <var>'helloworld-receiver.t'</var> topic as defined in the applications.properties file. In order to check the correct working we will use a producer to send a message to this topic. The producer properties are created using the static method provided by `KafkaUtils` and used to create a `KafkaTemplate`. 
 
 We need to ensure that the `Receiver` is initialized before sending the test message. We again use the `waitForAssignment()` of `ContainerTestUtils`. The link to the message listener container is acquired by autowiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually. We check that the message was received by asserting that the latch of the `Receiver` was lowered to zero. 
 

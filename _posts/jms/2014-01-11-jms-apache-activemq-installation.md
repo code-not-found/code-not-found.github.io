@@ -14,7 +14,7 @@ tags: [ActiveMQ, Apache ActiveMQ, Installation, Java, JMS, Unix, Windows]
 [Apache ActiveMQ](http://activemq.apache.org/) is an open source message broker written in Java that offers JMS, REST and WebSocket interfaces. It supports protocols like AMQP, MQTT, OpenWire and STOMP that can be used by applications in different languages. Following tutorial details how to install ActiveMQ on Windows or Unix and perform a start/stop of the installed instance.
 
 
- First thing to do is to download the ActiveMQ binaries. Go the the [ActiveMQ download page](http://activemq.apache.org/download.html) and click on the latest stable release link in the <file>Latest Releases</file> section. Then in the <file>Getting the Binary Distributions</file> section click on the download link for your operating system. At the time of writing the latest stable release was apache-activemq-5.13.3.
+ First thing to do is to download the ActiveMQ binaries. Go the the [ActiveMQ download page](http://activemq.apache.org/download.html) and click on the latest stable release link in the <var>Latest Releases</var> section. Then in the <var>Getting the Binary Distributions</var> section click on the download link for your operating system. At the time of writing the latest stable release was apache-activemq-5.13.3.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-download.png" alt="apache activemq download">
@@ -22,13 +22,13 @@ tags: [ActiveMQ, Apache ActiveMQ, Installation, Java, JMS, Unix, Windows]
 
 # Install ActiveMQ on Windows
 
-Extract the Windows binaries archive that was downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: '<var>[activemq_win_install_dir]</var>'.
+Extract the Windows binaries archive that was downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: <var>[activemq_win_install_dir]</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/windows-apache-activemq-files.png" alt="windows apache activemq files">
 </figure>
 
-Open a command prompt and navigate to <file>[activemq_win_install_dir]</file>. Change to the <file>bin</file> subdirectory and execute the following command to start ActiveMQ: 
+Open a command prompt and navigate to <var>[activemq_win_install_dir]</var>. Change to the <var>bin</var> subdirectory and execute the following command to start ActiveMQ: 
 
 ``` plaintext
 activemq start
@@ -40,23 +40,23 @@ By default ActiveMQ will generate a number of log statements at start-up as show
     <img src="{{ site.url }}/assets/images/jms/windows-apache-activemq-startup-trace.png" alt="windows apache activemq startup trace">
 </figure>
 
-One of the latest log entries will mention '<var>ActiveMQ WebConsole available at http://0.0.0.0:8161/</var>'. This indicates that ActiveMQ was successfully started.
+One of the latest log entries will mention <var>'ActiveMQ WebConsole available at http://0.0.0.0:8161/'</var>. This indicates that ActiveMQ was successfully started.
 
 # Install ActiveMQ on Unix
 
-Extract the Unix binaries archive downloaded in the first step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: '<var>[activemq_unix_install_dir]</var>'.
+Extract the Unix binaries archive downloaded in the first step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: <var>[activemq_unix_install_dir]</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/unix-apache-activemq-files.png" alt="unix apache activemq files">
 </figure>
 
-Open a terminal and navigate to <file>[activemq_unix_install_dir]</file>. Change to the <file>bin</file> subdirectory and execute the following command to start ActiveMQ as a foreground process:
+Open a terminal and navigate to <var>[activemq_unix_install_dir]</var>. Change to the <var>bin</var> subdirectory and execute the following command to start ActiveMQ as a foreground process:
 
 ``` plaintext
 ./activemq console
 ```
 
-The ActiveMQ broker can also be started as a background process (note that the corresponding process identifier is stored in the <file>[activemq_unix_install_dir]/data</file> directory for future reference). In order to achieve this, execute the following command instead of the above (hit "<kbd>CTRL+C</kbd>" first if you already started using a foreground process).
+The ActiveMQ broker can also be started as a background process (note that the corresponding process identifier is stored in the <var>[activemq_unix_install_dir]/data</var> directory for future reference). In order to achieve this, execute the following command instead of the above (hit "<kbd>CTRL+C</kbd>" first if you already started using a foreground process).
 
 ``` plaintext
 ./activemq start
@@ -96,13 +96,13 @@ The ActiveMQ Web Console is a web based administration tool for working with Act
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-console.png" alt="apache activemq console">
 </figure>
 
-Click on the <file>Manage ActiveMQ broker</file> link and enter following default credentials: User name="<kbd>admin</kbd>" and Password="<kbd>admin</kbd>". A home page will be displayed that shows some basic statistics on the ActiveMQ broker. In addition it contains a number of menus that allow you to explore the different configuration items (queues, topics, connections, ...) of the broker.
+Click on the <var>Manage ActiveMQ broker</var> link and enter following default credentials: User name="<kbd>admin</kbd>" and Password="<kbd>admin</kbd>". A home page will be displayed that shows some basic statistics on the ActiveMQ broker. In addition it contains a number of menus that allow you to explore the different configuration items (queues, topics, connections, ...) of the broker.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-console-welcome.png" alt="apache activemq console welcome">
 </figure>
 
-Let's finish this tutorial by stopping the running ActiveMQ instance. Switch back to the console in which ActiveMQ was started and press "<kbd>CTRL+C</kbd>" (note that if ActiveMQ was started as a background process, the stop command needs to be run instead). If needed type "<kbd>Y</kbd>" when prompted to '<var>Terminate batch job</var>' followed by "<kbd>ENTER</kbd>". The console will return to the prompt as shown below and ActiveMQ is stopped. 
+Let's finish this tutorial by stopping the running ActiveMQ instance. Switch back to the console in which ActiveMQ was started and press "<kbd>CTRL+C</kbd>" (note that if ActiveMQ was started as a background process, the stop command needs to be run instead). If needed type "<kbd>Y</kbd>" when prompted to <var>'Terminate batch job'</var> followed by "<kbd>ENTER</kbd>". The console will return to the prompt as shown below and ActiveMQ is stopped. 
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-stop.png" alt="apache activemq stop">

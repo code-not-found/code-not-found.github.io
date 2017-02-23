@@ -24,7 +24,7 @@ Tools used:
 
 We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter` and `spring-boot-starter-test` starters.
 
-A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was '<var>1.1.1.RELEASE</var>'.
+A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was <var>'1.1.1.RELEASE'</var>.
 
 We also include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "über-jar", which is convenient to execute and transport the written code.
 
@@ -163,7 +163,7 @@ public class Sender {
 
 The creation of the `KafkaTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
-In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template’s constructor. The producer factory needs to be set with a number of properties amongst which the `BOOTSTRAP_SERVERS_CONFIG` property that is fetched from the <file>application.properties</file> configuration file. For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
+In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template’s constructor. The producer factory needs to be set with a number of properties amongst which the `BOOTSTRAP_SERVERS_CONFIG` property that is fetched from the <var>application.properties</var> configuration file. For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
 
 ``` java
 package com.codenotfound.producer;

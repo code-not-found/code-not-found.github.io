@@ -199,7 +199,7 @@ public class Producer {
 }
 ```
 
-For receiving the messages, a `Consumer` class is created with two methods for opening/closing a connection to the message broker. In addition a method to create a message consumer for a specific queue and a method to receive a single message are available on the class. Note that instead of using the default connection to the ActiveMQ broker, we have specified the '<var>messagePrioritySupported</var>' property in order to assure the message are prioritized on consumer side.
+For receiving the messages, a `Consumer` class is created with two methods for opening/closing a connection to the message broker. In addition a method to create a message consumer for a specific queue and a method to receive a single message are available on the class. Note that instead of using the default connection to the ActiveMQ broker, we have specified the <var>'messagePrioritySupported'</var> property in order to assure the message are prioritized on consumer side.
 
 ``` java
 package com.codenotfound.jms.priority;
@@ -268,7 +268,7 @@ public class Consumer {
 }
 ```
 
-Last, a JUnit test class in which a first `testSend()` test case will send three messages with default priority to a '<var>priority.q</var>' queue. It then verifies if the messages are read in first in, first out (FIFO) order. A second `testSendWithPriority()` test case which will send three messages with custom priorities where the last message gets the highest priority. In turn it verifies if the message are read in last in, first out (LIFO) order.
+Last, a JUnit test class in which a first `testSend()` test case will send three messages with default priority to a <var>'priority.q'</var> queue. It then verifies if the messages are read in first in, first out (FIFO) order. A second `testSendWithPriority()` test case which will send three messages with custom priorities where the last message gets the highest priority. In turn it verifies if the message are read in last in, first out (LIFO) order.
 
 ``` java
 package com.codenotfound.jms.priority;
@@ -343,7 +343,7 @@ Make sure an ActiveMQ message broker is up and running, open a command prompt an
 mvn test
 ```
 
-This will trigger Maven to run the above test case and results in the following log statements. Even though '<var>message1</var>' was sent first in both test cases, in the first test it is received first whereas in the second test it is received last because of the different assigned priority. 
+This will trigger Maven to run the above test case and results in the following log statements. Even though <var>'message1'</var> was sent first in both test cases, in the first test it is received first whereas in the second test it is received last because of the different assigned priority. 
 
 ``` plaintext
 20:44:20.992 INFO  [main][Producer] message1 sent with default priority(=4)
@@ -360,7 +360,7 @@ This will trigger Maven to run the above test case and results in the following 
 20:44:23.031 INFO  [main][Consumer] message1 received
 ```
 
-By browsing the '<var>priority.q</var>' using the ActiveMQ console we can verify the `JMSPriority` header that was set on the messages sent by the above test cases. The `testSend()` test case will create three messages a shown below, each with priority set to 4.
+By browsing the <var>'priority.q'</var> using the ActiveMQ console we can verify the `JMSPriority` header that was set on the messages sent by the above test cases. The `testSend()` test case will create three messages a shown below, each with priority set to 4.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-message-browser-no-priority.png" alt="apache activemq message browser no priority">

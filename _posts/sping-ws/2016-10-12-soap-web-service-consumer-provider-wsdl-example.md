@@ -326,9 +326,9 @@ public class HelloWorldEndpoint {
 
 The `WebServiceTemplate` is the core class for client-side Web service access in Spring-WS. It contains methods for sending requests and receiving response messages. Additionally, it can marshal objects to XML before sending them across a transport, and unmarshal any response XML into an object again.
 
-As we will use JAXB to marshal our `Person` to a request XML and in turn unmarshal the response XML to our `Greeting` we need an instance of Spring's `Jaxb2Marshaller`. This class requires a context path to operate, which you can set using the <var>'contextPath'</var> property. The context path is a list of colon (:) separated Java package names that contain schema derived classes. In our example this is the package name of the generated Person and `Greeting` classes which is: '<var>com.codenotfound.types.helloworld</var>'.
+As we will use JAXB to marshal our `Person` to a request XML and in turn unmarshal the response XML to our `Greeting` we need an instance of Spring's `Jaxb2Marshaller`. This class requires a context path to operate, which you can set using the <var>'contextPath'</var> property. The context path is a list of colon (:) separated Java package names that contain schema derived classes. In our example this is the package name of the generated Person and `Greeting` classes which is: <var>'com.codenotfound.types.helloworld'</var>.
 
-The below `ClientConfig` configuration class specifies the `WebServiceTemplate` bean that uses the above `Jaxb2Marshaller` for marshalling and unmarshalling. We also set the default service URI (note that the '<var>helloworld</var>' at the end can actually be omitted as we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet).
+The below `ClientConfig` configuration class specifies the `WebServiceTemplate` bean that uses the above `Jaxb2Marshaller` for marshalling and unmarshalling. We also set the default service URI (note that the <var>'helloworld'</var> at the end can actually be omitted as we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet).
 
 Note that the class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 

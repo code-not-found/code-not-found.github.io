@@ -44,8 +44,8 @@ You can create and set properties for JMS messages if you need values in additio
 
 There are three kinds of message properties:
 1. **Application-related properties**: A Java application can assign application-related properties, which are set before the message is delivered.
-2. **Provider-related properties**: Every JMS provider can define proprietary properties that can be set either by the client or automatically by the provider. Provider-related properties are prefixed with '<var>JMS_</var>' followed by the vendor name and the specific property name; for example: `JMS_IBM_MsgType` or `JMS_SonicMQ_XQ.isMultipart`
-3. **Standard properties:** These standardized properties are set by the JMS provider (if supported) when a message is sent. Standard property names start with '<var>JMSX</var>'; for example: `JMSXUserid` or `JMSXDeliveryCount`.
+2. **Provider-related properties**: Every JMS provider can define proprietary properties that can be set either by the client or automatically by the provider. Provider-related properties are prefixed with <var>'JMS_'</var> followed by the vendor name and the specific property name; for example: `JMS_IBM_MsgType` or `JMS_SonicMQ_XQ.isMultipart`
+3. **Standard properties:** These standardized properties are set by the JMS provider (if supported) when a message is sent. Standard property names start with <var>'JMSX'</var>; for example: `JMSXUserid` or `JMSXDeliveryCount`.
 
 # JMS Message Body
 
