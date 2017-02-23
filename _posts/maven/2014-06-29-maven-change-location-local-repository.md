@@ -17,10 +17,42 @@ When installing Maven, the local repository is located under a default location.
 
 Maven is configured based on a <var>settings.xml</var> file that can be specified at two levels:
 
+1. **User Level**: provides configuration for a single user and is typically provided in <var>${user.home}/.m2/settings.xml</var>.
+2. **Global level**: provides configuration for all Maven users on a machine (assuming they're all using the same Maven installation) and it's typically provided in <var>${maven.home}/conf/settings.xml</var>.
 
+In this example we will change the local repository location by creating/editing a <var>settings.xml</var> file at user level.
 
+Navigate to <var>[maven_install_dir]/conf</var> and if not already present copy the <var>setting.xml</var> file to the <var>.m2</var> directory located in the user home directory (in this example the user is <var>'source4code'</var>) as shown below.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/maven-copy-settings-xml.png" alt="maven copy settings xml">
+</figure>
 
+Open the copied <var>settings.xml</var> file and add/update the <var>'&lt;localRepository&gt;'</var> element to point to the new location of the local repository (in this example the location is set to <var>C:\source4code\local-repo</var>).
 
+``` xml
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <!-- localRepository
+   | The path to the local repository maven will use to store artifacts.
+   |
+   | Default: ${user.home}/.m2/repository
+  <localRepository>/path/to/local/repo</localRepository>
+  -->
+  <localRepository>C:\source4code\local-repo</localRepository>
 
+  ...
+  
+</settings>
+```
 
+Next time Maven tries to resolve and download dependencies to the local repository, they will be stored in the newly defined location. The below image shows the result after creating a quickstart Maven project. The artifacts are now downloaded to the <var>C:\source4code\local-repo</var> directory that was configured in the above <var>settings.xml</var>.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/maven-new-local-repository.png" alt="maven new local repository">
+</figure>
+
+---
+
+This concludes changing the location of the Maven local repository. If you found this post helpful or have any questions or remarks, please leave a comment below.
