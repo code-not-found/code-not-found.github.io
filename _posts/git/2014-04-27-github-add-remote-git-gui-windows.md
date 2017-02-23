@@ -35,6 +35,7 @@ Start the Git command processor by clicking on the <var>Git Bash</var> link insi
 </figure>
 
  ## Configure Git
+ ## Generating SSH keys
 
 First thing that needs to be done is to setup some basic Git parameters like user name and email address. In order to do so enter following commands and replace the value between the quotes with your own values.
 
@@ -106,13 +107,15 @@ The newly added key is part of the SSH keys that are associated with your accoun
     <img src="{{ site.url }}/assets/images/git/github-ssh-key-added.png" alt="github ssh key added">
 </figure>
 
+## Configure Git GUI
 
+Start Git GUI by clicking on the <var>Git GUI</var> link inside the Git program group. Following window should appear.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/git/git-gui-startup.png" alt="git gui startup">
+</figure>
 
-
-
-
-
+First thing to do is to create a new local Git repository. Click on the <kbd>Create New Repository</kbd> link and select a folder in which you would like to create a new local repository. In the example below the local repository is created at <var>C:/source4code/code/test-repo</var>. Click the <kbd>Create</kbd> button to complete the repository creation.
 
 
 
