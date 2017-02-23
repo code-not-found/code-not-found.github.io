@@ -180,9 +180,9 @@ In the plugins section we included the `spring-boot-maven-plugin` Maven plugin s
 </project>
 ```
 
-In order to directly use the '<var>person</var>' and '<var>greeting</var>' elements (defined in the '<var>types</var>' section of the Hello World WSDL) in our Java code, we will use JAXB to generate the corresponding Java classes. The above POM file configures the `maven-jaxb2-plugin` that will handle the generation.
+In order to directly use the <var>'person'</var> and <var>'greeting'</var> elements (defined in the <var>'types'</var> section of the Hello World WSDL) in our Java code, we will use JAXB to generate the corresponding Java classes. The above POM file configures the `maven-jaxb2-plugin` that will handle the generation.
 
-The plugin will look into the defined '<var>&lt;schemaDirectory&gt;</var>' in order to find any WSDL files for which it needs to generate the the Java classes. In order to trigger the generation via Maven, executed following command:
+The plugin will look into the defined <var>'&lt;schemaDirectory&gt;'</var> in order to find any WSDL files for which it needs to generate the the Java classes. In order to trigger the generation via Maven, executed following command:
 
 ``` plaintext
 mvn generate-sources
@@ -214,11 +214,11 @@ public class SpringWsApplication {
 
 The server-side of Spring-WS is designed around a central class called `MessageDispatcher` that dispatches incoming XML messages to endpoints. For more detailed information checkout the [Spring Web Services reference documentation on the MessageDispatcher](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#message-dispatcher).
 
-Spring Web Services supports multiple transport protocols. The most common is the HTTP transport, for which a custom `MessageDispatcherServlet` servlet is supplied. This is a standard `Servlet` which extends from the standard Spring Web `DispatcherServlet` ([=central dispatcher for HTTP request handlers/controllers](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html)), and wraps a `MessageDispatcher`. 
+Spring Web Services supports multiple transport protocols. The most common is the HTTP transport, for which a custom `MessageDispatcherServlet` servlet is supplied. This is a standard `Servlet` which extends from the standard Spring Web `DispatcherServlet` ([=central dispatcher for HTTP request handlers/controllers](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html)), and wraps a `MessageDispatcher`.
 
 > In other words: the `MessageDispatcherServlet` combines the attributes of the `MessageDispatcher` and `DispatcherServlet` and as a result allows the handling of XML messages over HTTP.
 
-In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean '<var>messageDispatcherServlet</var>', it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
+In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>'messageDispatcherServlet'</var>, it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
 
 The servlet mapping URI pattern on the `ServletRegistrationBean` is set to "<kbd>/codenotfound/ws/*</kbd>". The web container will use this path to map incoming HTTP requests to the servlet.
 
@@ -270,13 +270,13 @@ Now that our `MessageDispatcherServlet` is defined it will try to match incoming
 
 The `HelloWorldEndpoint` POJO is annotated with the `@Endpoint` annotation which registers the class with Spring WS as a potential candidate for processing incoming SOAP messages. It contains a `sayHello()` method that receives a `Person` and returns a `Greeting`. Note that these are the Java classes that we generated earlier using JAXB.
 
-To indicate what sort of messages a method can handle, it is annotated with the `@PayloadRoot` annotation that specifies a qualified name that is defined by a '<var>namespace</var>' and a local name (='<var>localPart</var>'). Whenever a message comes in which has this qualified name for the payload root element, the method will be invoked.
+To indicate what sort of messages a method can handle, it is annotated with the `@PayloadRoot` annotation that specifies a qualified name that is defined by a <var>'namespace'</var> and a local name (=<var>'localPart'</var>). Whenever a message comes in which has this qualified name for the payload root element, the method will be invoked.
 
 The `@ResponsePayload` annotation makes Spring WS map the returned value to the response payload which in our example is the JAXB `Greeting` object.
 
 The `@RequestPayload` annotation on the `sayHello()` method parameter indicates that the incoming message will be mapped to the method’s request parameter. In our case this is the JAXB Person object.
 
-The implementation of the `sayHello` service simply logs the name of the received `Person` and then uses this name to construct a `Greeting` that is also logged and then returned. 
+The implementation of the `sayHello` service simply logs the name of the received `Person` and then uses this name to construct a `Greeting` that is also logged and then returned.
 
 ``` java
 package com.codenotfound.endpoint;
@@ -326,11 +326,11 @@ public class HelloWorldEndpoint {
 
 The `WebServiceTemplate` is the core class for client-side Web service access in Spring-WS. It contains methods for sending requests and receiving response messages. Additionally, it can marshal objects to XML before sending them across a transport, and unmarshal any response XML into an object again.
 
-As we will use JAXB to marshal our `Person` to a request XML and in turn unmarshal the response XML to our `Greeting` we need an instance of Spring's `Jaxb2Marshaller`. This class requires a context path to operate, which you can set using the '<var>contextPath</var>' property. The context path is a list of colon (:) separated Java package names that contain schema derived classes. In our example this is the package name of the generated Person and `Greeting` classes which is: '<var>com.codenotfound.types.helloworld</var>'.
+As we will use JAXB to marshal our `Person` to a request XML and in turn unmarshal the response XML to our `Greeting` we need an instance of Spring's `Jaxb2Marshaller`. This class requires a context path to operate, which you can set using the <var>'contextPath'</var> property. The context path is a list of colon (:) separated Java package names that contain schema derived classes. In our example this is the package name of the generated Person and `Greeting` classes which is: '<var>com.codenotfound.types.helloworld</var>'.
 
 The below `ClientConfig` configuration class specifies the `WebServiceTemplate` bean that uses the above `Jaxb2Marshaller` for marshalling and unmarshalling. We also set the default service URI (note that the '<var>helloworld</var>' at the end can actually be omitted as we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet).
 
-Note that the class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions. 
+Note that the class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
 ``` java
 package com.codenotfound.client;
@@ -366,11 +366,11 @@ public class ClientConfig {
 }
 ```
 
-The client code is specified in the `HelloWorldClient` class. The sayHello method creates a Person object based on the '<var>firstname</var>' and '<var>lastname</var>' input parameters.
+The client code is specified in the `HelloWorldClient` class. The sayHello method creates a Person object based on the <var>'firstname'</var> and <var>'lastname'</var> input parameters.
 
 The autowired `WebServiceTemplate` is used to marshal and send a person XML request towards the Hello World service. The result is unmarshalled to a `Greeting` object which is logged.
 
-The `@Component` annotation will cause Spring to automatically import this bean into the container if automatic component scanning is enabled (adding the `@SpringBootApplication` annotation to the main `SpringWsApplication` class [is equivalent](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html) to using `@ComponentScan`). 
+The `@Component` annotation will cause Spring to automatically import this bean into the container if automatic component scanning is enabled (adding the `@SpringBootApplication` annotation to the main `SpringWsApplication` class [is equivalent](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html) to using `@ComponentScan`).
 
 ``` java
 package com.codenotfound.client;
@@ -421,7 +421,7 @@ We will create a basic unit test case in which the above client is used to send 
 
 The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced with Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications), are used to tell JUnit to run using Spring’s testing support and bootstrap with Spring Boot’s support.
 
-By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the '<var>server.port</var>' property defined in the <file>application.properties</file> file. 
+By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the <var>'server.port'</var> property defined in the <var>application.properties</var> file.
 
 ``` java
 package com.codenotfound;
@@ -452,13 +452,13 @@ public class SpringWsApplicationTests {
 }
 ```
 
-The above test case can be triggered by opening a command prompt in the projects root folder and executing following Maven command: 
+The above test case can be triggered by opening a command prompt in the projects root folder and executing following Maven command:
 
 ``` plaintext
 mvn test
 ```
 
-The result should be a successful build during which the embedded Tomcat is started and a service call is made to the Hello World service: 
+The result should be a successful build during which the embedded Tomcat is started and a service call is made to the Hello World service:
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -518,7 +518,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
-If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven commmand: 
+If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven commmand:
 
 ``` plaintext
 mvn spring-boot:run
