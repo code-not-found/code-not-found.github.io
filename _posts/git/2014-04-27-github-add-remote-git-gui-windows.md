@@ -28,7 +28,7 @@ Double click to run the downloaded <var>'.exe'</var> file and click <kbd>Next</k
 </figure>
 
 
-Start the Git command processor by clicking on the <var>Git Bash<var> link inside the Git program group (<var>Start>All Programs>Git<var>). A bash window should appear as shown below.
+Start the Git command processor by clicking on the <var>Git Bash</var> link inside the Git program group (<var>Start>All Programs>Git</var>). A bash window should appear as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/git/git-bash.png" alt="git bash">
@@ -80,9 +80,15 @@ Locate the generated keys by going to the location as shown in the console outpu
     <img src="{{ site.url }}/assets/images/git/git-generated-ssh-keys-location.png" alt="git generated ssh keys location">
 </figure>
 
+The <var>id_rsa</var> file contains your private key and the <var>id_rsa.pub</var> file contains your public key.
 
+## Configure GitHub
 
+Create an account at [GitHub](https://github.com/) and sign in. Add a new remote repository by clicking the <var>+ New repository</var> button. Enter a repository name and check the <var>'Initialize this repository with a README'</var> checkbox so a <var>README.md</var> is automatically added as shown below.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/git/github-create-repo.png" alt="github create repo">
+</figure>
 
 
 
