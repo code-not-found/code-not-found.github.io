@@ -25,11 +25,59 @@ For this tutorial we will use an older Java version which can be obtained by scr
 
 Accept the License Agreement and pick the correct download for your operating system. In this example we will use the Windows 64 bit version.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/java/java-download-jdk.png" alt="java download jdk">
+</figure>
 
+Sign in using your Oracle account (or create a new one) and the download should start. Once the download is complete, locate the <var>jdk-6u45-windows-x64.exe</var> file and double click to run the installer.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/java/java-installer-start.png" alt="java installer start">
+</figure>
 
+Click <var>Next</var> and on the following screen optionally change the installation location by clicking on the <var>Change...</var> button. In the example below the install location was change to <var>'C:\Java\jdk1.6.0_45'</var>. From now on we will refer to this directory as: <var>[java_install_dir]</var>. 
 
+<figure>
+    <img src="{{ site.url }}/assets/images/java/java-installer-location.png" alt="java installer location">
+</figure>
 
+Click <var>Next</var> and then <var>Close</var> after the installer successfully finished installing Java.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/java/java-installer-finish.png" alt="java installer finish">
+</figure>
+
+# JDK Configuration
+
+In order for Java applications to be able to run we need to setup a JAVA_HOME environment variable that will point to the Java installation directory. In addition if we want to run Java commands from a command prompt we need to setup the PATH environment variable to contain the Java bin directory.
+
+When using Windows the above parameters can be configured on the Environment Variables panel. Click on the <var>Windows Start</var> button and enter "<kbd>env</kbd>" without quotes as shown below.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/java/edit-environment-variables.png" alt="edit environment variables">
+</figure>
+
+Environment variables can be set at account level or at system level. For this example click on <var>Edit environment variables for your account</var> and following panel should appear.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/java/environment-variables.png" alt="environment variables">
+</figure>
+
+Click on the <var>New</var> button and enter "<kbd>JAVA_HOME</kbd>" as variable name and the <var>[java_install_dir]</var> as variable value. In this tutorial the installation directory is <var>'C:\Java\jdk1.6.0_45'</var>. Click OK to to save.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/java/set-java-home.png" alt="set java home">
+</figure>
+
+Click on the <var>New</var> button and enter "<kbd>PATH</kbd>" as variable name and "<kbd>%JAVA_HOME%\bin</kbd>" as variable value. Click <var>OK</var> to save.
+
+> Note that in case a <var>'PATH'</var> variable is already present you can add "<kbd>;%JAVA_HOME%\bin</kbd>" at the end of the variable value.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/java/set-java-home-path.png" alt="set java home path">
+</figure>
+
+The result should be as shown below. Click <var>OK</var> to close the environment variables panel.
 
 
 
