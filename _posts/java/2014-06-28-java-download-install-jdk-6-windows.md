@@ -11,7 +11,7 @@ tags: [Download, Install, Java, JDK, jdk1.6.0_45, Tutorial, Windows]
     <img src="{{ site.url }}/assets/images/logos/java-logo.png" alt="java logo">
 </figure>
 
-Java is a computer programming language that is concurrent, class-based and object-oriented. It was originally developed by James Gosling at Sun Microsystems. Java applications are typically compiled to bytecode (class file) that can run on any Java virtual machine (JVM) regardless of computer architecture.
+[Java](https://www.java.com/en/) is a computer programming language that is concurrent, class-based and object-oriented. It was originally developed by James Gosling at Sun Microsystems. Java applications are typically compiled to bytecode (class file) that can run on any Java virtual machine (JVM) regardless of computer architecture.
 
 Java is currently owned by the Oracle Corporation which acquired Sun Microsystems in 2010. Following tutorial will show you how to setup and configure Java 1.6 on your Windows computer so you can develop and run Java code.
 
@@ -49,7 +49,7 @@ Click <var>Next</var> and then <var>Close</var> after the installer successfully
 
 # JDK Configuration
 
-In order for Java applications to be able to run we need to setup a JAVA_HOME environment variable that will point to the Java installation directory. In addition if we want to run Java commands from a command prompt we need to setup the PATH environment variable to contain the Java bin directory.
+In order for Java applications to be able to run we need to setup a <var>'JAVA_HOME'</var> environment variable that will point to the Java installation directory. In addition if we want to run Java commands from a command prompt we need to setup the <var>'PATH'</var> environment variable to contain the Java bin directory.
 
 When using Windows the above parameters can be configured on the Environment Variables panel. Click on the <var>Windows Start</var> button and enter "<kbd>env</kbd>" without quotes as shown below.
 
@@ -79,10 +79,22 @@ Click on the <var>New</var> button and enter "<kbd>PATH</kbd>" as variable name 
 
 The result should be as shown below. Click <var>OK</var> to close the environment variables panel.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/java/environment-variables-java.png" alt="environment variables java">
+</figure>
 
+In order to test the above configuration, open a command prompt by clicking on the Windows Start button and typing "cmd" followed by pressing ENTER. A new command prompt should open in which the following command can be entered to verify the installed Java version:
 
+``` plaintext
+java -version
+```
 
+The result should be as shown below.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/java/java-version.png" alt="java version">
+</figure>
 
+---
 
-
+This concludes the setting up and configuring JDK 1.6 on Windows. If you found this post helpful or have any questions or remarks, please leave a comment.
