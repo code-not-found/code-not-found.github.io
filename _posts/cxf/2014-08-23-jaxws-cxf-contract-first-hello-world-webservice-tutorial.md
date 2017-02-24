@@ -606,8 +606,150 @@ public class HelloWorldClientTest {
 }
 ```
 
+In addition to above unit tests, a `HelloWorldImplIT` integration test is defined for which an instance of Jetty will be started, using the <var>'jetty-maven-plugin'</var>, that will host the `HelloWorldImpl`. The actual web service call is made by the `HelloWorldClient`.
 
+> Note that by default, the Maven integration-test phase runs test classes named <var>'**/IT*.java, **/*IT.java, and **/*ITCase.java'</var>.
 
+``` java
+package com.codenotfound.soap.http.cxf;
 
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.codenotfound.services.helloworld.Person;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {
+        "classpath:/META-INF/spring/context-requester.xml" })
+public class HelloWorldImplIT {
+
+    @Autowired
+    private HelloWorldClient helloWorldClientBean;
+
+    @Test
+    public void testSayHello() {
+        Person person = new Person();
+        person.setFirstName("John");
+        person.setLastName("Doe");
+
+        assertEquals("Hello John Doe!", helloWorldClientBean.sayHello(person));
+    }
+}
+```
+
+In order to run the above example open a command prompt and execute following Maven command:
+
+``` plaintext
+mvn verify
+```
+
+Maven will download the needed dependencies, compile the code and run the unit test case. Subsequent Maven will start a Jetty server instance and run the integration test case. The result should be a successful build during which two log files are generated that contain the logs of the requester <var>jaxws-jetty-cxf-helloworld-test.log</var> and provider <var>jaxws-jetty-cxf-helloworld.log</var>.
+
+``` plaintext
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.codenotfound.soap.http.cxf.HelloWorldClientTest
+17:09:24.935 INFO  [main][ReflectionServiceFactoryBean] Creating Service {http://cxf.http.soap.codenotfound.com/}HelloWorldImplService from class com.codenotfound.services.helloworld.HelloWorldPortType
+17:09:25.371 INFO  [main][ServerImpl] Setting the server's publish address to be http://localhost:9090/codenotfound/services/helloworld
+17:09:25.422 WARN  [main][AbstractHandler] No Server set for org.apache.cxf.transport.http_jetty.JettyHTTPServerEngine$1@1941a8ff
+17:09:25.853 INFO  [main][ReflectionServiceFactoryBean] Creating Service {http://codenotfound.com/services/helloworld}HelloWorldPortTypeService from class com.codenotfound.services.helloworld.HelloWorldPortType
+17:09:26.165 DEBUG [qtp1857173583-18][HelloWorldImpl] firstName=Jane
+17:09:26.166 DEBUG [qtp1857173583-18][HelloWorldImpl] lastName=Doe
+17:09:26.166 INFO  [qtp1857173583-18][HelloWorldImpl] greeting=Hello Jane Doe!
+17:09:26.181 INFO  [main][HelloWorldClient] result=Hello Jane Doe!
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.77 sec
+Running com.codenotfound.soap.http.cxf.HelloWorldImplTest
+17:09:26.184 INFO  [main][ReflectionServiceFactoryBean] Creating Service {http://cxf.http.soap.codenotfound.com/}HelloWorldImplService from class com.codenotfound.services.helloworld.HelloWorldPortType
+17:09:26.187 INFO  [main][ServerImpl] Setting the server's publish address to be http://localhost:9080/codenotfound/services/helloworld
+17:09:26.189 WARN  [main][AbstractHandler] No Server set for org.apache.cxf.transport.http_jetty.JettyHTTPServerEngine$1@1fc793c2
+17:09:26.191 INFO  [main][ReflectionServiceFactoryBean] Creating Service {http://codenotfound.com/services/helloworld}HelloWorldPortTypeService from class com.codenotfound.services.helloworld.HelloWorldPortType
+17:09:26.202 DEBUG [qtp1103132232-33][HelloWorldImpl] firstName=Jane
+17:09:26.202 DEBUG [qtp1103132232-33][HelloWorldImpl] lastName=Doe
+17:09:26.202 INFO  [qtp1103132232-33][HelloWorldImpl] greeting=Hello Jane Doe!
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec
+
+Results :
+
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO]
+[INFO] --- maven-war-plugin:2.2:war (default-war) @ jaxws-cxf-helloworld ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [jaxws-cxf-helloworld] in [C:\codenotfound\code\jaxws-cxf\jaxws-cxf-helloworld\target\jaxws-cxf-helloworld-1.0]
+[INFO] Processing war project
+[INFO] Copying webapp resources [C:\codenotfound\code\jaxws-cxf\jaxws-cxf-helloworld\src\main\webapp]
+[INFO] Webapp assembled in [129 msecs]
+[INFO] Building war: C:\codenotfound\code\jaxws-cxf\jaxws-cxf-helloworld\target\jaxws-cxf-helloworld-1.0.war
+[INFO] WEB-INF\web.xml already added, skipping
+[INFO]
+[INFO] >>> jetty-maven-plugin:9.4.0.M0:start (start-jetty) > validate @ jaxws-cxf-helloworld >>>
+[INFO]
+[INFO] <<< jetty-maven-plugin:9.4.0.M0:start (start-jetty) < validate @ jaxws-cxf-helloworld <<<
+[INFO]
+[INFO] --- jetty-maven-plugin:9.4.0.M0:start (start-jetty) @ jaxws-cxf-helloworld ---
+[INFO] Logging initialized @6571ms
+[INFO] Configuring Jetty for project: JAX-WS - CXF Contract First Hello World Webservice Tutorial
+[INFO] webAppSourceDirectory not set. Trying src\main\webapp
+[INFO] Reload Mechanic: automatic
+[INFO] Classes = C:\codenotfound\code\jaxws-cxf\jaxws-cxf-helloworld\target\classes
+[INFO] Context path = /
+[INFO] Tmp directory = C:\codenotfound\code\jaxws-cxf\jaxws-cxf-helloworld\target\tmp
+[INFO] Web defaults = org/eclipse/jetty/webapp/webdefault.xml
+[INFO] Web overrides =  none
+[INFO] web.xml file = file:///C:/codenotfound/code/jaxws-cxf/jaxws-cxf-helloworld/src/main/webapp/WEB-INF/web.xml
+[INFO] Webapp directory = C:\codenotfound\code\jaxws-cxf\jaxws-cxf-helloworld\src\main\webapp
+[INFO] jetty-9.4.0.M0
+[WARNING] THIS IS NOT A STABLE RELEASE! DO NOT USE IN PRODUCTION!
+[WARNING] Download a stable release from http://download.eclipse.org/jetty/
+[INFO] No Spring WebApplicationInitializer types detected on classpath
+[WARNING] No workerName configured for DefaultSessionIdManager, using node0
+[WARNING] No SessionScavenger set, using defaults
+[INFO] Initializing Spring root WebApplicationContext
+[INFO] Started o.e.j.m.p.JettyWebAppContext@9b9a327{/,file:///C:/codenotfound/code/jaxws-cxf/jaxws-cxf-helloworld/src/main/webapp/,AVAILABLE}{file:///C:/codenotfound/code/jaxws-cxf/jaxws-cxf-helloworld/src/main/webapp/}
+[INFO] Started ServerConnector@471beaf1{HTTP/1.1,[http/1.1]}{0.0.0.0:9090}
+[INFO] Started @9181ms
+[INFO] Started Jetty Server
+[INFO]
+[INFO] --- maven-failsafe-plugin:2.19.1:integration-test (default) @ jaxws-cxf-helloworld ---
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.codenotfound.soap.http.cxf.HelloWorldImplIT
+17:09:31.834 INFO  [main][ReflectionServiceFactoryBean] Creating Service {http://codenotfound.com/services/helloworld}HelloWorldPortTypeService from class com.codenotfound.services.helloworld.HelloWorldPortType
+17:09:32.806 INFO  [main][HelloWorldClient] result=Hello John Doe!
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.87 sec - in com.codenotfound.soap.http.cxf.HelloWorldImplIT
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO]
+[INFO] --- jetty-maven-plugin:9.4.0.M0:stop (stop-jetty) @ jaxws-cxf-helloworld ---
+[INFO]
+[INFO] --- maven-failsafe-plugin:2.19.1:verify (default) @ jaxws-cxf-helloworld ---
+[INFO] Stopped ServerConnector@471beaf1{HTTP/1.1,[http/1.1]}{0.0.0.0:9090}
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 10.878 s
+[INFO] Finished at: 2016-08-15T17:09:33+02:00
+[INFO] Final Memory: 32M/396M
+[INFO] ------------------------------------------------------------------------
+```
+
+---
+
+{% capture notice-github %}
+![github mark](/assets/images/logos/github-mark.png){: .align-left}
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxws-cxf/tree/master/jaxws-cxf-helloworld).
+{% endcapture %}
+<div class="notice--info">{{ notice-github | markdownify }}</div>
+
+This concludes the CXF contract first Hello World web service example. If you found this post helpful or have any questions or remarks, please leave a comment. 
