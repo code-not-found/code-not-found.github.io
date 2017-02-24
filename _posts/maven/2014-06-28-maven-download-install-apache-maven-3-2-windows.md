@@ -71,7 +71,37 @@ Select the <var>'PATH'</var> entry and click on the <kbd>Edit</kbd> button. Add 
 
 The result should be as shown below. Click OK to close the Environment Variables panel.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/environment-variables-maven-configuration.png" alt="environment variables maven configuration">
+</figure>
 
+In order to test the above configuration, open a command prompt by clicking on the <kbd>Windows Start</kbd> button and typing "<kbd>cmd</kbd>" followed by pressing <kbd>ENTER</kbd>. A new command prompt should open in which the following command can be entered to verify the installed Maven version:
 
+``` plaintext
+mvn -version
+```
+The result should be that the Maven version is printed as shown below.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/maven-version-command.png" alt="maven version command">
+</figure>
 
+# Maven Usage
+
+Let's finish the tutorial by creating a basic Maven HelloWorld project. Open a command prompt and navigate to the directory in which you want to create the project. In the example below we will use 'C:\source4code\code'. Next enter following Maven command and press ENTER.
+
+``` plaintext
+mvn archetype:generate -DgroupId=info.source4code -DartifactId=hello-world -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+```
+
+Maven will start looking for the needed dependencies in order to create the project which is based on the <var>'maven-archetype-quickstart'</var> archetype (= a Maven project templating toolkit). If needed, dependencies are downloaded to the local repository. Once all dependencies are resolved, the project is created and a <var>'BUILD SUCCESS'</var> statement is shown.
+
+Feel free to browse the created <var>hello-world</var> directory. At the root you should be able to find the <var>pom.xml</var>, which is the XML representation of the Maven project.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/maven/maven-create-new-project.png" alt="maven create new project">
+</figure>
+
+---
+
+This concludes the setting up and configuring Maven. If you found this post helpful or have any questions or remarks, please leave a comment. 
