@@ -317,17 +317,55 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 </beans>
 ```
 
+For this example the CXF Spring configuration is kept in a separate file that is imported in the main <var>context-requester.xml</var> shown below. In addition to this, annotation based configuration is enabled and a <var>cxf.properties</var> file is loaded which contains the address at which the Hello World service was made available in the previous section.
 
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- import the CXF requester configuration -->
+    <import resource="classpath:META-INF/spring/cxf-requester.xml" />
 
+    <!-- HelloWorldClient bean -->
+    <bean id="helloWorldClientBean"
+        class="com.codenotfound.soap.http.cxf.HelloWorldClient" />
 
+</beans>
+```
 
+The actual client code is specified in the `HelloWorldClient` class which exposes a `sayHello()` method that takes as input a `Person` object. The `helloworldRequesterBean` previously defined in the <var>cxf-requester.xml</var> is auto wired using the corresponding annotation. 
 
+``` java
+package com.codenotfound.soap.http.cxf;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.codenotfound.services.helloworld.Greeting;
+import com.codenotfound.services.helloworld.HelloWorldPortType;
+import com.codenotfound.services.helloworld.Person;
 
+public class HelloWorldClient {
 
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(HelloWorldClient.class);
 
+    @Autowired
+    private HelloWorldPortType helloWorldRequesterBean;
+
+    public String sayHello(Person person) {
+        Greeting greeting = helloWorldRequesterBean.sayHello(person);
+
+        String result = greeting.getText();
+        LOGGER.info("result={}", result);
+        return result;
+    }
+}
+```
 
 
 
