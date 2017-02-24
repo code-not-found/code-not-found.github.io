@@ -88,7 +88,7 @@ The result should be that the Maven version is printed as shown below.
 
 # Maven Usage
 
-Let's finish the tutorial by creating a basic Maven HelloWorld project. Open a command prompt and navigate to the directory in which you want to create the project. In the example below we will use 'C:\source4code\code'. Next enter following Maven command and press ENTER.
+Let's finish the tutorial by creating a basic Maven HelloWorld project. Open a command prompt and navigate to the directory in which you want to create the project. In the example below we will use <var>C:\source4code\code</var>. Next enter following Maven command and press <kbd>ENTER</kbd>.
 
 ``` plaintext
 mvn archetype:generate -DgroupId=info.source4code -DartifactId=hello-world -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
