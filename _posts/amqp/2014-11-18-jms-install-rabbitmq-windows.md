@@ -77,7 +77,7 @@ rabbitmq-server
     <img src="{{ site.url }}/assets/images/amqp/rabbitmq-start.png" alt="rabbitmq start">
 </figure>
 
-In order to stop RabbitMQ, open another command prompt at the [rabbitmq_install_dir]/sbin and enter following command: 
+In order to stop RabbitMQ, open another command prompt at the [rabbitmq_install_dir]/sbin and enter following command:
 
 ``` plaintext
 rabbitmqctl stop
@@ -89,14 +89,28 @@ rabbitmqctl stop
 
 # Setup RabbitMQ
 
+The <var>'rabbitmq-management'</var> plugin provides a browser-based UI for management and monitoring of the RabbitMQ server . In order to enable the UI, make sure RabbitMQ is running and open a new command prompt at <var>[rabbitmq_install_dir]/sbin</var> in which you enter following:
 
+``` plaintext
+rabbitmq-plugins enable rabbitmq_management
+```
 
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/rabbitmq-enable-management-console.png" alt="rabbitmq enable management console">
+</figure>
 
+Open the RabbitMQ web console in a browser using: [http://localhost:15672](http://localhost:15672) and following page should be displayed:
 
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/rabbitmq-management-console-login.png" alt="rabbitmq management console login">
+</figure>
 
+Enter following default credentials: Username="<kbd>guest</kbd>" and Password="<kbd>guest</kbd>" and click on <var>Login</var>. The overview page will be displayed that shows some basic information on the RabbitMQ server:
 
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/rabbitmq-management-console.png" alt="rabbitmq management console">
+</figure>
 
+---
 
-
-
-
+This concludes setting up and configuring RabbitMQ. If you found this post helpful or have any questions or remarks, please leave a comment. 
