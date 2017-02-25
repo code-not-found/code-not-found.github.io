@@ -8,7 +8,7 @@ tags: [Code Sample, FacesContext, JSF, JUnit, Maven, Mockito, PowerMock, unit te
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/mockito/mockito-logo.png" alt="mockito logo">
+    <img src="{{ site.url }}/assets/images/logos/mockito-logo.png" alt="mockito logo">
 </figure>
 
 JSF defines the `FacesContext` abstract base class for representing all of the contextual information associated with processing an incoming request, and creating the corresponding response. When writing unit test cases for a JSF application there might be a need to mock some of the `FacesContext` static methods. The following post will illustrate how to do this using [PowerMock](https://code.google.com/p/powermock/), a framework that allows you to extend mock libraries like [Mockito](https://code.google.com/p/mockito/) with extra capabilities. In this case the capability to mock the static methods of `FacesContext`.
