@@ -305,24 +305,206 @@ The last section contains the different loggers and the level at which informati
 
 # Requester
 
-In order to activate the logging interceptors provided by the CXF framework, there are two options. For the requester(client) the option where all logging interceptors are configured manually will be illustrated. The other option, where the logging feature is used to configure all interceptors, will be shown in the provider section down below. For more information on the difference between interceptors and features check out this post.
+In order to activate the logging interceptors provided by the CXF framework, there are two options. For the requester(client) the option where all logging interceptors are configured manually will be illustrated. The other option, where the logging feature is used to configure all interceptors, will be shown in the provider section down below. For more information on the difference between interceptors and features check out this [post]({{ site.url }}/2015/01/cxf-feature-vs-interceptor.html).
 
-First an instance of the abstract AbstractLoggingInterceptor class is created to enable pretty printing of the SOAP messages. Next, instances of the LoggingInInterceptor and LoggingOutInterceptor are specified which have as parent the previously defined abstractLoggingInterceptor instance. In a last step the interceptors are added to the CXF bus, which is the backbone of the CXF architecture that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. The interceptors are added to both in/out and respective fault interceptor chains as shown below.
+First an instance of the abstract `AbstractLoggingInterceptor` class is created to enable pretty printing of the SOAP messages. Next, instances of the `LoggingInInterceptor` and `LoggingOutInterceptor` are specified which have as parent the previously defined `abstractLoggingInterceptor` instance. In a last step the interceptors are added to the CXF bus, which is the backbone of the CXF architecture that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. The interceptors are added to both in/out and respective fault interceptor chains as shown below.
 
 > Note that interceptors can be added to a client, server or bus.
 
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cxf="http://cxf.apache.org/core"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <jaxws:client id="helloWorldRequesterBean"
+        serviceClass="com.codenotfound.services.helloworld.HelloWorldPortType"
+        address="${helloworld.address}">
+    </jaxws:client>
+
+    <!-- abstractLoggingInterceptor that will enable pretty printing of messages -->
+    <bean id="abstractLoggingInterceptor" abstract="true">
+        <property name="prettyLogging" value="true" />
+    </bean>
+
+    <!-- logging interceptors that will log all received/sent messages -->
+    <bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor"
+        parent="abstractLoggingInterceptor">
+    </bean>
+    <bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor"
+        parent="abstractLoggingInterceptor">
+    </bean>
+
+    <!-- add the logging interceptors to the CXF bus -->
+    <cxf:bus>
+        <cxf:inInterceptors>
+            <ref bean="loggingInInterceptor" />
+        </cxf:inInterceptors>
+        <cxf:inFaultInterceptors>
+            <ref bean="loggingInInterceptor" />
+        </cxf:inFaultInterceptors>
+        <cxf:outInterceptors>
+            <ref bean="loggingOutInterceptor" />
+        </cxf:outInterceptors>
+        <cxf:outFaultInterceptors>
+            <ref bean="loggingOutInterceptor" />
+        </cxf:outFaultInterceptors>
+    </cxf:bus>
+
+</beans>
+```
+
+# Provider
+ Activating the interceptors at provider(server) side will be done using the `LoggingFeature` that is supplied with the CXF framework.
+
+First an instance of the abstract `LoggingFeature` class is created with the `prettyLogging` set to true in order to enable pretty printing of the SOAP messages. As with the interceptors, the feature is added to the CXF bus in order to activate them as shown below.
+
+> Note that features can be added to a client, server or a bus.
+
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cxf="http://cxf.apache.org/core"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <jaxws:endpoint id="helloWorldProviderBean"
+        implementor="com.codenotfound.soap.http.cxf.HelloWorldImpl"
+        address="/helloworld">
+    </jaxws:endpoint>
+
+    <!-- loggingFeature that will log all received/sent messages -->
+    <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature">
+        <property name="prettyLogging" value="true" />
+    </bean>
+
+    <!-- add the loggingFeature to the cxf bus -->
+    <cxf:bus>
+        <cxf:features>
+            <ref bean="loggingFeature" />
+        </cxf:features>
+    </cxf:bus>
+
+</beans>
+```
+
+# Testing
+
+Testing of the service is done using a unit and an integration test case. For the unit test case the provider is created without Spring (using `JaxWsServerFactoryBean`), as such the logging feature needs to be added programmatically as shown below. 
+
+``` java
+package com.codenotfound.soap.http.cxf;
+
+import static org.junit.Assert.assertEquals;
+
+import org.apache.cxf.feature.LoggingFeature;
+import org.apache.cxf.jaxws.JaxWsServerFactoryBean;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.codenotfound.services.helloworld.Person;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:/META-INF/spring/context-requester.xml" })
+public class HelloWorldImplTest {
+
+    private static String ENDPOINT_ADDRESS = "http://localhost:9090/cnf/services/helloworld";
+
+    @Autowired
+    private HelloWorldClient helloWorldClient;
+
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+        // start the HelloWorld service using jaxWsServerFactoryBean
+        JaxWsServerFactoryBean jaxWsServerFactoryBean = new JaxWsServerFactoryBean();
+
+        // adding loggingFeature to print the received/sent messages
+        LoggingFeature loggingFeature = new LoggingFeature();
+        loggingFeature.setPrettyLogging(true);
+
+        jaxWsServerFactoryBean.getFeatures().add(loggingFeature);
+
+        // setting the implementation
+        HelloWorldImpl implementor = new HelloWorldImpl();
+        jaxWsServerFactoryBean.setServiceBean(implementor);
+        // setting the endpoint
+        jaxWsServerFactoryBean.setAddress(ENDPOINT_ADDRESS);
+        jaxWsServerFactoryBean.create();
+    }
+
+    @Test
+    public void testSayHello() {
+        Person person = new Person();
+        person.setFirstName("John");
+        person.setLastName("Doe");
+
+        assertEquals("Hello John Doe!",
+                helloWorldClient.sayHello(person));
+    }
+}
+```
+
+Run the example by opening a command prompt and executing following Maven command:
+
+``` plaintext
+mvn verify
+```
+
+The result should be that a number of log files are created in the project root directory. Amongst these files there should be <var>jaxws-jetty-cxf-logging-ws.log</var> and <var>jaxws-jetty-cxf-logging-ws-test.log</var> which contain the exchanged SOAP messages.
 
 
+``` plaintext
+06:26:41.718 INFO  [qtp1766911175-27][HelloWorld_PortType] Inbound Message
+----------------------------
+ID: 1
+Address: http://localhost:9090/s4c/services/helloworld
+Encoding: UTF-8
+Http-Method: POST
+Content-Type: text/xml; charset=UTF-8
+Headers: {Accept=[*/*], Cache-Control=[no-cache], connection=[keep-alive], Content-Length=[229], content-type=[text/xml; charset=UTF-8], Host=[localhost:9090], Pragma=[no-cache], SOAPAction=[""], User-Agent=[Apache CXF 3.0.3]}
+Payload: <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <person xmlns="http://source4code.info/services/helloworld">
+      <firstName>John</firstName>
+      <lastName>Doe</lastName>
+    </person>
+  </soap:Body>
+</soap:Envelope>
 
+--------------------------------------
+06:26:41.786 INFO  [qtp1766911175-27][HelloWorld_PortType] Outbound Message
+---------------------------
+ID: 1
+Response-Code: 200
+Encoding: UTF-8
+Content-Type: text/xml
+Headers: {}
+Payload: <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <greeting xmlns="http://source4code.info/services/helloworld">
+      <text>Hello John Doe!</text>
+    </greeting>
+  </soap:Body>
+</soap:Envelope>
+```
 
+---
 
+{% capture notice-github %}
+![github mark](/assets/images/logos/github-mark.png){: .align-left}
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxws-cxf/tree/master/jaxws-jetty-cxf-logging-log4j2).
+{% endcapture %}
+<div class="notice--info">{{ notice-github | markdownify }}</div>
 
-
-
-
-
-
-
-
-
-
+This concludes the CXF logging request and response messages using Log4j2 example. If you found this post helpful or have any questions or remarks, please leave a comment.
