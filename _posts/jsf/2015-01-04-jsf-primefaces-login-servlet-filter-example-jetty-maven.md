@@ -346,9 +346,9 @@ In the example a number of web pages will be used which realize the view part of
     <img src="{{ site.url }}/assets/images/jsf/jsf-login-pages-overview.png" alt="jsf login pages overview">
 </figure>
 
-The <var>login.xhtml</var> page is shown below. The header section contains a `<viewAction>` component which will redirect to the home page in case the user is already logged in.
+The <var>login.xhtml</var> page is shown below. The header section contains a `<f:viewAction>` component which will redirect to the home page in case the user is already logged in.
 
-The body contains a `&lt;p:inputText&gt; and `&lt;p:password&gt;' input component which allow a user to enter the user name and password. Both fields apply some basic validation in that they are both required and need a minimum length of 3 characters. The <var>Login</var> button will pass the entered values and call the `login()` method on the `UserManger` bean. Validation errors detected when submitting the credentials will be displayed using the `&lt;p:messages&gt; component at the top of the page.
+The body contains a `<p:inputText>; and `<p:password>' input component which allow a user to enter the user name and password. Both fields apply some basic validation in that they are both required and need a minimum length of 3 characters. The <var>Login</var> button will pass the entered values and call the `login()` method on the `UserManger` bean. Validation errors detected when submitting the credentials will be displayed using the `&lt;p:messages&gt; component at the top of the page.
 
 At the bottom of the page a number of links are included that make navigating the example easier.
 
@@ -403,7 +403,7 @@ At the bottom of the page a number of links are included that make navigating th
 </html>
 ```
 
-The <var>logout.xhtml</var> page contains two `&lt;p:panel&gt;` components which are rendered based on whether a user is logged in or not. The first panel is shown in case a user is not logged in and contains a confirmation of the fact that the user is logged out. The second panel is shown in case the user is still logged in and provides a <var>Logout</var> button together with a reminder that the user is still logged in.
+The <var>logout.xhtml</var> page contains two `<p:panel>` components which are rendered based on whether a user is logged in or not. The first panel is shown in case a user is not logged in and contains a confirmation of the fact that the user is logged out. The second panel is shown in case the user is still logged in and provides a <var>Logout</var> button together with a reminder that the user is still logged in.
 
 ``` html
 <?xml version="1.0" encoding="UTF-8"?>
@@ -474,7 +474,7 @@ The <var>home.xhtml</var> page is located in a <var>/secured</var> folder, to wh
 </html>
 ```
 
-As a workaround for the fact the the `LoginFilter` is not applied to the files in the `<welcome-file-list>` of the <var>web.xml</var>, a <var>redirect.xhtml</var> page is added that does a simple redirect the <var>home.xhtml</var> using the JSF `&lt;f:viewAction&gt;` component.
+As a workaround for the fact the the `LoginFilter` is not applied to the files in the `<welcome-file-list>` of the <var>web.xml</var>, a <var>redirect.xhtml</var> page is added that does a simple redirect the <var>home.xhtml</var> using the JSF `<f:viewAction>` component.
 
 ``` html
 <?xml version="1.0" encoding="UTF-8"?>
@@ -573,28 +573,83 @@ public class LoginFilter implements Filter {
 }
 ```
 
-The 'web.xml' deployment descriptor file is shown below. It contains the definition of the LoginFilter and the resources to which it needs to be applied. In this example the filter will be applied to all pages inside the /secured directory.
+The <var>web.xml</var> deployment descriptor file is shown below. It contains the definition of the `LoginFilter` and the resources to which it needs to be applied. In this example the filter will be applied to all pages inside the <var>/secured</var> directory.
 
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
 
+    <display-name>PrimeFaces Login Example</display-name>
 
+    <!-- define the JSF listener class when using the jetty-maven-plugin 
+        with Jetty8 -->
+    <listener>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
 
+    <!-- login filter -->
+    <filter>
+        <filter-name>login</filter-name>
+        <filter-class>com.codenotfound.jsf.primefaces.filter.LoginFilter</filter-class>
+    </filter>
+    <!-- set the login filter to secure all the pages in the /secured/* path 
+        of the application -->
+    <filter-mapping>
+        <filter-name>login</filter-name>
+        <url-pattern>/secured/*</url-pattern>
+    </filter-mapping>
 
+    <welcome-file-list>
+        <welcome-file>redirect.xhtml</welcome-file>
+    </welcome-file-list>
 
+    <servlet>
+        <servlet-name>faces</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>faces</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+</web-app>
+```
 
+# Running the Example
+In order to run the above example open a command prompt and execute following Maven command:
 
+``` plaintext
+mvn jetty:run
+```
 
+Maven will download the needed dependencies, compile the code and start a Jetty instance on which the web application will be deployed. Open a web browser and enter following URL: [http://localhost:9090/cnf/](http://localhost:9090/cnf/). The result should be that below page is displayed:
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jsf/jsf-login-page.png" alt="jsf login page">
+</figure>
 
+Enter following credentials: User name="<kbd>john.doe</kbd>" and Password="<kbd>1234</kbd>" and a welcome page will be displayed as shown below. 
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jsf/jsf-home-page.png" alt="jsf home page">
+</figure>
 
+Click the <var>Logout</var> button and a redirect to the logout page should happen as shown below. 
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jsf/jsf-logout-page.png" alt="jsf logout page">
+</figure>
 
+---
 
+{% capture notice-github %}
+![github mark](/assets/images/logos/github-mark.png){: .align-left}
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-jetty-primefaces-login-servlet-filter).
+{% endcapture %}
+<div class="notice--info">{{ notice-github | markdownify }}</div>
 
-
-
-
-
-
-
+This concludes the PrimeFaces login example using Jetty. If you found this post helpful or have any questions or remarks, please leave a comment. 
