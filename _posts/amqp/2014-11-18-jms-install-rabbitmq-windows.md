@@ -45,6 +45,51 @@ Click <var>Finish</var> when the Microsoft Visual C++ setup is complete and then
 
 In order for Erlang applications to be able to run we need to setup an <var>'ERLANG_HOME'</var> environment variable that will point to the Erlang installation directory. When using Windows the above parameters can be configured on the Environment Variables panel. Click on the <var>Windows Start</var> button and enter "<kbd>env</kbd>" without quotes as shown below.
 
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/environment-variables.png" alt="environment variables">
+</figure>
+
+Environment variables can be set at account level or at system level. For this example click on <var>Edit environment variables for your account</var> and following panel should appear.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/edit-environment-variables.png" alt="edit environment variables">
+</figure>
+
+Click on the <var>New</var> button and enter "<kbd>ERLANG_HOME</kbd>" as variable name and the <var>[erlang_install_dir]</var> as variable value. In this tutorial the installation directory is <var>'D:\source4code\tools\erl6.2'</var>. Click OK to to save.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/environment-variable-erlang-home.png" alt="environment variable erlang home">
+</figure>
+
+# Install RabbitMQ
+
+RabbitMQ can be downloaded from the [RabbitMQ download page](https://www.rabbitmq.com/download.html). There are a number of different download packages available, for this tutorial we will be installing the [manual install package](https://www.rabbitmq.com/install-windows-manual.html) on Windows.At the time of writing the latest stable release was <var>'rabbitmq-server-windows-3.4.1.zip'</var>.
+
+Extract the binaries archive downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: <var>[rabbitmq_install_dir]</var>.
+
+In order to start RabbitMQ, open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing <var>ENTER</var>. A new command prompt window should open. Navigate to the <var>[rabbitmq_install_dir]/sbin</var> and enter following command:
+
+``` plaintext
+rabbitmq-server
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/rabbitmq-start.png" alt="rabbitmq start">
+</figure>
+
+In order to stop RabbitMQ, open another command prompt at the [rabbitmq_install_dir]/sbin and enter following command: 
+
+``` plaintext
+rabbitmqctl stop
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/rabbitmq-stop.png" alt="rabbitmq stop">
+</figure>
+
+# Setup RabbitMQ
+
+
 
 
 
