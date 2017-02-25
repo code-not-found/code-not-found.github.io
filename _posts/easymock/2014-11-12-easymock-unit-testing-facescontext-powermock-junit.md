@@ -26,17 +26,136 @@ As the `FacesContext` class is used in this code sample, dependencies to the EL 
 Note that the version of JUnit is not the latest as there seems to be a bug where [PowerMock doesn't recognize the correct JUnit version when using JUnit 4.12](http://stackoverflow.com/a/26222732/4201470).
 
 ``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.codenotfound</groupId>
+    <artifactId>easymock-powermock-facescontext</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>EasyMock - Mocking FacesContext using PowerMock</name>
+    <url>https://codenotfound.com/2014/11/easymock-mocking-facescontext-using.html</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+
+        <junit.version>4.11</junit.version>
+        <easymock.version>3.2</easymock.version>
+        <powermock.version>1.5.6</powermock.version>
+
+        <el.version>2.2.1-b04</el.version>
+        <jsf.version>2.2.8-02</jsf.version>
+
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- EasyMock -->
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>${easymock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- PowerMock -->
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-easymock</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- EL (Unified Expression Language) -->
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>${el.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JSF -->
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>${jsf.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
 ```
 
+The `SomeBean` class below contains two methods that make use of `FacesContext`. The first `addMessage()` method will create a new `FacesMessage` and add it to the `FacesContext`. The second `logout()` method will invalidate the current session.
 
+``` java
+package com.codenotfound.easymock;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
+@ManagedBean
+@SessionScoped
+public class SomeBean {
 
+    public void addMessage(Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(severity, summary, detail));
+    }
 
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext()
+                .invalidateSession();
 
+        return "logout?faces-redirect=true";
+    }
+}
+```
 
+Next is the `SomeBeanTest` JUnit test class. The class is annotated using two annotations. The first `@RunWith` annotation tells JUnit to run the test using `PowerMockRunner`. The second `@PrepareForTest` annotation tells PowerMock to prepare to mock the `FacesContext` class. If there are multiple classes to be prepared for mocking, they can be specified using a comma separated list.
 
+In the `setup()` method a number of objects are specified that are similar for the two test cases. The `mockStatic()` method is called in order to tell PowerMock to mock all static methods of the given `FacesContext` class. In addition the `FacesContext` and `ExternalContext` mock objects are created.
+
+Next are the two test cases which follow the basic EasyMock testing steps:
+
+| Step | Action                                                                               
+| ---- | -------------------------------------------------------------------------------------
+| 1    | Call `expect(mock.[method call]).andReturn([result])` for each expected call         
+| 2    | Call `mock.[method call], then EasyMock.expectLastCall()` for each expected void call
+| 3    | Call `replay(mock)` to switch from “record” mode to “playback” mode                  
+| 4    | Call the test method                                                                 
+| 5    | Call `verify(mock)` to assure that all expected calls happened                       
+
+In addition to this, the first `addMessage()` test case uses the `Capture` capability of EasyMock in order to test whether a `FacesMessage` with the correct values was added to the `FacesContext`. The second `testLogout()` test case checks if the correct redirect was returned.
 
 
 
