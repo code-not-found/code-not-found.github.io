@@ -13,7 +13,7 @@ tags: [Apache CXF, CXF, Feature, Interceptor, JAX-WS, Log, logback, logging, Mes
 
 CXF uses Java SE Logging for both client- and server-side logging of SOAP requests and responses. Logging is activated by use of separate in/out interceptors that can be attached to the requester and/or provider as required. These interceptors can be specified either programmatically (via Java code and/or annotations) or via use of configuration files.
 
-The following tutorial shows how to configure CXF logging interceptors using Logback for the [contract first Hello World web service example]({{ site.url }}/2014/08/jaxws-cxf-contract-first-hello-world-jetty-maven.html) from a previous post.
+The following tutorial shows how to configure CXF logging interceptors using Logback for the [contract first Hello World web service example]({{ site.url }}/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) from a previous post.
 
 Tools used:
 * CXF 3.1
@@ -392,7 +392,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
 Testing of the service is done using two unit and one integration test case. For the unit test cases the requester and provider are created without Spring (using `JaxWsServerFactoryBean` and `JaxWsProxyFactoryBean`), as such the logging interceptor and feature need to be added programmatically as shown below.
 
-``` xml
+``` java
 package com.codenotfound.soap.http.cxf;
 
 import static org.junit.Assert.assertEquals;
