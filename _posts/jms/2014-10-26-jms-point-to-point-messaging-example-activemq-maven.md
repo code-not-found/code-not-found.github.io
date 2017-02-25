@@ -1,5 +1,5 @@
 ---
-title: JMS - Point-to-Point messaging example using ActiveMQ and Maven  
+title: JMS - Point-to-Point messaging example using ActiveMQ and Maven
 permalink: /2014/10/jms-point-to-point-messaging-example-activemq-maven.html
 excerpt: A JMS Point-to-Point messaging example using ActiveMQ and Maven.
 date: 2014-10-16 21:00
