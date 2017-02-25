@@ -1,7 +1,7 @@
 ---
 title: JAX-WS - CXF Contract First Hello World Webservice Tutorial
 permalink: /2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html
-excerpt: A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Apache CXF and Spring Boot.
+excerpt: A detailed step-by-step tutorial on how to implement a CXF contract first Hello World web service.
 date: 2014-08-23 21:00
 categories: [Apache CXF]
 tags: [Apache CXF, Contract First, CXF, Example, Hello World, JAX-WS, Jetty, Maven, SOAP, Spring, Tutorial, Web service, Webservice]
