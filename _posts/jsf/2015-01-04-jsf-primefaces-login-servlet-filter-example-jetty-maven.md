@@ -346,16 +346,160 @@ In the example a number of web pages will be used which realize the view part of
     <img src="{{ site.url }}/assets/images/jsf/jsf-login-pages-overview.png" alt="jsf login pages overview">
 </figure>
 
+The <var>login.xhtml</var> page is shown below. The header section contains a `&lt;f:viewAction&gt;` component which will redirect to the home page in case the user is already logged in.
 
+The body contains a `&lt;p:inputText&gt; and `&lt;p:password&gt; input component which allow a user to enter the user name and password. Both fields apply some basic validation in that they are both required and need a minimum length of 3 characters. The <var>Login</var> button will pass the entered values and call the `login()` method on the `UserManger` bean. Validation errors detected when submitting the credentials will be displayed using the `&lt;p:messages&gt; component at the top of the page.
 
+At the bottom of the page a number of links are included that make navigating the example easier.
 
+``` html
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
 
+<h:head>
+    <title>Login</title>
+    <f:metadata>
+        <f:viewAction action="#{userManager.isLoggedInForwardHome()}" />
+    </f:metadata>
+</h:head>
 
+<h:body>
 
+    <h:form>
+        <p:messages id="messages" showDetail="false" />
 
+        <p:panel id="panel" header="Login">
 
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="userName" value="User Name:" />
+                <p:inputText id="userName" value="#{userManager.userId}"
+                    required="true" label="User name">
+                    <f:validateLength minimum="3" />
+                </p:inputText>
+                <p:message for="userName" display="icon" />
 
+                <p:outputLabel for="password" value="Password:" />
+                <p:password id="password"
+                    value="#{userManager.userPassword}" required="true"
+                    label="Password">
+                    <f:validateLength minimum="3" />
+                </p:password>
+                <p:message for="password" display="icon" />
+            </h:panelGrid>
 
+            <p:commandButton value="Login" update="panel messages"
+                action="#{userManager.login()}" />
+        </p:panel>
+    </h:form>
+
+    <ui:include src="/WEB-INF/template/links.xhtml" />
+
+</h:body>
+</html>
+```
+
+The <var>logout.xhtml</var> page contains two `&lt;p:panel&gt;` components which are rendered based on whether a user is logged in or not. The first panel is shown in case a user is not logged in and contains a confirmation of the fact that the user is logged out. The second panel is shown in case the user is still logged in and provides a <var>Logout</var> button together with a reminder that the user is still logged in.
+
+``` html
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Logout</title>
+</h:head>
+
+<h:body>
+
+    <h:form>
+        <p:panel header="Logout" rendered="#{!userManager.isLoggedIn()}">
+            <p>You are logged out.</p>
+        </p:panel>
+
+        <p:panel header="Logout" rendered="#{userManager.isLoggedIn()}">
+            <p>You are still logged in, click below button to log
+                out!</p>
+            <p:commandButton value="Logout"
+                action="#{userManager.logout()}" />
+        </p:panel>
+    </h:form>
+
+    <ui:include src="/WEB-INF/template/links.xhtml" />
+
+</h:body>
+</html>
+```
+
+The <var>home.xhtml</var> page is located in a <var>/secured</var> folder, to which access will be protected by the `LoginFilter`. The page contains a basic welcome message returning the full name of the user using the `getName()` method. In addition a Logout button is available which allows a user to invalidate the session. 
+
+``` html
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Home</title>
+</h:head>
+
+<h:body>
+
+    <h:form>
+        <p:panel header="Home">
+            <p>
+                <h:outputText
+                    value="Welcome, #{userManager.currentUser.getName()}!" />
+            </p>
+
+            <p:commandButton value="Logout"
+                action="#{userManager.logout()}" />
+        </p:panel>
+    </h:form>
+
+    <ui:include src="/WEB-INF/template/links.xhtml" />
+
+</h:body>
+</html>
+```
+
+As a workaround for the fact the the `LoginFilter` is not applied to the files in the `<welcome-file-list>` of the <var>web.xml</var>, a <var>redirect.xhtml</var> page is added that does a simple redirect the <var>home.xhtml</var> using the JSF `&lt;f:viewAction&gt;` component.
+
+``` html
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Redirect</title>
+    <f:metadata>
+        <f:viewAction action="/secured/home.xhtml?faces-redirect=true" />
+    </f:metadata>
+</h:head>
+
+<h:body>
+
+</h:body>
+</html>
+```
+
+The <var>unsecured.xhtml</var> page is an example of a page that can be accesses without needing to login. The <var>links.xhtml</var> is a `ui:composition` component that is referenced from all the above page which contains links to make navigating the example easier. 
+
+# Security
 
 
 
