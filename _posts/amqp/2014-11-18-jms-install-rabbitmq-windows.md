@@ -22,6 +22,36 @@ First thing to do is to download the OTP binaries. Go the the [Erlang download p
 Double click to run the downloaded <var>'.exe'</var> file and click <var>Next</var> keeping the default settings on the first installer step.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/erlang-installer-choose-components.png" alt="erlang installer choose components">
+    <img src="{{ site.url }}/assets/images/amqp/erlang-installer-choose-components.png" alt="erlang installer choose components">
 </figure>
+
+Optionally change the default destination folder and click <var>Next</var> and then <var>Install</var>. In the example below the install location was change to <var>'D:\source4code\tools\erl6.2'</var>. From now on we will refer to this directory as: <var>[erlang_install_dir]</var>.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/erlang-install-location.png" alt="erlang install location">
+</figure>
+
+If Microsoft Visual C++ is not already setup on your system, a second installer window will pop-up. Click the <var>'I have read and accept the license terms'</var> check-box and click <var>Install</var>.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/erlang-msvisualc-installer.png" alt="erlang msvisualc installer">
+</figure>
+
+Click <var>Finish</var> when the Microsoft Visual C++ setup is complete and then click <var>Close</var> to finish the OTP installation. 
+
+<figure>
+    <img src="{{ site.url }}/assets/images/amqp/erlang-installer-finish.png" alt="erlang installer finish">
+</figure>
+
+In order for Erlang applications to be able to run we need to setup an <var>'ERLANG_HOME'</var> environment variable that will point to the Erlang installation directory. When using Windows the above parameters can be configured on the Environment Variables panel. Click on the <var>Windows Start</var> button and enter "<kbd>env</kbd>" without quotes as shown below.
+
+
+
+
+
+
+
+
+
+
 
