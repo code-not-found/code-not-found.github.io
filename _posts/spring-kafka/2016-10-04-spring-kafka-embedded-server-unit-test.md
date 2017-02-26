@@ -13,7 +13,7 @@ tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka
 
 The [Spring Kafka project](https://projects.spring.io/spring-kafka/) comes with a `spring-kafka-test` JAR that contains a number of useful utilities to assist you with your application testing. These include: an embedded Kafka server, some static methods to setup consumers/producers and some utility methods to fetch results.
 
-Let's demonstrate how you can use these utilities with some runnable code. We will reuse the [Spring Kafka Hello World project](http://www.source4code.info/2016/09/spring-kafka-consumer-producer-example.html) from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot and Maven.
+Let's demonstrate how you can use these utilities with some runnable code. We will reuse the [Spring Kafka Hello World project]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot and Maven.
 
 
 Tools used:

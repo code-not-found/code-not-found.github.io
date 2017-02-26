@@ -468,14 +468,14 @@ The result should be that a number of log files are created in the project root 
 06:26:41.718 INFO  [qtp1766911175-27][HelloWorld_PortType] Inbound Message
 ----------------------------
 ID: 1
-Address: http://localhost:9090/s4c/services/helloworld
+Address: http://localhost:9090/cnf/services/helloworld
 Encoding: UTF-8
 Http-Method: POST
 Content-Type: text/xml; charset=UTF-8
 Headers: {Accept=[*/*], Cache-Control=[no-cache], connection=[keep-alive], Content-Length=[229], content-type=[text/xml; charset=UTF-8], Host=[localhost:9090], Pragma=[no-cache], SOAPAction=[""], User-Agent=[Apache CXF 3.0.3]}
 Payload: <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <person xmlns="http://source4code.info/services/helloworld">
+    <person xmlns="http://codenotfound.com/services/helloworld">
       <firstName>John</firstName>
       <lastName>Doe</lastName>
     </person>
@@ -492,7 +492,7 @@ Content-Type: text/xml
 Headers: {}
 Payload: <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <greeting xmlns="http://source4code.info/services/helloworld">
+    <greeting xmlns="http://codenotfound.com/services/helloworld">
       <text>Hello John Doe!</text>
     </greeting>
   </soap:Body>

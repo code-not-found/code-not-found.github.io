@@ -24,6 +24,37 @@ Specifying the interceptors via configuration files offers two benefits over pro
 1. Logging requirements **can be altered without needing to recompile the code**.
 2. **No Apache CXF-specific APIs need to be added to your code**, which helps it remain interoperable with other JAX-WS compliant web service stacks.
 
+For this example [Log4j](https://logging.apache.org/log4j/1.2/) will be used which is is a Java-based logging utility. As a best practice the CXF `java.util.logging` calls will first be redirected to [SLF4J](http://www.slf4j.org/) (Simple Logging Facade for Java) as described here. In other words a <var>META-INF/cxf/org.apache.cxf.Logger</var> file will be created on the classpath containing the following:
+
+``` plaintext
+org.apache.cxf.common.logging.Slf4jLogger
+```
+
+As the Hello World example uses Spring, the commons-logging calls from the Spring framework will also be redirected to SLF4J using [jcl-over-slf4j](http://www.slf4j.org/legacy.html). Now that all logging calls of both CXF and Spring are redirected to SLF4J, Log4j will be plugged into SLF4J using the [slf4j-log4j12](http://www.slf4j.org/legacy.html) adaptation layer. The picture below illustrates the described approach.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/c/cxf-logging-using-log4j.png" alt="cxf logging using log4j">
+</figure>
+
+The below Maven POM file contains the needed dependencies for the SLF4 bridge (<var>jcl-over-slf4j</var>), Log4j adaptation layer (<var>slf4j-log4j12</var>) and Log4j (<var>log4j</var>). In addition it contains all other needed dependencies and plugins needed in order to run the example.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
