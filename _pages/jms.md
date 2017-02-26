@@ -11,9 +11,40 @@ The below links provide many step-by-step examples on how to use the Java Messag
 
 A number of quick start examples for JMS:
 
-JMS Hello World example
- A Java Message Server Hello World example that explains the basic JMS concepts. It uses the ActiveMQ JMS provider from Apache and offers a first look at sending and receiving messages.
-    JMS Point-to-Point messaging example
-    A point-to-point (PTP) product or application is built on the concept of message queues, senders and receivers.
-    JMS Publish/Subscribe messaging example
-    In a publish/subscribe (pub/sub) product or application, clients address messages to a topic, which functions somewhat like a bulletin board.
+[JMS Hello World example]({{ site.url }}/2014/10/jms-hello-world-activemq-maven.html)
+: A Java Message Server Hello World example that explains the basic JMS concepts. It uses the ActiveMQ JMS provider from Apache and offers a first look at sending and receiving messages.
+
+[JMS Point-to-Point messaging example]({{ site.url }}/2014/10/jms-point-to-point-messaging-example-activemq-maven.html)
+: A point-to-point (PTP) product or application is built on the concept of message queues, senders and receivers.
+
+[JMS Publish/Subscribe messaging example]({{ site.url }}/2014/11/jms-publish-subscribe-messaging-example-activemq-maven.html)
+: In a publish/subscribe (pub/sub) product or application, clients address messages to a topic, which functions somewhat like a bulletin board.
+
+## Core Concepts
+
+How JMS core concepts work:
+
+[JMS Message Structure]({{ site.url }}/2014/01/jms-message-structure.html)
+: An overview on the different parts of a JMS message and how to use them.
+[JMS Priority]({{ site.url }}/2014/01/jms-priority-activemq-maven.html)
+: Explains the JMS priority concepts and provides a code sample which shows how to specify a priority level when sending a JMS message.
+    
+## Provider Setup
+
+A number of JMS provider installation tutorials:
+
+[Install ActiveMQ]({{ site.url }}/2014/01/jms-install-activemq-windows.html)
+: A step-by-step tutorial on how to install ActiveMQ on Windows.
+
+[Install RabbitMQ]({{ site.url }}/2014/11/jms-install-rabbitmq-windows.html)
+: A step-by-step tutorial on how to install RabbitMQ on Windows.
+
+[Install HermesJMS]({{ site.url }}/2014/01/jms-install-hermesjms-windows.html)
+: HermesJMS is an extensible console that helps you interact with JMS providers. This post contains a step-by-step tutorial on how to install HermesJMS on Windows.
+
+
+## References
+
+Some useful references when studying JMS:
+
+[The Java EE 6 Tutorial](http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html)

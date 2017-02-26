@@ -11,10 +11,10 @@ The below links provide many step-by-step examples on how to use the Apache CXF 
 
 A number of quick start examples for CXF:
 
-[CXF contract first Hello World web service](http://www.source4code.info/2014/08/jaxws-cxf-contract-first-hello-world-jetty-maven.html)
+[CXF contract first Hello World web service]({{ site.url }}/2014/08/jaxws-cxf-contract-first-hello-world-jetty-maven.html)
 : A CXF contract first Hello World web service example using Jetty and Maven.
 
-# Logging
+## Logging
 
 A number of CXF logging tutorials:
 
@@ -28,6 +28,8 @@ A number of CXF logging tutorials:
 : A code sample which shows how to configure CXF to log the request and response SOAP messages using Log4j.
 
 ## References
+
 Some useful references when studying CXF:
+
 * [CXF User's Guide](https://cxf.apache.org/docs/index.html)
 * [Apache CXF Example Projects](https://cxf.apache.org/docs/sample-projects.html)
