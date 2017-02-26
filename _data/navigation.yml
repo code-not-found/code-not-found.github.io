@@ -1,9 +1,11 @@
 # main links
 main:
-  - title: "Spring-WS"
-    url: https://code-not-found.github.io/spring-ws/
+  #- title: "Spring-WS"
+  #  url: https://code-not-found.github.io/spring-ws/
   - title: "Apache CXF"
     url: https://code-not-found.github.io/apache-cxf/
+  - title: "JMS"
+    url: https://code-not-found.github.io/jms/
   - title: "Terms and Privacy Policy"
     url: https://code-not-found.github.io/terms/
   # - title: "About"
