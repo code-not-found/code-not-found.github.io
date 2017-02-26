@@ -154,19 +154,19 @@ In order to run the Hello World PrimeFaces application, a servlet container is n
 </project>
 ```
 
-In order to be able to run the was-maven-plugin needs a WebSphere Application Server installation. So the first thing we need to set is the <var>'<was.home>'</var> variable with the full path to the WebSphere <var>'AppServer'</var> directory. In the above example we installed WAS on Windows at the following location: "<kbd>C:\Program Files (x86)\IBM\WebSphere\AppServer</kbd>".
+In order to be able to run the was-maven-plugin needs a WebSphere Application Server installation. So the first thing we need to set is the <var>'&lt;was.home&gt;'</var> variable with the full path to the WebSphere <var>'AppServer'</var> directory. In the above example we installed WAS on Windows at the following location: "<kbd>C:\Program Files (x86)\IBM\WebSphere\AppServer</kbd>".
 
-Under the plugin configuration section the <var>'<user>'</var> and <var>'<password>'</var> parameters need to be set with the values assigned during the profile creation when enabling administrative security. These parameters are not needed in case administrative security is not enabled.
+Under the plugin configuration section the <var>'&lt;user&gt;'</var> and <var>'&lt;password&gt;'</var> parameters need to be set with the values assigned during the profile creation when enabling administrative security. These parameters are not needed in case administrative security is not enabled.
 
 The <var>'<host>'</var> parameter specifies the IP/domain URL of the WAS instance on which we will deploy the Hello World application. In this example we will run the Maven command on the same machine as WAS is installed and so we use "<kbd>localhost</kbd>" as value.
 
-The <var>'<server>'</var> and <var>'<node>'</var> values can be found by opening the admin console and selecting the <var>'Servers > Server Types > WebSphere application servers'</var> menu on the left hand side. This opens an overview of all application servers. The <var>'name'</var> and <var>'node'</var> columns will contain the server name and node name respectively.
+The <var>'<server>'</var> and <var>'<node>'</var> values can be found by opening the admin console and selecting the <var>'Servers &gt; Server Types &gt; WebSphere application servers'</var> menu on the left hand side. This opens an overview of all application servers. The <var>'name'</var> and <var>'node'</var> columns will contain the server name and node name respectively.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jsf/websphere-application-server-servers.png" alt="websphere application server servers">
 </figure>
 
-In WebSphere, a virtual host is simply a set of host aliases, where each alias specifies a host name (or a * wildcard to match any host name) and a port number. The names of the available virtual hosts can be found under <var>'Environment > Virtual hosts'</var> menu, as shown below. In this example we will use <var>'default_host'</var> as it contains a host alias for port <var>'9080'</var>, which is the default port WAS uses to listen for HTTP traffic.
+In WebSphere, a virtual host is simply a set of host aliases, where each alias specifies a host name (or a * wildcard to match any host name) and a port number. The names of the available virtual hosts can be found under <var>'Environment &gt; Virtual hosts'</var> menu, as shown below. In this example we will use <var>'default_host'</var> as it contains a host alias for port <var>'9080'</var>, which is the default port WAS uses to listen for HTTP traffic.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jsf/websphere-application-server-virtual-hosts.png" alt="websphere application server virtual hosts">
