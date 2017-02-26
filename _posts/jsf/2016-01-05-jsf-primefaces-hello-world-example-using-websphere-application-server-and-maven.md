@@ -174,10 +174,10 @@ In WebSphere, a virtual host is simply a set of host aliases, where each alias s
 
 The name of the deployed application will be set to <var>'${project.build.finalName}'</var> which defaults to <var>'${artifactId}-${version}'</var>. In this example this would be: <var>'jsf-primefaces-websphere-application-server-1.0'</var>. In addition the context path is set to <var>'codenotfound'</var>.
 
-As WebSphere Application Server ships with its own implementation of the Servlet API and JaveServer Faces we need to set the respective Maven dependencies (javax.servlet-api, jsf-api, jsf-impl) to scope="<kbd>provided</kbd>". In addition the was-maven-plugin needs to be configured to set the webmodule class loader policy to parent last. This can be achieved by setting <var>'<parentLast>'</var> to "<kbd>true</kbd>".
+As WebSphere Application Server ships with its own implementation of the Servlet API and JaveServer Faces we need to set the respective Maven dependencies (javax.servlet-api, jsf-api, jsf-impl) to scope="<kbd>provided</kbd>". In addition the was-maven-plugin needs to be configured to set the webmodule class loader policy to parent last. This can be achieved by setting <var>'&lt;parentLast&gt;'</var> to "<kbd>true</kbd>".
 
 > Note that WebSphere Application server 8.5 by default runs on JDK 1.6. This is why the maven-compiler-plugin has been configured to compile to "1.6". Specifying a higher Java version will result following error message when trying to start the application:
-java.lang.UnsupportedClassVersionError: JVMCFRE003 bad major version; class=com/codenotfound/primefaces/HelloWorld, offset=6
+<var>java.lang.UnsupportedClassVersionError: JVMCFRE003 bad major version; class=com/codenotfound/primefaces/HelloWorld, offset=6</var>.
 
 The remaining code of the example is identical to the [PrimeFaces Hello World example detailed in this post]({{ site.url }}/2015/12/jsf-primefaces-hello-world-example-using-jetty-and-maven.html#helloworld). Feel free to check it out if you would like to know more details.
 
