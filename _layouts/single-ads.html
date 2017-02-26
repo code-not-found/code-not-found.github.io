@@ -34,6 +34,8 @@ layout: default
       {% endunless %}
 
       <section class="page__content" itemprop="text">
+        {% include post-header/custom.html %}
+      
         {{ content }}
         {% if page.link %}<div><a href="{{ page.link }}" class="btn">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
@@ -48,6 +50,8 @@ layout: default
         {% elsif page.date %}
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Updated:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time></p>
         {% endif %}
+
+        {% include post-footer/custom.html %}
       </footer>
 
       {% if page.share %}{% include social-share.html %}{% endif %}
