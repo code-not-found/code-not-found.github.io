@@ -158,9 +158,9 @@ In order to be able to run the was-maven-plugin needs a WebSphere Application Se
 
 Under the plugin configuration section the <var>'&lt;user&gt;'</var> and <var>'&lt;password&gt;'</var> parameters need to be set with the values assigned during the profile creation when enabling administrative security. These parameters are not needed in case administrative security is not enabled.
 
-The <var>'<host>'</var> parameter specifies the IP/domain URL of the WAS instance on which we will deploy the Hello World application. In this example we will run the Maven command on the same machine as WAS is installed and so we use "<kbd>localhost</kbd>" as value.
+The <var>'&lt;host&gt;'</var> parameter specifies the IP/domain URL of the WAS instance on which we will deploy the Hello World application. In this example we will run the Maven command on the same machine as WAS is installed and so we use "<kbd>localhost</kbd>" as value.
 
-The <var>'<server>'</var> and <var>'<node>'</var> values can be found by opening the admin console and selecting the <var>'Servers &gt; Server Types &gt; WebSphere application servers'</var> menu on the left hand side. This opens an overview of all application servers. The <var>'name'</var> and <var>'node'</var> columns will contain the server name and node name respectively.
+The <var>'&lt;server&gt;'</var> and <var>'&lt;node&gt;'</var> values can be found by opening the admin console and selecting the <var>'Servers &gt; Server Types &gt; WebSphere application servers'</var> menu on the left hand side. This opens an overview of all application servers. The <var>'name'</var> and <var>'node'</var> columns will contain the server name and node name respectively.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jsf/websphere-application-server-servers.png" alt="websphere application server servers">
