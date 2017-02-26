@@ -205,20 +205,97 @@ mvn wildfly:run
 
 Maven will download the needed dependencies, unpack the WildFly distribution, copy the server configuration, compile the code, and start a WildFly instance on which the web application will be deployed. The result should be the following WildFly startup trace which mentions: 'Deploying application <var>'jsf-primefaces-wildfly-1.0.war'</var> without reporting any errors.
 
+``` plaintext
+[INFO] --- wildfly-maven-plugin:1.1.0.Alpha5:run (default-cli) @ jsf-primefaces-wildfly ---
+[INFO] JAVA_HOME=C:\Program Files\Java\jdk1.8.0_65\jre
+[INFO] JBOSS_HOME=C:\codenotfound\code\jsf-primefaces\jsf-primefaces-wildfly\target\wildfly-9.0.2.Final
 
+[INFO] Server is starting up. Press CTRL + C to stop the server.
+jan 03, 2016 7:45:51 AM org.xnio.Xnio 
+INFO: XNIO version 3.3.1.Final
+jan 03, 2016 7:45:51 AM org.xnio.nio.NioXnio 
+INFO: XNIO NIO Implementation Version 3.3.1.Final
+jan 03, 2016 7:45:51 AM org.jboss.remoting3.EndpointImpl 
+INFO: JBoss Remoting version 4.0.9.Final
+07:45:51,929 INFO  [org.jboss.modules] (main) JBoss Modules version 1.4.3.Final
+07:45:52,365 INFO  [org.jboss.msc] (main) JBoss MSC version 1.2.6.Final
+07:45:52,443 INFO  [org.jboss.as] (MSC service thread 1-6) WFLYSRV0049: WildFly Full 9.0.2.Final (WildFly Core 1.0.2.Final) starting
+07:45:54,320 INFO  [org.jboss.as.controller.management-deprecated] (ServerService Thread Pool -- 3) WFLYCTL0028: Attribute 'enabled' in the resource at address '/subsystem=datasources/data-source=ExampleDS' is deprecated, and may be removed in future version. See the attribute description in the output of the read-resource-description operation to learn more about the deprecation.
+07:45:54,320 INFO  [org.jboss.as.controller.management-deprecated] (ServerService Thread Pool -- 23) WFLYCTL0028: Attribute 'job-repository-type' in the resource at address '/subsystem=batch' is deprecated, and may be removed in future version. See the attribute description in the output of the read-resource-description operation to learn more about the deprecation.
+07:45:54,367 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0039: Creating http management service using socket-binding (management-http)
+07:45:54,383 INFO  [org.xnio] (MSC service thread 1-5) XNIO version 3.3.1.Final
+07:45:54,383 INFO  [org.xnio.nio] (MSC service thread 1-5) XNIO NIO Implementation Version 3.3.1.Final
+07:45:54,414 WARN  [org.jboss.as.txn] (ServerService Thread Pool -- 54) WFLYTX0013: Node identifier property is set to the default value. Please make sure it is unique.
+07:45:54,414 INFO  [org.jboss.as.security] (ServerService Thread Pool -- 53) WFLYSEC0002: Activating Security Subsystem
+07:45:54,414 INFO  [org.jboss.as.jsf] (ServerService Thread Pool -- 44) WFLYJSF0007: Activated the following JSF Implementations: [main]
+07:45:54,461 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 38) WFLYCLINF0001: Activating Infinispan subsystem.
+07:45:54,461 INFO  [org.jboss.as.security] (MSC service thread 1-6) WFLYSEC0001: Current PicketBox version=4.9.2.Final
+07:45:54,461 INFO  [org.jboss.as.naming] (ServerService Thread Pool -- 46) WFLYNAM0001: Activating Naming Subsystem
+07:45:54,476 INFO  [org.jboss.as.webservices] (ServerService Thread Pool -- 56) WFLYWS0002: Activating WebServices Extension
+07:45:54,508 INFO  [org.jboss.as.connector] (MSC service thread 1-7) WFLYJCA0009: Starting JCA Subsystem (IronJacamar 1.2.5.Final)
+07:45:54,508 INFO  [org.wildfly.extension.io] (ServerService Thread Pool -- 37) WFLYIO001: Worker 'default' has auto-configured to 8 core threads with 64 task threads based on your 4 available processors
+07:45:54,554 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-7) WFLYUT0003: Undertow 1.2.9.Final starting
+07:45:54,554 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 55) WFLYUT0003: Undertow 1.2.9.Final starting
+07:45:54,554 INFO  [org.jboss.as.mail.extension] (MSC service thread 1-6) WFLYMAIL0001: Bound mail session [java:jboss/mail/Default]
+07:45:54,554 INFO  [org.jboss.as.naming] (MSC service thread 1-2) WFLYNAM0003: Starting Naming Service
+07:45:54,570 INFO  [org.jboss.as.connector.subsystems.datasources] (ServerService Thread Pool -- 33) WFLYJCA0004: Deploying JDBC-compliant driver class org.h2.Driver (version 1.3)
+07:45:54,570 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-7) WFLYJCA0018: Started Driver service with driver-name = h2
+07:45:54,809 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 55) WFLYUT0014: Creating file handler for path C:\codenotfound\code\jsf-primefaces\jsf-primefaces-wildfly\target\wildfly-9.0.2.Final/welcome-content
+07:45:54,809 INFO  [org.jboss.remoting] (MSC service thread 1-3) JBoss Remoting version 4.0.9.Final
+07:45:54,840 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-6) WFLYUT0012: Started server default-server.
+07:45:54,856 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-6) WFLYUT0018: Host default-host starting
+07:45:54,996 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-8) WFLYUT0006: Undertow HTTP listener default listening on /127.0.0.1:9090
+07:45:55,152 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-6) WFLYJCA0001: Bound data source [java:jboss/datasources/ExampleDS]
+07:45:55,183 INFO  [org.jboss.as.server.deployment.scanner] (MSC service thread 1-8) WFLYDS0013: Started FileSystemDeploymentService for directory C:\codenotfound\code\jsf-primefaces\jsf-primefaces-wildfly\target\wildfly-9.0.2.Final\standalone\deployments
+07:45:55,199 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-5) WFLYSRV0027: Starting deployment of "jsf-primefaces-wildfly-1.0.war" (runtime-name: "jsf-primefaces-wildfly-1.0.war")
+07:45:55,464 INFO  [org.jboss.ws.common.management] (MSC service thread 1-6) JBWS022052: Starting JBoss Web Services - Stack CXF Server 5.0.0.Final
+07:45:56,104 INFO  [org.jboss.weld.deployer] (MSC service thread 1-8) WFLYWELD0003: Processing weld deployment jsf-primefaces-wildfly-1.0.war
+07:45:56,229 INFO  [org.hibernate.validator.internal.util.Version] (MSC service thread 1-8) HV000001: Hibernate Validator 5.1.3.Final
+07:45:56,733 INFO  [org.jboss.weld.deployer] (MSC service thread 1-3) WFLYWELD0006: Starting Services for CDI deployment: jsf-primefaces-wildfly-1.0.war
+07:45:56,764 INFO  [org.jboss.weld.Version] (MSC service thread 1-3) WELD-000900: 2.2.16 (SP1)
+07:45:56,811 INFO  [org.jboss.weld.deployer] (MSC service thread 1-2) WFLYWELD0009: Starting weld service for deployment jsf-primefaces-wildfly-1.0.war
+07:45:57,606 INFO  [javax.enterprise.resource.webcontainer.jsf.config] (ServerService Thread Pool -- 69) Initializing Mojarra 2.2.12-jbossorg-2 20150729-1131 for context '/codenotfound'
+07:45:58,542 INFO  [org.primefaces.webapp.PostConstructApplicationEventListener] (ServerService Thread Pool -- 69) Running on PrimeFaces 5.3
+07:45:58,558 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 69) WFLYUT0021: Registered web context: /codenotfound
+07:45:58,589 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0010: Deployed "jsf-primefaces-wildfly-1.0.war" (runtime-name : "jsf-primefaces-wildfly-1.0.war")
+07:45:58,688 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:9990/management
+07:45:58,688 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0051: Admin console listening on http://127.0.0.1:9990
+07:45:58,688 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0025: WildFly Full 9.0.2.Final (WildFly Core 1.0.2.Final) started in 7165ms - Started 555 of 735 services (221 services are lazy, passive or on-demand)
+[INFO] Deploying application 'jsf-primefaces-wildfly-1.0.war'
 
+07:45:58,937 INFO  [org.jboss.as.repository] (management-handler-thread - 3) WFLYDR0001: Content added at location C:\codenotfound\code\jsf-primefaces\jsf-primefaces-wildfly\target\wildfly-9.0.2.Final\standalone\data\content\62\18a7ce69de2ad5f6835a1c0edc310c19f9b4a8\content
+07:45:58,953 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 9) WFLYUT0022: Unregistered web context: /codenotfound
+07:45:58,953 INFO  [org.jboss.weld.deployer] (MSC service thread 1-1) WFLYWELD0010: Stopping weld service for deployment jsf-primefaces-wildfly-1.0.war
+07:45:59,078 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-7) WFLYSRV0028: Stopped deployment jsf-primefaces-wildfly-1.0.war (runtime-name: jsf-primefaces-wildfly-1.0.war) in 140ms
+07:45:59,078 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-5) WFLYSRV0027: Starting deployment of "jsf-primefaces-wildfly-1.0.war" (runtime-name: "jsf-primefaces-wildfly-1.0.war")
+07:45:59,452 INFO  [org.jboss.weld.deployer] (MSC service thread 1-8) WFLYWELD0003: Processing weld deployment jsf-primefaces-wildfly-1.0.war
+07:45:59,593 INFO  [org.jboss.weld.deployer] (MSC service thread 1-1) WFLYWELD0006: Starting Services for CDI deployment: jsf-primefaces-wildfly-1.0.war
+07:45:59,593 INFO  [org.jboss.weld.deployer] (MSC service thread 1-1) WFLYWELD0009: Starting weld service for deployment jsf-primefaces-wildfly-1.0.war
+07:45:59,749 INFO  [javax.enterprise.resource.webcontainer.jsf.config] (ServerService Thread Pool -- 6) Initializing Mojarra 2.2.12-jbossorg-2 20150729-1131 for context '/codenotfound'
+07:46:00,248 INFO  [org.primefaces.webapp.PostConstructApplicationEventListener] (ServerService Thread Pool -- 6) Running on PrimeFaces 5.3
+07:46:00,248 INFO  [org.wildfly.extension.undertow] (ServerService Thread Pool -- 6) WFLYUT0021: Registered web context: /codenotfound
+07:46:00,295 INFO  [org.jboss.as.server] (management-handler-thread - 3) WFLYSRV0016: Replaced deployment "jsf-primefaces-wildfly-1.0.war" with deployment "jsf-primefaces-wildfly-1.0.war"
+07:46:00,295 INFO  [org.jboss.as.repository] (management-handler-thread - 3) WFLYDR0002: Content removed from location C:\codenotfound\code\jsf-primefaces\jsf-primefaces-wildfly\target\wildfly-9.0.2.Final\standalone\data\content\b6\2fa4660581d5b4d8f5703b276b7c2d7a282c58\content
+```
 
+Open a web browser and enter following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/). The below page should be displayed:
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jsf/wildfly-hello-world-example.png" alt="wildfly hello world example">
+</figure>
 
+Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message. 
 
+<figure>
+    <img src="{{ site.url }}/assets/images/jsf/wildfly-hello-world-example-greeting.png" alt="wildfly hello world example greeting">
+</figure>
 
+---
 
+{% capture notice-github %}
+![github mark](/assets/images/logos/github-mark.png){: .align-left}
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-primefaces-wildfly).
+{% endcapture %}
+<div class="notice--info">{{ notice-github | markdownify }}</div>
 
-
-
-
-
-
-
-
-
+This concludes the PrimeFaces WildFly example. If you found this post helpful or have any questions or remarks, please leave a comment.
