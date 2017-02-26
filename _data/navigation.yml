@@ -1,7 +1,11 @@
 # main links
 main:
-  - title: "CXF"
+  - title: "Spring-WS"
+    url: https://code-not-found.github.io/spring-ws/
+  - title: "Apache CXF"
     url: https://code-not-found.github.io/apache-cxf/
+  - title: "Terms and Privacy Policy"
+    url: https://code-not-found.github.io/terms/
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
