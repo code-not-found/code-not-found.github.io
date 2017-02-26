@@ -1,9 +1,9 @@
 ---
-title: Apache CXF
+title: Java Message Service
 permalink: /jms/
 ---
 
-The Java Message Service (JMS) API is a Java Message Oriented Middleware (MOM) API for sending messages between two or more clients. It is a Java API that allows applications to create, send, receive, and read messages. The JMS API enables communication that is loosely coupled, asynchronous and reliable. The current version of the JMS specification is version 1.1.
+The [Java Message Service (JMS) API](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html) is a Java Message Oriented Middleware (MOM) API for sending messages between two or more clients. It is a Java API that allows applications to create, send, receive, and read messages. The JMS API enables communication that is loosely coupled, asynchronous and reliable. The current version of the JMS specification is version 1.1.
 
 The below links provide many step-by-step examples on how to use the Java Message Service API.
 
@@ -24,7 +24,7 @@ A number of quick start examples for JMS:
 
 How JMS core concepts work:
 
-[JMS Message Structure]({{ site.url }}/2014/01/jms-message-structure.html)
+[JMS Message Structure]({{ site.url }}/2014/01/jms-message-structure-overview.html)
 : An overview on the different parts of a JMS message and how to use them.
 [JMS Priority]({{ site.url }}/2014/01/jms-priority-activemq-maven.html)
 : Explains the JMS priority concepts and provides a code sample which shows how to specify a priority level when sending a JMS message.
@@ -33,13 +33,13 @@ How JMS core concepts work:
 
 A number of JMS provider installation tutorials:
 
-[Install ActiveMQ]({{ site.url }}/2014/01/jms-install-activemq-windows.html)
+[Install ActiveMQ]({{ site.url }}/2014/01/jms-apache-activemq-installation.html)
 : A step-by-step tutorial on how to install ActiveMQ on Windows.
 
-[Install RabbitMQ]({{ site.url }}/2014/11/jms-install-rabbitmq-windows.html)
+[Install RabbitMQ]({{ site.url }}/2014/11/amqp-install-rabbitmq-windows.html)
 : A step-by-step tutorial on how to install RabbitMQ on Windows.
 
-[Install HermesJMS]({{ site.url }}/2014/01/jms-install-hermesjms-windows.html)
+[Install HermesJMS]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html)
 : HermesJMS is an extensible console that helps you interact with JMS providers. This post contains a step-by-step tutorial on how to install HermesJMS on Windows.
 
 

@@ -11,14 +11,14 @@ The below links provide many step-by-step examples on how to use the Apache CXF 
 
 A number of quick start examples for CXF:
 
-[CXF contract first Hello World web service]({{ site.url }}/2014/08/jaxws-cxf-contract-first-hello-world-jetty-maven.html)
-: A CXF contract first Hello World web service example using Jetty and Maven.
+[CXF - SOAP Web Service Consumer & Provider WSDL Example]({{ site.url }}/2016/10/cxf-soap-web-service-consumer-provider-wsdl-example.html)
+: A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Apache CXF and Spring Boot.
 
 ## Logging
 
 A number of CXF logging tutorials:
 
-[CXF logging SOAP messages using Logback]({{ site.url }}/2014/09/jaxws-cxf-logging-request-response-soap-messages-logback.html)
+[CXF logging SOAP messages using Logback]({{ site.url }}/2014/09/jaxws-cxf-log-request-response-soap-messages-logback.html)
 : A code sample which shows how to configure CXF to log the request and response SOAP messages using Logback.
 
 [CXF logging SOAP messages using Log4j2]({{ site.url }}/2015/01/jaxws-cxf-logging-request-response-soap-messages-log4j2.html)
