@@ -33,7 +33,7 @@ org.apache.cxf.common.logging.Slf4jLogger
 As the Hello World example uses Spring, the commons-logging calls from the Spring framework will also be redirected to SLF4J using [jcl-over-slf4j](http://www.slf4j.org/legacy.html). Now that all logging calls of both CXF and Spring are redirected to SLF4J, Log4j will be plugged into SLF4J using the [slf4j-log4j12](http://www.slf4j.org/legacy.html) adaptation layer. The picture below illustrates the described approach.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/c/cxf-logging-using-log4j.png" alt="cxf logging using log4j">
+    <img src="{{ site.url }}/assets/images/cxf/cxf-logging-using-log4j.png" alt="cxf logging using log4j">
 </figure>
 
 The below Maven POM file contains the needed dependencies for the SLF4 bridge (<var>jcl-over-slf4j</var>), Log4j adaptation layer (<var>slf4j-log4j12</var>) and Log4j (<var>log4j</var>). In addition it contains all other needed dependencies and plugins needed in order to run the example.
@@ -449,7 +449,7 @@ public class HelloWorldImplTest {
 
 Run the example by opening a command prompt and executing following Maven command:
 
-plaintext ```
+``` plaintext
 mvn verify
 ```
 
