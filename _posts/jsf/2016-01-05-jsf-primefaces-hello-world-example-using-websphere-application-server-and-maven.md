@@ -190,7 +190,7 @@ mvn install
 ```
 
 > Depending on where WebSphere Application Server is installed, you might need to execute the above command with the correct privileges. For example when running on Windows 7 with the default installation location, not running as an administrator results in following error message:
-!MESSAGE Error reading configuration: C:\Program Files (x86)\IBM\WebSphere\AppServer\profiles\AppSrv01\configuration\org.eclipse.osgi\.manager\.fileTableLock (Access is denied.)
+<var>!MESSAGE Error reading configuration: C:\Program Files (x86)\IBM\WebSphere\AppServer\profiles\AppSrv01\configuration\org.eclipse.osgi\.manager\.fileTableLock (Access is denied.)</var>.
 
 Maven will download the needed dependencies, compile the code and connect to the WAS server. In a first step, a check is done to see if the application is already installed. If so then an uninstall command is triggered to remove the previous version. In a next step the application is installed and started. Finally the application server is restarted resulting in a successful build and deploy as shown below.
 
