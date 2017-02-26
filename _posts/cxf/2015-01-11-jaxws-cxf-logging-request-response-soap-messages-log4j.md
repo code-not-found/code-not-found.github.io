@@ -455,7 +455,7 @@ mvn verify
 
 The result should be that a number of log files are created in the project root directory. Amongst these files there should be <var>jaxws-jetty-cxf-logging-ws.log</var> and <var>jaxws-jetty-cxf-logging-ws-test.log</var> which contain the exchanged SOAP messages.
 
-plaintext ```
+``` plaintext
 06:26:41.718 INFO  [qtp1766911175-27][HelloWorld_PortType] Inbound Message
 ----------------------------
 ID: 1
