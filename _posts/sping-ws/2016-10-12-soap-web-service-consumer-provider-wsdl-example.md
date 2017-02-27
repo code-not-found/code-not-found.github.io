@@ -5,7 +5,7 @@ excerpt: A detailed step-by-step tutorial on how to implement a Hello World web 
 date: 2016-10-12 21:00
 categories: [Spring-WS]
 tags: [Client, Consumer, Endpoint, Example, Hello World, Maven, Provider, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, WSDL]
-teaser: /assets/images/logos/spring-logo.png
+last_modified_at: 2017-02-27 21:00
 ---
 
 <figure>
@@ -15,8 +15,8 @@ teaser: /assets/images/logos/spring-logo.png
 [Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads. The following step by step tutorial illustrates a basic example in which we will configure, build and run a Hello World contract first client and endpoint using a WSDL, Spring-WS, Spring Boot and Maven.
 
 Tools used:
-* Spring-WS 2.3
-* Spring Boot 1.4
+* Spring-WS 2.4
+* Spring Boot 1.5
 * Maven 3
 
 The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
@@ -28,7 +28,6 @@ As Spring Web Services is contract first only, we need to start from a contract 
 ``` xml
 <?xml version="1.0"?>
 <wsdl:definitions name="HelloWorld"
-
     targetNamespace="http://codenotfound.com/services/helloworld"
     xmlns:tns="http://codenotfound.com/services/helloworld" xmlns:types="http://codenotfound.com/types/helloworld"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
@@ -121,14 +120,13 @@ In the plugins section we included the `spring-boot-maven-plugin` Maven plugin s
     <packaging>jar</packaging>
 
     <name>spring-ws-helloworld-example</name>
-    <description>Spring WS - Consume & Provide a Web Service Using WSDL</description>
-    <url>http://www.codenotfound.com/2016/10/consume-provide-web-service-wsdl.html</url>
+    <description>Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example</description>
+    <url>https://www.codenotfound.com/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.1.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
+        <version>1.5.1.RELEASE</version>
     </parent>
 
     <properties>
@@ -142,7 +140,7 @@ In the plugins section we included the `spring-boot-maven-plugin` Maven plugin s
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-ws</artifactId>
+            <artifactId>spring-boot-starter-web-services</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
