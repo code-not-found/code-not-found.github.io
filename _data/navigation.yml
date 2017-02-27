@@ -3,11 +3,11 @@ main:
   #- title: "Spring-WS"
   #  url: https://code-not-found.github.io/spring-ws/
   - title: "Apache CXF"
-    url: https://code-not-found.github.io/apache-cxf/
+    url: https://www.codenotfound.com/apache-cxf/
   - title: "JMS"
-    url: https://code-not-found.github.io/jms/
+    url: https://www.codenotfound.com/jms/
   - title: "Terms and Privacy Policy"
-    url: https://code-not-found.github.io/terms/
+    url: https://www.codenotfound.com/terms/
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
