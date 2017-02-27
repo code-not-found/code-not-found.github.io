@@ -172,7 +172,7 @@ Press the <var>Commit</var> button. The file will disappear from the <var>'Stage
     <img src="{{ site.url }}/assets/images/git/git-gui-commit.png" alt="git gui commit">
 </figure>
 
-Now the local and remote baseline need to be merged. Click on the <kbd>Merge</kbd> menu and select <kbd>Local Merge</kbd>. A new window will pop-up that shows the possible baselines that can be merged with the local master baseline.
+Now the local and remote baseline need to be merged. Click on the <var>Merge</var> menu and select <var>Local Merge</var>. A new window will pop-up that shows the possible baselines that can be merged with the local master baseline.
 
 > If the remote <var>'test-repo/master'</var> does not show as below, make sure to restart Git GUI!
 
@@ -180,19 +180,19 @@ Now the local and remote baseline need to be merged. Click on the <kbd>Merge</kb
     <img src="{{ site.url }}/assets/images/git/git-gui-local-merge.png" alt="git gui local merge">
 </figure>
 
-Click on the <kbd>Merge</kbd> button and a success status should be appear which shows that the <var>'README.md'</var> from the remote repository was successfully added.
+Click on the <var>Merge</var> button and a success status should be appear which shows that the <var>'README.md'</var> from the remote repository was successfully added.
 
 <figure>
     <img src="{{ site.url }}/assets/images/git/git-gui-local-merge-success.png" alt="git gui local merge success">
 </figure>
 
-The last thing left to do is to push the merged local baseline to GitHub. In order to do so select the <kbd>Remote</kbd> menu and click on the <kbd>Push</kbd> menu item. A new window is shown which shows the local master that will be pushed to the remote <var>'test-repo'</var>.
+The last thing left to do is to push the merged local baseline to GitHub. In order to do so select the <var>Remote</var> menu and click on the <var>Push</var> menu item. A new window is shown which shows the local master that will be pushed to the remote <var>'test-repo'</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/git/git-gui-push-to-remote.png" alt="git gui push to remote">
 </figure>
 
-Click the <kbd>Push</kbd> button and enter the passphrase of the SSH keys. A success message should be shown. Close the message by clicking on the <kbd>Close</kbd> button and open your GitHub account. Select your repository and the <var>test1.txt</var> file should be present as shown below.
+Click the <var>Push</var> button and enter the passphrase of the SSH keys. A success message should be shown. Close the message by clicking on the <var>Close</var> button and open your GitHub account. Select your repository and the <var>test1.txt</var> file should be present as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/git/github-file-added.png" alt="github file added">
