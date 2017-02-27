@@ -8,7 +8,7 @@ tags: [Example, Hello World, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, Pr
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/primefaces-logo.png" alt="primefaces logo">
+    <img src="{{ site.url }}/assets/images/logos/primefaces-logo.png" alt="primefaces logo" class="logo">
 </figure>
 
 [PrimeFaces](http://primefaces.org/) is an open source component library for JavaServer Faces (JSF). It provides a collection of mostly visual components (widgets) that can be used by JSF programmers to build the UI for a web application. An overview of these widgets can be found at the [PrimeFaces showcase](http://www.primefaces.org/showcase/). In the following tutorial we will configure, build and run a Hello World PrimeFaces example using Jetty and Maven.
@@ -21,7 +21,7 @@ Tools used:
 
 First let's look at the below Maven POM file which contains the needed dependencies for our project. At the bottom of the dependencies list we find the PrimeFaces library. As PrimeFaces is built on top of [JavaServer Faces](http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html) we also need to include the JSF dependencies. JSF is a component based Model–view–controller (MVC) framework which is built on top of the [Servlet API](http://docs.oracle.com/javaee/6/tutorial/doc/bnafd.html) so we also need to include the Servlet dependency.
 
-In order to run our example we need a servlet container (the component of a web server that interacts with Java servlets). There are a number of servlet containers implementations available, in the below example we will use Jetty which is a non-commercial pure Java-based HTTP (Web) server and Java Servlet container from the Eclipse Foundation. There is a Jetty Maven plugin which allows launching a Jetty instance from command line using Maven which has been configured so that the HTTP listener port is set to "<kbd>9090</kbd>" and the context path is set to "<kbd>codenotfound</kbd>".
+In order to run our example we need a servlet container (the component of a web server that interacts with Java servlets). There are a number of servlet containers implementations available, in the below example we will use [Jetty](http://www.eclipse.org/jetty/) which is a non-commercial pure Java-based HTTP (Web) server and Java Servlet container from the Eclipse Foundation. There is a <var>jetty-maven-plugin</var> which allows launching a Jetty instance from command line using Maven. The plugin has been configured so that the HTTP listener port is set to "<kbd>9090</kbd>" and the context path is set to "<kbd>codenotfound</kbd>".
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -145,7 +145,7 @@ public class HelloWorld {
 }
 ```
 
-The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <p:inputText> fields, that will be used to enter a first and last name, surrounded by a <var>'&lt;p:panel&gt;'</var>. There is also a <var>'&lt;p:dialog&gt;'</var> component that shows a greeting message. The dialog is triggered by a <var>'&lt;p:commandButton&gt;'</var> that is part of the panel.
+The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <p:inputText> fields, that will be used to enter a first and last name, surrounded by a <var>&lt;p:panel&gt;</var>. There is also a <var>&lt;p:dialog&gt;</var> component that shows a greeting message. The dialog is triggered by a <var>&lt;p:commandButton&gt;</var> that is part of the panel.
 
 In order to use the PrimeFaces components, following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
 
@@ -264,7 +264,7 @@ Open a web browser and enter following URL: [http://localhost:9090/codenotfound/
     <img src="{{ site.url }}/assets/images/jsf/jsf-primefaces-hello-world-example.png" alt="jsf primefaces hello world example">
 </figure>
 
-Enter a first and last name and press the <kbd>Submit</kbd> button. A pop-up dialog will be shown with a greeting message.
+Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jsf/jsf-primefaces-hello-world-example-greeting.png" alt="jsf primefaces hello world example greeting">

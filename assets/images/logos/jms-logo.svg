@@ -14,10 +14,10 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    width="600"
-   height="200"
-   viewBox="0 0 600 200"
-   sodipodi:docname="jms_logo.svg"
-   inkscape:export-filename="C:\blogs\codenotfound\images\original\jms_logo.png"
+   height="180"
+   viewBox="0 0 600 180"
+   sodipodi:docname="jms-logo.svg"
+   inkscape:export-filename="C:\code\st\code-not-found\assets\images\logos\jms-logo.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <metadata
@@ -48,16 +48,32 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="0.96"
-     inkscape:cx="156.89172"
+     inkscape:cx="161.97917"
      inkscape:cy="97.768609"
      inkscape:window-x="1272"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
+     inkscape:current-layer="svg2"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="-65.625,180.20833"
+       orientation="0,1"
+       id="guide3342" />
+    <sodipodi:guide
+       position="-6.25,1.0416667"
+       orientation="0,1"
+       id="guide3344" />
+    <sodipodi:guide
+       position="-102.08333,89.583333"
+       orientation="0,1"
+       id="guide3346" />
+  </sodipodi:namedview>
   <flowRoot
      xml:space="preserve"
      id="flowRoot4245"
-     style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     transform="translate(0,-20)"><flowRegion
        id="flowRegion4247"><rect
          id="rect4249"
          width="250"
@@ -66,7 +82,7 @@
          y="69.791664" /></flowRegion><flowPara
        id="flowPara4251" /></flowRoot>  <g
      id="g4266"
-     transform="matrix(0.67232959,0,0,0.67232959,236.07291,31.394669)">
+     transform="matrix(0.67232959,0,0,0.67232959,236.07291,21.394669)">
     <image
        style="fill:#ffffff;fill-opacity:1"
        width="172"
@@ -85,18 +101,18 @@
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     x="115.33333"
-     y="93.750008"
+     x="105.33333"
+     y="79.750008"
      id="text4270"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
-       x="115.33333"
-       y="93.750008"
+       x="105.33333"
+       y="79.750008"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold'"
        id="tspan4274">Java Message</tspan><tspan
        sodipodi:role="line"
-       x="115.33333"
-       y="143.75"
+       x="105.33333"
+       y="129.75"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold'"
        id="tspan4144">Service</tspan></text>
 </svg>
