@@ -13,7 +13,7 @@ tags: [XmlRootElement, Java, JAXB, Marshal, Unmarshal, XML]
 
 Information on the root XML element is required when **marshalling** to or **unmarshalling** from a Java object. JAXB provides this information via the `@XmlRootElement` annotation which contains the name and namespace of the root XML element.
 
-When trying to marshal a class which does not have a `@XMLRootElement` annotation defined, following error will be thrown: *"unable to marshal as an element because it is missing an @XmlRootElement annotation"*. Alternatively when trying to unmarshal, the Java runtime will report that an *"unsuspected element"* is found.
+When trying to marshal a class which does not have a `@XMLRootElement` annotation defined, following error will be thrown: <var>"unable to marshal as an element because it is missing an @XmlRootElement annotation"</var>. Alternatively when trying to unmarshal, the Java runtime will report that an <var>"unsuspected element"</var> is found.
 
 For this example let’s use following class representing a car with a basic structure. Note that a `XmlRootElement` is not defined!
 
@@ -196,4 +196,4 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the marshal & unmarshal with missing `@XmlRootElement` annotation code samples. If you found this post helpful or have any questions or remarks, please leave a comment below. 
+This concludes the marshal & unmarshal with missing `@XmlRootElement` annotation code samples. If you found this post helpful or have any questions or remarks, please leave a comment below.
