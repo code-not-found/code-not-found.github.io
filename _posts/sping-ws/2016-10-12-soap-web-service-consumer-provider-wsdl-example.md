@@ -23,7 +23,7 @@ The tutorial code is organized in such a way that you can choose to only run the
 
 # General Project Setup
 
-As Spring Web Services is contract first only, we need to start from a contract definition. In this tutorial we will use a Hello World service that is defined by below WSDL. The service takes as input a person's first and last name and returns a greeting.
+As Spring Web Services is **contract first only**, we need to start from a contract definition. In this tutorial we will use a Hello World service that is defined by below WSDL. The service takes as input a person's first and last name and returns a greeting.
 
 ``` xml
 <?xml version="1.0"?>
@@ -179,7 +179,7 @@ In the plugins section we included the `spring-boot-maven-plugin` Maven plugin s
 </project>
 ```
 
-In order to directly use the <var>'person'</var> and <var>'greeting'</var> elements (defined in the <var>'types'</var> section of the Hello World WSDL) in our Java code, we will use JAXB to generate the corresponding Java classes. The above POM file configures the `maven-jaxb2-plugin` that will handle the generation.
+In order to directly use the <var>'person'</var> and <var>'greeting'</var> elements (defined in the <var>'types'</var> section of the Hello World WSDL) in our Java code, we will use [JAXB](http://www.oracle.com/technetwork/articles/javase/index-140168.html) to generate the corresponding Java classes. The above POM file configures the [maven-jaxb2-plugin](https://java.net/projects/maven-jaxb2-plugin/pages/Home) that will handle the generation.
 
 The plugin will look into the defined <var>'&lt;schemaDirectory&gt;'</var> in order to find any WSDL files for which it needs to generate the the Java classes. In order to trigger the generation via Maven, executed following command:
 
@@ -194,6 +194,7 @@ This results in a number of generated classes amongst which the `Person` and `Gr
 </figure>
 
 We start by creating an `SpringWsApplication` that contains a `main()` method that uses Spring Boot’s `SpringApplication.run()` method to bootstrap the application, starting Spring. For more information on Spring Boot we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
+
 ``` java
 package com.codenotfound;
 
@@ -211,13 +212,13 @@ public class SpringWsApplication {
 
 # Creating the Endpoint (Provider)
 
-The server-side of Spring-WS is designed around a central class called `MessageDispatcher` that dispatches incoming XML messages to endpoints. For more detailed information checkout the [Spring Web Services reference documentation on the MessageDispatcher](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#message-dispatcher).
+The server-side of Spring-WS is designed around a central class called `MessageDispatcher` that dispatches incoming XML messages to endpoints. For more detailed information checkout the [Spring Web Services reference documentation on the MessageDispatcher](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#d5e780).
 
 Spring Web Services supports multiple transport protocols. The most common is the HTTP transport, for which a custom `MessageDispatcherServlet` servlet is supplied. This is a standard `Servlet` which extends from the standard Spring Web `DispatcherServlet` ([=central dispatcher for HTTP request handlers/controllers](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html)), and wraps a `MessageDispatcher`.
 
 > In other words: the `MessageDispatcherServlet` combines the attributes of the `MessageDispatcher` and `DispatcherServlet` and as a result allows the handling of XML messages over HTTP.
 
-In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>'messageDispatcherServlet'</var>, it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
+In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>'messageDispatcherServlet'</var>, it does [not replace Spring Boot’s default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
 
 The servlet mapping URI pattern on the `ServletRegistrationBean` is set to "<kbd>/codenotfound/ws/*</kbd>". The web container will use this path to map incoming HTTP requests to the servlet.
 
@@ -267,7 +268,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
 Now that our `MessageDispatcherServlet` is defined it will try to match incoming XML messages on the defined URI with one of the available handling methods. So all we need to do is setup an `Endpoint` that contains a handling method that matches the incoming request. This service endpoint can be a simple POJO with a number of Spring WS annotations as shown below.
 
-The `HelloWorldEndpoint` POJO is annotated with the `@Endpoint` annotation which registers the class with Spring WS as a potential candidate for processing incoming SOAP messages. It contains a `sayHello()` method that receives a `Person` and returns a `Greeting`. Note that these are the Java classes that we generated earlier using JAXB.
+The `HelloWorldEndpoint` POJO is annotated with the `@Endpoint` annotation which registers the class with Spring WS as a potential candidate for processing incoming SOAP messages. It contains a `sayHello()` method that receives a `Person` and returns a `Greeting`. Note that these are the Java classes that we generated earlier using JAXB and both are annotated with `@XmlRoolElement`.
 
 To indicate what sort of messages a method can handle, it is annotated with the `@PayloadRoot` annotation that specifies a qualified name that is defined by a <var>'namespace'</var> and a local name (=<var>'localPart'</var>). Whenever a message comes in which has this qualified name for the payload root element, the method will be invoked.
 
