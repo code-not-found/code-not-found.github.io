@@ -180,7 +180,7 @@ Now the local and remote baseline need to be merged. Click on the <var>Merge</va
     <img src="{{ site.url }}/assets/images/git/git-gui-local-merge.png" alt="git gui local merge">
 </figure>
 
-Click on the <var>Merge</var> button and a success status should be appear which shows that the <var>'README.md'</var> from the remote repository was successfully added.
+Click on the <var>Merge</var> button and a success status should be appear which shows that the <var>README.md</var> file from the remote repository was successfully added.
 
 <figure>
     <img src="{{ site.url }}/assets/images/git/git-gui-local-merge-success.png" alt="git gui local merge success">
