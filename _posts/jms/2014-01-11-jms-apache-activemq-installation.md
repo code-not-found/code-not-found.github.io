@@ -11,10 +11,10 @@ tags: [ActiveMQ, Apache ActiveMQ, Installation, Java, JMS, Unix, Windows]
     <img src="{{ site.url }}/assets/images/logos/apache-activemq-logo.png" alt="apache activemq logo">
 </figure>
 
-[Apache ActiveMQ](http://activemq.apache.org/) is an open source message broker written in Java that offers JMS, REST and WebSocket interfaces. It supports protocols like AMQP, MQTT, OpenWire and STOMP that can be used by applications in different languages. Following tutorial details how to install ActiveMQ on Windows or Unix and perform a start/stop of the installed instance.
+[Apache ActiveMQ](http://activemq.apache.org/) is an **open source message broker** written in Java that offers JMS, REST and WebSocket interfaces. It supports protocols like AMQP, MQTT, OpenWire and STOMP that can be used by applications in different languages. Following tutorial details how to install ActiveMQ on Windows or Unix and in addition shows how perform a start/stop of the installed instance.
 
 
- First thing to do is to download the ActiveMQ binaries. Go the the [ActiveMQ download page](http://activemq.apache.org/download.html) and click on the latest stable release link in the <var>Latest Releases</var> section. Then in the <var>Getting the Binary Distributions</var> section click on the download link for your operating system. At the time of writing the latest stable release was apache-activemq-5.13.3.
+ First thing to do is to download the ActiveMQ binaries. Go the the [ActiveMQ download page](http://activemq.apache.org/download.html) and click on the latest stable release link in the <var>Latest Releases</var> section. Then in the <var>Getting the Binary Distributions</var> section click on the download link for your operating system. At the time of writing the latest stable release was <var>apache-activemq-5.13.3</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-download.png" alt="apache activemq download">
@@ -28,7 +28,7 @@ Extract the Windows binaries archive that was downloaded in the previous step. T
     <img src="{{ site.url }}/assets/images/jms/windows-apache-activemq-files.png" alt="windows apache activemq files">
 </figure>
 
-Open a command prompt and navigate to <var>[activemq_win_install_dir]</var>. Change to the <var>bin</var> subdirectory and execute the following command to start ActiveMQ: 
+Open a command prompt and navigate to <var>[activemq_win_install_dir]</var>. Change to the <var>bin</var> subdirectory and execute the following command to start ActiveMQ:
 
 ``` plaintext
 activemq start
@@ -56,7 +56,7 @@ Open a terminal and navigate to <var>[activemq_unix_install_dir]</var>. Change t
 ./activemq console
 ```
 
-The ActiveMQ broker can also be started as a background process (note that the corresponding process identifier is stored in the <var>[activemq_unix_install_dir]/data</var> directory for future reference). In order to achieve this, execute the following command instead of the above (hit "<kbd>CTRL+C</kbd>" first if you already started using a foreground process).
+The ActiveMQ broker can also be started as a background process (note that the corresponding process identifier is stored in the <var>[activemq_unix_install_dir]/data</var> directory for future reference). In order to achieve this, execute the following command instead of the above (hit <var>CTRL+C</var> first if you already started using a foreground process).
 
 ``` plaintext
 ./activemq start
@@ -102,7 +102,7 @@ Click on the <var>Manage ActiveMQ broker</var> link and enter following default 
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-console-welcome.png" alt="apache activemq console welcome">
 </figure>
 
-Let's finish this tutorial by stopping the running ActiveMQ instance. Switch back to the console in which ActiveMQ was started and press "<kbd>CTRL+C</kbd>" (note that if ActiveMQ was started as a background process, the stop command needs to be run instead). If needed type "<kbd>Y</kbd>" when prompted to <var>'Terminate batch job'</var> followed by "<kbd>ENTER</kbd>". The console will return to the prompt as shown below and ActiveMQ is stopped. 
+Let's finish this tutorial by stopping the running ActiveMQ instance. Switch back to the console in which ActiveMQ was started and press <var>CTRL+C</var> (note that if ActiveMQ was started as a background process, the stop command needs to be run instead). If needed type "<kbd>Y</kbd>" when prompted to <var>'Terminate batch job'</var> followed by <var>ENTER</var>. The console will return to the prompt as shown below and ActiveMQ is stopped.
 
 <figure>
     <img src="{{ site.url }}/assets/images/jms/apache-activemq-stop.png" alt="apache activemq stop">
