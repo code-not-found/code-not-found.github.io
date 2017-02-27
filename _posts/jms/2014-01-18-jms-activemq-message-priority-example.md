@@ -73,7 +73,7 @@ First let's look at the below Maven POM file which contains the needed dependenc
     <packaging>jar</packaging>
 
     <name>JMS - ActiveMQ Message Priority Example</name>
-    <url>https://codenotfound.com/2014/01/jms-activemq-message-priority-example.html</url>
+    <url>https://www.codenotfound.com/2014/01/jms-activemq-message-priority-example.html</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

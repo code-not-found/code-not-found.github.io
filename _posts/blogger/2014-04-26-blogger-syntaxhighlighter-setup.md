@@ -8,10 +8,10 @@ tags: [Example, Hello World, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, Pr
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/syntaxhighlighter-logo.png" alt="syntaxhighlighter logo">
+    <img src="{{ site.url }}/assets/images/logos/syntaxhighlighter-logo.png" alt="syntaxhighlighter logo" class="logo">
 </figure>
 
-Blogger, the blog-publishing service from Google, does not provide a syntax highlighter out of the box. This means you need to resort to third party solutions in order to have syntax highlighting in your posts. One of those solutions is the syntax highlighter created by Alex Gorbatchev which is called [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/).
+[Blogger](https://www.blogger.com/), the blog-publishing service from Google, does not provide a syntax highlighter out of the box. This means you need to resort to third party solutions in order to have syntax highlighting in your posts. One of those solutions is the syntax highlighter created by Alex Gorbatchev which is called [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/).
 
 One of the advantages of this highlighter is that it is purely written in JavaScript and as a result it does not need a server side component. SyntaxHighlighter can be easily integrated into your Blogger blog as we will detail in this tutorial.
 
@@ -29,7 +29,7 @@ This will open the template page of your blog. Click on the button that says <va
     <img src="{{ site.url }}/assets/images/blogger/blogger-template.png" alt="blogger template">
 </figure>
 
-Click anywhere inside the editor window and press <kbd>CTRL+F</kbd>. A search box should now appear in the upper right hand corner as shown below. In the search box enter "<kbd>&lt;/head&gt;</kbd>" (without quotes) and press <kbd>ENTER</kbd>.
+Click anywhere inside the editor window and press <var>CTRL+F</var>. A search box should now appear in the upper right hand corner as shown below. In the search box enter "<kbd>&lt;/head&gt;</kbd>" (without quotes) and press <var>ENTER</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/blogger/blogger-edit-html-head.png" alt="blogger edit html head">
@@ -52,14 +52,14 @@ The core files consist out of the following JavaScript file and style sheet:
 
 ## 2) The SyntaxHighlighter theme
 
-There are a number of themes available for SyntaxHighlighter, for the complete list please check following [link](http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/). The style sheet below is the default theme.
+There are [a number of themes available for SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/manual/themes/), the style sheet below is the default theme.
 
 ``` xml
 <link href="http://alexgorbatchev.com/pub/sh/current/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
 ```
 
 ## 3) The specific brush(es) needed for the blog
-Depending on the structured language that needs to be highlighted, the corresponding brush needs to be imported. For a complete list of all available brushes please check following [link](http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/). In this example we will add the brushes for <var>'Java'</var> and <var>'XML'</var>.
+Depending on the structured language that needs to be highlighted, the corresponding brush needs to be imported. The SyntaxHighlighter site contains [a complete list of all available brushes](http://alexgorbatchev.com/SyntaxHighlighter/manual/brushes/). In this example we will add the brushes for <var>'Java'</var> and <var>'XML'</var>.
 
 ``` xml
 <script src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJava.js" type="text/javascript"></scrip>
@@ -96,17 +96,18 @@ The complete script to be inserted in the Blogger template is shown below. Copy 
 <!-- 'SyntaxHighlighter' additions END -->
 ```
 
+Click the <var>Save template</var> button to save the changes made to your Blogger template. This concludes the setup, in the next section will see how to use SyntaxHighlighter.
+
 <figure>
     <img src="{{ site.url }}/assets/images/blogger/blogger-edit-html-setup.png" alt="blogger edit html setup">
 </figure>
 
-Click the <var>Save template</var> button to save the changes made to your Blogger template. This concludes the setup, in the next section will see how to use SyntaxHighlighter.
 
 ## SyntaxHighlighter Usage
 
-In order to use SyntaxHighlighter we need to wrap the section to be highlighted with an XML tag called &lt;pre&gt;. This tag has one required parameter called <var>'brush'</var> which is the same brush that was added in section 3 of the above setup.
+In order to use SyntaxHighlighter we need to wrap the section to be highlighted with an XML tag called <var>&lt;pre&gt;</var>. This tag has one required parameter called <var>'brush'</var> which is the same brush that was added in section 3 of the above setup.
 
-For this example we will add a `HelloWorld` Java class to a &lt;pre&gt; tag with a <var>'Java'</var> brush and a Hello World XML file to a <pre> tag with a <var>'XML'</var> brush. Copy the below code and paste it inside a Blogger post as shown.
+For this example we will add a `HelloWorld` Java class to a <var>&lt;pre&gt;</var> tag with a <var>'Java'</var> brush and a Hello World XML file to a <var>&lt;pre&gt;</var> tag with a <var>'XML'</var> brush. Copy the below code and paste it inside a Blogger post as shown.
 
 > Make sure all right angle brackets within the <pre> tags are HTML escaped, in other words all < (less than character) must be replaced with "&amp;lt;" (without quotes, as shown below)!
 
@@ -138,7 +139,7 @@ Save and publish the page and the result should look like:
 
 # SyntaxHighlighter Options
 
-In addition to the mandatory <var>'brush'</var> parameter, the &lt;pre&gt; tag has a number of optional parameters. For example it is possible to highlight one or more lines to focus the reader's attention by adding the <var>'highlight'</var> parameter as shown below. The full list of available parameters can be found [here](The result of above snippet:).
+In addition to the mandatory <var>'brush'</var> parameter, the <var>&lt;pre&gt;</var> tag has a number of optional parameters. For example it is possible to highlight one or more lines to focus the reader's attention by adding the <var>'highlight'</var> parameter as shown below. Checkout the [full list of additional parameters that can be configured](http://alexgorbatchev.com/SyntaxHighlighter/manual/configuration/).
 
 ``` xml
 <pre class="brush: java; highlight: [3,4,5]">

@@ -35,7 +35,7 @@ In order to run our example we need a servlet container (the component of a web 
     <packaging>war</packaging>
 
     <name>JSF - PrimeFaces Hello World Example</name>
-    <url>https://codenotfound.com/2014/04/jsf-primefaces-hello-world-example.html</url>
+    <url>https://www.codenotfound.com/2014/04/jsf-primefaces-hello-world-example.html</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
