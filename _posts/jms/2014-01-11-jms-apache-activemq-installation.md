@@ -8,7 +8,7 @@ tags: [ActiveMQ, Apache ActiveMQ, Installation, Java, JMS, Unix, Windows]
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-activemq-logo.png" alt="apache activemq logo">
+    <img src="{{ site.url }}/assets/images/logos/apache-activemq-logo.png" alt="apache activemq logo" class="logo">
 </figure>
 
 [Apache ActiveMQ](http://activemq.apache.org/) is an **open source message broker** written in Java that offers JMS, REST and WebSocket interfaces. It supports protocols like AMQP, MQTT, OpenWire and STOMP that can be used by applications in different languages. Following tutorial details how to install ActiveMQ on Windows or Unix and in addition shows how perform a start/stop of the installed instance.
