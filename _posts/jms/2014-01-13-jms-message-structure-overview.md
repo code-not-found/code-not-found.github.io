@@ -8,7 +8,7 @@ tags: [Format, Java Message Service, JMS, Message, Properties, Structure]
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/jms-logo.png" alt="jms logo">
+    <img src="{{ site.url }}/assets/images/logos/jms-logo.png" alt="jms logo" class="logo">
 </figure>
 
 The basic structure of a JMS message consists out of three parts: **headers**, **properties** and **body**. In this blog post we will explore the different elements of the JMS message format and explain their use. For an exhaustive overview please check the [Java Message Service Concepts](http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html) chapter of The Java EE 6 Tutorial.
@@ -69,7 +69,7 @@ The JMS API provides methods for creating messages of each type and for filling 
     producer.send(message);
 ```
 
-At the consuming end, a message arrives as a generic `Message` object and must be cast to the appropriate message type. You can use one or more getter methods to extract the message contents. The following code fragment uses the `getText()` method: 
+At the consuming end, a message arrives as a generic `Message` object and must be cast to the appropriate message type. You can use one or more getter methods to extract the message contents. The following code fragment uses the `getText()` method:
 
 ``` java
     Message m = consumer.receive();
