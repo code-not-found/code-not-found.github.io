@@ -8,7 +8,7 @@ tags: [Apache ActiveMQ, ActiveMQ, Example, Java Message Service, JMS, Level, Mes
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/jms-logo.png" alt="jms logo">
+    <img src="{{ site.url }}/assets/images/logos/jms-logo.png" alt="jms logo" class="logo">
 </figure>
 
 Priority levels are a powerful instrument on JMS messages which allow building robust applications where for example peak traffic will not block important messages (set with a higher priority) from getting through the queue. The following post explains the basics of JMS priority and illustrates them with a code sample using ActiveMQ and Maven.
@@ -44,7 +44,7 @@ messages; however, it should do its best to deliver expedited messages ahead of
 normal messages.
 ```
 
-> When implementing JMS priority it is important to realize that correct configuration of the JMS provider and consumers/producers is key in getting higher-priority messages delivered before lower-priority ones. It is also important to note that the JMS specification does not mandate a provider to implement a strict priority ordering of messages.
+> When implementing JMS priority it is important to realize that correct configuration of the JMS provider and consumers/producers is key in getting higher-priority messages delivered before lower-priority ones. It is also important to note that **the JMS specification does not mandate a provider to implement a strict priority ordering of messages**.
 
 For example [on ActiveMQ, there are a number of settings that need to be made in order to support message priority](http://activemq.apache.org/how-can-i-support-priority-queues.html). A typical example is lowering the consumer prefetch to 1 to ensure getting the high priority messages from the store ahead of lower priority messages. However this sort of tradeoff can have significant performance implications, so always test your scenarios thoroughly.
 
@@ -131,7 +131,7 @@ First let's look at the below Maven POM file which contains the needed dependenc
 </project>
 ```
 
-Next is the `Producer` class which contains the two `send()` methods: one which applies default priority and one which applies a custom priority. The class also contains two methods for opening/closing a connection to the message broker as well as a method for creating the message producer. 
+Next is the `Producer` class which contains the two `send()` methods: one which applies default priority and one which applies a custom priority. The class also contains two methods for opening/closing a connection to the message broker as well as a method for creating the message producer.
 
 ``` java
 package com.codenotfound.jms.priority;
@@ -343,7 +343,7 @@ Make sure an ActiveMQ message broker is up and running, open a command prompt an
 mvn test
 ```
 
-This will trigger Maven to run the above test case and results in the following log statements. Even though <var>'message1'</var> was sent first in both test cases, in the first test it is received first whereas in the second test it is received last because of the different assigned priority. 
+This will trigger Maven to run the above test case and results in the following log statements. Even though <var>'message1'</var> was sent first in both test cases, in the first test it is received first whereas in the second test it is received last because of the different assigned priority.
 
 ``` plaintext
 20:44:20.992 INFO  [main][Producer] message1 sent with default priority(=4)
