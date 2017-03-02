@@ -5,7 +5,8 @@ excerpt: A step-by-step tutorial on how to download and install HermesJMS on Win
 date: 2014-01-11 21:00
 categories: [JMS]
 tags: [Configuration, Download, Hermes JMS, HermesJMS, Installation, Java, JMS, Tutorial, Unix, Windows]
-redirect_from: "/2014/01/jms-install-hermesjms-windows.html"
+redirect_from:
+  - /2014/01/jms-install-hermesjms-windows.html
 ---
 
 <figure>

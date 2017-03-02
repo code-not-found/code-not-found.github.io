@@ -5,7 +5,8 @@ excerpt: A detailed example using ActiveMQ that shows how to specify a priority 
 date: 2014-01-18 21:00
 categories: [JMS]
 tags: [Apache ActiveMQ, ActiveMQ, Example, Java Message Service, JMS, Level, Message, Priority, Queue]
-redirect_from: "/2014/01/jms-priority-activemq-maven.html"
+redirect_from:
+  - /2014/01/jms-priority-activemq-maven.html
 ---
 
 <figure>

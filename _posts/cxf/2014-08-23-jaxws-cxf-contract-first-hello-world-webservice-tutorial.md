@@ -5,7 +5,8 @@ excerpt: A detailed step-by-step tutorial on how to implement a CXF contract fir
 date: 2014-08-23 21:00
 categories: [Apache CXF]
 tags: [Apache CXF, Contract First, CXF, Example, Hello World, JAX-WS, Jetty, Maven, SOAP, Spring, Tutorial, Web service, Webservice]
-redirect_from: "/2014/08/jaxws-cxf-contract-first-hello-world-jetty-maven.html"
+redirect_from:
+  - /2014/08/jaxws-cxf-contract-first-hello-world-jetty-maven.html
 ---
 
 <figure>

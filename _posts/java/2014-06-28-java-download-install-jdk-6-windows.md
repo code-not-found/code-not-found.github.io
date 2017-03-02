@@ -5,7 +5,8 @@ excerpt: A detailed tutorial on how to download and install jdk1.6.0_45 on Windo
 date: 2014-06-28 21:00
 categories: [Java]
 tags: [Download, Install, Java, JDK, jdk1.6.0_45, Tutorial, Windows]
-redirect_from: "/2014/06/java-install-jdk-windows.html"
+redirect_from:
+  - /2014/06/java-install-jdk-windows.html
 ---
 
 <figure>

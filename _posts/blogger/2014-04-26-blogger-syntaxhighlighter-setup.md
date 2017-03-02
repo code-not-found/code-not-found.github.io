@@ -5,7 +5,8 @@ excerpt: A detailed tutorial on how to setup code syntax highlighting on your Bl
 date: 2014-04-26 21:00
 categories: [PrimeFaces]
 tags: [Example, Hello World, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, Project, Tutorial]
-redirect_from: "/2014/04/how-to-setup-syntaxhighlighter-on-blogger.html"
+redirect_from:
+  - /2014/04/how-to-setup-syntaxhighlighter-on-blogger.html
 ---
 
 <figure>
