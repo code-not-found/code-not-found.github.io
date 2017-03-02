@@ -6,8 +6,8 @@ date: 2013-07-30 21:00
 categories: [JAXB]
 tags: [XmlRootElement, Java, JAXB, Marshal, Unmarshal, XML]
 redirect_from:
-  -/2013/07/jaxb-marshal-unmarshal-with-missing.html
-  -/2013/07/jaxb-marshal-unmarshal-with-missing.html?m=0
+  - /2013/07/jaxb-marshal-unmarshal-with-missing.html
+  - /2013/07/jaxb-marshal-unmarshal-with-missing.html?m=0
 ---
 
 <figure>
