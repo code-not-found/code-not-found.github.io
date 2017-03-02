@@ -5,6 +5,7 @@ excerpt: A step-by-step tutorial on how to install and run Apache ActiveMQ on Wi
 date: 2014-01-11 21:00
 categories: [JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Installation, Java, JMS, Unix, Windows]
+redirect_from: "/2014/01/jms-activemq-installation.html"
 ---
 
 <figure>

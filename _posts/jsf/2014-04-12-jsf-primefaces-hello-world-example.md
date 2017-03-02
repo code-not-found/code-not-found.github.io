@@ -5,6 +5,7 @@ excerpt: A PrimeFaces tutorial in which we build and run a Hello World example u
 date: 2014-04-12 21:00
 categories: [PrimeFaces]
 tags: [Example, Hello World, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, Project, Tutorial]
+redirect_from: "/2014/04/jsf-primefaces-hello-world-using-jetty.html"
 ---
 
 <figure>
