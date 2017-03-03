@@ -5,6 +5,8 @@ excerpt: A detailed tutorial on how to download and install Maven 3.2.2 on Windo
 date: 2014-06-28 21:00
 categories: [Apache Maven]
 tags: [Apache Maven, Apache Maven 3.2.2, Download, Install, Maven, Tutorial, Windows]
+redirect_from:
+  - /2014/06/maven-install-windows.html
 ---
 
 <figure>

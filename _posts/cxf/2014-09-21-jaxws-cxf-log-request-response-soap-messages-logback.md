@@ -5,6 +5,8 @@ excerpt: A detailed example on how to setup CXF to log request and response SOAP
 date: 2014-09-21 21:00
 categories: [Apache CXF]
 tags: [Apache CXF, CXF, Feature, Interceptor, JAX-WS, Log, logback, logging, Messages, Request, Response, SOAP]
+redirect_from:
+  - /2014/09/jaxws-cxf-logging-request-response-soap-messages-logback.html
 ---
 
 <figure>

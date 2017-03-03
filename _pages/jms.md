@@ -1,6 +1,8 @@
 ---
 title: Java Message Service
 permalink: /jms/
+redirect_from:
+  - /p/jms.html
 ---
 
 The [Java Message Service (JMS) API](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html) is a Java Message Oriented Middleware (MOM) API for sending messages between two or more clients. It is a Java API that allows applications to create, send, receive, and read messages. The JMS API enables communication that is loosely coupled, asynchronous and reliable. The current version of the JMS specification is version 1.1.

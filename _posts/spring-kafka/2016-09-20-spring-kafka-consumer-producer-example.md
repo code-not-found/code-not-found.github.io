@@ -5,6 +5,9 @@ excerpt: A detailed step-by-step tutorial on how to implement an Apache Kafka Co
 date: 2016-09-20 21:00
 categories: [Spring Kafka]
 tags: [Apache Kafka, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring Kafka, Tutorial]
+redirect_from:
+  - /2016/09/spring-kafka-hello-world-consumer-producer-example.html
+  - /2016/09/spring-kafka-hello-world-consumer.html
 ---
 
 <figure>

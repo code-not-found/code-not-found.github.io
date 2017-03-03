@@ -5,6 +5,8 @@ excerpt: A detailed tutorial on how to add a GitHub remote repository using Git 
 date: 2014-04-27 21:00
 categories: [Git]
 tags: [Add, Git, Git GUI, GitHub, Remote, Repository, Setup, Tutorial, upload code, Windows]
+redirect_from:
+  - /2014/04/git-upload-source-code-github-git-gui.html
 ---
 
 <figure>

@@ -5,6 +5,8 @@ excerpt: A code sample which shows how to configure CXF to log the request and r
 date: 2015-01-10 21:00
 categories: [Apache CXF]
 tags: [Apache CXF, Code Sample, CXF, JAX-WS, Jetty, log4j2, logging, Maven, SOAP message]
+redirect_from:
+  - /2015/01/jaxws-cxf-logging-inbound-outbound-soap-messages-log4j2.html
 ---
 
 <figure>

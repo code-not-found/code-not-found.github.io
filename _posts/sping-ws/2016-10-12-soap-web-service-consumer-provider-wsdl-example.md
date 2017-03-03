@@ -98,7 +98,7 @@ As Spring Web Services is **contract first only**, we need to start from a contr
 </wsdl:definitions>
 ```
 
-We will be building and running our example using [Maven](https://maven.apache.org/). Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
+We will be building and running our example using [Apache Maven](https://maven.apache.org/). Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
 
 In order to expose the Hello World service endpoint we will use the [Spring Boot](https://projects.spring.io/spring-boot/) project that comes with an embedded Apache Tomcat server. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) are used which are a set of convenient dependency descriptors that you can include in your application.
 

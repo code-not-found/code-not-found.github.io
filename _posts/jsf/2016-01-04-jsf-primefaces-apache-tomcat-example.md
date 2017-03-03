@@ -5,6 +5,8 @@ excerpt: A PrimeFaces 'Hello World' example using Apache Tomcat and Maven.
 date: 2016-01-04 21:00
 categories: [PrimeFaces]
 tags: [Apache Tomcat, Example, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, Tomcat]
+redirect_from:
+  - /2016/01/jsf-primefaces-apache-tomcat-example-using-maven.html
 ---
 
 <figure>
