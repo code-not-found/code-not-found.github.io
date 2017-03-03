@@ -4,7 +4,9 @@ permalink: /2014/11/amqp-install-rabbitmq-windows.html
 excerpt: A step-by-step tutorial on how to install RabbitMQ on Windows.
 date: 2014-11-18 21:00
 categories: [AMQP]
-tags: [nstall, Java Message Service, JMS, RabbitMQ, Setup, Tutorial]
+tags: [Install, Java Message Service, JMS, RabbitMQ, Setup, Tutorial]
+redirect_from:
+  - /2014/11/jms-install-rabbitmq-windows.html
 ---
 
 <figure>
