@@ -5,6 +5,8 @@ excerpt: A code sample which shows how to unit test FacesContext using EasyMock,
 date: 2014-11-12 21:00
 categories: [EasyMock]
 tags: [Code Sample, EasyMock, FacesContext, JSF, JUnit, Maven, PowerMock, unit testing]
+redirect_from:
+  - /2014/11/easymock-mocking-facescontext-using.html
 ---
 
 <figure>

@@ -1,6 +1,8 @@
 ---
 title: Apache CXF
 permalink: /apache-cxf/
+redirect_from:
+  - /p/cxf.html
 ---
 
 [Apache CXF](http://cxf.apache.org/) is an open source services framework. CXF helps to build and develop services using front end programming APIs like JAX-WS and JAX-RS. These services can speak a variety of protocols such as SOAP, XML/HTTP or RESTful HTTP and work over a variety of transports such as HTTP or JMS.
