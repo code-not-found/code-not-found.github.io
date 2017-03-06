@@ -7,6 +7,7 @@ categories: [Apache Maven]
 tags: [Apache Maven, Apache Maven 3.2.2, Download, Install, Maven, Tutorial, Windows]
 redirect_from:
   - /2014/06/maven-install-windows.html
+  - /2014/06/maven-install-maven.html
 ---
 
 <figure>
