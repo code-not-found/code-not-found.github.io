@@ -5,6 +5,8 @@ excerpt: A detailed overview on the different parts of a JMS message.
 date: 2014-01-13 21:00
 categories: [JMS]
 tags: [Format, Java Message Service, JMS, Message, Properties, Structure]
+redirect_from:
+  - /2014/01/jms-message-structure.html
 ---
 
 <figure>

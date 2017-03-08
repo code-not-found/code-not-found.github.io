@@ -8,6 +8,7 @@ tags: [ActiveMQ, Apache ActiveMQ, Installation, Java, JMS, Unix, Windows]
 redirect_from:
   - /2014/01/jms-activemq-installation.html
   - /2014/01/jms-installing-activemq.html
+  - /2014/01/jms-install-activemq-windows.html
 ---
 
 <figure>
