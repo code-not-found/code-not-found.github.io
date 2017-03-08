@@ -5,6 +5,8 @@ excerpt: A code sample which shows how to unit test FacesContext using Mockito, 
 date: 2014-11-11 21:00
 categories: [Mockito]
 tags: [Code Sample, FacesContext, JSF, JUnit, Maven, Mockito, PowerMock, unit testing]
+redirect_from:
+  - /2014/11/mockito-mocking-facescontext-using.html
 ---
 
 <figure>

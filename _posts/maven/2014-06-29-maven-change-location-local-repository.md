@@ -5,6 +5,8 @@ excerpt: A short tutorial on how to change the location of the Maven local repos
 date: 2014-06-29 21:00
 categories: [Apache Maven]
 tags: [Apache Maven, Change, Configuration, Local, Location, Maven, Repository, Setup]
+redirect_from:
+  - /2014/06/maven-change-location-of-local.html
 ---
 
 <figure>

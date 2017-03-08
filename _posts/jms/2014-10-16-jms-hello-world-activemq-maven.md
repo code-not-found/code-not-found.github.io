@@ -5,6 +5,8 @@ excerpt: A JMS Hello World example using ActiveMQ and Maven.
 date: 2014-10-16 21:00
 categories: [JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Example, Hello World, Java Message Service, JMS, Maven]
+redirect_from:
+  - /2014/10/jms-hello-world-using-activemq.html
 ---
 
 <figure>

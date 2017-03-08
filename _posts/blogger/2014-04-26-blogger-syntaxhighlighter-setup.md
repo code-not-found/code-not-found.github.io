@@ -7,6 +7,7 @@ categories: [PrimeFaces]
 tags: [Example, Hello World, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, Project, Tutorial]
 redirect_from:
   - /2014/04/how-to-setup-syntaxhighlighter-on-blogger.html
+  - /2014/04/blogger-add-syntaxhighlighter.html
 ---
 
 <figure>
