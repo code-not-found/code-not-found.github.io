@@ -8,7 +8,6 @@ tags: [Apache Tomcat, Example, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, 
 redirect_from:
   - /2016/01/jsf-primefaces-apache-tomcat-example-using-maven.html
   - /2016/01/jsf-primefaces-hello-world-example-using-apache-tomcat-and-maven.html
-  - /2016/01/jsf-primefaces-hello-world-example-using-apache-tomcat-and-maven.html?m=0
 ---
 
 <figure>

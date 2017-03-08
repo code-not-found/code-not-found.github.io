@@ -7,7 +7,6 @@ categories: [JAXB]
 tags: [Java, JAXB, Object, String, Unmarshal, XML]
 redirect_from:
   - /2013/07/jaxb-unmarshal-xml-string.html
-  - /2013/07/jaxb-unmarshalling-xml-string.html?m=1
 ---
 
 <figure>
