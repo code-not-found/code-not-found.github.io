@@ -9,6 +9,7 @@ redirect_from:
   - /2014/04/jsf-primefaces-hello-world-using-jetty.html
   - /2015/12/jsf-primefaces-hello-world-example-using-jetty-and-maven.html
   - /2014/04/jsf-primefaces-hello-world-jetty-maven.html
+  - /2015/12/jsf-primefaces-hello-world-using-jetty.html
 ---
 
 <figure>

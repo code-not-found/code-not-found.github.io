@@ -5,6 +5,8 @@ excerpt: A PrimeFaces 'Hello World' example using WildFly and Maven.
 date: 2016-01-03 21:00
 categories: [PrimeFaces]
 tags: [Example, JavaServer Faces, JSF, Maven, PrimeFaces, WildFly]
+redirect_from:
+  - /2016/01/jsf-primefaces-wildfly-example-using-maven.html
 ---
 
 <figure>

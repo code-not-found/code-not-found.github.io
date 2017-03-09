@@ -5,6 +5,8 @@ excerpt: This post explains the difference between a feature and an interceptor 
 date: 2015-01-08 21:00
 categories: [Apache CXF]
 tags: [Apache CXF, Concepts, CXF, Feature, Interceptor, Learning]
+redirect_from:
+  - /2015/01/cxf-feature-versus-interceptor.html
 ---
 
 <figure>

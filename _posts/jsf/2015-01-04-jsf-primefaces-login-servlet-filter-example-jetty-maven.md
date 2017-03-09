@@ -5,6 +5,8 @@ excerpt: A PrimeFaces login servlet filter example using Jetty and Maven.
 date: 2015-01-04 21:00
 categories: [PrimeFaces]
 tags: [Example, Hello World, JavaServer Faces, Jetty, JSF, Maven, PrimeFaces, Project, Tutorial]
+redirect_from:
+  - /2016/01/jsf-primefaces-login-servlet-filter-example-using-jetty-and-maven.html
 ---
 
 <figure>
