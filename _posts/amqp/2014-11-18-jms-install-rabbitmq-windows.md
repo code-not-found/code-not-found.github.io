@@ -7,6 +7,7 @@ categories: [AMQP]
 tags: [Install, Java Message Service, JMS, RabbitMQ, Setup, Tutorial]
 redirect_from:
   - /2014/11/jms-install-rabbitmq-windows.html
+  - /2014/11/jms-install-rabbitmq.html
 ---
 
 <figure>
