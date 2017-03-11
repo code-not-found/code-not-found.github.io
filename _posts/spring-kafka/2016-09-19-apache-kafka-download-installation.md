@@ -5,6 +5,7 @@ excerpt: A step-by-step tutorial on how to install and run Apache Kafka on Windo
 date: 2016-09-19 21:00
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache ZooKeeper, Download, Installation, Kafka, Windows, ZooKeeper]
+last_modified_at: 2017-03-11 21:00
 ---
 
 <figure>
@@ -28,7 +29,7 @@ java -version
     <img src="{{ site.url }}/assets/images/logos/apache-zookeeper-logo.png" alt="apache zookeeper logo">
 </figure>
 
-Head over to the [Apache ZooKeeper download](https://zookeeper.apache.org/releases.html) page and and click on the download link in the <var>Download</var> section. This will redirect to a mirror site, click on the suggested mirror link and from the <var>index</var> select the <var>stable</var> directory as shown below. Download the gzipped TAR file, at the moment of writing this tutorial the latest stable release was <var>'zookeeper-3.4.9'</var>.
+Head over to the [Apache ZooKeeper download](https://zookeeper.apache.org/releases.html) page and and click on the download link in the <var>Download</var> section. This will redirect to a mirror site, click on the suggested mirror link and from the <var>index</var> select the <var>stable</var> directory as shown below. Download the gzipped TAR file, at the moment of writing this tutorial the latest stable release was [zookeeper-3.4.9](http://www-us.apache.org/dist/zookeeper/stable/).
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-kafka/apache-zookeeper-stable-releases.png" alt="apache zookeeper stable releases">
@@ -72,6 +73,8 @@ Open the [Kafka releases page](http://kafka.apache.org/downloads.html) which con
 You'll notice that the release page contains multiple versions of Scala for a specific Kafka release. This only matters if you are using Scala yourself. If not the case, go ahead and choose the highest supported version. At the moment of writing the latest stable release was [kafka_2.11-0.10.0.1.tgz](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.1/kafka_2.11-0.10.0.1.tgz).
 
 Extract the gzipped TAR file, downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: <var>[kafka_install_dir]</var>.
+
+> Make sure to extract to a directory path that does not contain spaces.
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-kafka/apache-kafka-install-directory.png" alt="apache kafka install directory">
