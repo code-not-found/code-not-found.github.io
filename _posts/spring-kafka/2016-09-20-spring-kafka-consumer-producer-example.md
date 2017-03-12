@@ -22,8 +22,8 @@ In the following tutorial we will configure, build and run a Hello World example
 > Spring Kafka 1.1 uses the Apache Kafka 0.10.x.x client.
 
 Tools used:
-* Spring Kafka 1.1
 * Spring Boot 1.5
+* Spring Kafka 1.1
 * Maven 3
 
 We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter` and `spring-boot-starter-test` starters.
@@ -44,7 +44,7 @@ We also include the `spring-boot-maven-plugin` Maven plugin so that we can build
 
     <name>spring-kafka-helloworld-example</name>
     <description>Spring Kafka - Consumer &amp; Producer Example</description>
-    <url>http://www.codenotfound.com/2016/09/spring-kafka-consumer-producer-example.html</url>
+    <url>https://www.codenotfound.com/2016/09/spring-kafka-consumer-producer-example.html</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -111,9 +111,9 @@ public class SpringKafkaApplication {
 
 For sending messages we will be using the `KafkaTemplate` which wraps a `Producer` and provides convenience methods to send data to Kafka topics. The template provides both asynchronous and synchronous send methods, with the asynchronous methods returning a `Future`.
 
-In the below `Sender` class, the `KafkaTemplate` is autowired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class. In this example we will be using the async `send()` method and we will also configure the `ListenableFuture` with a `ListenableFutureCallback` to get an async callback with the results of the send (success or failure) instead of waiting for the `Future` to complete. If the sending of a message is successful we simply create a log statement.
+In the below `Sender` class, the `KafkaTemplate` is autowired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class. In this example we will be using the async `send()` method and we will also configure the returned `ListenableFuture` with a `ListenableFutureCallback` to get an async callback with the results of the send (success or failure) instead of waiting for the `Future` to complete. If the sending of a message is successful we simply create a log statement.
 
-> Note that the topic will be auto-created when the Kafka broker receives a request for unknown topic.
+> Note that the topic will be auto-created when the Kafka broker receives a request for an unknown topic.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -330,11 +330,11 @@ public class ReceiverConfig {
 
 # Testing the Spring Kafka Template & Listener
 
-> When executing below test case, make sure you have a running instance of Apache Kafka on port '9092' of your local machine. Note that it is also possible to [use Spring Kafka to automatically start an embedded Kafka broker as part of a unit test case]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
+> When executing below test case, make sure you have [a running instance of Apache Kafka on port '9092' of your local machine](({{ site.url }}/2016/09/apache-kafka-download-installation.html)). Note that it is also possible to [use Spring Kafka to automatically start an embedded Kafka broker as part of a unit test case]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
 
 In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>helloworld.t</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
-> Note that if the <var>helloworld.t</var> topic does not exist on the Kafka bus, the test case will fail. Reason for this is that when the consumer is starting up it tries to access the topic and fails. [By the time it retries, the topic has been created by the `sendMessage()` but also has data in it, so the consumer tries to connect at "latest"](https://issues.apache.org/jira/browse/KAFKA-3334), which is the offset of the most recent message, and so the consumer never receives the initial message. The next time you run the test case it will work since the topic exists.
+> Note that if the <var>helloworld.t</var> topic does not exist on the Kafka bus, the test case will not be successful. Reason for this is that when the consumer is starting up it tries to access the topic and fails. [By the time it retries, the topic has been created by the `sendMessage()` but also has data in it, so the consumer tries to connect at "latest"](https://issues.apache.org/jira/browse/KAFKA-3334), which is the offset of the most recent message, as such the consumer never receives the initial message. The next time you run the test case it will work since the topic exists.
 
 ``` java
 package com.codenotfound.kafka;
