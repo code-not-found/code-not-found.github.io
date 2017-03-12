@@ -330,7 +330,7 @@ public class ReceiverConfig {
 
 # Testing the Spring Kafka Template & Listener
 
-> When executing below test case, make sure you have [a running instance of Apache Kafka on port '9092' of your local machine](({{ site.url }}/2016/09/apache-kafka-download-installation.html)). Note that it is also possible to [use Spring Kafka to automatically start an embedded Kafka broker as part of a unit test case]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
+> When executing below test case, make sure you have [a running instance of Apache Kafka on port '9092' of your local machine]({{ site.url }}/2016/09/apache-kafka-download-installation.html). Note that it is also possible to [use Spring Kafka to automatically start an embedded Kafka broker as part of a unit test case]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
 
 In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>helloworld.t</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
