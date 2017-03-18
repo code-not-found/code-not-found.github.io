@@ -126,98 +126,15 @@ We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spri
 </project>
 ```
 
+In order to trigger the code generation via Maven, executed following command:
 
-
-
-
-
-
-
-
-
-
-We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter` and `spring-boot-starter-test` starters.
-
-A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was <var>'1.1.2.RELEASE'</var>.
-
-We also include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "über-jar", which is convenient to execute and transport the written code.
-
-``` xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.codenotfound</groupId>
-    <artifactId>spring-kafka-helloworld-example</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
-    <name>spring-kafka-helloworld-example</name>
-    <description>Spring Kafka - Consumer &amp; Producer Example</description>
-    <url>https://www.codenotfound.com/2016/09/spring-kafka-consumer-producer-example.html</url>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.2.RELEASE</version>
-    </parent>
-
-    <properties>
-        <java.version>1.8</java.version>
-
-        <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
-    </properties>
-
-    <dependencies>
-        <!-- Spring Boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Spring Kafka -->
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-            <version>${spring-kafka.version}</version>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-</project>
+``` plaintext
+mvn generate-sources
 ```
 
-We will use Spring Boot in order to make a Spring Kafka example application that you can "just run". We start by creating an `SpringKafkaApplication` that contains the `main()` method that uses Spring Boot’s `SpringApplication.run()` method to launch an application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
+This results in the generation of a `User` class which contains the schema and a number of Builder methods to construct a User object.
 
-For more information on Spring Boot you can check out the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
-
-``` java
-package com.codenotfound.kafka;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class SpringKafkaApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(SpringKafkaApplication.class, args);
-    }
-}
-```
-
-# Create a Spring Kafka Message Producer
+# Sending Avro Messages to a Kafka Topic
 
 For sending messages we will be using the `KafkaTemplate` which wraps a `Producer` and provides convenience methods to send data to Kafka topics. The template provides both asynchronous and synchronous send methods, with the asynchronous methods returning a `Future`.
 
