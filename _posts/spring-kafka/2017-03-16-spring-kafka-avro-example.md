@@ -20,7 +20,7 @@ Tools used:
 * Apache Avro 1.8
 * Maven 3
 
-Avro relies on schemas which are defined using JSON. Schemas are composed of primitive types. For this example we will use [the <var>User</var> schema from the Apache Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema) as shown below. This schema is stored in the <var>user.avsc</var> file located under <var>src/main/resources/avro</var>.
+Avro relies on schemas which are defined using JSON. Schemas are composed of primitive types. For this example we will use [the <var>'User'</var> schema from the Apache Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema) as shown below. This schema is stored in the <var>user.avsc</var> file located under <var>src/main/resources/avro</var>.
 
 ``` json
 {"namespace": "example.avro",
@@ -34,9 +34,9 @@ Avro relies on schemas which are defined using JSON. Schemas are composed of pri
 }
 ```
 
-Avro ships with code generation which allows us to automatically create Java classes based on defined <var>User</var> schema. Once we have generated the relevant classes, there is no need to use the schema directly in our program. The classes can be generated using the <var>avro-tools.jar</var> or via the Avro Maven plugin, we will use the latter in this example.
+Avro ships with code generation which allows us to automatically create Java classes based on defined <var>'User'</var> schema. Once we have generated the relevant classes, there is no need to use the schema directly in our program. The classes can be generated using the <var>avro-tools.jar</var> or via the Avro Maven plugin, we will use the latter in this example.
 
-We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) and add the `avro` Maven dependency to the dependencies section. In addition we configure the `avro-maven-plugin` to run the <var>schema</var> goal on all schema's that are found in the <var>/src/main/resources/avro/</var> location as shown below.
+We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) and add the `avro` Maven dependency to the dependencies section. In addition we configure the `avro-maven-plugin` to run the <var>'schema'</var> goal on all schema's that are found in the <var>/src/main/resources/avro/</var> location as shown below.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -135,6 +135,76 @@ mvn generate-sources
 This results in the generation of a `User` class which contains the schema and a number of Builder methods to construct a User object.
 
 # Sending Avro Messages to a Kafka Topic
+
+Kafka stores and transports `Byte` arrays in its queue. But as we are working with Avro objects we need to transform to/from these `Byte` arrays. Before version 0.9.0.0, the Kafka Java API use implementations of `Encoder`/`Decoder` interfaces to handle these transformations but these have been replaced by `Serializer`/`Deserializer` interface implementations in the new API. Spring Kafka ships with a number of built in (de)serializers but a Avro one is not included.
+
+To tacle this we will implement 
+
+``` java
+package com.codenotfound.kafka.serializer;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.avro.generic.GenericDatumWriter;
+import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.io.BinaryEncoder;
+import org.apache.avro.io.DatumWriter;
+import org.apache.avro.io.EncoderFactory;
+import org.apache.avro.specific.SpecificRecordBase;
+import org.apache.kafka.common.errors.SerializationException;
+import org.apache.kafka.common.serialization.Serializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<T> {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(AvroSerializer.class);
+
+  @Override
+  public void close() {
+    // No-op
+  }
+
+  @Override
+  public void configure(Map<String, ?> arg0, boolean arg1) {
+    // No-op
+  }
+
+  @Override
+  public byte[] serialize(String topic, T data) {
+    try {
+      byte[] result = null;
+      if (data != null) {
+        LOGGER.debug("data='{}'", data);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        BinaryEncoder binaryEncoder =
+            EncoderFactory.get().binaryEncoder(byteArrayOutputStream, null);
+
+        DatumWriter<GenericRecord> datumWriter = new GenericDatumWriter<>(data.getSchema());
+        datumWriter.write(data, binaryEncoder);
+
+        binaryEncoder.flush();
+        byteArrayOutputStream.close();
+
+        result = byteArrayOutputStream.toByteArray();
+        LOGGER.debug("serialized data='{}'", DatatypeConverter.printHexBinary(result));
+      }
+      return result;
+    } catch (IOException ex) {
+      throw new SerializationException(
+          "Can't serialize data [" + data + "] for topic [" + topic + "]", ex);
+    }
+  }
+}
+```
+
+As we are sending Avro messages there are a number of items we need to change on the `SenderConfig`. First we need to configure a custom `Serializer` class to handle the fact that we will be passing Avro objects to the `send()` method of the `KafkaTemplate`.  for the `VALUE_SERIALIZER_CLASS_CONFIG` property of the `ProducerConfig`.
+
+
 
 For sending messages we will be using the `KafkaTemplate` which wraps a `Producer` and provides convenience methods to send data to Kafka topics. The template provides both asynchronous and synchronous send methods, with the asynchronous methods returning a `Future`.
 
