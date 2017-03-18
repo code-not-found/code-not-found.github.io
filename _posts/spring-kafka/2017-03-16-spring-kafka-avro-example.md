@@ -134,11 +134,11 @@ mvn generate-sources
 
 This results in the generation of a `User` class which contains the schema and a number of `Builder` methods to construct a User object.
 
-# Sending Avro Messages to a Kafka Topic
+# Producing Avro Messages to a Kafka Topic
 
 Kafka stores and transports `Byte` arrays in its topics. But as we are working with Avro objects we need to transform to/from these `Byte` arrays. Before version 0.9.0.0, the Kafka Java API used implementations of `Encoder`/`Decoder` interfaces to handle transformations but these have been replaced by `Serializer`/`Deserializer` interface implementations in the new API. Kafka ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html) but an Avro one is not included.
 
-To tackle this we will create an `AvroSerializer` class that implements the `Serializer` interface specifically for Avro objects. We then implement the `serialize()` method which takes as input a topic name and some data (in our case this will be an Avro object). The method [serializes the Avro object to a byte array](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and returns the result.
+To tackle this we will create an `AvroSerializer` class that implements the `Serializer` interface specifically for Avro objects. We then implement the `serialize()` method which takes as input a topic name and a data object which in our case is an Avro object which extends `SpecificRecordBase`. The method [serializes the Avro object to a byte array](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and returns the result.
 
 ``` java
 package com.codenotfound.kafka.serializer;
@@ -291,12 +291,74 @@ public class Sender {
 }
 ```
 
-# Receiving Avro Messages from a Kafka Topic
+# Consuming Avro Messages from a Kafka Topic
 
+Received messages need to be deserialized back to the Avro format. To achieve this we create an `AvroDeserializer` class that implements the `Deserializer` interface. The `deserialize()` method takes as input a topic name and [a Byte array which is decoded back into an Avro object](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Deserializingfromabytearray). The schema that needs to be used for the decoding is retrieved from the target type that needs to be passed as an argument to the `AvroDeserializer` constructor.
 
+``` java
+package com.codenotfound.kafka.serializer;
 
+import java.util.Arrays;
+import java.util.Map;
 
+import javax.xml.bind.DatatypeConverter;
 
+import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.io.DatumReader;
+import org.apache.avro.io.Decoder;
+import org.apache.avro.io.DecoderFactory;
+import org.apache.avro.specific.SpecificDatumReader;
+import org.apache.avro.specific.SpecificRecordBase;
+import org.apache.kafka.common.errors.SerializationException;
+import org.apache.kafka.common.serialization.Deserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class AvroDeserializer<T extends SpecificRecordBase> implements Deserializer<T> {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(AvroDeserializer.class);
+
+  protected final Class<T> targetType;
+
+  public AvroDeserializer(Class<T> targetType) {
+    this.targetType = targetType;
+  }
+
+  @Override
+  public void close() {
+    // No-op
+  }
+
+  @Override
+  public void configure(Map<String, ?> arg0, boolean arg1) {
+    // No-op
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public T deserialize(String topic, byte[] data) {
+    try {
+      T result = null;
+
+      if (data != null) {
+        LOGGER.debug("serialized data='{}'", DatatypeConverter.printHexBinary(data));
+
+        DatumReader<GenericRecord> datumReader =
+            new SpecificDatumReader<>(targetType.newInstance().getSchema());
+        Decoder decoder = DecoderFactory.get().binaryDecoder(data, null);
+
+        result = (T) datumReader.read(null, decoder);
+        LOGGER.debug("data='{}'", result);
+      }
+
+      return result;
+    } catch (Exception ex) {
+      throw new SerializationException(
+          "Can't deserialize data [" + Arrays.toString(data) + "] from topic [" + topic + "]", ex);
+    }
+  }
+}
+```
 
 
 
