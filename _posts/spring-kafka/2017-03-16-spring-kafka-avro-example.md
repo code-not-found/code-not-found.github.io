@@ -422,7 +422,7 @@ public class ReceiverConfig {
 }
 ```
 
-Just like with the Sender class, the argument of the `receive()` method of Receiver class needs to be changed to the Avro `User` class.
+Just like with the `Sender` class, the argument of the `receive()` method of `Receiver` class needs to be changed to the Avro `User` class.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -453,11 +453,11 @@ public class Receiver {
 }
 ```
 
-# Test Sending and Receiving of Avro Messages on Kafka
+# Test Sending and Receiving Avro Messages on Kafka
 
-In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>helloworld.t</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
+The `SpringKafkaApplicationTest` test case demonstrates the above example. It [starts an embedded Kafka and ZooKeeper server using a JUnit ClassRule]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Before the test case starts we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer`s (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
-> Note that if the <var>helloworld.t</var> topic does not exist on the Kafka bus, the test case will not be successful. Reason for this is that when the consumer is starting up it tries to access the topic and fails. [By the time it retries, the topic has been created by the `sendMessage()` but also has data in it, so the consumer tries to connect at "latest"](https://issues.apache.org/jira/browse/KAFKA-3334), which is the offset of the most recent message, as such the consumer never receives the initial message. The next time you run the test case it will work since the topic exists.
+In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>avro.t</var> topic. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received.
 
 ``` java
 package com.codenotfound.kafka;
@@ -466,32 +466,72 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
+import org.springframework.kafka.listener.MessageListenerContainer;
+import org.springframework.kafka.test.rule.KafkaEmbedded;
+import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.codenotfound.kafka.consumer.Receiver;
 import com.codenotfound.kafka.producer.Sender;
 
+import example.avro.User;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringKafkaApplicationTests {
+public class SpringKafkaApplicationTest {
 
-    @Autowired
-    private Sender sender;
+  @Autowired
+  private Sender sender;
 
-    @Autowired
-    private Receiver receiver;
+  @Autowired
+  private Receiver receiver;
 
-    @Test
-    public void testReceiver() throws Exception {
-        sender.sendMessage("helloworld.t", "Hello Spring Kafka!");
+  @Autowired
+  private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
-        receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
-        assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+  @ClassRule
+  public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, "avro.t");
+
+  @BeforeClass
+  public static void setUpBeforeClass() throws Exception {
+    System.setProperty("kafka.bootstrap.servers", embeddedKafka.getBrokersAsString());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Before
+  public void setUp() throws Exception {
+    // wait until the partitions are assigned
+    for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
+        .getListenerContainers()) {
+      if (messageListenerContainer instanceof ConcurrentMessageListenerContainer) {
+        ConcurrentMessageListenerContainer<String, User> concurrentMessageListenerContainer =
+            (ConcurrentMessageListenerContainer<String, User>) messageListenerContainer;
+
+        ContainerTestUtils.waitForAssignment(concurrentMessageListenerContainer,
+            embeddedKafka.getPartitionsPerTopic());
+      }
     }
+  }
+
+  @Test
+  public void testReceiver() throws Exception {
+    User user = User.newBuilder().setName("John Doe").setFavoriteColor("green")
+        .setFavoriteNumber(null).build();
+
+    sender.send(user);
+
+    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+  }
 }
 ```
 
@@ -512,45 +552,124 @@ Maven will download the needed dependencies, compile the code and run the unit t
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.2.RELEASE)
 
-2017-03-11 19:39:36.634  INFO 3852 --- [           main] c.c.kafka.SpringKafkaApplicationTests    : Starting SpringKafkaApplicationTests on cnf-pc with PID 3852 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-helloworld-example)
-2017-03-11 19:39:36.635  INFO 3852 --- [           main] c.c.kafka.SpringKafkaApplicationTests    : No active profile set, falling back to default profiles: default
-2017-03-11 19:39:36.658  INFO 3852 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@5c90e579: startup date [Sat Mar 11 19:39:36 CET 2017]; root of context hierarchy
-2017-03-11 19:39:37.037  INFO 3852 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$3bb11429] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2017-03-11 19:39:37.220  INFO 3852 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0
-2017-03-11 19:39:37.239  INFO 3852 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
-2017-03-11 19:39:37.278  INFO 3852 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
-2017-03-11 19:39:37.393  INFO 3852 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
-2017-03-11 19:39:37.393  INFO 3852 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
-2017-03-11 19:39:37.405  INFO 3852 --- [           main] c.c.kafka.SpringKafkaApplicationTests    : Started SpringKafkaApplicationTests in 1.109 seconds (JVM running for 1.726)
-2017-03-11 19:39:37.446  INFO 3852 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
-2017-03-11 19:39:37.447  INFO 3852 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
-2017-03-11 19:39:37.460  INFO 3852 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
-2017-03-11 19:39:37.460  INFO 3852 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
-2017-03-11 19:39:37.532  INFO 3852 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Discovered coordinator 192.168.1.5:9092 (id: 2147483647 rack: null) for group helloworld.
-2017-03-11 19:39:37.536  INFO 3852 --- [afka-consumer-1] o.a.k.c.c.internals.ConsumerCoordinator  : Revoking previously assigned partitions [] for group helloworld
-2017-03-11 19:39:37.536  INFO 3852 --- [afka-consumer-1] o.s.k.l.KafkaMessageListenerContainer    : partitions revoked:[]
-2017-03-11 19:39:37.536  INFO 3852 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : (Re-)joining group helloworld
-2017-03-11 19:39:37.546  INFO 3852 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Successfully joined group helloworld with generation 7
-2017-03-11 19:39:37.547  INFO 3852 --- [afka-consumer-1] o.a.k.c.c.internals.ConsumerCoordinator  : Setting newly assigned partitions [helloworld.t-0] for group helloworld
-2017-03-11 19:39:37.556  INFO 3852 --- [afka-consumer-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned:[helloworld.t-0]
-2017-03-11 19:39:37.572  INFO 3852 --- [ad | producer-1] com.codenotfound.kafka.producer.Sender   : sent message='Hello Spring Kafka!' with offset=3
-2017-03-11 19:39:37.581  INFO 3852 --- [afka-listener-1] c.codenotfound.kafka.consumer.Receiver   : received message='Hello Spring Kafka!'
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.417 sec - in com.codenotfound.kafka.SpringKafkaApplicationTests
-2017-03-11 19:39:37.620  INFO 3852 --- [       Thread-2] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@5c90e579: startupdate [Sat Mar 11 19:39:36 CET 2017]; root of context hierarchy
-2017-03-11 19:39:37.622  INFO 3852 --- [       Thread-2] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 0
-2017-03-11 19:39:38.592  INFO 3852 --- [afka-consumer-1] essageListenerContainer$ListenerConsumer : Consumer stopped
-2017-03-11 19:39:38.593  INFO 3852 --- [       Thread-2] o.a.k.clients.producer.KafkaProducer     : Closing the Kafka producer with timeoutMillis = 9223372036854775807 ms.
+2017-03-18 20:27:54.855  INFO 4500 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Starting SpringKafkaApplicationTest on cnf-pc with PID 4500 (started by CodeNotFound in c:\code\st\spring-kaf
+ka\spring-kafka-avro)
+2017-03-18 20:27:54.856 DEBUG 4500 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
+2017-03-18 20:27:54.856  INFO 4500 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : No active profile set, falling back to default profiles: default
+2017-03-18 20:27:54.877  INFO 4500 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4604b900: start
+up date [Sat Mar 18 20:27:54 CET 2017]; root of context hierarchy
+2017-03-18 20:27:55.287  INFO 4500 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework
+.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$e407da82] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-03-18 20:27:55.485  INFO 4500 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0
+2017-03-18 20:27:55.495  INFO 4500 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
+2017-03-18 20:27:55.496  INFO 4500 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
+2017-03-18 20:27:55.517  INFO 4500 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
+2017-03-18 20:27:55.518  INFO 4500 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
+2017-03-18 20:27:55.530  INFO 4500 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Started SpringKafkaApplicationTest in 0.953 seconds (JVM running for 5.284)
+2017-03-18 18:38:02.954  INFO 6740 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : (Re-)joining group avro
+2017-03-18 18:38:02.964  INFO 6740 --- [quest-handler-4] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Preparing to restabilize group avro with old generation 0
+2017-03-18 18:38:02.970  INFO 6740 --- [quest-handler-4] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Stabilized group avro generation 1
+2017-03-18 18:38:02.975  INFO 6740 --- [quest-handler-6] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Assignment received from leader for group avro for generation 1
+2017-03-18 18:38:03.036  INFO 6740 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Successfully joined group avro with generation 1
+2017-03-18 18:38:03.037  INFO 6740 --- [afka-consumer-1] o.a.k.c.c.internals.ConsumerCoordinator  : Setting newly assigned partitions [avro.t-1, avro.t-0] for group avro
+2017-03-18 18:38:03.056  INFO 6740 --- [afka-consumer-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned:[avro.t-1, avro.t-0]
+2017-03-18 18:38:03.119  INFO 6740 --- [           main] com.codenotfound.kafka.producer.Sender   : sending user='{"name": "John Doe", "favorite_number": null, "favorite_color": "green"}'
+2017-03-18 18:38:03.122  INFO 6740 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
+2017-03-18 18:38:03.123  INFO 6740 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
+2017-03-18 18:38:03.134  INFO 6740 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
+2017-03-18 18:38:03.134  INFO 6740 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
+2017-03-18 18:38:03.230 DEBUG 6740 --- [           main] c.c.kafka.serializer.AvroSerializer      : data='{"name": "John Doe", "favorite_number": null, "favorite_color": "green"}'
+2017-03-18 18:38:03.231 DEBUG 6740 --- [           main] c.c.kafka.serializer.AvroSerializer      : serialized data='104A6F686E20446F6502000A677265656E'
+2017-03-18 18:38:03.263 DEBUG 6740 --- [afka-consumer-1] c.c.kafka.serializer.AvroDeserializer    : serialized data='104A6F686E20446F6502000A677265656E'
+2017-03-18 18:38:03.263 DEBUG 6740 --- [afka-consumer-1] c.c.kafka.serializer.AvroDeserializer    : data='{"name": "John Doe", "favorite_number": null, "favorite_color": "green"}'
+2017-03-18 18:38:03.269  INFO 6740 --- [afka-listener-1] c.codenotfound.kafka.consumer.Receiver   : received user='{"name": "John Doe", "favorite_number": null, "favorite_color": "green"}'
+2017-03-18 18:38:03.273  INFO 6740 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], shutting down
+2017-03-18 18:38:03.274  INFO 6740 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], Starting controlled shutdown
+2017-03-18 18:38:03.282  INFO 6740 --- [quest-handler-2] kafka.controller.KafkaController         : [Controller 0]: Shutting down broker 0
+2017-03-18 18:38:03.290  INFO 6740 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], Controlled shutdown succeeded
+2017-03-18 18:38:03.291  INFO 6740 --- [           main] kafka.network.SocketServer               : [Socket Server on Broker 0], Shutting down
+2017-03-18 18:38:03.295  INFO 6740 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Marking the coordinator localhost:55754 (id: 2147483647 rack: null) dead for group avro
+2017-03-18 18:38:03.298  INFO 6740 --- [           main] kafka.network.SocketServer               : [Socket Server on Broker 0], Shutdown completed
+2017-03-18 18:38:03.298  INFO 6740 --- [           main] kafka.server.KafkaRequestHandlerPool     : [Kafka Request Handler on Broker 0], shutting down
+2017-03-18 18:38:03.300  INFO 6740 --- [           main] kafka.server.KafkaRequestHandlerPool     : [Kafka Request Handler on Broker 0], shut down completely
+2017-03-18 18:38:03.302  INFO 6740 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Shutting down
+2017-03-18 18:38:03.658  INFO 6740 --- [estReaper-Fetch] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Stopped
+2017-03-18 18:38:03.658  INFO 6740 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Shutdown completed
+2017-03-18 18:38:03.659  INFO 6740 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Shutting down
+2017-03-18 18:38:04.659  INFO 6740 --- [tReaper-Produce] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Stopped
+2017-03-18 18:38:04.659  INFO 6740 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Shutdown completed
+2017-03-18 18:38:04.660  INFO 6740 --- [           main] kafka.server.KafkaApis                   : [KafkaApi-0] Shutdown complete.
+2017-03-18 18:38:04.662  INFO 6740 --- [           main] kafka.server.ReplicaManager              : [Replica Manager on Broker 0]: Shutting down
+2017-03-18 18:38:04.663  INFO 6740 --- [           main] kafka.server.ReplicaFetcherManager       : [ReplicaFetcherManager on broker 0] shutting down
+2017-03-18 18:38:04.664  INFO 6740 --- [           main] kafka.server.ReplicaFetcherManager       : [ReplicaFetcherManager on broker 0] shutdown completed
+2017-03-18 18:38:04.665  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-18 18:38:04.771  INFO 6740 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-18 18:38:04.771  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-18 18:38:04.771  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-18 18:38:04.827  INFO 6740 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-18 18:38:04.827  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-18 18:38:04.837  INFO 6740 --- [           main] kafka.server.ReplicaManager              : [Replica Manager on Broker 0]: Shut down completely
+2017-03-18 18:38:04.838  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-18 18:38:04.934  INFO 6740 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-18 18:38:04.934  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-18 18:38:04.935  INFO 6740 --- [           main] kafka.log.LogManager                     : Shutting down.
+2017-03-18 18:38:04.936  INFO 6740 --- [           main] kafka.log.LogCleaner                     : Shutting down the log cleaner.
+2017-03-18 18:38:04.937  INFO 6740 --- [           main] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Shutting down
+2017-03-18 18:38:04.937  INFO 6740 --- [leaner-thread-0] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Stopped
+2017-03-18 18:38:04.937  INFO 6740 --- [           main] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Shutdown completed
+2017-03-18 18:38:05.251  INFO 6740 --- [           main] kafka.log.LogManager                     : Shutdown complete.
+2017-03-18 18:38:05.252  INFO 6740 --- [           main] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Shutting down.
+2017-03-18 18:38:05.252  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-18 18:38:05.335  INFO 6740 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-18 18:38:05.335  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-18 18:38:05.335  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-18 18:38:05.536  INFO 6740 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-18 18:38:05.536  INFO 6740 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-18 18:38:05.537  INFO 6740 --- [           main] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Shutdown complete.
+2017-03-18 18:38:05.539  INFO 6740 --- [           main] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Shutting down
+2017-03-18 18:38:05.540  INFO 6740 --- [topics-thread-0] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Stopped
+2017-03-18 18:38:05.540  INFO 6740 --- [           main] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Shutdown completed
+2017-03-18 18:38:05.544  INFO 6740 --- [           main] kafka.controller.PartitionStateMachine   : [Partition state machine on Controller 0]: Stopped partition state machine
+2017-03-18 18:38:05.544  INFO 6740 --- [           main] kafka.controller.ReplicaStateMachine     : [Replica state machine on controller 0]: Stopped replica state machine
+2017-03-18 18:38:05.547  INFO 6740 --- [           main] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Shutting down
+2017-03-18 18:38:05.547  INFO 6740 --- [r-0-send-thread] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Stopped
+2017-03-18 18:38:05.549  INFO 6740 --- [           main] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Shutdown completed
+2017-03-18 18:38:05.550  INFO 6740 --- [           main] kafka.controller.KafkaController         : [Controller 0]: Broker 0 resigned as the controller
+2017-03-18 18:38:05.551  INFO 6740 --- [127.0.0.1:55750] org.I0Itec.zkclient.ZkEventThread        : Terminate ZkClient event thread.
+2017-03-18 18:38:05.552  INFO 6740 --- [0 cport:55750):] o.a.z.server.PrepRequestProcessor        : Processed session termination for sessionid: 0x15ae27f51df0001
+2017-03-18 18:38:05.557  INFO 6740 --- [ry:/127.0.0.1:0] o.apache.zookeeper.server.NIOServerCnxn  : Closed socket connection for client /127.0.0.1:55757 which had sessionid 0x15ae27f51df0001
+2017-03-18 18:38:05.558  INFO 6740 --- [           main] org.apache.zookeeper.ZooKeeper           : Session: 0x15ae27f51df0001 closed
+2017-03-18 18:38:05.558  INFO 6740 --- [ain-EventThread] org.apache.zookeeper.ClientCnxn          : EventThread shut down for session: 0x15ae27f51df0001
+2017-03-18 18:38:05.559  INFO 6740 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], shut down completed
+2017-03-18 18:38:05.646  INFO 6740 --- [127.0.0.1:55750] org.I0Itec.zkclient.ZkEventThread        : Terminate ZkClient event thread.
+2017-03-18 18:38:05.647  INFO 6740 --- [0 cport:55750):] o.a.z.server.PrepRequestProcessor        : Processed session termination for sessionid: 0x15ae27f51df0000
+2017-03-18 18:38:05.652  INFO 6740 --- [           main] org.apache.zookeeper.ZooKeeper           : Session: 0x15ae27f51df0000 closed
+2017-03-18 18:38:05.652  INFO 6740 --- [ry:/127.0.0.1:0] o.apache.zookeeper.server.NIOServerCnxn  : Closed socket connection for client /127.0.0.1:55753 which had sessionid 0x15ae27f51df0000
+2017-03-18 18:38:05.652  INFO 6740 --- [ain-EventThread] org.apache.zookeeper.ClientCnxn          : EventThread shut down for session: 0x15ae27f51df0000
+2017-03-18 18:38:05.652  INFO 6740 --- [           main] o.a.zookeeper.server.ZooKeeperServer     : shutting down
+2017-03-18 18:38:05.652  INFO 6740 --- [           main] o.a.zookeeper.server.SessionTrackerImpl  : Shutting down
+2017-03-18 18:38:05.653  INFO 6740 --- [           main] o.a.z.server.PrepRequestProcessor        : Shutting down
+2017-03-18 18:38:05.653  INFO 6740 --- [           main] o.a.z.server.SyncRequestProcessor        : Shutting down
+2017-03-18 18:38:05.653  INFO 6740 --- [0 cport:55750):] o.a.z.server.PrepRequestProcessor        : PrepRequestProcessor exited loop!
+2017-03-18 18:38:05.653  INFO 6740 --- [   SyncThread:0] o.a.z.server.SyncRequestProcessor        : SyncRequestProcessor exited!
+2017-03-18 18:38:05.653  INFO 6740 --- [           main] o.a.z.server.FinalRequestProcessor       : shutdown of request processor complete
+2017-03-18 18:38:05.654  INFO 6740 --- [ry:/127.0.0.1:0] o.a.z.server.NIOServerCnxnFactory        : NIOServerCnxn factory exited run method
+2017-03-18 18:38:06.000  INFO 6740 --- [ SessionTracker] o.a.zookeeper.server.SessionTrackerImpl  : SessionTrackerImpl exited loop!
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.161 sec - in com.codenotfound.kafka.SpringKafkaApplicationTests
+2017-03-18 18:38:06.680  INFO 6740 --- [       Thread-8] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@4604b900: startup
+date [Sat Mar 18 18:38:00 CET 2017]; root of context hierarchy
+2017-03-18 18:38:06.682  INFO 6740 --- [       Thread-8] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 0
 
 Results :
 
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 4.342 s
-[INFO] Finished at: 2017-03-11T19:39:38+01:00
-[INFO] Final Memory: 15M/227M
+[INFO] Total time: 43.294 s
+[INFO] Finished at: 2017-03-18T18:38:36+01:00
+[INFO] Final Memory: 18M/209M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -562,4 +681,4 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This wraps up our example in which we used a Spring Kafka template to create a producer and Spring Kafka listener to create a consumer. If you found this sample useful or have a question you would like to ask, drop a line below!
+This concludes the example on how to send/receive Avro messages using Spring Kafka. I created this blog post based on a user request so if you found this tutorial useful or would like to see another variation, let me know.
