@@ -260,6 +260,45 @@ public class SenderConfig {
 }
 ```
 
+The only thing left to do is to update the `Sender` class so that it's `send()` method accepts an Avro `User` object as input. Note that we also update the `KafkaTemplate` generic type.
+
+
+``` java
+package com.codenotfound.kafka.producer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+
+import example.avro.User;
+
+public class Sender {
+
+  @Value("${kafka.avro.topic}")
+  private String avroTopic;
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
+
+  @Autowired
+  private KafkaTemplate<String, User> kafkaTemplate;
+
+  public void send(User user) {
+    LOGGER.info("sending user='{}'", user.toString());
+    kafkaTemplate.send(avroTopic, user);
+  }
+}
+```
+
+# Receiving Avro Messages from a Kafka Topic
+
+
+
+
+
+
+
 
 
 For sending messages we will be using the `KafkaTemplate` which wraps a `Producer` and provides convenience methods to send data to Kafka topics. The template provides both asynchronous and synchronous send methods, with the asynchronous methods returning a `Future`.
