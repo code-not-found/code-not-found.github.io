@@ -30,7 +30,7 @@ We start by defining a Maven POM file which contains the dependencies for the ne
 
 A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was <var>'1.1.2.RELEASE'</var>.
 
-We also include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "Ã¼ber-jar", which is convenient to execute and transport the written code.
+We also include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "über-jar", which is convenient to execute and transport the written code.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
