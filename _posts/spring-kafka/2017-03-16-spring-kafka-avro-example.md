@@ -204,7 +204,7 @@ public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<
 }
 ```
 
-Now we need to change on the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting `VALUE_SERIALIZER_CLASS_CONFIG` property of the `ProducerConfig` to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
+Now we need to change the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting the `VALUE_SERIALIZER_CLASS_CONFIG` property of the `ProducerConfig` to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
 
 ``` java
 package com.codenotfound.kafka.producer;
