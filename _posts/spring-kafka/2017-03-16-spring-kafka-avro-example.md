@@ -20,7 +20,7 @@ Tools used:
 * Apache Avro 1.8
 * Maven 3
 
-Avro relies on schemas which are defined using JSON. Schemas are composed of primitive types. For this example we will use [the <var>'User'</var> schema from the Apache Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema) as shown below. This schema is stored in the <var>user.avsc</var> file located under <var>src/main/resources/avro</var>.
+Avro relies on schemas which are defined using JSON. Schemas are composed of primitive types. For this example we will use [the 'User' schema from the Apache Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema) as shown below. This schema is stored in the <var>user.avsc</var> file located under <var>src/main/resources/avro</var>.
 
 ``` json
 {"namespace": "example.avro",
@@ -34,7 +34,7 @@ Avro relies on schemas which are defined using JSON. Schemas are composed of pri
 }
 ```
 
-Avro ships with code generation which allows us to automatically create Java classes based on defined <var>'User'</var> schema. Once we have generated the relevant classes, there is no need to use the schema directly in our program. The classes can be generated using the <var>avro-tools.jar</var> or via the Avro Maven plugin, we will use the latter in this example.
+Avro ships with code generation which allows us to automatically create Java classes based on the above defined <var>'User'</var> schema. Once we have generated the relevant classes, there is no need to use the schema directly in our program. The classes can be generated using the <var>avro-tools.jar</var> or via the Avro Maven plugin, we will use the latter in this example.
 
 We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) and add the `avro` Maven dependency to the dependencies section. In addition we configure the `avro-maven-plugin` to run the <var>'schema'</var> goal on all schema's that are found in the <var>/src/main/resources/avro/</var> location as shown below.
 
@@ -132,7 +132,7 @@ In order to trigger the code generation via Maven, executed following command:
 mvn generate-sources
 ```
 
-This results in the generation of a `User` class which contains the schema and a number of Builder methods to construct a User object.
+This results in the generation of a `User` class which contains the schema and a number of `Builder` methods to construct a User object.
 
 # Sending Avro Messages to a Kafka Topic
 
@@ -300,123 +300,6 @@ public class Sender {
 
 
 
-
-For sending messages we will be using the `KafkaTemplate` which wraps a `Producer` and provides convenience methods to send data to Kafka topics. The template provides both asynchronous and synchronous send methods, with the asynchronous methods returning a `Future`.
-
-In the below `Sender` class, the `KafkaTemplate` is autowired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class. In this example we will be using the async `send()` method and we will also configure the returned `ListenableFuture` with a `ListenableFutureCallback` to get an async callback with the results of the send (success or failure) instead of waiting for the `Future` to complete. If the sending of a message is successful we simply create a log statement.
-
-> Note that the topic will be auto-created when the Kafka broker receives a request for an unknown topic.
-
-``` java
-package com.codenotfound.kafka.producer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
-
-public class Sender {
-
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(Sender.class);
-
-    @Autowired
-    private KafkaTemplate<Integer, String> kafkaTemplate;
-
-    public void sendMessage(String topic, String message) {
-        // the KafkaTemplate provides asynchronous send methods returning a
-        // Future
-        ListenableFuture<SendResult<Integer, String>> future = kafkaTemplate
-                .send(topic, message);
-
-        // you can register a callback with the listener to receive the result
-        // of the send asynchronously
-        future.addCallback(
-                new ListenableFutureCallback<SendResult<Integer, String>>() {
-
-                    @Override
-                    public void onSuccess(
-                            SendResult<Integer, String> result) {
-                        LOGGER.info("sent message='{}' with offset={}",
-                                message,
-                                result.getRecordMetadata().offset());
-                    }
-
-                    @Override
-                    public void onFailure(Throwable ex) {
-                        LOGGER.error("unable to send message='{}'",
-                                message, ex);
-                    }
-                });
-
-        // alternatively, to block the sending thread, to await the result,
-        // invoke the future's get() method
-    }
-}
-```
-
-The creation of the `KafkaTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
-
-In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template’s constructor. The producer factory needs to be set with a number of properties amongst which the `BOOTSTRAP_SERVERS_CONFIG` property that is fetched from the <var>application.properties</var> configuration file. For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
-
-``` java
-package com.codenotfound.kafka.producer;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.IntegerSerializer;
-import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.core.DefaultKafkaProducerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.core.ProducerFactory;
-
-@Configuration
-public class SenderConfig {
-
-    @Value("${kafka.bootstrap.servers}")
-    private String bootstrapServers;
-
-    @Bean
-    public Map<String, Object> producerConfigs() {
-        Map<String, Object> props = new HashMap<>();
-        // list of host:port pairs used for establishing the initial connections
-        // to the Kakfa cluster
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                bootstrapServers);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-                IntegerSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                StringSerializer.class);
-        // value to block, after which it will throw a TimeoutException
-        props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
-
-        return props;
-    }
-
-    @Bean
-    public ProducerFactory<Integer, String> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs());
-    }
-
-    @Bean
-    public KafkaTemplate<Integer, String> kafkaTemplate() {
-        return new KafkaTemplate<Integer, String>(producerFactory());
-    }
-
-    @Bean
-    public Sender sender() {
-        return new Sender();
-    }
-}
-```
 
 # Create a Spring Kafka Message Consumer
 
