@@ -138,7 +138,7 @@ This results in the generation of a `User` class which contains the schema and a
 
 Kafka stores and transports `Byte` arrays in its topics. But as we are working with Avro objects we need to transform to/from these `Byte` arrays. Before version 0.9.0.0, the Kafka Java API used implementations of `Encoder`/`Decoder` interfaces to handle transformations but these have been replaced by `Serializer`/`Deserializer` interface implementations in the new API. Kafka ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html) but an Avro one is not included.
 
-To tackle this we will create an `AvroSerializer` class that implements the `Serializer` interface specifically for Avro objects. We then implement the `serialize()` method which takes as input a topic name and some data (in our case this will be an Avro object). This method [serializes the Avro object to a byte arry](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and returns the result.
+To tackle this we will create an `AvroSerializer` class that implements the `Serializer` interface specifically for Avro objects. We then implement the `serialize()` method which takes as input a topic name and some data (in our case this will be an Avro object). The method [serializes the Avro object to a byte array](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and returns the result.
 
 ``` java
 package com.codenotfound.kafka.serializer;
@@ -204,7 +204,61 @@ public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<
 }
 ```
 
-As we are sending Avro messages there are a number of items we need to change on the `SenderConfig`. First we need to configure a custom `Serializer` class to handle the fact that we will be passing Avro objects to the `send()` method of the `KafkaTemplate`.  for the `VALUE_SERIALIZER_CLASS_CONFIG` property of the `ProducerConfig`.
+Now we need to change on the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting `VALUE_SERIALIZER_CLASS_CONFIG` property of the `ProducerConfig` to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
+
+``` java
+package com.codenotfound.kafka.producer;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
+
+import com.codenotfound.kafka.serializer.AvroSerializer;
+
+import example.avro.User;
+
+@Configuration
+public class SenderConfig {
+
+  @Value("${kafka.bootstrap.servers}")
+  private String bootstrapServers;
+
+  @Bean
+  public Map<String, Object> producerConfigs() {
+    Map<String, Object> props = new HashMap<>();
+
+    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AvroSerializer.class);
+    props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
+
+    return props;
+  }
+
+  @Bean
+  public ProducerFactory<String, User> producerFactory() {
+    return new DefaultKafkaProducerFactory<>(producerConfigs());
+  }
+
+  @Bean
+  public KafkaTemplate<String, User> kafkaTemplate() {
+    return new KafkaTemplate<>(producerFactory());
+  }
+
+  @Bean
+  public Sender sender() {
+    return new Sender();
+  }
+}
+```
 
 
 
