@@ -136,9 +136,9 @@ This results in the generation of a `User` class which contains the schema and a
 
 # Sending Avro Messages to a Kafka Topic
 
-Kafka stores and transports `Byte` arrays in its queue. But as we are working with Avro objects we need to transform to/from these `Byte` arrays. Before version 0.9.0.0, the Kafka Java API use implementations of `Encoder`/`Decoder` interfaces to handle these transformations but these have been replaced by `Serializer`/`Deserializer` interface implementations in the new API. Spring Kafka ships with a number of built in (de)serializers but a Avro one is not included.
+Kafka stores and transports `Byte` arrays in its topics. But as we are working with Avro objects we need to transform to/from these `Byte` arrays. Before version 0.9.0.0, the Kafka Java API used implementations of `Encoder`/`Decoder` interfaces to handle transformations but these have been replaced by `Serializer`/`Deserializer` interface implementations in the new API. Kafka ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html) but an Avro one is not included.
 
-To tacle this we will implement 
+To tackle this we will create an `AvroSerializer` class that implement the `Serializer` interface for Avro objects. In order to do this we need to implement the `serialize()` method that takes a input a topic name and some data (in our case this will be an Avro object). This method [serializes the Avro object to a byte arry](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and logs and returns the result.
 
 ``` java
 package com.codenotfound.kafka.serializer;
