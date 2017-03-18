@@ -204,7 +204,7 @@ public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<
 }
 ```
 
-Now we need to change the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting the `VALUE_SERIALIZER_CLASS_CONFIG` property of the `ProducerConfig` to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
+Now we need to change the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting the `VALUE_SERIALIZER_CLASS_CONFIG` property to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -293,7 +293,7 @@ public class Sender {
 
 # Consuming Avro Messages from a Kafka Topic
 
-Received messages need to be deserialized back to the Avro format. To achieve this we create an `AvroDeserializer` class that implements the `Deserializer` interface. The `deserialize()` method takes as input a topic name and [a Byte array which is decoded back into an Avro object](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Deserializingfromabytearray). The schema that needs to be used for the decoding is retrieved from the target type that needs to be passed as an argument to the `AvroDeserializer` constructor.
+Received messages need to be deserialized back to the Avro format. To achieve this we create an `AvroDeserializer` class that implements the `Deserializer` interface. The `deserialize()` method takes as input a topic name and [a Byte array which is decoded back into an Avro object](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Deserializingfromabytearray). The schema that needs to be used for the decoding is retrieved from the `targetType` class parameter that needs to be passed as an argument to the `AvroDeserializer` constructor.
 
 ``` java
 package com.codenotfound.kafka.serializer;
@@ -360,16 +360,69 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
 }
 ```
 
+The `ReceiverConfig` needs to be updated so that the `AvroDeserializer` is used as value for the `VALUE_DESERIALIZER_CLASS_CONFIG` property. We also change the `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type so that it specifies `User` instead of `String`. The `DefaultKafkaConsumerFactory` is created by passing a new `AvroDeserializer` that takes `User.class` as constructor argument.
 
+``` java
+package com.codenotfound.kafka.consumer;
 
+import java.util.HashMap;
+import java.util.Map;
 
-# Create a Spring Kafka Message Consumer
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 
-Like with any messaging-based application, you need to create a receiver that will handle the published messages. The Receiver is nothing more than a simple POJO that defines a method for receiving messages. In the below example we named the method `receiveMessage()`, but you can name it anything you want.
+import com.codenotfound.kafka.serializer.AvroDeserializer;
 
-The `@KafkaListener` annotation creates a message listener container behind the scenes for each annotated method, using a `ConcurrentMessageListenerContainer`. By default, a bean with name `kafkaListenerContainerFactory` is expected that we will setup in the next section. Using the `topics` element, we specify the topics for this listener. For more information on the other available elements, you can consult the [KafkaListener API documentation](http://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html).
+import example.avro.User;
 
-> For testing convenience, we added a `CountDownLatch`. This allows the POJO to signal that a message is received. This is something you are not likely to implement in a production application. 
+@Configuration
+@EnableKafka
+public class ReceiverConfig {
+
+  @Value("${kafka.bootstrap.servers}")
+  private String bootstrapServers;
+
+  @Bean
+  public Map<String, Object> consumerConfigs() {
+    Map<String, Object> props = new HashMap<>();
+    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, AvroDeserializer.class);
+    props.put(ConsumerConfig.GROUP_ID_CONFIG, "avro");
+
+    return props;
+  }
+
+  @Bean
+  public ConsumerFactory<String, User> consumerFactory() {
+    return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(),
+        new AvroDeserializer<>(User.class));
+  }
+
+  @Bean
+  public ConcurrentKafkaListenerContainerFactory<String, User> kafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, User> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(consumerFactory());
+
+    return factory;
+  }
+
+  @Bean
+  public Receiver receiver() {
+    return new Receiver();
+  }
+}
+```
+
+Just like with the Sender class, the argument of the `receive()` method of Receiver class needs to be changed to the Avro `User` class.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -380,94 +433,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 
+import example.avro.User;
+
 public class Receiver {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(Receiver.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
 
-    private CountDownLatch latch = new CountDownLatch(1);
+  private CountDownLatch latch = new CountDownLatch(1);
 
-    @KafkaListener(topics = "helloworld.t")
-    public void receiveMessage(String message) {
-        LOGGER.info("received message='{}'", message);
-        latch.countDown();
-    }
+  @KafkaListener(topics = "${kafka.avro.topic}")
+  public void receive(User user) {
+    LOGGER.info("received user='{}'", user.toString());
+    latch.countDown();
+  }
 
-    public CountDownLatch getLatch() {
-        return latch;
-    }
+  public CountDownLatch getLatch() {
+    return latch;
+  }
 }
 ```
 
-The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class. Note that we need to add the `@EnableKafka` annotation to enable support for the `@KafkaListener` annotation that was used on the `Receiver`.
-
-The `kafkaListenerContainerFactory()` is used by the `@KafkaListener` annotation from the `Receiver`. In order to create it, a `ConsumerFactory` and accompanying configuration `Map` is needed. In this example only the mandatory configuration parameters are set, for a complete list consult the [Kafka ConsumerConfig API](https://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/consumer/ConsumerConfig.html). 
-
-``` java
-package com.codenotfound.kafka.consumer;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.IntegerDeserializer;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-
-@Configuration
-@EnableKafka
-public class ReceiverConfig {
-
-    @Value("${kafka.bootstrap.servers}")
-    private String bootstrapServers;
-
-    @Bean
-    public Map<String, Object> consumerConfigs() {
-        Map<String, Object> props = new HashMap<>();
-        // list of host:port pairs used for establishing the initial connections
-        // to the Kakfa cluster
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                bootstrapServers);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-                IntegerDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-                StringDeserializer.class);
-        // consumer groups allow a pool of processes to divide the work of
-        // consuming and processing records
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "helloworld");
-
-        return props;
-    }
-
-    @Bean
-    public ConsumerFactory<Integer, String> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(consumerConfigs());
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<Integer, String> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<Integer, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-
-        return factory;
-    }
-
-    @Bean
-    public Receiver receiver() {
-        return new Receiver();
-    }
-}
-```
-
-# Testing the Spring Kafka Template & Listener
-
-> When executing below test case, make sure you have [a running instance of Apache Kafka on port '9092' of your local machine]({{ site.url }}/2016/09/apache-kafka-download-installation.html). Note that it is also possible to [use Spring Kafka to automatically start an embedded Kafka broker as part of a unit test case]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
+# Test Sending and Receiving of Avro Messages on Kafka
 
 In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>helloworld.t</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
@@ -572,7 +558,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-helloworld-example).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-avro).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
