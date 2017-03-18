@@ -138,7 +138,7 @@ This results in the generation of a `User` class which contains the schema and a
 
 Kafka stores and transports `Byte` arrays in its topics. But as we are working with Avro objects we need to transform to/from these `Byte` arrays. Before version 0.9.0.0, the Kafka Java API used implementations of `Encoder`/`Decoder` interfaces to handle transformations but these have been replaced by `Serializer`/`Deserializer` interface implementations in the new API. Kafka ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html) but an Avro one is not included.
 
-To tackle this we will create an `AvroSerializer` class that implement the `Serializer` interface for Avro objects. In order to do this we need to implement the `serialize()` method that takes a input a topic name and some data (in our case this will be an Avro object). This method [serializes the Avro object to a byte arry](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and logs and returns the result.
+To tackle this we will create an `AvroSerializer` class that implements the `Serializer` interface specifically for Avro objects. We then implement the `serialize()` method which takes as input a topic name and some data (in our case this will be an Avro object). This method [serializes the Avro object to a byte arry](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and returns the result.
 
 ``` java
 package com.codenotfound.kafka.serializer;
@@ -178,6 +178,7 @@ public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<
   public byte[] serialize(String topic, T data) {
     try {
       byte[] result = null;
+
       if (data != null) {
         LOGGER.debug("data='{}'", data);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -193,6 +194,7 @@ public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<
         result = byteArrayOutputStream.toByteArray();
         LOGGER.debug("serialized data='{}'", DatatypeConverter.printHexBinary(result));
       }
+
       return result;
     } catch (IOException ex) {
       throw new SerializationException(
