@@ -5,7 +5,7 @@ excerpt: A detailed step-by-step tutorial on how to implement Apache Avro serial
 date: 2017-03-16 21:00
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache Avro, Avro, Deserializer, Example, Maven, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial]
-published: false
+published: true
 ---
 
 <figure>
