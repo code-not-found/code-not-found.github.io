@@ -142,7 +142,7 @@ This results in the generation of a `User` class which contains the schema and a
 
 Kafka stores and transports `Byte` arrays in its topics. But as we are working with Avro objects we need to transform to/from these `Byte` arrays. Before version 0.9.0.0, the Kafka Java API used implementations of `Encoder`/`Decoder` interfaces to handle transformations but these have been replaced by `Serializer`/`Deserializer` interface implementations in the new API. Kafka ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html) but an Avro one is not included.
 
-To tackle this we will create an `AvroSerializer` class that implements the `Serializer` interface specifically for Avro objects. We then implement the `serialize()` method which takes as input a topic name and a data object which in our case is an Avro object which extends `SpecificRecordBase`. The method [serializes the Avro object to a byte array](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and returns the result.
+To tackle this we will create an `AvroSerializer` class that implements the `Serializer` interface specifically for Avro objects. We then implement the `serialize()` method which takes as input a topic name and a data object which in our case is an Avro object that extends `SpecificRecordBase`. The method [serializes the Avro object to a byte array](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and returns the result.
 
 ``` java
 package com.codenotfound.kafka.serializer;
@@ -208,7 +208,7 @@ public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<
 }
 ```
 
-Now we need to change the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting the `VALUE_SERIALIZER_CLASS_CONFIG` property to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
+Now we need to change the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting the <var>VALUE_SERIALIZER_CLASS_CONFIG</var> property to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -364,7 +364,7 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
 }
 ```
 
-The `ReceiverConfig` needs to be updated so that the `AvroDeserializer` is used as value for the `VALUE_DESERIALIZER_CLASS_CONFIG` property. We also change the `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type so that it specifies `User` instead of `String`. The `DefaultKafkaConsumerFactory` is created by passing a new `AvroDeserializer` that takes `User.class` as constructor argument.
+The `ReceiverConfig` needs to be updated so that the `AvroDeserializer` is used as value for the <var>VALUE_DESERIALIZER_CLASS_CONFIG</var> property. We also change the `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type so that it specifies `User` instead of `String`. The `DefaultKafkaConsumerFactory` is created by passing a new `AvroDeserializer` that takes <var>'User.class'</var> as constructor argument.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -459,9 +459,9 @@ public class Receiver {
 
 # Test Sending and Receiving Avro Messages on Kafka
 
-The `SpringKafkaApplicationTest` test case demonstrates the above example. It [starts an embedded Kafka and ZooKeeper server using a JUnit ClassRule]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Before the test case starts we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer`s (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+The `SpringKafkaApplicationTest` test case demonstrates the above sample code. A JUnit ClassRule [starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Before the test case starts we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
-In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>avro.t</var> topic. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received.
+In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>avro.t</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
 ``` java
 package com.codenotfound.kafka;
