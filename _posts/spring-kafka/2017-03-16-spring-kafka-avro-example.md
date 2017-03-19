@@ -12,7 +12,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
 </figure>
 
-[Apache Avro](https://avro.apache.org/docs/current/) is a data serialization system. It uses JSON for defining data types and protocols, and serializes data in a compact binary format. In the following tutorial we will configure, build and run an example in which we will send/receive binary Avro messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
+[Apache Avro](https://avro.apache.org/docs/current/) is a data serialization system. It uses JSON for defining data types and protocols, and serializes data in a compact binary format. In the following tutorial we will configure, build and run an example in which we will send/receive an Avro messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
 
 Tools used:
 * Spring Boot 1.5
@@ -34,9 +34,9 @@ Avro relies on schemas which are defined using JSON. Schemas are composed of pri
 }
 ```
 
-Avro ships with code generation which allows us to automatically create Java classes based on the above defined <var>'User'</var> schema. Once we have generated the relevant classes, there is no need to use the schema directly in our program. The classes can be generated using the <var>avro-tools.jar</var> or via the Avro Maven plugin, we will use the latter in this example.
+Avro ships with code generation which allows us to automatically create Java classes based on the above defined <var>'User'</var> schema. Once we have generated the relevant classes, there is no need to use the schema directly in our program. The classes can be generated using the <var>avro-tools.jar</var> or via the [Avro Maven plugin](https://mvnrepository.com/artifact/org.apache.avro/avro-maven-plugin), we will use the latter in this example.
 
-We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) and add the `avro` Maven dependency to the dependencies section. In addition we configure the `avro-maven-plugin` to run the <var>'schema'</var> goal on all schema's that are found in the <var>/src/main/resources/avro/</var> location as shown below.
+We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) and add the `avro` dependency to the Maven POM file. In addition we configure the `avro-maven-plugin` to run the <var>'schema'</var> goal on all schema's that are found in the <var>/src/main/resources/avro/</var> location as shown below.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -132,7 +132,11 @@ In order to trigger the code generation via Maven, executed following command:
 mvn generate-sources
 ```
 
-This results in the generation of a `User` class which contains the schema and a number of `Builder` methods to construct a User object.
+This results in the generation of a `User` class which contains the schema and a number of `Builder` methods to construct a `User` object.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/spring-kafka/avro-generated-java-classes.png" alt="avro generated java classes">
+</figure>
 
 # Producing Avro Messages to a Kafka Topic
 
