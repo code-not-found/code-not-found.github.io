@@ -367,7 +367,7 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
 
 The `ReceiverConfig` needs to be updated so that the `AvroDeserializer` is used as value for the <var>VALUE_DESERIALIZER_CLASS_CONFIG</var> property. We also change the `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type so that it specifies `User` instead of `String`. The `DefaultKafkaConsumerFactory` is created by passing a new `AvroDeserializer` that takes <var>'User.class'</var> as constructor argument.
 
-> The `Class<?>` targetType of the `AvroDeserializer` is need to allow the deserialization of a consumed `byte[]` to the proper target object (in this example the `User` class).
+> The `Class<?>` targetType of the `AvroDeserializer` is needed to allow the deserialization of a consumed `byte[]` to the proper target object (in this example the `User` class).
 
 ``` java
 package com.codenotfound.kafka.consumer;

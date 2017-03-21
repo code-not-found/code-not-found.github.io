@@ -146,7 +146,7 @@ public class Car {
 
 # Producing JSON Messages to a Kafka Topic
 
-In order to use the `JsonSerializer` for converting the `Car` object that is sent to the topic, we need to set the value of the <var>VALUE_SERIALIZER_CLASS_CONFIG</var> Producer configuration property to the `JsonSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `Car` instead of `String`.
+In order to use the `JsonSerializer` for converting the `Car` object that is sent, we need to set the value of the <var>VALUE_SERIALIZER_CLASS_CONFIG</var> `Producer` configuration property to the `JsonSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `Car` instead of `String`.
 
 
 ``` java
@@ -202,7 +202,7 @@ public class SenderConfig {
 }
 ```
 
-The `Sender` class is updated accordingly so that it's `send()` method accepts an `Car` object as input. We also update the `KafkaTemplate` generic type.
+The `Sender` class is updated accordingly so that it's `send()` method accepts a `Car` object as input. We also update the `KafkaTemplate` generic type.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -234,7 +234,7 @@ public class Sender {
 
 # Consuming JSON Messages from a Kafka Topic
 
-In order to be able to receive the JSON serialized messages we need to update the value of the <var>VALUE_DESERIALIZER_CLASS_CONFIG</var> property so that it points to the `JsonDeserializer` class. The `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type needs to be changed so that it specifies `Car` instead of `String`.
+To receive the JSON serialized message we need to update the value of the <var>VALUE_DESERIALIZER_CLASS_CONFIG</var> property so that it points to the `JsonDeserializer` class. The `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type needs to be changed so that it specifies `Car` instead of `String`.
 
 > Note that the `JsonDeserializer` requires an additional `Class<?>` targetType argument to allow the deserialization of a consumed `byte[]` to the proper target object (in this example the `Car` class).
 
@@ -297,7 +297,7 @@ public class ReceiverConfig {
 }
 ```
 
-Identical to the `Sender` class, the argument of the `receive()` method of `Receiver` class needs to be changed to the `Car` class.
+Identical to the updated `Sender` class, the argument of the `receive()` method of `Receiver` class needs to be changed to the `Car` class.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -330,11 +330,95 @@ public class Receiver {
 
 # Test Sending and Receiving JSON Messages on Kafka
 
+The Maven porject contains a `SpringKafkaApplicationTest` test case to demonstrate the above sample code. A JUnit ClassRule [starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Before the test case starts we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
+In the `testReceiver()` test case we create a `Car` object and send  it to the <var>jons.t</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
+``` java
+package com.codenotfound.kafka;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.concurrent.TimeUnit;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
+import org.springframework.kafka.listener.MessageListenerContainer;
+import org.springframework.kafka.test.rule.KafkaEmbedded;
+import org.springframework.kafka.test.utils.ContainerTestUtils;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.codenotfound.kafka.consumer.Receiver;
+import com.codenotfound.kafka.producer.Sender;
+import com.codenotfound.model.Car;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class SpringKafkaApplicationTest {
+
+  @Autowired
+  private Sender sender;
+
+  @Autowired
+  private Receiver receiver;
+
+  @Autowired
+  private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
+
+  @ClassRule
+  public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, "json.t");
+
+  @BeforeClass
+  public static void setUpBeforeClass() throws Exception {
+    System.setProperty("kafka.bootstrap.servers", embeddedKafka.getBrokersAsString());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Before
+  public void setUp() throws Exception {
+    // wait until the partitions are assigned
+    for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
+        .getListenerContainers()) {
+      if (messageListenerContainer instanceof ConcurrentMessageListenerContainer) {
+        ConcurrentMessageListenerContainer<String, Car> concurrentMessageListenerContainer =
+            (ConcurrentMessageListenerContainer<String, Car>) messageListenerContainer;
+
+        ContainerTestUtils.waitForAssignment(concurrentMessageListenerContainer,
+            embeddedKafka.getPartitionsPerTopic());
+      }
+    }
+  }
+
+  @Test
+  public void testReceiver() throws Exception {
+    Car car = new Car("Passat", "Volkswagen", "ABC-123");
+
+    sender.send(car);
+
+    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+  }
+}
+```
+
+In order to run the above example open a command prompt and execute following Maven command: 
+
+``` plaintext
+mvn test
+```
+
+Maven will download the needed dependencies, compile the code and run the unit test case. The result should be a successful build during which following logs are generated:
+
+``` plaintext
+
+```
 
 ---
 
