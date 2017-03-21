@@ -1,11 +1,13 @@
 ---
-title: Spring Kafka - Avro Serializer &amp; Deserializer 
-permalink: /2017/03/spring-kafka-avro-serializer-deserializer.html
-excerpt: A detailed step-by-step tutorial on how to implement Apache Avro serialization &amp; deserialization using Spring Kafka and Spring Boot.
+title: Spring Kafka - Apache Avro Example
+permalink: /2017/03/spring-kafka-apache-avro-example.html
+excerpt: A detailed step-by-step tutorial on how to implement an Apache Avro Serializer &amp; Deserializer using Spring Kafka and Spring Boot.
 date: 2017-03-16 21:00
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache Avro, Avro, Deserializer, Example, Maven, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial]
 published: true
+redirect_from:
+  - /2017/03/spring-kafka-avro-serializer-deserializer.html
 ---
 
 <figure>
@@ -365,6 +367,8 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
 ```
 
 The `ReceiverConfig` needs to be updated so that the `AvroDeserializer` is used as value for the <var>VALUE_DESERIALIZER_CLASS_CONFIG</var> property. We also change the `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type so that it specifies `User` instead of `String`. The `DefaultKafkaConsumerFactory` is created by passing a new `AvroDeserializer` that takes <var>'User.class'</var> as constructor argument.
+
+> The `Class<?>` targetType of the `AvroDeserializer` is need to allow the deserialization of a consumed `byte[]` to the proper target object (in this example the `User` class).
 
 ``` java
 package com.codenotfound.kafka.consumer;
