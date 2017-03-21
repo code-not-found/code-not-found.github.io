@@ -91,6 +91,250 @@ We base the below example on a previous [Spring Kafka tutorial]({{ site.url }}/2
 
 For this example we will be sending a `Car` object. to a <var>json.t</var> topic. Let's use following class representing a car with a basic structure.
 
+``` java
+package com.codenotfound.model;
+
+public class Car {
+
+  private String make;
+  private String manufacturer;
+  private String id;
+
+  public Car() {
+    super();
+  }
+
+  public Car(String make, String manufacturer, String id) {
+    super();
+    this.make = make;
+    this.manufacturer = manufacturer;
+    this.id = id;
+  }
+
+  public String getMake() {
+    return make;
+  }
+
+  public void setMake(String make) {
+    this.make = make;
+  }
+
+  public String getManufacturer() {
+    return manufacturer;
+  }
+
+
+  public void setManufacturer(String manufacturer) {
+    this.manufacturer = manufacturer;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  @Override
+  public String toString() {
+    return "Car [make=" + make + ", manufacturer=" + manufacturer + ", id=" + id + "]";
+  }
+}
+```
+
+# Producing JSON Messages to a Kafka Topic
+
+In order to use the `JsonSerializer` for converting the `Car` object that is sent to the topic, we need to set the value of the <var>VALUE_SERIALIZER_CLASS_CONFIG</var> Producer configuration property to the `JsonSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `Car` instead of `String`.
+
+
+``` java
+package com.codenotfound.kafka.producer;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+
+import com.codenotfound.model.Car;
+
+@Configuration
+public class SenderConfig {
+
+  @Value("${kafka.bootstrap.servers}")
+  private String bootstrapServers;
+
+  @Bean
+  public Map<String, Object> producerConfigs() {
+    Map<String, Object> props = new HashMap<>();
+
+    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+    props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
+
+    return props;
+  }
+
+  @Bean
+  public ProducerFactory<String, Car> producerFactory() {
+    return new DefaultKafkaProducerFactory<>(producerConfigs());
+  }
+
+  @Bean
+  public KafkaTemplate<String, Car> kafkaTemplate() {
+    return new KafkaTemplate<>(producerFactory());
+  }
+
+  @Bean
+  public Sender sender() {
+    return new Sender();
+  }
+}
+```
+
+The `Sender` class is updated accordingly so that it's `send()` method accepts an `Car` object as input. We also update the `KafkaTemplate` generic type.
+
+``` java
+package com.codenotfound.kafka.producer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+
+import com.codenotfound.model.Car;
+
+public class Sender {
+
+  @Value("${kafka.json.topic}")
+  private String jsonTopic;
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
+
+  @Autowired
+  private KafkaTemplate<String, Car> kafkaTemplate;
+
+  public void send(Car car) {
+    LOGGER.info("sending car='{}'", car.toString());
+    kafkaTemplate.send(jsonTopic, car);
+  }
+}
+```
+
+# Consuming JSON Messages from a Kafka Topic
+
+In order to be able to receive the JSON serialized messages we need to update the value of the <var>VALUE_DESERIALIZER_CLASS_CONFIG</var> property so that it points to the `JsonDeserializer` class. The `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type needs to be changed so that it specifies `Car` instead of `String`.
+
+> Note that the `JsonDeserializer` requires an additional `Class<?>` targetType argument to allow the deserialization of a consumed `byte[]` to the proper target object (in this example the `Car` class).
+
+``` java
+package com.codenotfound.kafka.consumer;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
+
+import com.codenotfound.model.Car;
+
+@Configuration
+@EnableKafka
+public class ReceiverConfig {
+
+  @Value("${kafka.bootstrap.servers}")
+  private String bootstrapServers;
+
+  @Bean
+  public Map<String, Object> consumerConfigs() {
+    Map<String, Object> props = new HashMap<>();
+    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+    props.put(ConsumerConfig.GROUP_ID_CONFIG, "json");
+
+    return props;
+  }
+
+  @Bean
+  public ConsumerFactory<String, Car> consumerFactory() {
+    return new DefaultKafkaConsumerFactory<>(consumerConfigs(), new StringDeserializer(),
+        new JsonDeserializer<>(Car.class));
+  }
+
+  @Bean
+  public ConcurrentKafkaListenerContainerFactory<String, Car> kafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, Car> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(consumerFactory());
+
+    return factory;
+  }
+
+  @Bean
+  public Receiver receiver() {
+    return new Receiver();
+  }
+}
+```
+
+Identical to the `Sender` class, the argument of the `receive()` method of `Receiver` class needs to be changed to the `Car` class.
+
+``` java
+package com.codenotfound.kafka.consumer;
+
+import java.util.concurrent.CountDownLatch;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.kafka.annotation.KafkaListener;
+
+import com.codenotfound.model.Car;
+
+public class Receiver {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
+
+  private CountDownLatch latch = new CountDownLatch(1);
+
+  @KafkaListener(topics = "${kafka.json.topic}")
+  public void receive(Car car) {
+    LOGGER.info("received car='{}'", car.toString());
+    latch.countDown();
+  }
+
+  public CountDownLatch getLatch() {
+    return latch;
+  }
+}
+```
+
+# Test Sending and Receiving JSON Messages on Kafka
+
+
+
+
+
+
 
 ---
 
