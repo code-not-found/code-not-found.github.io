@@ -87,8 +87,9 @@ We base the below example on a previous [Spring Kafka tutorial]({{ site.url }}/2
     </plugins>
   </build>
 </project>
-
 ```
+
+For this example we will be sending a `Car` object. to a <var>json.t</var> topic. Let's use following class representing a car with a basic structure.
 
 
 ---
