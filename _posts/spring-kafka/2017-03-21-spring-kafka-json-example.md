@@ -417,7 +417,127 @@ mvn test
 Maven will download the needed dependencies, compile the code and run the unit test case. The result should be a successful build during which following logs are generated:
 
 ``` plaintext
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.5.2.RELEASE)
 
+2017-03-21 20:48:57.677  INFO 4776 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Starting SpringKafkaApplicationTest on cnf-pc with PID 4776 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-json)
+2017-03-21 20:48:57.678 DEBUG 4776 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
+2017-03-21 20:48:57.678  INFO 4776 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : No active profile set, falling back to default profiles: default
+2017-03-21 20:48:57.727  INFO 4776 --- [           main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@2f08c4b: startup date [Tue Mar 21 20:48:57 CET 2017]; root of context hierarchy
+2017-03-21 20:48:58.572  INFO 4776 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$b1b59555] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-03-21 20:48:59.185  INFO 4776 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@2f08c4b: startup date [Tue Mar 21 20:48:57 CET 2017]; root of context hierarchy
+2017-03-21 20:48:59.253  INFO 4776 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2017-03-21 20:48:59.255  INFO 4776 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2017-03-21 20:48:59.304  INFO 4776 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-03-21 20:48:59.305  INFO 4776 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-03-21 20:48:59.346  INFO 4776 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2017-03-21 20:48:59.520  INFO 4776 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0
+2017-03-21 20:48:59.531  INFO 4776 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
+2017-03-21 20:48:59.532  INFO 4776 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
+2017-03-21 20:48:59.558  INFO 4776 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
+2017-03-21 20:48:59.558  INFO 4776 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
+2017-03-21 20:48:59.571  INFO 4776 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Started SpringKafkaApplicationTest in 2.149 seconds (JVM running for 6.566)
+2017-03-21 20:50:06.970  INFO 1236 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Successfully joined group json with generation 1
+2017-03-21 20:50:06.971  INFO 1236 --- [afka-consumer-1] o.a.k.c.c.internals.ConsumerCoordinator  : Setting newly assigned partitions [json.t-1, json.t-0] for group json
+2017-03-21 20:50:06.988  INFO 1236 --- [afka-consumer-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned:[json.t-1, json.t-0]
+2017-03-21 20:50:07.009  INFO 1236 --- [           main] com.codenotfound.kafka.producer.Sender   : sending car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
+2017-03-21 20:50:07.012  INFO 1236 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
+2017-03-21 20:50:07.013  INFO 1236 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
+2017-03-21 20:50:07.023  INFO 1236 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
+2017-03-21 20:50:07.023  INFO 1236 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
+2017-03-21 20:50:07.241  INFO 1236 --- [afka-listener-1] c.codenotfound.kafka.consumer.Receiver   : received car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
+2017-03-21 20:50:07.245  INFO 1236 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], shutting down
+2017-03-21 20:50:07.246  INFO 1236 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], Starting controlled shutdown
+2017-03-21 20:50:07.256  INFO 1236 --- [quest-handler-4] kafka.controller.KafkaController         : [Controller 0]: Shutting down broker 0
+2017-03-21 20:50:07.264  INFO 1236 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], Controlled shutdown succeeded
+2017-03-21 20:50:07.266  INFO 1236 --- [           main] kafka.network.SocketServer               : [Socket Server on Broker 0], Shutting down
+2017-03-21 20:50:07.269  INFO 1236 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Marking the coordinator localhost:56210 (id: 2147483647 rack: null) dead for group json
+2017-03-21 20:50:07.274  INFO 1236 --- [           main] kafka.network.SocketServer               : [Socket Server on Broker 0], Shutdown completed
+2017-03-21 20:50:07.275  INFO 1236 --- [           main] kafka.server.KafkaRequestHandlerPool     : [Kafka Request Handler on Broker 0], shutting down
+2017-03-21 20:50:07.277  INFO 1236 --- [           main] kafka.server.KafkaRequestHandlerPool     : [Kafka Request Handler on Broker 0], shut down completely
+2017-03-21 20:50:07.281  INFO 1236 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Shutting down
+2017-03-21 20:50:07.390  INFO 1236 --- [estReaper-Fetch] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Stopped
+2017-03-21 20:50:07.390  INFO 1236 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Shutdown completed
+2017-03-21 20:50:07.390  INFO 1236 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Shutting down
+2017-03-21 20:50:07.416  INFO 1236 --- [tReaper-Produce] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Stopped
+2017-03-21 20:50:07.416  INFO 1236 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Shutdown completed
+2017-03-21 20:50:07.416  INFO 1236 --- [           main] kafka.server.KafkaApis                   : [KafkaApi-0] Shutdown complete.
+2017-03-21 20:50:07.417  INFO 1236 --- [           main] kafka.server.ReplicaManager              : [Replica Manager on Broker 0]: Shutting down
+2017-03-21 20:50:07.418  INFO 1236 --- [           main] kafka.server.ReplicaFetcherManager       : [ReplicaFetcherManager on broker 0] shutting down
+2017-03-21 20:50:07.419  INFO 1236 --- [           main] kafka.server.ReplicaFetcherManager       : [ReplicaFetcherManager on broker 0] shutdown completed
+2017-03-21 20:50:07.419  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-21 20:50:07.502  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-21 20:50:07.502  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-21 20:50:07.502  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-21 20:50:07.626  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-21 20:50:07.626  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-21 20:50:07.639  INFO 1236 --- [           main] kafka.server.ReplicaManager              : [Replica Manager on Broker 0]: Shut down completely
+2017-03-21 20:50:07.639  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-21 20:50:07.659  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-21 20:50:07.659  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-21 20:50:07.660  INFO 1236 --- [           main] kafka.log.LogManager                     : Shutting down.
+2017-03-21 20:50:07.660  INFO 1236 --- [           main] kafka.log.LogCleaner                     : Shutting down the log cleaner.
+2017-03-21 20:50:07.661  INFO 1236 --- [           main] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Shutting down
+2017-03-21 20:50:07.661  INFO 1236 --- [leaner-thread-0] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Stopped
+2017-03-21 20:50:07.661  INFO 1236 --- [           main] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Shutdown completed
+2017-03-21 20:50:07.938  INFO 1236 --- [           main] kafka.log.LogManager                     : Shutdown complete.
+2017-03-21 20:50:07.938  INFO 1236 --- [           main] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Shutting down.
+2017-03-21 20:50:07.939  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-21 20:50:08.029  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-21 20:50:08.029  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-21 20:50:08.029  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
+2017-03-21 20:50:08.061  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
+2017-03-21 20:50:08.061  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
+2017-03-21 20:50:08.061  INFO 1236 --- [           main] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Shutdown complete.
+2017-03-21 20:50:08.063  INFO 1236 --- [           main] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Shutting down
+2017-03-21 20:50:08.063  INFO 1236 --- [topics-thread-0] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Stopped
+2017-03-21 20:50:08.063  INFO 1236 --- [           main] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Shutdown completed
+2017-03-21 20:50:08.065  INFO 1236 --- [           main] kafka.controller.PartitionStateMachine   : [Partition state machine on Controller 0]: Stopped partition state machine
+2017-03-21 20:50:08.065  INFO 1236 --- [           main] kafka.controller.ReplicaStateMachine     : [Replica state machine on controller 0]: Stopped replica state machine
+2017-03-21 20:50:08.067  INFO 1236 --- [           main] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Shutting down
+2017-03-21 20:50:08.067  INFO 1236 --- [r-0-send-thread] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Stopped
+2017-03-21 20:50:08.067  INFO 1236 --- [           main] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Shutdown completed
+2017-03-21 20:50:08.068  INFO 1236 --- [           main] kafka.controller.KafkaController         : [Controller 0]: Broker 0 resigned as the controller
+2017-03-21 20:50:08.068  INFO 1236 --- [127.0.0.1:56206] org.I0Itec.zkclient.ZkEventThread        : Terminate ZkClient event thread.
+2017-03-21 20:50:08.069  INFO 1236 --- [0 cport:56206):] o.a.z.server.PrepRequestProcessor        : Processed session termination for sessionid: 0x15af26b4a640001
+2017-03-21 20:50:08.076  INFO 1236 --- [ry:/127.0.0.1:0] o.apache.zookeeper.server.NIOServerCnxn  : Closed socket connection for client /127.0.0.1:56213 which had sessionid 0x15af26b4a640001
+2017-03-21 20:50:08.076  INFO 1236 --- [           main] org.apache.zookeeper.ZooKeeper           : Session: 0x15af26b4a640001 closed
+2017-03-21 20:50:08.077  INFO 1236 --- [ain-EventThread] org.apache.zookeeper.ClientCnxn          : EventThread shut down for session: 0x15af26b4a640001
+2017-03-21 20:50:08.078  INFO 1236 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], shut down completed
+2017-03-21 20:50:08.154  INFO 1236 --- [127.0.0.1:56206] org.I0Itec.zkclient.ZkEventThread        : Terminate ZkClient event thread.
+2017-03-21 20:50:08.155  INFO 1236 --- [0 cport:56206):] o.a.z.server.PrepRequestProcessor        : Processed session termination for sessionid: 0x15af26b4a640000
+2017-03-21 20:50:08.160  INFO 1236 --- [           main] org.apache.zookeeper.ZooKeeper           : Session: 0x15af26b4a640000 closed
+2017-03-21 20:50:08.160  INFO 1236 --- [ain-EventThread] org.apache.zookeeper.ClientCnxn          : EventThread shut down for session: 0x15af26b4a640000
+2017-03-21 20:50:08.160  INFO 1236 --- [ry:/127.0.0.1:0] o.apache.zookeeper.server.NIOServerCnxn  : Closed socket connection for client /127.0.0.1:56209 which had sessionid 0x15af26b4a640000
+2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.zookeeper.server.ZooKeeperServer     : shutting down
+2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.zookeeper.server.SessionTrackerImpl  : Shutting down
+2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.z.server.PrepRequestProcessor        : Shutting down
+2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.z.server.SyncRequestProcessor        : Shutting down
+2017-03-21 20:50:08.161  INFO 1236 --- [0 cport:56206):] o.a.z.server.PrepRequestProcessor        : PrepRequestProcessor exited loop!
+2017-03-21 20:50:08.161  INFO 1236 --- [   SyncThread:0] o.a.z.server.SyncRequestProcessor        : SyncRequestProcessor exited!
+2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.z.server.FinalRequestProcessor       : shutdown of request processor complete
+2017-03-21 20:50:08.162  INFO 1236 --- [ry:/127.0.0.1:0] o.a.z.server.NIOServerCnxnFactory        : NIOServerCnxn factory exited run method
+2017-03-21 20:50:08.500  INFO 1236 --- [ SessionTracker] o.a.zookeeper.server.SessionTrackerImpl  : SessionTrackerImpl exited loop!
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.717 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
+2017-03-21 20:50:09.171  INFO 1236 --- [       Thread-8] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@2f08c4b: startup date [Tue Mar 21 20:50:03 CET 2017]; root of context hierarchy
+2017-03-21 20:50:09.175  INFO 1236 --- [       Thread-8] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 0
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 41.654 s
+[INFO] Finished at: 2017-03-21T20:50:39+01:00
+[INFO] Final Memory: 17M/220M
+[INFO] ------------------------------------------------------------------------
 ```
 
 ---

@@ -559,14 +559,11 @@ Maven will download the needed dependencies, compile the code and run the unit t
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.2.RELEASE)
 
-2017-03-18 20:27:54.855  INFO 4500 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Starting SpringKafkaApplicationTest on cnf-pc with PID 4500 (started by CodeNotFound in c:\code\st\spring-kaf
-ka\spring-kafka-avro)
+2017-03-18 20:27:54.855  INFO 4500 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Starting SpringKafkaApplicationTest on cnf-pc with PID 4500 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-avro)
 2017-03-18 20:27:54.856 DEBUG 4500 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
 2017-03-18 20:27:54.856  INFO 4500 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : No active profile set, falling back to default profiles: default
-2017-03-18 20:27:54.877  INFO 4500 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4604b900: start
-up date [Sat Mar 18 20:27:54 CET 2017]; root of context hierarchy
-2017-03-18 20:27:55.287  INFO 4500 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework
-.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$e407da82] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2017-03-18 20:27:54.877  INFO 4500 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4604b900: startup date [Sat Mar 18 20:27:54 CET 2017]; root of context hierarchy
+2017-03-18 20:27:55.287  INFO 4500 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$e407da82] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
 2017-03-18 20:27:55.485  INFO 4500 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0
 2017-03-18 20:27:55.495  INFO 4500 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
 2017-03-18 20:27:55.496  INFO 4500 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
@@ -663,8 +660,7 @@ up date [Sat Mar 18 20:27:54 CET 2017]; root of context hierarchy
 2017-03-18 18:38:05.654  INFO 6740 --- [ry:/127.0.0.1:0] o.a.z.server.NIOServerCnxnFactory        : NIOServerCnxn factory exited run method
 2017-03-18 18:38:06.000  INFO 6740 --- [ SessionTracker] o.a.zookeeper.server.SessionTrackerImpl  : SessionTrackerImpl exited loop!
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.161 sec - in com.codenotfound.kafka.SpringKafkaApplicationTests
-2017-03-18 18:38:06.680  INFO 6740 --- [       Thread-8] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@4604b900: startup
-date [Sat Mar 18 18:38:00 CET 2017]; root of context hierarchy
+2017-03-18 18:38:06.680  INFO 6740 --- [       Thread-8] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@4604b900: startup date [Sat Mar 18 18:38:00 CET 2017]; root of context hierarchy
 2017-03-18 18:38:06.682  INFO 6740 --- [       Thread-8] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 0
 
 Results :
