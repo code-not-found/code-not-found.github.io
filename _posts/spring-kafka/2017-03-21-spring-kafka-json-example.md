@@ -22,7 +22,6 @@ Tools used:
 
 We base the below example on a previous [Spring Kafka tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html). The only thing that needs to be added to the Maven POM file for working with JSON is the `spring-boot-starter-web` dependency which will indirectly include the needed `jackson-*` JAR dependencies.
 
-
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -90,8 +89,6 @@ We base the below example on a previous [Spring Kafka tutorial]({{ site.url }}/2
 </project>
 
 ```
-
-For this example we will be sending a `Car` object to a <var>json.t</var> topic. Let’s use following class representing a car with a basic structure.
 
 
 ---
