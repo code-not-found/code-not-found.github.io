@@ -1,11 +1,10 @@
 ---
-title: Spring Kafka - JSON Example 
+title: Spring Kafka - JSON Example
 permalink: /2017/03/spring-kafka-json-example.html
 excerpt: A detailed step-by-step tutorial on how to send/receive JSON messages using Spring Kafka and Spring Boot.
 date: 2017-03-21 21:00
 categories: [Spring Kafka]
 tags: [Apache Kafka, Example, Maven, JSON, JsonDeserializer, JsonSerializer, Spring, Spring Boot, Spring Kafka, Tutorial]
-published: true
 ---
 
 <figure>

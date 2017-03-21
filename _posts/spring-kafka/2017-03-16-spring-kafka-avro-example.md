@@ -5,7 +5,6 @@ excerpt: A detailed step-by-step tutorial on how to implement an Apache Avro Ser
 date: 2017-03-16 21:00
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache Avro, Avro, Deserializer, Example, Maven, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial]
-published: true
 redirect_from:
   - /2017/03/spring-kafka-avro-serializer-deserializer.html
 ---
