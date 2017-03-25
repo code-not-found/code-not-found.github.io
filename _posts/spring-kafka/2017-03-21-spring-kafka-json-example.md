@@ -332,7 +332,7 @@ public class Receiver {
 
 The Maven project contains a `SpringKafkaApplicationTest` test case to demonstrate the above sample code. A JUnit ClassRule [starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
-In the `testReceiver()` test case we create a `Car` object and send  it to the <var>'jons.t'</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
+In the `testReceiver()` test case we create a `Car` object and send  it to the <var>'json.t'</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
 ``` java
 package com.codenotfound.kafka;
