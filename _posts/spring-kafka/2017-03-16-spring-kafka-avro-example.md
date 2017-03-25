@@ -25,13 +25,13 @@ Avro relies on schemas which are defined using JSON. Schemas are composed of pri
 
 ``` json
 {"namespace": "example.avro",
- "type": "record",
- "name": "User",
- "fields": [
-     {"name": "name", "type": "string"},
-     {"name": "favorite_number",  "type": ["int", "null"]},
-     {"name": "favorite_color", "type": ["string", "null"]}
- ]
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "favorite_number",  "type": ["int", "null"]},
+    {"name": "favorite_color", "type": ["string", "null"]}
+  ]
 }
 ```
 
@@ -51,7 +51,7 @@ We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spri
 
   <name>spring-kafka-avro</name>
   <description>Spring Kafka - Apache Avro Example</description>
-  <url>https://www.codenotfound.com/2017/03/spring-kafka-avro-example</url>
+  <url>https://www.codenotfound.com/2017/03/spring-kafka-apache-avro-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -186,6 +186,7 @@ public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<
 
       if (data != null) {
         LOGGER.debug("data='{}'", data);
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         BinaryEncoder binaryEncoder =
             EncoderFactory.get().binaryEncoder(byteArrayOutputStream, null);
@@ -199,17 +200,16 @@ public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<
         result = byteArrayOutputStream.toByteArray();
         LOGGER.debug("serialized data='{}'", DatatypeConverter.printHexBinary(result));
       }
-
       return result;
     } catch (IOException ex) {
       throw new SerializationException(
-          "Can't serialize data [" + data + "] for topic [" + topic + "]", ex);
+          "Can't serialize data='" + data + "' for topic='" + topic + "'", ex);
     }
   }
 }
 ```
 
-Now we need to change the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting the <var>VALUE_SERIALIZER_CLASS_CONFIG</var> property to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
+Now we need to change the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting the <var>'VALUE_SERIALIZER_CLASS_CONFIG'</var> property to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -233,7 +233,7 @@ import example.avro.User;
 @Configuration
 public class SenderConfig {
 
-  @Value("${kafka.bootstrap.servers}")
+  @Value("${kafka.servers.bootstrap}")
   private String bootstrapServers;
 
   @Bean
@@ -281,7 +281,7 @@ import example.avro.User;
 
 public class Sender {
 
-  @Value("${kafka.avro.topic}")
+  @Value("${kafka.topic.avro}")
   private String avroTopic;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
@@ -346,26 +346,25 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
       T result = null;
 
       if (data != null) {
-        LOGGER.debug("serialized data='{}'", DatatypeConverter.printHexBinary(data));
+        LOGGER.debug("data='{}'", DatatypeConverter.printHexBinary(data));
 
         DatumReader<GenericRecord> datumReader =
             new SpecificDatumReader<>(targetType.newInstance().getSchema());
         Decoder decoder = DecoderFactory.get().binaryDecoder(data, null);
 
         result = (T) datumReader.read(null, decoder);
-        LOGGER.debug("data='{}'", result);
+        LOGGER.debug("deserialized data='{}'", result);
       }
-
       return result;
     } catch (Exception ex) {
       throw new SerializationException(
-          "Can't deserialize data [" + Arrays.toString(data) + "] from topic [" + topic + "]", ex);
+          "Can't deserialize data '" + Arrays.toString(data) + "' from topic '" + topic + "'", ex);
     }
   }
 }
 ```
 
-The `ReceiverConfig` needs to be updated so that the `AvroDeserializer` is used as value for the <var>VALUE_DESERIALIZER_CLASS_CONFIG</var> property. We also change the `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type so that it specifies `User` instead of `String`. The `DefaultKafkaConsumerFactory` is created by passing a new `AvroDeserializer` that takes <var>'User.class'</var> as constructor argument.
+The `ReceiverConfig` needs to be updated so that the `AvroDeserializer` is used as value for the <var>'VALUE_DESERIALIZER_CLASS_CONFIG'</var> property. We also change the `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type so that it specifies `User` instead of `String`. The `DefaultKafkaConsumerFactory` is created by passing a new `AvroDeserializer` that takes <var>'User.class'</var> as constructor argument.
 
 > The `Class<?>` targetType of the `AvroDeserializer` is needed to allow the deserialization of a consumed `byte[]` to the proper target object (in this example the `User` class).
 
@@ -393,7 +392,7 @@ import example.avro.User;
 @EnableKafka
 public class ReceiverConfig {
 
-  @Value("${kafka.bootstrap.servers}")
+  @Value("${kafka.servers.bootstrap}")
   private String bootstrapServers;
 
   @Bean
@@ -429,7 +428,7 @@ public class ReceiverConfig {
 }
 ```
 
-Just like with the `Sender` class, the argument of the `receive()` method of `Receiver` class needs to be changed to the Avro `User` class.
+Just like with the `Sender` class, the argument of the `receive()` method of the `Receiver` class needs to be changed to the Avro `User` class.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -448,7 +447,7 @@ public class Receiver {
 
   private CountDownLatch latch = new CountDownLatch(1);
 
-  @KafkaListener(topics = "${kafka.avro.topic}")
+  @KafkaListener(topics = "${kafka.topic.avro}")
   public void receive(User user) {
     LOGGER.info("received user='{}'", user.toString());
     latch.countDown();
@@ -464,7 +463,7 @@ public class Receiver {
 
 The `SpringKafkaApplicationTest` test case demonstrates the above sample code. A JUnit ClassRule [starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Before the test case starts we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
-In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>avro.t</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
+In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>'avro.t'</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
 ``` java
 package com.codenotfound.kafka;
@@ -510,7 +509,7 @@ public class SpringKafkaApplicationTest {
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-    System.setProperty("kafka.bootstrap.servers", embeddedKafka.getBrokersAsString());
+    System.setProperty("kafka.servers.bootstrap", embeddedKafka.getBrokersAsString());
   }
 
   @SuppressWarnings("unchecked")
