@@ -35,56 +35,57 @@ We also include the `spring-boot-maven-plugin` Maven plugin so that we can build
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.codenotfound</groupId>
-    <artifactId>spring-kafka-helloworld-example</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+  <groupId>com.codenotfound</groupId>
+  <artifactId>spring-kafka-helloworld</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
 
-    <name>spring-kafka-helloworld-example</name>
-    <description>Spring Kafka - Consumer &amp; Producer Example</description>
-    <url>https://www.codenotfound.com/2016/09/spring-kafka-consumer-producer-example.html</url>
+  <name>spring-kafka-helloworld</name>
+  <description>Spring Kafka - Consumer &amp; Producer Example</description>
+  <url>https://www.codenotfound.com/2016/09/spring-kafka-consumer-producer-example.html</url>
 
-    <parent>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.2.RELEASE</version>
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+
+    <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
+  </properties>
+
+  <dependencies>
+    <!-- Spring Boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Spring Kafka -->
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+      <version>${spring-kafka.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- spring-boot-maven-plugin -->
+      <plugin>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.2.RELEASE</version>
-    </parent>
-
-    <properties>
-        <java.version>1.8</java.version>
-
-        <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
-    </properties>
-
-    <dependencies>
-        <!-- Spring Boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Spring Kafka -->
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-            <version>${spring-kafka.version}</version>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 </project>
 ```
 
@@ -101,9 +102,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringKafkaApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringKafkaApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(SpringKafkaApplication.class, args);
+  }
 }
 ```
 
@@ -128,47 +129,41 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 public class Sender {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(Sender.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
 
-    @Autowired
-    private KafkaTemplate<Integer, String> kafkaTemplate;
+  @Autowired
+  private KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendMessage(String topic, String message) {
-        // the KafkaTemplate provides asynchronous send methods returning a
-        // Future
-        ListenableFuture<SendResult<Integer, String>> future = kafkaTemplate
-                .send(topic, message);
+  public void send(String topic, String message) {
+    // the KafkaTemplate provides asynchronous send methods returning a
+    // Future
+    ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, message);
 
-        // you can register a callback with the listener to receive the result
-        // of the send asynchronously
-        future.addCallback(
-                new ListenableFutureCallback<SendResult<Integer, String>>() {
+    // you can register a callback with the listener to receive the result
+    // of the send asynchronously
+    future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
 
-                    @Override
-                    public void onSuccess(
-                            SendResult<Integer, String> result) {
-                        LOGGER.info("sent message='{}' with offset={}",
-                                message,
-                                result.getRecordMetadata().offset());
-                    }
+      @Override
+      public void onSuccess(SendResult<String, String> result) {
+        LOGGER.info("sent message='{}' with offset={}", message,
+            result.getRecordMetadata().offset());
+      }
 
-                    @Override
-                    public void onFailure(Throwable ex) {
-                        LOGGER.error("unable to send message='{}'",
-                                message, ex);
-                    }
-                });
+      @Override
+      public void onFailure(Throwable ex) {
+        LOGGER.error("unable to send message='{}'", message, ex);
+      }
+    });
 
-        // alternatively, to block the sending thread, to await the result,
-        // invoke the future's get() method
-    }
+    // alternatively, to block the sending thread, to await the result,
+    // invoke the future's get() method
+  }
 }
 ```
 
 The creation of the `KafkaTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
-In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template’s constructor. The producer factory needs to be set with a number of properties amongst which the `BOOTSTRAP_SERVERS_CONFIG` property that is fetched from the <var>application.properties</var> configuration file. For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
+In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template's constructor. The producer factory needs to be set with a number of properties amongst which the <var>BOOTSTRAP_SERVERS_CONFIG</var> property that is fetched from the <var>application.properties</var> configuration file. For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -177,7 +172,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -189,46 +183,43 @@ import org.springframework.kafka.core.ProducerFactory;
 @Configuration
 public class SenderConfig {
 
-    @Value("${kafka.bootstrap.servers}")
-    private String bootstrapServers;
+  @Value("${kafka.servers.bootstrap}")
+  private String bootstrapServers;
 
-    @Bean
-    public Map<String, Object> producerConfigs() {
-        Map<String, Object> props = new HashMap<>();
-        // list of host:port pairs used for establishing the initial connections
-        // to the Kakfa cluster
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                bootstrapServers);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-                IntegerSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                StringSerializer.class);
-        // value to block, after which it will throw a TimeoutException
-        props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
+  @Bean
+  public Map<String, Object> producerConfigs() {
+    Map<String, Object> props = new HashMap<>();
+    // list of host:port pairs used for establishing the initial connections
+    // to the Kakfa cluster
+    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    // value to block, after which it will throw a TimeoutException
+    props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
 
-        return props;
-    }
+    return props;
+  }
 
-    @Bean
-    public ProducerFactory<Integer, String> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs());
-    }
+  @Bean
+  public ProducerFactory<String, String> producerFactory() {
+    return new DefaultKafkaProducerFactory<>(producerConfigs());
+  }
 
-    @Bean
-    public KafkaTemplate<Integer, String> kafkaTemplate() {
-        return new KafkaTemplate<Integer, String>(producerFactory());
-    }
+  @Bean
+  public KafkaTemplate<String, String> kafkaTemplate() {
+    return new KafkaTemplate<>(producerFactory());
+  }
 
-    @Bean
-    public Sender sender() {
-        return new Sender();
-    }
+  @Bean
+  public Sender sender() {
+    return new Sender();
+  }
 }
 ```
 
 # Create a Spring Kafka Message Consumer
 
-Like with any messaging-based application, you need to create a receiver that will handle the published messages. The Receiver is nothing more than a simple POJO that defines a method for receiving messages. In the below example we named the method `receiveMessage()`, but you can name it anything you want.
+Like with any messaging-based application, you need to create a receiver that will handle the published messages. The Receiver is nothing more than a simple POJO that defines a method for receiving messages. In the below example we named the method `receive()`, but you can name it anything you want.
 
 The `@KafkaListener` annotation creates a message listener container behind the scenes for each annotated method, using a `ConcurrentMessageListenerContainer`. By default, a bean with name `kafkaListenerContainerFactory` is expected that we will setup in the next section. Using the `topics` element, we specify the topics for this listener. For more information on the other available elements, you can consult the [KafkaListener API documentation](http://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html).
 
@@ -245,20 +236,19 @@ import org.springframework.kafka.annotation.KafkaListener;
 
 public class Receiver {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(Receiver.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
 
-    private CountDownLatch latch = new CountDownLatch(1);
+  private CountDownLatch latch = new CountDownLatch(1);
 
-    @KafkaListener(topics = "helloworld.t")
-    public void receiveMessage(String message) {
-        LOGGER.info("received message='{}'", message);
-        latch.countDown();
-    }
+  @KafkaListener(topics = "helloworld.t")
+  public void receive(String message) {
+    LOGGER.info("received message='{}'", message);
+    latch.countDown();
+  }
 
-    public CountDownLatch getLatch() {
-        return latch;
-    }
+  public CountDownLatch getLatch() {
+    return latch;
+  }
 }
 ```
 
@@ -273,7 +263,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -287,44 +276,42 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 @EnableKafka
 public class ReceiverConfig {
 
-    @Value("${kafka.bootstrap.servers}")
-    private String bootstrapServers;
+  @Value("${kafka.servers.bootstrap}")
+  private String bootstrapServers;
 
-    @Bean
-    public Map<String, Object> consumerConfigs() {
-        Map<String, Object> props = new HashMap<>();
-        // list of host:port pairs used for establishing the initial connections
-        // to the Kakfa cluster
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                bootstrapServers);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-                IntegerDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-                StringDeserializer.class);
-        // consumer groups allow a pool of processes to divide the work of
-        // consuming and processing records
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "helloworld");
+  @Bean
+  public Map<String, Object> consumerConfigs() {
+    Map<String, Object> props = new HashMap<>();
+    // list of host:port pairs used for establishing the initial connections
+    // to the Kakfa cluster
+    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+    // consumer groups allow a pool of processes to divide the work of
+    // consuming and processing records
+    props.put(ConsumerConfig.GROUP_ID_CONFIG, "helloworld");
 
-        return props;
-    }
+    return props;
+  }
 
-    @Bean
-    public ConsumerFactory<Integer, String> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(consumerConfigs());
-    }
+  @Bean
+  public ConsumerFactory<String, String> consumerFactory() {
+    return new DefaultKafkaConsumerFactory<>(consumerConfigs());
+  }
 
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<Integer, String> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<Integer, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+  @Bean
+  public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
+    ConcurrentKafkaListenerContainerFactory<String, String> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(consumerFactory());
 
-        return factory;
-    }
+    return factory;
+  }
 
-    @Bean
-    public Receiver receiver() {
-        return new Receiver();
-    }
+  @Bean
+  public Receiver receiver() {
+    return new Receiver();
+  }
 }
 ```
 
@@ -356,19 +343,19 @@ import com.codenotfound.kafka.producer.Sender;
 @SpringBootTest
 public class SpringKafkaApplicationTests {
 
-    @Autowired
-    private Sender sender;
+  @Autowired
+  private Sender sender;
 
-    @Autowired
-    private Receiver receiver;
+  @Autowired
+  private Receiver receiver;
 
-    @Test
-    public void testReceiver() throws Exception {
-        sender.sendMessage("helloworld.t", "Hello Spring Kafka!");
+  @Test
+  public void testReceive() throws Exception {
+    sender.send("helloworld.t", "Hello Spring Kafka!");
 
-        receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
-        assertThat(receiver.getLatch().getCount()).isEqualTo(0);
-    }
+    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+  }
 }
 ```
 
@@ -435,7 +422,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-helloworld-example).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-helloworld).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
