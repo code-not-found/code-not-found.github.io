@@ -89,7 +89,7 @@ We base the below example on a previous [Spring Kafka tutorial]({{ site.url }}/2
 </project>
 ```
 
-For this example we will be sending a `Car` object. to a <var>json.t</var> topic. Let's use following class representing a car with a basic structure.
+For this example we will be sending a `Car` object. to a <var>'json.t'</var> topic. Let's use following class representing a car with a basic structure.
 
 ``` java
 package com.codenotfound.model;
@@ -146,7 +146,7 @@ public class Car {
 
 # Producing JSON Messages to a Kafka Topic
 
-In order to use the `JsonSerializer` for converting the `Car` object that is sent, we need to set the value of the <var>VALUE_SERIALIZER_CLASS_CONFIG</var> `Producer` configuration property to the `JsonSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `Car` instead of `String`.
+In order to use the `JsonSerializer` for converting the `Car` object that is sent, we need to set the value of the <var>'VALUE_SERIALIZER_CLASS_CONFIG'</var> `Producer` configuration property to the `JsonSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `Car` instead of `String`.
 
 
 ``` java
@@ -170,7 +170,7 @@ import com.codenotfound.model.Car;
 @Configuration
 public class SenderConfig {
 
-  @Value("${kafka.bootstrap.servers}")
+  @Value("${kafka.servers.bootstrap}")
   private String bootstrapServers;
 
   @Bean
@@ -217,7 +217,7 @@ import com.codenotfound.model.Car;
 
 public class Sender {
 
-  @Value("${kafka.json.topic}")
+  @Value("${kafka.topic.json}")
   private String jsonTopic;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
@@ -234,7 +234,7 @@ public class Sender {
 
 # Consuming JSON Messages from a Kafka Topic
 
-To receive the JSON serialized message we need to update the value of the <var>VALUE_DESERIALIZER_CLASS_CONFIG</var> property so that it points to the `JsonDeserializer` class. The `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type needs to be changed so that it specifies `Car` instead of `String`.
+To receive the JSON serialized message we need to update the value of the <var>'VALUE_DESERIALIZER_CLASS_CONFIG'</var> property so that it points to the `JsonDeserializer` class. The `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type needs to be changed so that it specifies `Car` instead of `String`.
 
 > Note that the `JsonDeserializer` requires an additional `Class<?>` targetType argument to allow the deserialization of a consumed `byte[]` to the proper target object (in this example the `Car` class).
 
@@ -261,7 +261,7 @@ import com.codenotfound.model.Car;
 @EnableKafka
 public class ReceiverConfig {
 
-  @Value("${kafka.bootstrap.servers}")
+  @Value("${kafka.servers.bootstrap}")
   private String bootstrapServers;
 
   @Bean
@@ -316,7 +316,7 @@ public class Receiver {
 
   private CountDownLatch latch = new CountDownLatch(1);
 
-  @KafkaListener(topics = "${kafka.json.topic}")
+  @KafkaListener(topics = "${kafka.topic.json}")
   public void receive(Car car) {
     LOGGER.info("received car='{}'", car.toString());
     latch.countDown();
@@ -330,9 +330,9 @@ public class Receiver {
 
 # Test Sending and Receiving JSON Messages on Kafka
 
-The Maven porject contains a `SpringKafkaApplicationTest` test case to demonstrate the above sample code. A JUnit ClassRule [starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Before the test case starts we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+The Maven project contains a `SpringKafkaApplicationTest` test case to demonstrate the above sample code. A JUnit ClassRule [starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
-In the `testReceiver()` test case we create a `Car` object and send  it to the <var>jons.t</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
+In the `testReceiver()` test case we create a `Car` object and send  it to the <var>'jons.t'</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
 ``` java
 package com.codenotfound.kafka;
@@ -377,7 +377,7 @@ public class SpringKafkaApplicationTest {
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-    System.setProperty("kafka.bootstrap.servers", embeddedKafka.getBrokersAsString());
+    System.setProperty("kafka.servers.bootstrap", embeddedKafka.getBrokersAsString());
   }
 
   @SuppressWarnings("unchecked")
@@ -397,7 +397,7 @@ public class SpringKafkaApplicationTest {
   }
 
   @Test
-  public void testReceiver() throws Exception {
+  public void testReceive() throws Exception {
     Car car = new Car("Passat", "Volkswagen", "ABC-123");
 
     sender.send(car);
