@@ -27,73 +27,75 @@ We need to add the `spring-kafka-test` dependency to the Maven POM file in addit
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.codenotfound</groupId>
-    <artifactId>spring-kafka-embedded-test</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+  <groupId>com.codenotfound</groupId>
+  <artifactId>spring-kafka-embedded-test</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
 
-    <name>spring-kafka-embedded-test</name>
-    <description>Spring-Kafka - Embedded Kafka Test Example</description>
-    <url>https://www.codenotfound.com/2016/10/spring-kafka-embedded-server-unit-test.html</url>
+  <name>spring-kafka-embedded-test</name>
+  <description>Spring-Kafka - Embedded Kafka Test Example</description>
+  <url>https://www.codenotfound.com/2016/10/spring-kafka-embedded-server-unit-test.html</url>
 
-    <parent>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.2.RELEASE</version>
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+
+    <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
+    <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+  </properties>
+
+  <dependencies>
+    <!-- Spring Boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Spring Kafka -->
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+      <version>${spring-kafka.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka-test</artifactId>
+      <version>${spring-kafka.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- spring-boot-maven-plugin -->
+      <plugin>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.2.RELEASE</version>
-    </parent>
-
-    <properties>
-        <java.version>1.8</java.version>
-
-        <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
-        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
-    </properties>
-
-    <dependencies>
-        <!-- Spring Boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Spring Kafka -->
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-            <version>${spring-kafka.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka-test</artifactId>
-            <version>${spring-kafka.version}</version>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <includes>
-                        <include>AllSpringKafkaTests.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <!-- maven-surefire-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
+        <configuration>
+          <includes>
+            <include>AllSpringKafkaTests.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
 ```
 
@@ -103,9 +105,9 @@ The message consumer and producer classes from the Hello World example are uncha
 
 `spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/) and [Kafka](https://kafka.apache.org/) server instance on a random port before all the test cases are run, and stops the instances one the test cases are finished. In order to support multiple unit test classes (in this example `SpringKafkaSenderTest` and `SpringKafkaReceiverTest`), we will trigger the `@ClassRule` from a `Suite` class that bundles these test cases together.
 
-As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the <var>'kafka.bootstrap.servers'</var> property.
+As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the <var>'kafka.servers.bootstrap'</var> property.
 
-> Note that we pass the <var>helloworld-sender.t</var> topic as a parameter to the embedded kafka server. This assures that the topic is present when the `MessageListener` in the `SpringKafkaSenderTest` connects.
+> Note that we pass the <var>'sender.t'</var> topic as a parameter to the embedded kafka server. This assures that the topic is present when the `MessageListener` in the `SpringKafkaSenderTest` connects.
 
 ``` java
 package com.codenotfound.kafka;
@@ -120,33 +122,28 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.test.rule.KafkaEmbedded;
 
 @RunWith(Suite.class)
-@SuiteClasses({ SpringKafkaSenderTest.class,
-        SpringKafkaReceiverTest.class })
+@SuiteClasses({SpringKafkaSenderTest.class, SpringKafkaReceiverTest.class})
 public class AllSpringKafkaTests {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(AllSpringKafkaTests.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AllSpringKafkaTests.class);
 
-    protected static final String HELLOWORLD_SENDER_TOPIC = "helloworld-sender.t";
-    protected static final String HELLOWORLD_RECEIVER_TOPIC = "helloworld-receiver.t";
+  protected static final String SENDER_TOPIC = "sender.t";
+  protected static final String RECEIVER_TOPIC = "receiver.t";
 
-    @ClassRule
-    public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1,
-            true, HELLOWORLD_SENDER_TOPIC);
+  @ClassRule
+  public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, SENDER_TOPIC);
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-        String kafkaBootstrapServers = embeddedKafka
-                .getBrokersAsString();
-        LOGGER.debug("kafkaServers='{}'", kafkaBootstrapServers);
-        // override the property in application.properties
-        System.setProperty("kafka.bootstrap.servers",
-                kafkaBootstrapServers);
-    }
+  @BeforeClass
+  public static void setUpBeforeClass() throws Exception {
+    String kafkaBootstrapServers = embeddedKafka.getBrokersAsString();
+    LOGGER.debug("kafkaServers='{}'", kafkaBootstrapServers);
+    // override the property in application.properties
+    System.setProperty("kafka.servers.bootstrap", kafkaBootstrapServers);
+  }
 }
 ```
 
-In the first test class we will be testing the `Sender` by sending a message to a <var>'helloworld-sender.t'</var> topic. We will verify the correct sending by setting up a message listener on the topic. For creating the consumer properties we use a static method provided by `KafkaUtils`. After setting up the `KafkaMessageListenerContainer` we setup a `MessageListener` and start the container. 
+In the first test class we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify the correct sending by setting up a message listener on the topic. For creating the consumer properties we use a static method provided by `KafkaUtils`. After setting up the `KafkaMessageListenerContainer` we setup a `MessageListener` and start the container. 
 
 In order to avoid that we send the message before the container has required the number of assigned partitions, we use the `waitForAssignment()` method on the `ContainerTestUtils` helper class. We then send a greeting and assert that the received value is the same as the one that was sent using an AssertJ condition that is provided by `KafkaConditions` which is also included in the `spring-kafka-test` dependency. 
 
@@ -182,66 +179,59 @@ import com.codenotfound.kafka.producer.Sender;
 @SpringBootTest
 public class SpringKafkaSenderTest {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(SpringKafkaSenderTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SpringKafkaSenderTest.class);
 
-    @Autowired
-    private Sender sender;
+  @Autowired
+  private Sender sender;
 
-    @Test
-    public void testSender() throws Exception {
-        // set up the Kafka consumer properties
-        Map<String, Object> consumerProperties = KafkaTestUtils
-                .consumerProps("helloworld_sender_group", "false",
-                        AllSpringKafkaTests.embeddedKafka);
+  @Test
+  public void testSend() throws Exception {
+    // set up the Kafka consumer properties
+    Map<String, Object> consumerProperties =
+        KafkaTestUtils.consumerProps("sender_group", "false", AllSpringKafkaTests.embeddedKafka);
 
-        // create a Kafka consumer factory
-        DefaultKafkaConsumerFactory<Integer, String> consumerFactory = new DefaultKafkaConsumerFactory<Integer, String>(
-                consumerProperties);
-        // set the topic that needs to be consumed
-        ContainerProperties containerProperties = new ContainerProperties(
-                AllSpringKafkaTests.HELLOWORLD_SENDER_TOPIC);
+    // create a Kafka consumer factory
+    DefaultKafkaConsumerFactory<Integer, String> consumerFactory =
+        new DefaultKafkaConsumerFactory<Integer, String>(consumerProperties);
+    // set the topic that needs to be consumed
+    ContainerProperties containerProperties =
+        new ContainerProperties(AllSpringKafkaTests.SENDER_TOPIC);
 
-        // create a Kafka MessageListenerContainer
-        KafkaMessageListenerContainer<Integer, String> container = new KafkaMessageListenerContainer<>(
-                consumerFactory, containerProperties);
+    // create a Kafka MessageListenerContainer
+    KafkaMessageListenerContainer<Integer, String> container =
+        new KafkaMessageListenerContainer<>(consumerFactory, containerProperties);
 
-        // create a thread safe queue to store the received message
-        BlockingQueue<ConsumerRecord<Integer, String>> records = new LinkedBlockingQueue<>();
-        // setup a Kafka message listener
-        container.setupMessageListener(
-                new MessageListener<Integer, String>() {
-                    @Override
-                    public void onMessage(
-                            ConsumerRecord<Integer, String> record) {
-                        LOGGER.debug(record.toString());
-                        records.add(record);
-                    }
-                });
+    // create a thread safe queue to store the received message
+    BlockingQueue<ConsumerRecord<Integer, String>> records = new LinkedBlockingQueue<>();
+    // setup a Kafka message listener
+    container.setupMessageListener(new MessageListener<Integer, String>() {
+      @Override
+      public void onMessage(ConsumerRecord<Integer, String> record) {
+        LOGGER.debug(record.toString());
+        records.add(record);
+      }
+    });
 
-        // start the container and underlying message listener
-        container.start();
-        // wait until the container has the required number of assigned
-        // partitions
-        ContainerTestUtils.waitForAssignment(container,
-                AllSpringKafkaTests.embeddedKafka
-                        .getPartitionsPerTopic());
+    // start the container and underlying message listener
+    container.start();
+    // wait until the container has the required number of assigned
+    // partitions
+    ContainerTestUtils.waitForAssignment(container,
+        AllSpringKafkaTests.embeddedKafka.getPartitionsPerTopic());
 
-        // send the message
-        String greeting = "Hello Spring Kafka Sender!";
-        sender.sendMessage(AllSpringKafkaTests.HELLOWORLD_SENDER_TOPIC,
-                greeting);
-        // check that the message was received
-        assertThat(records.poll(10, TimeUnit.SECONDS))
-                .has(value(greeting));
+    // send the message
+    String greeting = "Hello Spring Kafka Sender!";
+    sender.send(AllSpringKafkaTests.SENDER_TOPIC, greeting);
+    // check that the message was received
+    assertThat(records.poll(10, TimeUnit.SECONDS)).has(value(greeting));
 
-        // stop the container
-        container.stop();
-    }
+    // stop the container
+    container.stop();
+  }
 }
 ```
 
-The second test class focuses on the `Receiver` which listens to a <var>'helloworld-receiver.t'</var> topic as defined in the applications.properties file. In order to check the correct working we will use a producer to send a message to this topic. The producer properties are created using the static method provided by `KafkaUtils` and used to create a `KafkaTemplate`. 
+The second test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.properties</var> file. In order to check the correct working we will use a producer to send a message to this topic. The producer properties are created using the static method provided by `KafkaUtils` and used to create a `KafkaTemplate`. 
 
 We need to ensure that the `Receiver` is initialized before sending the test message. For this we use the `waitForAssignment()` of `ContainerTestUtils`. The link to the message listener container is acquired by autowiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually. We check that the message was received by asserting that the latch of the `Receiver` was lowered to zero. 
 
@@ -275,53 +265,51 @@ import com.codenotfound.kafka.consumer.Receiver;
 @SpringBootTest
 public class SpringKafkaReceiverTest {
 
-    @Autowired
-    private Receiver receiver;
+  @Autowired
+  private Receiver receiver;
 
-    @Autowired
-    KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
+  @Autowired
+  KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
-    @Test
-    public void testReceiver() throws Exception {
-        // set up the Kafka producer properties
-        Map<String, Object> senderProperties = KafkaTestUtils
-                .senderProps(AllSpringKafkaTests.embeddedKafka
-                        .getBrokersAsString());
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testReceive() throws Exception {
+    // set up the Kafka producer properties
+    Map<String, Object> senderProperties =
+        KafkaTestUtils.senderProps(AllSpringKafkaTests.embeddedKafka.getBrokersAsString());
 
-        // create a Kafka producer factory
-        ProducerFactory<Integer, String> producerFactory = new DefaultKafkaProducerFactory<Integer, String>(
-                senderProperties);
+    // create a Kafka producer factory
+    ProducerFactory<Integer, String> producerFactory =
+        new DefaultKafkaProducerFactory<Integer, String>(senderProperties);
 
-        // create a Kafka template
-        KafkaTemplate<Integer, String> template = new KafkaTemplate<>(
-                producerFactory);
-        // set the default topic to send to
-        template.setDefaultTopic(
-                AllSpringKafkaTests.HELLOWORLD_RECEIVER_TOPIC);
+    // create a Kafka template
+    KafkaTemplate<Integer, String> template = new KafkaTemplate<>(producerFactory);
+    // set the default topic to send to
+    template.setDefaultTopic(AllSpringKafkaTests.RECEIVER_TOPIC);
 
-        // get the ConcurrentMessageListenerContainers
-        for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
-                .getListenerContainers()) {
-            if (messageListenerContainer instanceof ConcurrentMessageListenerContainer) {
-                ConcurrentMessageListenerContainer<Integer, String> concurrentMessageListenerContainer = (ConcurrentMessageListenerContainer<Integer, String>) messageListenerContainer;
+    // get the ConcurrentMessageListenerContainers
+    for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
+        .getListenerContainers()) {
+      if (messageListenerContainer instanceof ConcurrentMessageListenerContainer) {
+        ConcurrentMessageListenerContainer<Integer, String> concurrentMessageListenerContainer =
+            (ConcurrentMessageListenerContainer<Integer, String>) messageListenerContainer;
 
-                // as the topic is created implicitly, the default number of
-                // partitions is 1
-                int partitionsPerTopic = 1;
-                // wait until the container has the required number of assigned
-                // partitions
-                ContainerTestUtils.waitForAssignment(
-                        concurrentMessageListenerContainer,
-                        partitionsPerTopic);
-            }
-        }
-
-        // send the message
-        template.sendDefault("Hello Spring Kafka Receiver!");
-
-        receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
-        assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+        // as the topic is created implicitly, the default number of
+        // partitions is 1
+        int partitionsPerTopic = 1;
+        // wait until the container has the required number of assigned
+        // partitions
+        ContainerTestUtils.waitForAssignment(concurrentMessageListenerContainer,
+            partitionsPerTopic);
+      }
     }
+
+    // send the message
+    template.sendDefault("Hello Spring Kafka Receiver!");
+
+    receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
+    assertThat(receiver.getLatch().getCount()).isEqualTo(0);
+  }
 }
 ```
 
