@@ -22,8 +22,8 @@ In the following tutorial we will configure, build and run a Hello World example
 > Spring Kafka 1.1 uses the Apache Kafka 0.10.x.x client.
 
 Tools used:
-* Spring Boot 1.5
 * Spring Kafka 1.1
+* Spring Boot 1.5
 * Maven 3
 
 We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter` and `spring-boot-starter-test` starters.

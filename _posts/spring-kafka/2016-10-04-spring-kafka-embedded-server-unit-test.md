@@ -18,8 +18,8 @@ Let's demonstrate how you can use these utilities with a simple code sample. We 
 
 
 Tools used:
-* Spring Boot 1.5
 * Spring Kafka 1.1
+* Spring Boot 1.5
 * Maven 3
 
 We need to add the `spring-kafka-test` dependency to the Maven POM file in addition to the Spring Kafka and Spring Boot dependencies. In the plugins section we included the `maven-surefire-plugin` to trigger a `AllSpringKafkaTests` test suite class that will be used to start the embedded server for the different unit test cases in our project.

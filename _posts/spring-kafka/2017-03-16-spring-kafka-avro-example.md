@@ -13,12 +13,12 @@ redirect_from:
     <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
 </figure>
 
-[Apache Avro](https://avro.apache.org/docs/current/) is a data serialization system. It uses JSON for defining data types and protocols, and serializes data in a compact binary format. In the following tutorial we will configure, build and run an example in which we will send/receive an Avro messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
+[Apache Avro](https://avro.apache.org/docs/current/) is a data serialization system. It uses JSON for defining data types and protocols, and serializes data in a compact binary format. In the following tutorial we will configure, build and run an example in which we will send/receive an Avro message to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
 
 Tools used:
-* Spring Boot 1.5
-* Spring Kafka 1.1
 * Apache Avro 1.8
+* Spring Kafka 1.1
+* Spring Boot 1.5
 * Maven 3
 
 Avro relies on schemas which are defined using JSON. Schemas are composed of primitive types. For this example we will use [the 'User' schema from the Apache Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema) as shown below. This schema is stored in the <var>user.avsc</var> file located under <var>src/main/resources/avro</var>.
