@@ -5,6 +5,7 @@ excerpt: How to handle element missing @XmlRootElement annotation errors when tr
 date: 2013-07-30 21:00
 categories: [JAXB]
 tags: [XmlRootElement, Java, JAXB, Marshal, Unmarshal, XML]
+last_modified_at: 2017-03-26 21:00
 redirect_from:
   - /2013/07/jaxb-marshal-unmarshal-with-missing.html
   - /2013/07/jaxb-marshal-unmarshal-with-missing.html?m=0
@@ -18,7 +19,7 @@ Information on the root XML element is required when **marshalling** to or **unm
 
 When trying to marshal a class which does not have a `@XMLRootElement` annotation defined, following error will be thrown: <var>"unable to marshal as an element because it is missing an @XmlRootElement annotation"</var>. Alternatively when trying to unmarshal, the Java runtime will report that an <var>"unsuspected element"</var> is found.
 
-For this example let’s use following class representing a car with a basic structure. Note that a `XmlRootElement` is not defined!
+For this example let's use following class representing a car with a basic structure. Note that a `XmlRootElement` is not defined!
 
 ``` java
 package com.codenotfound.jaxb.model;
@@ -28,41 +29,40 @@ import javax.xml.bind.annotation.XmlElement;
 
 public class Car {
 
-    private String make;
-    private String manufacturer;
-    private String id;
+  private String make;
+  private String manufacturer;
+  private String id;
 
-    public String getMake() {
-        return make;
-    }
+  public String getMake() {
+    return make;
+  }
 
-    @XmlElement
-    public void setMake(String make) {
-        this.make = make;
-    }
+  @XmlElement
+  public void setMake(String make) {
+    this.make = make;
+  }
 
-    public String getManufacturer() {
-        return manufacturer;
-    }
+  public String getManufacturer() {
+    return manufacturer;
+  }
 
-    @XmlElement
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
+  @XmlElement
+  public void setManufacturer(String manufacturer) {
+    this.manufacturer = manufacturer;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    @XmlAttribute
-    public void setId(String id) {
-        this.id = id;
-    }
+  @XmlAttribute
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String toString() {
-        return "Car [" + "make=" + make + ", manufacturer=" + manufacturer
-                + ", id=" + id + "]";
-    }
+  public String toString() {
+    return "Car [" + "make=" + make + ", manufacturer=" + manufacturer + ", id=" + id + "]";
+  }
 }
 ```
 
@@ -70,29 +70,29 @@ public class Car {
 
 Marshalling is the process of transforming the memory representation of an object to a data format suitable for storage or transmission. In the case of JAXB it means converting a Java object into XML. The below code snippet shows the creation of a new `Car` instance.
 ``` java
-    car = new Car();
-    car.setMake("Passat");
-    car.setManufacturer("Volkswagen");
-    car.setId("ABC-123");
+  car = new Car();
+  car.setMake("Passat");
+  car.setManufacturer("Volkswagen");
+  car.setId("ABC-123");
 ```
 
 The method below takes as input the above car object and tries to marshal it using JAXB.
 
 ``` java
 public static String marshalError(Car car) throws JAXBException {
-    StringWriter stringWriter = new StringWriter();
+  StringWriter stringWriter = new StringWriter();
 
-    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
-    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+  JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+  Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-    // format the XML output
-    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+  // format the XML output
+  jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-    jaxbMarshaller.marshal(car, stringWriter);
+  jaxbMarshaller.marshal(car, stringWriter);
 
-    String result = stringWriter.toString();
-    LOGGER.info(result);
-    return result;
+  String result = stringWriter.toString();
+  LOGGER.info(result);
+  return result;
 }
 ```
 
@@ -107,22 +107,22 @@ In order to be able to marshal the car object we need to provide a root XML elem
 
 ``` java
 public static String marshal(Car car) throws JAXBException {
-    StringWriter stringWriter = new StringWriter();
+  StringWriter stringWriter = new StringWriter();
 
-    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
-    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+  JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+  Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-    // format the XML output
-    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+  // format the XML output
+  jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-    QName qName = new QName("com.codenotfound.jaxb.model", "car");
-    JAXBElement<Car> root = new JAXBElement<Car>(qName, Car.class, car);
+  QName qName = new QName("com.codenotfound.jaxb.model", "car");
+  JAXBElement<Car> root = new JAXBElement<Car>(qName, Car.class, car);
 
-    jaxbMarshaller.marshal(root, stringWriter);
+  jaxbMarshaller.marshal(root, stringWriter);
 
-    String result = stringWriter.toString();
-    LOGGER.info(result);
-    return result;
+  String result = stringWriter.toString();
+  LOGGER.info(result);
+  return result;
 }
 ```
 
@@ -131,8 +131,8 @@ This time JAXB is able to successfully marshal the object and the result is the 
 ``` xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:car id="ABC-123" xmlns:ns2="com.codenotfound.jaxb.model">
-    <make>Passat</make>
-    <manufacturer>Volkswagen</manufacturer>
+  <make>Passat</make>
+  <manufacturer>Volkswagen</manufacturer>
 </ns2:car>
 ```
 
@@ -143,8 +143,8 @@ Unmarshalling in JAXB is the process of converting XML content into a Java objec
 ``` xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:car id="DEF-456" xmlns:ns2="com.codenotfound.jaxb.model">
-    <make>Golf</make>
-    <manufacturer>Volkswagen</manufacturer>
+  <make>Golf</make>
+  <manufacturer>Volkswagen</manufacturer>
 </ns2:car>
 ```
 
@@ -152,13 +152,13 @@ In the method below we pass the above XML file and try to unmarshal it to an ins
 
 ``` java
 public static Car unmarshalError(File file) throws JAXBException {
-    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
-    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+  JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+  Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-    Car car = (Car) jaxbUnmarshaller.unmarshal(file);
+  Car car = (Car) jaxbUnmarshaller.unmarshal(file);
 
-    LOGGER.info(car.toString());
-    return car;
+  LOGGER.info(car.toString());
+  return car;
 }
 ```
 
@@ -173,15 +173,15 @@ In order to be able to unmarshal the object we need to define a root XML element
 
 ``` java
 public static Car unmarshal(File file) throws JAXBException {
-    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
-    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+  JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+  Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-    JAXBElement<Car> root = jaxbUnmarshaller.unmarshal(new StreamSource(
+  JAXBElement<Car> root = jaxbUnmarshaller.unmarshal(new StreamSource(
             file), Car.class);
-    Car car = root.getValue();
+  Car car = root.getValue();
 
-    LOGGER.info(car.toString());
-    return car;
+  LOGGER.info(car.toString());
+  return car;
 }
 ```
 
