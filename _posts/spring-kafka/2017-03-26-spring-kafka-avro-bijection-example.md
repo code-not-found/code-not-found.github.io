@@ -5,6 +5,7 @@ excerpt: A detailed step-by-step tutorial on how to implement an Avro Serializer
 date: 2017-03-26 21:00
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache Avro, Avro, Bijection, Deserializer, Example, Maven, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial, Twitter Bijection]
+published: false
 ---
 
 <figure>
@@ -38,7 +39,7 @@ The <var>user.avsc</var> schema from the [Avro getting started guide](https://av
 
 In the Maven POM file we add the `bijection-avro_2.11` dependency. The <var>artifactId</var> suffix of the dependency highlights the scala version used to compile the JAR.
 
-> Note that we choose the <var>2.11</var> version since `spring-kafka-test` includes a dependency on the 2.11 version of the `scala-library`.
+> Note that we choose the <var>2.11</var> version of `bijection-avro` since `spring-kafka-test` includes a dependency on the <var>2.11</var> version of the `scala-library`.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -134,11 +135,15 @@ In the Maven POM file we add the `bijection-avro_2.11` dependency. The <var>arti
 </project>
 ```
 
+# Producing Avro Messages to a Kafka Topic
 
 
 
+# Consuming Avro Messages from a Kafka Topic
 
 
+
+# Test Sending and Receiving Avro Messages on Kafka
 
 
 
