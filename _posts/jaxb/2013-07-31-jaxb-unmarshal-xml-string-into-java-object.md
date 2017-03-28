@@ -5,7 +5,7 @@ excerpt: A short code sample on how to unmarshal an XML String into a Java Objec
 date: 2013-07-31 21:00
 categories: [JAXB]
 tags: [Java, JAXB, Object, String, Unmarshal, XML]
-last_modified_at: 2017-03-26 21:00
+last_modified_at: 2017-03-26
 redirect_from:
   - /2013/07/jaxb-unmarshal-xml-string.html
   - /2013/07/jaxb-unmarshal-an-xml-string.html

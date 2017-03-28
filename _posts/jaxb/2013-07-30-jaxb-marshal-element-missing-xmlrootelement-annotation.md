@@ -5,7 +5,7 @@ excerpt: How to handle element missing @XmlRootElement annotation errors when tr
 date: 2013-07-30 21:00
 categories: [JAXB]
 tags: [XmlRootElement, Java, JAXB, Marshal, Unmarshal, XML]
-last_modified_at: 2017-03-26 21:00
+last_modified_at: 2017-03-28
 redirect_from:
   - /2013/07/jaxb-marshal-unmarshal-with-missing.html
   - /2013/07/jaxb-marshal-unmarshal-with-missing.html?m=0
@@ -60,6 +60,7 @@ public class Car {
     this.id = id;
   }
 
+  @Override
   public String toString() {
     return "Car [" + "make=" + make + ", manufacturer=" + manufacturer + ", id=" + id + "]";
   }
@@ -116,7 +117,7 @@ public static String marshal(Car car) throws JAXBException {
   jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
   QName qName = new QName("com.codenotfound.jaxb.model", "car");
-  JAXBElement<Car> root = new JAXBElement<Car>(qName, Car.class, car);
+  JAXBElement<Car> root = new JAXBElement<>(qName, Car.class, car);
 
   jaxbMarshaller.marshal(root, stringWriter);
 
