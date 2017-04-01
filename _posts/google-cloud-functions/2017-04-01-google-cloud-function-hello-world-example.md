@@ -5,7 +5,7 @@ excerpt: A step-by-step tutorial on how to create and deploy a Hello World Googl
 date: 2017-04-01 21:00
 categories: [Google Cloud Functions]
 tags: [Example, Google Cloud Functions, Google Cloud Platform, Hello World, Tutorial]
-published: true
+published: false
 ---
 
 <figure>
@@ -19,7 +19,7 @@ Cloud Functions are written in JavaScript and execute in a Node.js environment o
 > Please note that at the moment of writing  Cloud Functions are still in beta phase.
 
 Tools used:
-* Google Cloud Functions
+* Google Cloud Functions - beta
 * npm 4.4
 
 As Cloud Functions are written in JavaScript and executed on Node.js, we will be using [npm](https://www.npmjs.com/) which is the default package manager for the JavaScript runtime environment [Node.js](https://nodejs.org/). If NPM isn't installed on your system, first thing you need to do is to [install Node.js and update npm](https://docs.npmjs.com/getting-started/installing-node). Once installed, executed following command on the Node.js command prompt to check if everything is setup correctly, at the moment of writing the NPM version was _4.4.4_.
@@ -49,8 +49,8 @@ Dependencies in Node.js are managed with npm and expressed in a [metadata file c
 ```
 
 Google Cloud Functions come in two distinct variants:
-# foreground functions
-# background functions 
+1. foreground functions
+2. background functions 
 
 You use use foreground functions when you want to directly invoke your function via HTTP(S). Background functions on the other hand are use when you want to have your Cloud Function invoked indirectly via a message on a [Google Cloud Pub/Sub topic](https://cloud.google.com/pubsub/docs/overview), or a change in a [Google Cloud Storage bucket](https://cloud.google.com/storage/docs/key-terms#buckets).
 
