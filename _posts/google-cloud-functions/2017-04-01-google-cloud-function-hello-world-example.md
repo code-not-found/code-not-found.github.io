@@ -1,10 +1,11 @@
 ---
 title: Google Cloud Functions - Hello World Example
 permalink: /2017/04/google-cloud-functions-hello-world-example.html
-excerpt: A step-by-step tutorial on how to create a Hello World Google Cloud Function.
+excerpt: A step-by-step tutorial on how to create and deploy a Hello World Google Cloud Function.
 date: 2017-04-01 21:00
 categories: [Google Cloud Functions]
 tags: [Example, Google Cloud Functions, Google Cloud Platform, Hello World, Tutorial]
+published: false
 ---
 
 <figure>
