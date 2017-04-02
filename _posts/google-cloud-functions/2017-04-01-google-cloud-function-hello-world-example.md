@@ -38,7 +38,7 @@ Dependencies in Node.js are managed with npm and expressed in a [metadata file c
   "version": "0.0.1",
   "description": "Google Cloud Functions - Hello World Example",
   "homepage" : "https://www.codenotfound.com/2017/04/google-cloud-functions-hello-world-example.html",
-  "main": "index.js",
+  "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -52,25 +52,22 @@ Google Cloud Functions come in two distinct variants:
 1. foreground functions
 2. background functions 
 
-You use use foreground functions when you want to directly invoke your function via HTTP(S). Background functions on the other hand are use when you want to have your Cloud Function invoked indirectly via a message on a [Google Cloud Pub/Sub topic](https://cloud.google.com/pubsub/docs/overview), or a change in a [Google Cloud Storage bucket](https://cloud.google.com/storage/docs/key-terms#buckets).
+You use foreground functions when you want to directly invoke your function via HTTP(S). Background functions on the other hand are used when you want to have your Cloud Function invoked indirectly via a message on a [Google Cloud Pub/Sub topic](https://cloud.google.com/pubsub/docs/overview), or a change in a [Google Cloud Storage bucket](https://cloud.google.com/storage/docs/key-terms#buckets).
 
 In this example we will create an [HTTP foreground function](https://cloud.google.com/functions/docs/writing/http) called `helloWorld`. The signature of an HTTP function takes two arguments: `request` and `response`. The `request` parameter represents the HTTP request that was sent to the function, and the `response` parameter represents the HTTP response that will be returned to the caller.
 
-The body of the HTTP request is automatically parsed and populated based on the content-type. We can then access the different parts from the request like for example: the body, HTTP headers, HTTP method and HTTP query parameters. Inside our `helloWorld` function we will extract two query parameters called firstName and lastName and use them to construct a `greeting` JSON object.
+The body of the HTTP request is automatically parsed and populated based on the content-type. We can then access the different parts from the request: the body, HTTP headers, HTTP method and HTTP query parameters. Inside our `helloWorld` function we will extract a query parameters called `name` and use it to construct a `greeting` message that will be returned in the body of the `response`.
 
 
 ``` javascript
 'use strict';
 
 exports.helloWorld = function helloWorld(request, response) {
-    const firstName = request.query.firstName
-    console.log('firstName=' + firstName);
-    const lastName = request.query.lastName
-    console.log('lastName=' + lastName);
+    const name = request.query.name
 
-    const greeting = { greeting: 'Hello ' + firstName + ' ' + lastName + '!' };
-    console.log('greeting=' + JSON.stringify(greeting));
-    
+    const greeting = `Hello ${name || 'World'}!`;
+    console.log(greeting);
+
     response.status(200).send(greeting);
 };
 ```
