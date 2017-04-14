@@ -15,6 +15,8 @@ published: false
 
 [Katharsis](http://katharsis.io) is a Java library that implements the JSON API specification. It is an additional layer that can be plugged on top of existing server side Java implementations in order to provide easy HATEOAS support. Katharsis defines resources which can be shared over a RESTful interface and a repository for handling them.
 
+
+
 ---
 
 The example will be built and run using Apache Maven. In order to use the Katharsis framework we need to include the katharsis-core dependency. As we will be using Spring Boot for running the server part we also need to include katharsis-spring. For the client part the katharsis-client depenency is needed.
@@ -41,7 +43,7 @@ Modelled resources must be complemented by a corresponding repository implementa
 1. ResourceRepositoryV2 for a resource
 2. RelationshipRepositoryV2 resp. BulkRelationshipRepositoryV2 for resource relationships
 
-For our Greeting resource we will create a GreetingRepositoryImpl which extends the ResourceRepositoryBase implmentation of the ResourceRepositoryV2 repository interface. This base repository will be used by Katharsis to operate on the resource. The implementation consists of five basic methods which provide CRUD operation for a resource and two parameters: the first is a type of a resource and the second is the type of the resource’s identifier.
+For our Greeting resource we will create a GreetingRepositoryImpl which extends the ResourceRepositoryBase implmentation of the ResourceRepositoryV2 repository interface. This base repository will be used by Katharsis to operate on the resource. The implementation consists of five basic methods which provide CRUD operation for a resource and two parameters: the first is a type of a resource and the second is the type of the resource's identifier.
 
 For this example we will use a HashMap to store the greetings and in the constructor we already populate the Map with a greeting that contains <var>'Hello World!</var> as content.
 
