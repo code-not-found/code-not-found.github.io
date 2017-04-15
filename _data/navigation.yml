@@ -1,5 +1,7 @@
 # main links
 main:
+  - title: "Blog"
+    url: https://www.codenotfound.com/blog/
   #- title: "Spring-WS"
   #  url: https://code-not-found.github.io/spring-ws/
   - title: "Apache CXF"
