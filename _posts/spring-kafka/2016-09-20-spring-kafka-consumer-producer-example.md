@@ -9,26 +9,29 @@ tags: [Apache Kafka, Consumer, Example, Hello World, Maven, Producer, Spring, Sp
 redirect_from:
   - /2016/09/spring-kafka-hello-world-consumer-producer-example.html
   - /2016/09/spring-kafka-hello-world-consumer.html
+published: true
 ---
 
-{% include figure image_path="/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo" %}
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+</figure>
 
 The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/spring-kafka/) applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a 'template' as a high-level abstraction for sending messages. It also provides support for Message-driven POJOs with `@KafkaListener` annotations and a 'listener container'.
 
-In the following tutorial we will configure, build and run a Hello World example in which we will send/receive messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven. Before running below code, make sure that [Apache Kafka is installed and started]({{ site.url }}/2016/09/apache-kafka-download-installation.html).
+In the following tutorial we will configure, build and run a Hello World example in which we will send/receive messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
 
-> Spring Kafka 1.1 uses the Apache Kafka 0.10.x.x client.
+> Spring Kafka 1.2 uses the Apache Kafka 0.10.2.x client.
 
 Tools used:
-* Spring Kafka 1.1
+* Spring Kafka 1.2
 * Spring Boot 1.5
-* Maven 3
+* Maven 3.5
 
 We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter` and `spring-boot-starter-test` starters.
 
-A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was <var>'1.1.2.RELEASE'</var>.
+A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was <var>'1.2.0.RELEASE'</var>. We also include `spring-kafka-test` in order to have access to an embedded Kafka broker when creating our unit test.
 
-We also include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar", which is convenient to execute and transport the written code.
+The `spring-boot-maven-plugin` Maven plugin is added so that we can build a single, runnable "uber-jar", which is convenient to execute and transport the written code.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -53,11 +56,11 @@ We also include the `spring-boot-maven-plugin` Maven plugin so that we can build
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
+    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
   </properties>
 
   <dependencies>
-    <!-- Spring Boot -->
+    <!-- spring-boot -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
@@ -67,11 +70,17 @@ We also include the `spring-boot-maven-plugin` Maven plugin so that we can build
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- Spring Kafka -->
+    <!-- spring-kafka -->
     <dependency>
       <groupId>org.springframework.kafka</groupId>
       <artifactId>spring-kafka</artifactId>
       <version>${spring-kafka.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka-test</artifactId>
+      <version>${spring-kafka.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -87,7 +96,7 @@ We also include the `spring-boot-maven-plugin` Maven plugin so that we can build
 </project>
 ```
 
-We will use Spring Boot in order to make a Spring Kafka example application that you can "just run". We start by creating an `SpringKafkaApplication` that contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch an application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
+We will use Spring Boot in order to make a Spring Kafka example application that you can "just run". We start by creating an `SpringKafkaApplication` which contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch an application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
 
 For more information on Spring Boot you can check out the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
 
@@ -112,7 +121,7 @@ For sending messages we will be using the `KafkaTemplate` which wraps a `Produce
 
 In the below `Sender` class, the `KafkaTemplate` is autowired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class. In this example we will be using the async `send()` method and we will also configure the returned `ListenableFuture` with a `ListenableFutureCallback` to get an async callback with the results of the send (success or failure) instead of waiting for the `Future` to complete. If the sending of a message is successful we simply create a log statement.
 
-> Note that the topic will be auto-created when the Kafka broker receives a request for an unknown topic.
+> Note that by default a topic will be auto-created when the Kafka broker receives a request for an unknown topic.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -133,12 +142,10 @@ public class Sender {
   private KafkaTemplate<String, String> kafkaTemplate;
 
   public void send(String topic, String message) {
-    // the KafkaTemplate provides asynchronous send methods returning a
-    // Future
+    // the KafkaTemplate provides asynchronous send methods returning a Future
     ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, message);
 
-    // you can register a callback with the listener to receive the result
-    // of the send asynchronously
+    // register a callback with the listener to receive the result of the send asynchronously
     future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
 
       @Override
@@ -153,15 +160,14 @@ public class Sender {
       }
     });
 
-    // alternatively, to block the sending thread, to await the result,
-    // invoke the future's get() method
+    // or, to block the sending thread to await the result, invoke the future's get() method
   }
 }
 ```
 
 The creation of the `KafkaTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
-In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template's constructor. The producer factory needs to be set with a number of properties amongst which the <var>'BOOTSTRAP_SERVERS_CONFIG'</var> property that is fetched from the <var>application.properties</var> configuration file. For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
+In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template's constructor. The producer factory needs to be set with a number of properties amongst which the <var>'BOOTSTRAP_SERVERS_CONFIG'</var> property that is fetched from the <var>application.yml</var> configuration file. For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -181,18 +187,19 @@ import org.springframework.kafka.core.ProducerFactory;
 @Configuration
 public class SenderConfig {
 
-  @Value("${kafka.servers.bootstrap}")
+  @Value("${kafka.bootstrap-servers}")
   private String bootstrapServers;
 
   @Bean
   public Map<String, Object> producerConfigs() {
     Map<String, Object> props = new HashMap<>();
-    // list of host:port pairs used for establishing the initial connections
-    // to the Kakfa cluster
+    // list of host:port pairs used for establishing the initial connections to the Kakfa cluster
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    // serializer to use for the key
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    // serializer to use for the value
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-    // value to block, after which it will throw a TimeoutException
+    // duration for sending after which the producer will throw a TimeoutException if not successful
     props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
 
     return props;
