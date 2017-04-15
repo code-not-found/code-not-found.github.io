@@ -127,10 +127,12 @@ p var, li var {
   color: #494E52;
   font-style: normal;
 }
+/*
 p file {
   @extend code;
   color: #494E52;
 }
+*/
 kbd {
   color: #ff6700;
 }
@@ -140,6 +142,9 @@ div .highlighter-rouge {
 }
 code span {
   line-height: 0.4;
+}
+blockquote {
+  border-left-color: #4caf50;
 }
 .notice--info {
   color: #fff;
