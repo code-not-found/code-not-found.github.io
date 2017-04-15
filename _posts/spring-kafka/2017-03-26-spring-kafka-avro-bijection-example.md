@@ -21,9 +21,9 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3
 
-We base this example on a previous [Spring Kafka Avro serializer/deserializer example]({{ site.url }}//2017/03/spring-kafka-apache-avro-example.html) in which we used the Avro API's to serialize and deserialize objects. As we will see further down below, Bijection allows to convert back and forth in only a couple of lines of code.
+We base this example on a previous [Spring Kafka Avro serializer/deserializer example]({{ site.url }}//2017/03/spring-kafka-apache-avro-example.html) in which we used the Avro API's to serialize and deserialize objects. For this tutorial we will be using the Bijection APIs which are a bit easier to use as we will see further down below.
 
-The <var>user.avsc</var> schema from the [Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema) describes the fields and their types of our `User` type.
+Starting point is again the <var>user.avsc</var> schema from the [Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema). It describes the fields and their types of a `User` type.
 
 ``` json
 {"namespace": "example.avro",
@@ -37,7 +37,7 @@ The <var>user.avsc</var> schema from the [Avro getting started guide](https://av
 }
 ```
 
-In the Maven POM file we add the `bijection-avro_2.11` dependency. The <var>artifactId</var> suffix of the dependency highlights the scala version used to compile the JAR.
+We setup our project using [Maven](https://maven.apache.org/). In the POM file we add the `bijection-avro_2.11` dependency. The <var>artifactId</var> suffix of the dependency (in this case ** _2.11**) highlights the [Scala](https://www.scala-lang.org/) version used to compile the JAR.
 
 > Note that we choose the <var>2.11</var> version of `bijection-avro` since `spring-kafka-test` includes a dependency on the <var>2.11</var> version of the `scala-library`.
 
@@ -135,8 +135,64 @@ In the Maven POM file we add the `bijection-avro_2.11` dependency. The <var>arti
 </project>
 ```
 
+Generation of the Avro `User` class is done by executed below Maven command. The result is a `User` class that contains the schema and `Builder` methods.
+
+``` plaintext
+mvn generate-sources
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/bijection-avro-generated-java-classes.png" alt="bijection avro generated java classes">
+</figure>
+
 # Producing Avro Messages to a Kafka Topic
 
+Serializing an Avro message to a `byte[]` array using Bijection can be achieved in just two lines of code as shown below. We first create an `Injection` which is an object that can make the conversion in one way or the other.
+
+
+``` java
+package com.codenotfound.kafka.serializer;
+
+import java.util.Map;
+
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.specific.SpecificRecordBase;
+import org.apache.kafka.common.serialization.Serializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.twitter.bijection.Injection;
+import com.twitter.bijection.avro.GenericAvroCodecs;
+
+public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<T> {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(AvroSerializer.class);
+
+  @Override
+  public void close() {
+    // No-op
+  }
+
+  @Override
+  public void configure(Map<String, ?> arg0, boolean arg1) {
+    // No-op
+  }
+
+  @Override
+  public byte[] serialize(String topic, T data) {
+    LOGGER.debug("data to serialize='{}'", data);
+
+    Injection<GenericRecord, byte[]> genericRecordInjection =
+        GenericAvroCodecs.toBinary(data.getSchema());
+    byte[] result = genericRecordInjection.apply(data);
+
+    LOGGER.debug("serialized data='{}'", DatatypeConverter.printHexBinary(result));
+    return result;
+  }
+}
+```
 
 
 # Consuming Avro Messages from a Kafka Topic

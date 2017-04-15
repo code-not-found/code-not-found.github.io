@@ -236,7 +236,7 @@ public class Sender {
 
 To receive the JSON serialized message we need to update the value of the <var>'VALUE_DESERIALIZER_CLASS_CONFIG'</var> property so that it points to the `JsonDeserializer` class. The `ConsumerFactory` and `ConcurrentKafkaListenerContainerFactory` generic type needs to be changed so that it specifies `Car` instead of `String`.
 
-> Note that the `JsonDeserializer` requires an additional `Class<?>` targetType argument to allow the deserialization of a consumed `byte[]` to the proper target object (in this example the `Car` class).
+> Note that the `JsonDeserializer` requires a `Class<?>` argument to allow the deserialization of a consumed `byte[]` to the proper target object (in this example the `Car` class).
 
 ``` java
 package com.codenotfound.kafka.consumer;
