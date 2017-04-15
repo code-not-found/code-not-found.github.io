@@ -1,7 +1,7 @@
 ---
 title: "Spring Kafka - Spring Boot Example"
 permalink: /2017/04/spring-kafka-boot-example.html
-excerpt: "A detailed step-by-step tutorial on setting up Spring Kafka using Spring Boot autoconfiguration."
+excerpt: "A detailed step-by-step tutorial on how to setup Spring Kafka using Spring Boot autoconfiguration."
 date: 2017-04-13
 modified: 2017-04-13
 categories: [Spring Kafka]
@@ -19,6 +19,8 @@ Tools used:
 * Spring Kafka 1.2
 * Spring Boot 1.5
 * Maven 3.5
+
+# General Project Setup
 
 The project is built using [Maven](https://maven.apache.org/). The Maven POM file contains the needed dependencies for [Spring Boot](https://projects.spring.io/spring-boot/) and [Spring Kafka](https://projects.spring.io/spring-kafka/).
 
