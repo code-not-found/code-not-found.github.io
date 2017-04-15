@@ -94,15 +94,6 @@ ins.adsbygoogle {
 .custom-post-footer {
   margin-top: 30px;
 }
-/*
-.page__hero--overlay .page__title {
-  text-shadow: none;
-}
-.page__hero--overlay .page__lead {
-  text-shadow: none;
-  font-style: italic;
-}
-*/
 .masthead__menu-item {
   color: #03af6c;
 }
@@ -161,8 +152,11 @@ figure img.logo {
 .page__hero--overlay .btn:hover {
   background-color: #087f23 !important;
 }
-.feature__item .btn:hover {
+.feature__item .btn {
   background-color: #4caf50 !important;
+}
+.feature__item .btn:hover {
+  background-color: #087f23 !important;
 }
 .greedy-nav .visible-links a::before {
   background: #087f23 !important;
