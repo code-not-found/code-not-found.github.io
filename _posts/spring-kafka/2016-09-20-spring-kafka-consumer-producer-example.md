@@ -121,7 +121,7 @@ For sending messages we will be using the `KafkaTemplate` which wraps a `Produce
 
 In the below `Sender` class, the `KafkaTemplate` is autowired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class. In this example we will be using the async `send()` method and we will also configure the returned `ListenableFuture` with a `ListenableFutureCallback` to get an async callback with the results of the send (success or failure) instead of waiting for the `Future` to complete. If the sending of a message is successful we simply create a log statement.
 
-> Note that by default a topic will be auto-created when the Kafka broker receives a request for an unknown topic.
+> Note that a Kafka broker by default auto-creates a topic when it receives a request for an unknown topic.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -195,9 +195,7 @@ public class SenderConfig {
     Map<String, Object> props = new HashMap<>();
     // list of host:port pairs used for establishing the initial connections to the Kakfa cluster
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-    // serializer to use for the key
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-    // serializer to use for the value
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     // duration for sending after which the producer will throw a TimeoutException if not successful
     props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
@@ -224,7 +222,7 @@ public class SenderConfig {
 
 # Create a Spring Kafka Message Consumer
 
-Like with any messaging-based application, you need to create a receiver that will handle the published messages. The Receiver is nothing more than a simple POJO that defines a method for receiving messages. In the below example we named the method `receive()`, but you can name it anything you want.
+Like with any messaging-based application, you need to create a receiver that will handle the published messages. The `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In the below example we named the method `receive()`, but you can name it anything you like.
 
 The `@KafkaListener` annotation creates a message listener container behind the scenes for each annotated method, using a `ConcurrentMessageListenerContainer`. By default, a bean with name `kafkaListenerContainerFactory` is expected that we will setup in the next section. Using the `topics` element, we specify the topics for this listener. For more information on the other available elements, you can consult the [KafkaListener API documentation](http://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html).
 
@@ -245,14 +243,14 @@ public class Receiver {
 
   private CountDownLatch latch = new CountDownLatch(1);
 
-  @KafkaListener(topics = "${kafka.topic.helloworld}")
+  public CountDownLatch getLatch() {
+    return latch;
+  }
+
+  @KafkaListener(topics = "${topic.helloworld}")
   public void receive(String message) {
     LOGGER.info("received message='{}'", message);
     latch.countDown();
-  }
-
-  public CountDownLatch getLatch() {
-    return latch;
   }
 }
 ```
@@ -281,20 +279,20 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 @EnableKafka
 public class ReceiverConfig {
 
-  @Value("${kafka.servers.bootstrap}")
+  @Value("${kafka.bootstrap-servers}")
   private String bootstrapServers;
 
   @Bean
   public Map<String, Object> consumerConfigs() {
     Map<String, Object> props = new HashMap<>();
-    // list of host:port pairs used for establishing the initial connections
-    // to the Kakfa cluster
+    // list of host:port pairs used for establishing the initial connections to the Kakfa cluster
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-    // consumer groups allow a pool of processes to divide the work of
-    // consuming and processing records
+    // allows a pool of processes to divide the work of consuming and processing records
     props.put(ConsumerConfig.GROUP_ID_CONFIG, "helloworld");
+    // reset the offset to the beginning as the consumer will connect after the message was sent
+    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
     return props;
   }
