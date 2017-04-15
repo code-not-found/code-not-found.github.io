@@ -1,7 +1,7 @@
 ---
 title: "Spring Kafka - Consumer &amp; Producer Example"
 permalink: /2016/09/spring-kafka-consumer-producer-example.html
-excerpt: A detailed step-by-step tutorial on how to implement an Apache Kafka Consumer and Producer using Spring Kafka and Spring Boot.
+excerpt: "A detailed step-by-step tutorial on how to implement an Apache Kafka Consumer and Producer using Spring Kafka and Spring Boot."
 date: 2016-09-20
 modified: 2017-04-15
 categories: [Spring Kafka]
@@ -11,7 +11,7 @@ redirect_from:
   - /2016/09/spring-kafka-hello-world-consumer.html
 ---
 
-{% include figure image_path="/assets/images/logos/spring-logo.jpg" alt="spring logo" %}
+{% include figure image_path="/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo" %}
 
 The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/spring-kafka/) applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a 'template' as a high-level abstraction for sending messages. It also provides support for Message-driven POJOs with `@KafkaListener` annotations and a 'listener container'.
 
