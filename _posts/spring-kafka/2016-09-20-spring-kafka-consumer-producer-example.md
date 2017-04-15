@@ -259,7 +259,7 @@ The creation and configuration of the different Spring Beans needed for the `Rec
 
 The `kafkaListenerContainerFactory()` is used by the `@KafkaListener` annotation from the `Receiver`. In order to create it, a `ConsumerFactory` and accompanying configuration `Map` is needed. Apart from the <var>'AUTO_OFFSET_RESET_CONFIG'</var> property all configuration parameters are mandatory, for a complete list consult the [Kafka ConsumerConfig API](https://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/consumer/ConsumerConfig.html). 
 
-
+> If not specified the default <var>'AUTO_OFFSET_RESET_CONFIG'</var> value is "latest". This can potentially cause problems when running a send/receive test case for the first time. Reason for this is that when the consumer is starting up it tries to access the non-existing topic and fails. [By the time it retries, the topic has probably been created by the sender and also has data in it, so the consumer tries to connect at <var>'latest'</var>](https://issues.apache.org/jira/browse/KAFKA-3334). This is the offset of the most recent message and as such the consumer never receives the initial message. The next time you run the test case it will work since the topic exists. In order to avoid this problem we set the value to <var>'earliest'</var>.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -328,8 +328,6 @@ In order to verify that we are able to send and receive a message to and from Ka
 An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) for a more information on this topic.
 
 Below test case can also be executed after you [install kafka and zookeeper]({{ site.url }}/2016/09/apache-kafka-download-installation.html) on your local system. You just need to comment out the lines annotated with `@ClassRule` and `@BeforeClass`.
-
-> Note that if the <var>'helloworld.t'</var> topic does not exist on the Kafka bus, the test case will not be successful. Reason for this is that when the consumer is starting up it tries to access the topic and fails. [By the time it retries, the topic has been created by the `sendMessage()` but also has data in it, so the consumer tries to connect at "latest"](https://issues.apache.org/jira/browse/KAFKA-3334), which is the offset of the most recent message, as such the consumer never receives the initial message. The next time you run the test case it will work since the topic exists.
 
 ``` java
 package com.codenotfound.kafka;
