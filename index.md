@@ -1,6 +1,5 @@
 ---
 layout: splash
-permalink: /
 date: 2017-04-15
 header:
   overlay_color: "#000"
