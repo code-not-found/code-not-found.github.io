@@ -2,10 +2,10 @@
 main:
   - title: "Blog"
     url: https://www.codenotfound.com/blog/
-  #- title: "Spring-WS"
-  #  url: https://code-not-found.github.io/spring-ws/
-  - title: "Apache CXF"
-    url: https://www.codenotfound.com/apache-cxf/
+  - title: "Spring-WS"
+    url: https://www.codenotfound.com/spring-ws/
+  - title: "Spring-Kafka"
+    url: https://www.codenotfound.com/spring-kafka/
   - title: "JMS"
     url: https://www.codenotfound.com/jms/
   - title: "Terms and Privacy Policy"
