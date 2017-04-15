@@ -82,9 +82,7 @@ $susy: (
 /*
    codenotfound
    ========================================================================== */
-ins.adsbygoogle {
-  border-bottom: none !important;
-}
+/*layout*/
 .custom-sidebar {
   margin-top: 40px;
 }
@@ -94,11 +92,28 @@ ins.adsbygoogle {
 .custom-post-footer {
   margin-top: 30px;
 }
-.masthead__menu-item {
-  color: #03af6c;
+ins.adsbygoogle {
+  border-bottom: none !important;
+}
+/*splash*/
+.greedy-nav .visible-links a::before {
+  background: #087f23 !important;
+}
+.page__hero--overlay .btn:hover {
+  background-color: #087f23 !important;
+}
+.feature__item .btn {
+  background-color: #4caf50 !important;
+}
+.feature__item .btn:hover {
+  background-color: #087f23 !important;
+}
+/*post*/
+h1 {
+  margin-top: 60px;
 }
 a {
-  color: #03af6c;
+  color: #4caf50;
 }
 p code {
   background-color: #F7F7F9;
@@ -112,32 +127,23 @@ p var, li var {
   color: #494E52;
   font-style: normal;
 }
+p file {
+  @extend code;
+  color: #494E52;
+}
 kbd {
   color: #ff6700;
-}
-nav.pagination a.pagination--pager {
-  color: #03af6c;
-}
-nav.pagination a.pagination--pager:hover, nav.pagination a.pagination--pager:active {
-  text-decoration: underline
-}
-h1 {
-  margin-top: 60px;
 }
 div .highlighter-rouge {
   margin-bottom: 30px;
   margin-top: -20px;
-}
-p file {
-  @extend code;
-  color: #494E52;
 }
 code span {
   line-height: 0.4;
 }
 .notice--info {
   color: #fff;
-  background-color: #03af6c;
+  background-color: #4caf50;
 }
 .notice--info p {
   font-size: 1.2em;
@@ -146,18 +152,16 @@ code span {
   color: #fff;
   text-decoration: underline
 }
+nav.pagination a.pagination--pager {
+  color: #4caf50;
+}
+nav.pagination a.pagination--pager:hover, nav.pagination a.pagination--pager:active {
+  text-decoration: underline
+}
+/*other*/
 figure img.logo {
   margin-bottom: -20px;
 }
-.page__hero--overlay .btn:hover {
-  background-color: #087f23 !important;
-}
-.feature__item .btn {
-  background-color: #4caf50 !important;
-}
-.feature__item .btn:hover {
-  background-color: #087f23 !important;
-}
-.greedy-nav .visible-links a::before {
-  background: #087f23 !important;
+.masthead__menu-item {
+  color: #03af6c;
 }
