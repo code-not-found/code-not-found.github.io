@@ -6,7 +6,7 @@ date: 2017-04-15
 modified: 2017-04-15
 categories: [Spring Kafka]
 tags: [Example, Hello World, JSON API, Katharsis, Maven, Spring, Spring Boot, Tutorial]
-published: true
+published: false
 ---
 
 {% include figure image_path="/assets/images/logos/katharsis-logo.jpg" alt="katharsis logo" %}
@@ -105,11 +105,26 @@ The running and testing of the example is based on the `spring-boot-starter` and
 </project>
 ```
 
-Text for spring boot application
 
----
 
-We start by defining a simple model that will represent our Greeting resource. It contains an id in addition to the actual greeting content. We also define the constructors and getters/setters for the two fields.
+``` java
+package com.codenotfound.katharsis;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringKatharsisApplication {
+
+  public static void main(String[] args) {
+    SpringApplication.run(SpringKatharsisApplication.class, args);
+  }
+}
+```
+
+# Creating the Domain Model
+
+We start by defining a simple model that will represent our `Greeting` resource. It contains an `id` in addition to the actual greeting `content`. We also define the constructors and getters/setters for the two fields.
 
 The @JsonApiResource annotation defines a resource. It requires the type parameter to be defined which will be used to form the URI and populate the type field which is passed as part of the JSON message. According to JSON API standard, the name defined in type can be either plural or singular
 
