@@ -2,7 +2,6 @@
 title: "Spring for Apache Kafka"
 permalink: /spring-kafka/
 excerpt: "Step by step tutorials on Spring Kafka"
-layout: single-ads-footer
 date: 2017-04-15
 modified: 2017-04-15
 ---

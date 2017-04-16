@@ -255,3 +255,6 @@ defaults:
     values:
       layout: single
       author_profile: true
+      read_time: false
+      comments: true
+      related: false
