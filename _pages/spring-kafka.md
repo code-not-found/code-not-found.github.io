@@ -33,4 +33,14 @@ The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/
 
 * [Apache Kafka - Download &amp; Installation]({{ site.url }}/2016/09/apache-kafka-download-installation.html)
 
+## References
+
+* [Spring for Apache Kafka - Projects](https://projects.spring.io/spring-kafka/)
+
+* [Spring for Apache Kafka - Reference Documentation](http://docs.spring.io/spring-kafka/docs/current/reference/htmlsingle/)
+
+* [GitHub - spring-projects/spring-kafka](https://github.com/spring-projects/spring-kafka)
+
+* [StackOverflow - Spring-Kafka Questions](http://stackoverflow.com/questions/tagged/spring-kafka)
+
 ---
