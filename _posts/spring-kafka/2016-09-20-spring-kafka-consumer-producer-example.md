@@ -27,6 +27,8 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
+# General Project Setup
+
 We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter` and `spring-boot-starter-test` starters.
 
 A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was <var>'1.2.0.RELEASE'</var>. We also include `spring-kafka-test` in order to have access to an embedded Kafka broker when creating our unit test.
@@ -114,6 +116,8 @@ public class SpringKafkaApplication {
   }
 }
 ```
+
+> The below sections will detail how to create a sender and receiver together with their respective configurations. Note that it is also possible to have [Spring Boot autoconfigure Spring Kafka]({{ site.url }}/2017/04/spring-kafka-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
 # Create a Spring Kafka Message Producer
 

@@ -3,15 +3,17 @@ title: "Spring Kafka - Spring Boot Example"
 permalink: /2017/04/spring-kafka-boot-example.html
 excerpt: "A detailed step-by-step tutorial on how to setup Spring Kafka using Spring Boot autoconfiguration."
 date: 2017-04-13
-modified: 2017-04-15
+modified: 2017-04-16
 categories: [Spring Kafka]
 tags: [Autoconfig, Autoconfiguration, Apache Kafka, Example, Maven, Spring, Spring Boot, Spring Kafka, Tutorial]
 published: true
 ---
 
-{% include figure image_path="/assets/images/logos/spring-logo.jpg" alt="spring logo" %}
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+</figure>
 
-[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html) attempts to automatically configure your Spring application based on the JAR dependencies that have been added. In other words if `spring-kafka` is on the classpath and you have not manually configured any `Consumer` or `Provider` beans, then Spring Boot will auto-configure them using default values.
+[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html) attempts to automatically configure your Spring application based on the JAR dependencies that have been added. In other words if the <var>spring-kafka-1.2.0.RELEASE.jar</var> is on the classpath and you have not manually configured any `Consumer` or `Provider` beans, then Spring Boot will auto-configure them using default values.
 
 In order to demonstrate this behavior we will start from a previous [Spring Kafka tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) in which we send/receive messages to/from an Apache Kafka topic using Spring Kafka. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration.
 
@@ -47,7 +49,7 @@ The project is built using [Maven](https://maven.apache.org/). The Maven POM fil
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
+    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
   </properties>
 
   <dependencies>
@@ -108,9 +110,9 @@ public class SpringKafkaApplication {
 
 # Autoconfigure the Spring Kafka Message Producer
 
-The setup and creation of the `KafkaTemplate` and `Producer` beans is automatically done by Spring Boot. The only thing left to do is to autowire the `KafkaTemplate` and use it in the `send()` method.
+The setup and creation of the `KafkaTemplate` and `Producer` beans is automatically done by Spring Boot. The only thing left to do is autowiring the `KafkaTemplate` and using it in the `send()` method.
 
-> By annotating the `Sender` class with `@Component`, Spring will instantiate it as a bean that we will use in our test case. In order for this to work we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringKafkaApplication` by using the `@SpringBootApplication` annotation.
+> By annotating the `Sender` class with `@Component`, Spring will instantiate this class as a bean that we will use in our test case. In order for this to work we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringKafkaApplication` by using the `@SpringBootApplication` annotation.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -170,11 +172,9 @@ public class Receiver {
 }
 ```
 
-For the `Receiver`, Spring Boot takes care of most of the configuration when using a local Kafka broker with default settings. There are however two properties that need to be set explicitly in order to make our example work:
+For the `Receiver`, Spring Boot takes care of most of the configuration. There are however two properties that need to be explicitly set in the <var>application.yml</var> properties file:
 1. The <var>'kafka.consumer.group-id'</var> property needs to be specified as we are [using group management to assign topic partitions to consumers](https://www.confluent.io/blog/tutorial-getting-started-with-the-new-apache-kafka-0-9-consumer-client/). In this example we will assign it the value <var>'boot'</var>.
 2. The <var>'kafka.consumer.auto-offset-reset'</var> property needs to be set to <var>'earliest'</var> which ensures the new consumer group will get the message sent in case the container started after the send was completed.
-
-The code snippet below shows the properties specified using the YAML format in <var>/src/main/resources/application.yml</var>.
 
 ``` yml
 spring:
@@ -186,6 +186,8 @@ spring:
 topic:
   boot: boot.t
 ```
+
+> Scroll down to <var># APACHE KAFKA</var> [in the following link order to get a complete overview on all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) that can be set for auto configuration using the Spring Boot application properties file.
 
 # Testing the Sender and Receiver
 
