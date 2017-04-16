@@ -1,26 +1,32 @@
 ---
-title: Spring Kafka - JSON Example
-permalink: /2017/03/spring-kafka-json-example.html
-excerpt: A detailed step-by-step tutorial on how to send/receive JSON messages using Spring Kafka and Spring Boot.
-date: 2017-03-21 21:00
+title: "Spring Kafka - JSON Serializer Example"
+permalink: /2017/03/spring-kafka-json-serializer-example.html
+excerpt: "A detailed step-by-step tutorial on how to send/receive JSON messages using Spring Kafka and Spring Boot."
+date: 2017-03-21
+modified: 2017-04-15
 categories: [Spring Kafka]
-tags: [Apache Kafka, Example, Maven, JSON, JsonDeserializer, JsonSerializer, Spring, Spring Boot, Spring Kafka, Tutorial]
+tags: [Apache Kafka, Example, Maven, JSON, Deserializer, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial]
+redirect_from:
+  - /2017/03/spring-kafka-json-example.html
+published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
+    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[JSON](http://www.json.org/) (JavaScript Object Notation) is a lightweight data-interchange format that uses human-readable text to transmit data objects. It is built on two structures: a collection of name/value pairs and an ordered list of values. The following tutorial illustrates how to send/receive a Java object as a JSON `byte[]` array to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
+[JSON](http://www.json.org/) (JavaScript Object Notation) is a lightweight data-interchange format that uses human-readable text to transmit data objects. It is built on two structures: a collection of name/value pairs and an ordered list of values.
+
+The following tutorial illustrates how to send/receive a Java object as a JSON `byte[]` array to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
 
 Tools used:
-* Spring Kafka 1.1
+* Spring Kafka 1.2
 * Spring Boot 1.5
-* Maven 3
+* Maven 3.5
 
 [Apache Kafka](https://kafka.apache.org/) stores and transports `Byte` arrays in its topics. It ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html) but a JSON one is not included. Luckily, the [Spring Kafka framework](https://projects.spring.io/spring-kafka/) includes a support package that contains a [JSON (de)serializer](https://github.com/spring-projects/spring-kafka/tree/master/spring-kafka/src/main/java/org/springframework/kafka/support/serializer) that uses a [Jackson](https://github.com/FasterXML/jackson) `ObjectMapper` under the covers.
 
-We base the below example on a previous [Spring Kafka tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html). The only thing that needs to be added to the Maven POM file for working with JSON is the `spring-boot-starter-web` dependency which will indirectly include the needed `jackson-*` JAR dependencies.
+We base the below example on a previous [Spring Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html). The only thing that needs to be added to the Maven POM file for working with JSON is the `spring-boot-starter-web` dependency which will indirectly include the needed `jackson-*` JAR dependencies.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -45,7 +51,7 @@ We base the below example on a previous [Spring Kafka tutorial]({{ site.url }}/2
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
+    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
   </properties>
 
   <dependencies>
@@ -89,7 +95,9 @@ We base the below example on a previous [Spring Kafka tutorial]({{ site.url }}/2
 </project>
 ```
 
-For this example we will be sending a `Car` object. to a <var>'json.t'</var> topic. Let's use following class representing a car with a basic structure.
+# Object Model to Serialize/Deserialize
+
+To illustrate the example we will send a `Car` object to a <var>'json.t'</var> topic. Let's use following class representing a car with a basic structure.
 
 ``` java
 package com.codenotfound.model;
@@ -146,8 +154,7 @@ public class Car {
 
 # Producing JSON Messages to a Kafka Topic
 
-In order to use the `JsonSerializer` for converting the `Car` object that is sent, we need to set the value of the <var>'VALUE_SERIALIZER_CLASS_CONFIG'</var> `Producer` configuration property to the `JsonSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `Car` instead of `String`.
-
+In order to use the `JsonSerializer`, shipped with Spring Kafka, we need to set the value of the producer's <var>'VALUE_SERIALIZER_CLASS_CONFIG'</var> configuration property to the `JsonSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `Car` instead of `String`. This will result in the `Car` object to be serialized in a JSON `byte[]` message.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -170,7 +177,7 @@ import com.codenotfound.model.Car;
 @Configuration
 public class SenderConfig {
 
-  @Value("${kafka.servers.bootstrap}")
+  @Value("${kafka.bootstrap-servers}")
   private String bootstrapServers;
 
   @Bean
@@ -180,7 +187,6 @@ public class SenderConfig {
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-    props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
 
     return props;
   }
@@ -202,7 +208,7 @@ public class SenderConfig {
 }
 ```
 
-The `Sender` class is updated accordingly so that it's `send()` method accepts a `Car` object as input. We also update the `KafkaTemplate` generic type.
+The `Sender` class is updated accordingly so that it's `send()` method accepts a `Car` object as input. We also update the `KafkaTemplate` generic type from `String` to `Car`.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -217,10 +223,10 @@ import com.codenotfound.model.Car;
 
 public class Sender {
 
-  @Value("${kafka.topic.json}")
-  private String jsonTopic;
-
   private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
+
+  @Value("${topic.json}")
+  private String jsonTopic;
 
   @Autowired
   private KafkaTemplate<String, Car> kafkaTemplate;
@@ -261,7 +267,7 @@ import com.codenotfound.model.Car;
 @EnableKafka
 public class ReceiverConfig {
 
-  @Value("${kafka.servers.bootstrap}")
+  @Value("${kafka.bootstrap-servers}")
   private String bootstrapServers;
 
   @Bean
@@ -316,14 +322,14 @@ public class Receiver {
 
   private CountDownLatch latch = new CountDownLatch(1);
 
-  @KafkaListener(topics = "${kafka.topic.json}")
+  public CountDownLatch getLatch() {
+    return latch;
+  }
+
+  @KafkaListener(topics = "${topic.json}")
   public void receive(Car car) {
     LOGGER.info("received car='{}'", car.toString());
     latch.countDown();
-  }
-
-  public CountDownLatch getLatch() {
-    return latch;
   }
 }
 ```
@@ -349,7 +355,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
-import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.kafka.test.rule.KafkaEmbedded;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
@@ -377,29 +382,22 @@ public class SpringKafkaApplicationTest {
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-    System.setProperty("kafka.servers.bootstrap", embeddedKafka.getBrokersAsString());
+    System.setProperty("kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
   }
 
-  @SuppressWarnings("unchecked")
   @Before
   public void setUp() throws Exception {
     // wait until the partitions are assigned
     for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
         .getListenerContainers()) {
-      if (messageListenerContainer instanceof ConcurrentMessageListenerContainer) {
-        ConcurrentMessageListenerContainer<String, Car> concurrentMessageListenerContainer =
-            (ConcurrentMessageListenerContainer<String, Car>) messageListenerContainer;
-
-        ContainerTestUtils.waitForAssignment(concurrentMessageListenerContainer,
-            embeddedKafka.getPartitionsPerTopic());
-      }
+      ContainerTestUtils.waitForAssignment(messageListenerContainer,
+          embeddedKafka.getPartitionsPerTopic());
     }
   }
 
   @Test
   public void testReceive() throws Exception {
     Car car = new Car("Passat", "Volkswagen", "ABC-123");
-
     sender.send(car);
 
     receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
@@ -425,107 +423,28 @@ Maven will download the needed dependencies, compile the code and run the unit t
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.2.RELEASE)
 
-2017-03-21 20:48:57.677  INFO 4776 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Starting SpringKafkaApplicationTest on cnf-pc with PID 4776 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-json)
-2017-03-21 20:48:57.678 DEBUG 4776 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
-2017-03-21 20:48:57.678  INFO 4776 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : No active profile set, falling back to default profiles: default
-2017-03-21 20:48:57.727  INFO 4776 --- [           main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@2f08c4b: startup date [Tue Mar 21 20:48:57 CET 2017]; root of context hierarchy
-2017-03-21 20:48:58.572  INFO 4776 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$b1b59555] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2017-03-21 20:48:59.185  INFO 4776 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@2f08c4b: startup date [Tue Mar 21 20:48:57 CET 2017]; root of context hierarchy
-2017-03-21 20:48:59.253  INFO 4776 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
-2017-03-21 20:48:59.255  INFO 4776 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
-2017-03-21 20:48:59.304  INFO 4776 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-2017-03-21 20:48:59.305  INFO 4776 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-2017-03-21 20:48:59.346  INFO 4776 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-2017-03-21 20:48:59.520  INFO 4776 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0
-2017-03-21 20:48:59.531  INFO 4776 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
-2017-03-21 20:48:59.532  INFO 4776 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
-2017-03-21 20:48:59.558  INFO 4776 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
-2017-03-21 20:48:59.558  INFO 4776 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
-2017-03-21 20:48:59.571  INFO 4776 --- [           main] c.c.kafka.SpringKafkaApplicationTest     : Started SpringKafkaApplicationTest in 2.149 seconds (JVM running for 6.566)
-2017-03-21 20:50:06.970  INFO 1236 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Successfully joined group json with generation 1
-2017-03-21 20:50:06.971  INFO 1236 --- [afka-consumer-1] o.a.k.c.c.internals.ConsumerCoordinator  : Setting newly assigned partitions [json.t-1, json.t-0] for group json
-2017-03-21 20:50:06.988  INFO 1236 --- [afka-consumer-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned:[json.t-1, json.t-0]
-2017-03-21 20:50:07.009  INFO 1236 --- [           main] com.codenotfound.kafka.producer.Sender   : sending car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
-2017-03-21 20:50:07.012  INFO 1236 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
-2017-03-21 20:50:07.013  INFO 1236 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
-2017-03-21 20:50:07.023  INFO 1236 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
-2017-03-21 20:50:07.023  INFO 1236 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
-2017-03-21 20:50:07.241  INFO 1236 --- [afka-listener-1] c.codenotfound.kafka.consumer.Receiver   : received car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
-2017-03-21 20:50:07.245  INFO 1236 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], shutting down
-2017-03-21 20:50:07.246  INFO 1236 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], Starting controlled shutdown
-2017-03-21 20:50:07.256  INFO 1236 --- [quest-handler-4] kafka.controller.KafkaController         : [Controller 0]: Shutting down broker 0
-2017-03-21 20:50:07.264  INFO 1236 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], Controlled shutdown succeeded
-2017-03-21 20:50:07.266  INFO 1236 --- [           main] kafka.network.SocketServer               : [Socket Server on Broker 0], Shutting down
-2017-03-21 20:50:07.269  INFO 1236 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Marking the coordinator localhost:56210 (id: 2147483647 rack: null) dead for group json
-2017-03-21 20:50:07.274  INFO 1236 --- [           main] kafka.network.SocketServer               : [Socket Server on Broker 0], Shutdown completed
-2017-03-21 20:50:07.275  INFO 1236 --- [           main] kafka.server.KafkaRequestHandlerPool     : [Kafka Request Handler on Broker 0], shutting down
-2017-03-21 20:50:07.277  INFO 1236 --- [           main] kafka.server.KafkaRequestHandlerPool     : [Kafka Request Handler on Broker 0], shut down completely
-2017-03-21 20:50:07.281  INFO 1236 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Shutting down
-2017-03-21 20:50:07.390  INFO 1236 --- [estReaper-Fetch] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Stopped
-2017-03-21 20:50:07.390  INFO 1236 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Shutdown completed
-2017-03-21 20:50:07.390  INFO 1236 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Shutting down
-2017-03-21 20:50:07.416  INFO 1236 --- [tReaper-Produce] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Stopped
-2017-03-21 20:50:07.416  INFO 1236 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Shutdown completed
-2017-03-21 20:50:07.416  INFO 1236 --- [           main] kafka.server.KafkaApis                   : [KafkaApi-0] Shutdown complete.
-2017-03-21 20:50:07.417  INFO 1236 --- [           main] kafka.server.ReplicaManager              : [Replica Manager on Broker 0]: Shutting down
-2017-03-21 20:50:07.418  INFO 1236 --- [           main] kafka.server.ReplicaFetcherManager       : [ReplicaFetcherManager on broker 0] shutting down
-2017-03-21 20:50:07.419  INFO 1236 --- [           main] kafka.server.ReplicaFetcherManager       : [ReplicaFetcherManager on broker 0] shutdown completed
-2017-03-21 20:50:07.419  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-21 20:50:07.502  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-21 20:50:07.502  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-21 20:50:07.502  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-21 20:50:07.626  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-21 20:50:07.626  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-21 20:50:07.639  INFO 1236 --- [           main] kafka.server.ReplicaManager              : [Replica Manager on Broker 0]: Shut down completely
-2017-03-21 20:50:07.639  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-21 20:50:07.659  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-21 20:50:07.659  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-21 20:50:07.660  INFO 1236 --- [           main] kafka.log.LogManager                     : Shutting down.
-2017-03-21 20:50:07.660  INFO 1236 --- [           main] kafka.log.LogCleaner                     : Shutting down the log cleaner.
-2017-03-21 20:50:07.661  INFO 1236 --- [           main] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Shutting down
-2017-03-21 20:50:07.661  INFO 1236 --- [leaner-thread-0] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Stopped
-2017-03-21 20:50:07.661  INFO 1236 --- [           main] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Shutdown completed
-2017-03-21 20:50:07.938  INFO 1236 --- [           main] kafka.log.LogManager                     : Shutdown complete.
-2017-03-21 20:50:07.938  INFO 1236 --- [           main] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Shutting down.
-2017-03-21 20:50:07.939  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-21 20:50:08.029  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-21 20:50:08.029  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-21 20:50:08.029  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-21 20:50:08.061  INFO 1236 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-21 20:50:08.061  INFO 1236 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-21 20:50:08.061  INFO 1236 --- [           main] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Shutdown complete.
-2017-03-21 20:50:08.063  INFO 1236 --- [           main] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Shutting down
-2017-03-21 20:50:08.063  INFO 1236 --- [topics-thread-0] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Stopped
-2017-03-21 20:50:08.063  INFO 1236 --- [           main] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Shutdown completed
-2017-03-21 20:50:08.065  INFO 1236 --- [           main] kafka.controller.PartitionStateMachine   : [Partition state machine on Controller 0]: Stopped partition state machine
-2017-03-21 20:50:08.065  INFO 1236 --- [           main] kafka.controller.ReplicaStateMachine     : [Replica state machine on controller 0]: Stopped replica state machine
-2017-03-21 20:50:08.067  INFO 1236 --- [           main] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Shutting down
-2017-03-21 20:50:08.067  INFO 1236 --- [r-0-send-thread] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Stopped
-2017-03-21 20:50:08.067  INFO 1236 --- [           main] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Shutdown completed
-2017-03-21 20:50:08.068  INFO 1236 --- [           main] kafka.controller.KafkaController         : [Controller 0]: Broker 0 resigned as the controller
-2017-03-21 20:50:08.068  INFO 1236 --- [127.0.0.1:56206] org.I0Itec.zkclient.ZkEventThread        : Terminate ZkClient event thread.
-2017-03-21 20:50:08.069  INFO 1236 --- [0 cport:56206):] o.a.z.server.PrepRequestProcessor        : Processed session termination for sessionid: 0x15af26b4a640001
-2017-03-21 20:50:08.076  INFO 1236 --- [ry:/127.0.0.1:0] o.apache.zookeeper.server.NIOServerCnxn  : Closed socket connection for client /127.0.0.1:56213 which had sessionid 0x15af26b4a640001
-2017-03-21 20:50:08.076  INFO 1236 --- [           main] org.apache.zookeeper.ZooKeeper           : Session: 0x15af26b4a640001 closed
-2017-03-21 20:50:08.077  INFO 1236 --- [ain-EventThread] org.apache.zookeeper.ClientCnxn          : EventThread shut down for session: 0x15af26b4a640001
-2017-03-21 20:50:08.078  INFO 1236 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], shut down completed
-2017-03-21 20:50:08.154  INFO 1236 --- [127.0.0.1:56206] org.I0Itec.zkclient.ZkEventThread        : Terminate ZkClient event thread.
-2017-03-21 20:50:08.155  INFO 1236 --- [0 cport:56206):] o.a.z.server.PrepRequestProcessor        : Processed session termination for sessionid: 0x15af26b4a640000
-2017-03-21 20:50:08.160  INFO 1236 --- [           main] org.apache.zookeeper.ZooKeeper           : Session: 0x15af26b4a640000 closed
-2017-03-21 20:50:08.160  INFO 1236 --- [ain-EventThread] org.apache.zookeeper.ClientCnxn          : EventThread shut down for session: 0x15af26b4a640000
-2017-03-21 20:50:08.160  INFO 1236 --- [ry:/127.0.0.1:0] o.apache.zookeeper.server.NIOServerCnxn  : Closed socket connection for client /127.0.0.1:56209 which had sessionid 0x15af26b4a640000
-2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.zookeeper.server.ZooKeeperServer     : shutting down
-2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.zookeeper.server.SessionTrackerImpl  : Shutting down
-2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.z.server.PrepRequestProcessor        : Shutting down
-2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.z.server.SyncRequestProcessor        : Shutting down
-2017-03-21 20:50:08.161  INFO 1236 --- [0 cport:56206):] o.a.z.server.PrepRequestProcessor        : PrepRequestProcessor exited loop!
-2017-03-21 20:50:08.161  INFO 1236 --- [   SyncThread:0] o.a.z.server.SyncRequestProcessor        : SyncRequestProcessor exited!
-2017-03-21 20:50:08.161  INFO 1236 --- [           main] o.a.z.server.FinalRequestProcessor       : shutdown of request processor complete
-2017-03-21 20:50:08.162  INFO 1236 --- [ry:/127.0.0.1:0] o.a.z.server.NIOServerCnxnFactory        : NIOServerCnxn factory exited run method
-2017-03-21 20:50:08.500  INFO 1236 --- [ SessionTracker] o.a.zookeeper.server.SessionTrackerImpl  : SessionTrackerImpl exited loop!
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.717 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
-2017-03-21 20:50:09.171  INFO 1236 --- [       Thread-8] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@2f08c4b: startup date [Tue Mar 21 20:50:03 CET 2017]; root of context hierarchy
-2017-03-21 20:50:09.175  INFO 1236 --- [       Thread-8] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 0
+22:11:39.942 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 2760 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-json)
+22:11:39.943 [main] DEBUG c.c.kafka.SpringKafkaApplicationTest - Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
+22:11:39.943 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
+22:11:39.978 [main] INFO  o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4cc61eb1: startup date [Sun Apr 16 22:11:39 CEST 2017]; root of context hierarchy
+22:11:40.854 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$26b361b1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+22:11:41.462 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@4cc61eb1: startup date [Sun Apr 16 22:11:39 CEST 2017]; root of context hierarchy
+22:11:41.525 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+22:11:41.526 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:11:41.559 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+22:11:41.559 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+22:11:41.596 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+22:11:41.773 [main] INFO  o.s.c.s.DefaultLifecycleProcessor - Starting beans in phase 0
+22:11:41.819 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 2.149 seconds (JVM running for 6.241)
+22:11:43.196 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - partitions revoked:[]
+22:11:43.268 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - partitions assigned:[json.t-1, json.t-0]
+22:11:43.320 [main] INFO  c.codenotfound.kafka.producer.Sender - sending car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
+22:11:43.428 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-L-1] INFO  c.c.kafka.consumer.Receiver - received car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
+22:11:46.209 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.965 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
+22:11:47.222 [Thread-8] INFO  o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@4cc61eb1: startup date [Sun Apr 16 22:11:39 CEST 201
+7]; root of context hierarchy
+22:11:47.227 [Thread-8] INFO  o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 0
 
 Results :
 
@@ -534,9 +453,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 41.654 s
-[INFO] Finished at: 2017-03-21T20:50:39+01:00
-[INFO] Final Memory: 17M/220M
+[INFO] Total time: 43.242 s
+[INFO] Finished at: 2017-04-16T22:12:17+02:00
+[INFO] Final Memory: 17M/226M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -548,4 +467,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the example on how to send/receive JSON messages using Spring Kafka. If you have some questions or remarks, drop me a line below.
+This concludes the example on how to use the Spring Kafka JsonSerializer/JsonDeserializer in combination with Apache Kafka.
+
+If you have some questions or remarks, drop me a line below.
