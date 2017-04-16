@@ -327,7 +327,7 @@ public class ReceiverConfig {
 
 # Testing the Spring Kafka Template & Listener
 
-In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.t'</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
+In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTest` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.t'</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
 An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) for a more information on this topic.
 
@@ -428,4 +428,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This wraps up our example in which we used a Spring Kafka template to create a producer and Spring Kafka listener to create a consumer. If you found this sample useful or have a question you would like to ask, drop a line below!
+This wraps up our example in which we used a Spring Kafka template to create a producer and Spring Kafka listener to create a consumer.
+
+If you found this sample useful or have a question you would like to ask, drop a line below!

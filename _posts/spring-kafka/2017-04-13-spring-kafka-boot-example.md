@@ -187,11 +187,13 @@ topic:
   boot: boot.t
 ```
 
-> Scroll down to <var># APACHE KAFKA</var> [in the following link order to get a complete overview on all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) that can be set for auto configuration using the Spring Boot application properties file.
+> Scroll down to <var># APACHE KAFKA</var> [in the following link in order to get a complete overview on all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) that can be set for auto configuration using the Spring Boot application properties file.
 
 # Testing the Sender and Receiver
 
-In order to verify that our code works, a basic `SpringKafkaApplicationTests` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>'boot.t'</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received. We trigger [the embedded Kafka broker using a JUnit @ClassRule]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
+In order to verify that our code works, a basic `SpringKafkaApplicationTest` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>'boot.t'</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received.
+
+The test case runs using [the embedded Kafka broker which is started via a JUnit @ClassRule]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
 
 ``` java
 package com.codenotfound.kafka;
@@ -292,4 +294,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Using Spring Boot's autoconfiguration we were able to setup a `Sender` and `Receiver` using only a couple of lines of code. Hopefully this example will kick-start your Spring Kafka development. Drop a line below in case something was not clear or just to let me know if everything worked.
+Using Spring Boot's autoconfiguration we were able to setup a `Sender` and `Receiver` using only a couple of lines of code. Hopefully this example will kick-start your Spring Kafka development.
+
+Feel free to leave a comment in case something was not clear or just to let me know if everything worked.
