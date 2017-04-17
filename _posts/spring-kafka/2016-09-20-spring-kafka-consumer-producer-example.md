@@ -201,8 +201,6 @@ public class SenderConfig {
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-    // duration for sending after which the producer will throw a TimeoutException if not successful
-    props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 5000);
 
     return props;
   }
@@ -295,9 +293,6 @@ public class ReceiverConfig {
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
     // allows a pool of processes to divide the work of consuming and processing records
     props.put(ConsumerConfig.GROUP_ID_CONFIG, "helloworld");
-    // ensures the new consumer group will get the message sent in case the container started after
-    // the send was completed
-    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
     return props;
   }
@@ -340,13 +335,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
+import org.springframework.kafka.listener.MessageListenerContainer;
 import org.springframework.kafka.test.rule.KafkaEmbedded;
+import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.codenotfound.kafka.consumer.Receiver;
@@ -354,7 +353,7 @@ import com.codenotfound.kafka.producer.Sender;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringKafkaApplicationTests {
+public class SpringKafkaApplicationTest {
 
   private static String HELLOWORLD_TOPIC = "helloworld.t";
 
@@ -364,12 +363,25 @@ public class SpringKafkaApplicationTests {
   @Autowired
   private Receiver receiver;
 
+  @Autowired
+  private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
+
   @ClassRule
   public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, HELLOWORLD_TOPIC);
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
     System.setProperty("kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
+  }
+
+  @Before
+  public void setUp() throws Exception {
+    // wait until the partitions are assigned
+    for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
+        .getListenerContainers()) {
+      ContainerTestUtils.waitForAssignment(messageListenerContainer,
+          embeddedKafka.getPartitionsPerTopic());
+    }
   }
 
   @Test
