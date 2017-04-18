@@ -13,12 +13,14 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads. The following step by step tutorial illustrates a basic example in which we will configure, build and run a Hello World contract first client and endpoint using a WSDL, Spring-WS, Spring Boot and Maven.
+[Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads.
+
+The following step by step tutorial illustrates a basic example in which we will configure, build and run a Hello World contract first client and endpoint using a WSDL, Spring-WS, Spring Boot and Maven.
 
 Tools used:
 * Spring-WS 2.4
 * Spring Boot 1.5
-* Maven 3
+* Maven 3.5
 
 The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
@@ -29,72 +31,70 @@ As Spring Web Services is **contract first only**, we need to start from a contr
 ``` xml
 <?xml version="1.0"?>
 <wsdl:definitions name="HelloWorld"
-    targetNamespace="http://codenotfound.com/services/helloworld"
-    xmlns:tns="http://codenotfound.com/services/helloworld" xmlns:types="http://codenotfound.com/types/helloworld"
-    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  targetNamespace="http://codenotfound.com/services/helloworld"
+  xmlns:tns="http://codenotfound.com/services/helloworld" xmlns:types="http://codenotfound.com/types/helloworld"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
 
-    <wsdl:types>
-        <xsd:schema targetNamespace="http://codenotfound.com/types/helloworld"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            elementFormDefault="qualified" attributeFormDefault="unqualified"
-            version="1.0">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://codenotfound.com/types/helloworld"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+      attributeFormDefault="unqualified" version="1.0">
 
-            <xsd:element name="person">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="firstName" type="xsd:string" />
-                        <xsd:element name="lastName" type="xsd:string" />
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
+      <xsd:element name="person">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="firstName" type="xsd:string" />
+            <xsd:element name="lastName" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
 
-            <xsd:element name="greeting">
-                <xsd:complexType>
-                    <xsd:sequence>
-                        <xsd:element name="greeting" type="xsd:string" />
-                    </xsd:sequence>
-                </xsd:complexType>
-            </xsd:element>
-        </xsd:schema>
-    </wsdl:types>
+      <xsd:element name="greeting">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="greeting" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
 
-    <wsdl:message name="SayHelloInput">
-        <wsdl:part name="person" element="types:person" />
-    </wsdl:message>
+  <wsdl:message name="SayHelloInput">
+    <wsdl:part name="person" element="types:person" />
+  </wsdl:message>
 
-    <wsdl:message name="SayHelloOutput">
-        <wsdl:part name="greeting" element="types:greeting" />
-    </wsdl:message>
+  <wsdl:message name="SayHelloOutput">
+    <wsdl:part name="greeting" element="types:greeting" />
+  </wsdl:message>
 
-    <wsdl:portType name="HelloWorld_PortType">
-        <wsdl:operation name="sayHello">
-            <wsdl:input message="tns:SayHelloInput" />
-            <wsdl:output message="tns:SayHelloOutput" />
-        </wsdl:operation>
-    </wsdl:portType>
+  <wsdl:portType name="HelloWorld_PortType">
+    <wsdl:operation name="sayHello">
+      <wsdl:input message="tns:SayHelloInput" />
+      <wsdl:output message="tns:SayHelloOutput" />
+    </wsdl:operation>
+  </wsdl:portType>
 
-    <wsdl:binding name="HelloWorld_SoapBinding" type="tns:HelloWorld_PortType">
-        <soap:binding style="document"
-            transport="http://schemas.xmlsoap.org/soap/http" />
-        <wsdl:operation name="sayHello">
-            <soap:operation
-                soapAction="http://codenotfound.com/services/helloworld/sayHello" />
-            <wsdl:input>
-                <soap:body use="literal" />
-            </wsdl:input>
-            <wsdl:output>
-                <soap:body use="literal" />
-            </wsdl:output>
-        </wsdl:operation>
-    </wsdl:binding>
+  <wsdl:binding name="HelloWorld_SoapBinding" type="tns:HelloWorld_PortType">
+    <soap:binding style="document"
+      transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sayHello">
+      <soap:operation
+        soapAction="http://codenotfound.com/services/helloworld/sayHello" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
 
-    <wsdl:service name="HelloWorld_Service">
-        <wsdl:documentation>Hello World service</wsdl:documentation>
-        <wsdl:port name="HelloWorld_Port" binding="tns:HelloWorld_SoapBinding">
-            <soap:address
-                location="http://localhost:9090/codenotfound/ws/helloworld" />
-        </wsdl:port>
-    </wsdl:service>
+  <wsdl:service name="HelloWorld_Service">
+    <wsdl:documentation>Hello World service</wsdl:documentation>
+    <wsdl:port name="HelloWorld_Port" binding="tns:HelloWorld_SoapBinding">
+      <soap:address location="http://localhost:9090/codenotfound/ws/helloworld" />
+    </wsdl:port>
+  </wsdl:service>
 
 </wsdl:definitions>
 ```
@@ -112,71 +112,71 @@ In the plugins section we included the `spring-boot-maven-plugin` Maven plugin s
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.codenotfound</groupId>
-    <artifactId>spring-ws-helloworld-example</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+  <groupId>com.codenotfound</groupId>
+  <artifactId>spring-ws-helloworld</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
-    <name>spring-ws-helloworld-example</name>
-    <description>Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example</description>
-    <url>https://www.codenotfound.com/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html</url>
+  <name>spring-ws-helloworld</name>
+  <description>Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example</description>
+  <url>https://www.codenotfound.com/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html</url>
 
-    <parent>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.2.RELEASE</version>
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+
+    <maven-jaxb2-plugin.version>0.13.1</maven-jaxb2-plugin.version>
+  </properties>
+
+  <dependencies>
+    <!-- spring-boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web-services</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- spring-boot-maven-plugin -->
+      <plugin>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.1.RELEASE</version>
-    </parent>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-
-        <maven-jaxb2-plugin.version>0.13.1</maven-jaxb2-plugin.version>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web-services</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jvnet.jaxb2.maven2</groupId>
-                <artifactId>maven-jaxb2-plugin</artifactId>
-                <version>${maven-jaxb2-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
-                    <schemaIncludes>
-                        <include>*.wsdl</include>
-                    </schemaIncludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <!-- maven-jaxb2-plugin -->
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>${maven-jaxb2-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+          <schemaIncludes>
+            <include>*.wsdl</include>
+          </schemaIncludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
 ```
 
@@ -197,7 +197,7 @@ This results in a number of generated classes amongst which the `Person` and `Gr
 We start by creating an `SpringWsApplication` that contains a `main()` method that uses Spring Boot’s `SpringApplication.run()` method to bootstrap the application, starting Spring. For more information on Spring Boot we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
 
 ``` java
-package com.codenotfound;
+package com.codenotfound.ws;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -205,9 +205,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringWsApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringWsApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(SpringWsApplication.class, args);
+  }
 }
 ```
 
@@ -228,7 +228,7 @@ The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified He
 To enable the support for `@Endpoint` annotation that we will use in the next section we need to annotate our configuration class with `@EnableWs`.
 
 ``` java
-package com.codenotfound.endpoint;
+package com.codenotfound.ws.endpoint;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -245,25 +245,22 @@ import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
 @Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
 
-    @Bean
-    public ServletRegistrationBean messageDispatcherServlet(
-            ApplicationContext applicationContext) {
+  @Bean
+  public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
 
-        MessageDispatcherServlet servlet = new MessageDispatcherServlet();
-        servlet.setApplicationContext(applicationContext);
+    MessageDispatcherServlet servlet = new MessageDispatcherServlet();
+    servlet.setApplicationContext(applicationContext);
 
-        return new ServletRegistrationBean(servlet,
-                "/codenotfound/ws/*");
-    }
+    return new ServletRegistrationBean(servlet, "/codenotfound/ws/*");
+  }
 
-    @Bean(name = "helloworld")
-    public Wsdl11Definition defaultWsdl11Definition() {
-        SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
-        wsdl11Definition.setWsdl(
-                new ClassPathResource("/wsdl/helloworld.wsdl"));
+  @Bean(name = "helloworld")
+  public Wsdl11Definition defaultWsdl11Definition() {
+    SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
+    wsdl11Definition.setWsdl(new ClassPathResource("/wsdl/helloworld.wsdl"));
 
-        return wsdl11Definition;
-    }
+    return wsdl11Definition;
+  }
 }
 ```
 
@@ -280,7 +277,7 @@ The `@RequestPayload` annotation on the `sayHello()` method parameter indicates 
 The implementation of the `sayHello` service simply logs the name of the received `Person` and then uses this name to construct a `Greeting` that is also logged and then returned.
 
 ``` java
-package com.codenotfound.endpoint;
+package com.codenotfound.ws.endpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -296,30 +293,25 @@ import com.codenotfound.types.helloworld.Person;
 @Endpoint
 public class HelloWorldEndpoint {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(HelloWorldEndpoint.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldEndpoint.class);
 
-    private static final String NAMESPACE_URI = "http://codenotfound.com/types/helloworld";
+  private static final String NAMESPACE_URI = "http://codenotfound.com/types/helloworld";
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "person")
-    @ResponsePayload
-    public Greeting sayHello(@RequestPayload Person request) {
+  @PayloadRoot(namespace = NAMESPACE_URI, localPart = "person")
+  @ResponsePayload
+  public Greeting sayHello(@RequestPayload Person request) {
+    LOGGER.info("Endpoint received person[firstName={},lastName={}]", request.getFirstName(),
+        request.getLastName());
 
-        LOGGER.info(
-                "Endpoint received person=[firstName:{},lastName:{}]",
-                request.getFirstName(), request.getLastName());
+    String greeting = "Hello " + request.getFirstName() + " " + request.getLastName() + "!";
 
-        String greeting = "Hello " + request.getFirstName() + " "
-                + request.getLastName() + "!";
+    ObjectFactory factory = new ObjectFactory();
+    Greeting response = factory.createGreeting();
+    response.setGreeting(greeting);
 
-        ObjectFactory factory = new ObjectFactory();
-        Greeting response = factory.createGreeting();
-        response.setGreeting(greeting);
-
-        LOGGER.info("Endpoint sending greeting='{}'",
-                response.getGreeting());
-        return response;
-    }
+    LOGGER.info("Endpoint sending greeting='{}'", response.getGreeting());
+    return response;
+  }
 }
 ```
 
