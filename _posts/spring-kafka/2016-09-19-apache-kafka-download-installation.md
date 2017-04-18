@@ -13,12 +13,13 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/apache-kafka-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Apache Kafka](http://kafka.apache.org/) is an open-source message broker project developed by the Apache Software Foundation written in Scala. The project aims to provide a high-throughput, low-latency platform capable of handling hundreds of megabytes of reads and writes per second from thousands of clients. Following tutorial shows how to download and install Apache Kafka on Windows and perform a start/stop of the installed instance.
+[Apache Kafka](http://kafka.apache.org/) is an open-source message broker project developed by the Apache Software Foundation written in Scala. The project aims to provide a high-throughput, low-latency platform capable of handling hundreds of megabytes of reads and writes per second from thousands of clients.
 
+Following tutorial shows how to download and install Apache Kafka on Windows and perform a start/stop of the installed instance.
 
-It is important to note that Kafka will not work without [Apache ZooKeeper](https://zookeeper.apache.org/), which is essentially a distributed hierarchical key-value store. Like Kafka, ZooKeeper is a software project of the Apache Software Foundation. [Kafka uses ZooKeeper for: electing a controller, cluster membership, topic configuration, quotas and ACLs](https://www.quora.com/What-is-the-actual-role-of-ZooKeeper-in-Kafka).
+It is important to note that Kafka will not work without [Apache ZooKeeper](https://zookeeper.apache.org/), which is essentially a distributed hierarchical key-value store. Like Kafka, ZooKeeper is a software project of the Apache Software Foundation. Kafka uses ZooKeeper for: [electing a controller, cluster membership, topic configuration, quotas and ACLs](https://www.quora.com/What-is-the-actual-role-of-ZooKeeper-in-Kafka).
 
-Note that for running Kafka and ZooKeeper, a [Java Runtime Environment needs to be installed and configured](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (with JAVA_HOME correctly set). If you are not sure if Java is installed on your machine, open a console and executed following command:
+Note that for running Kafka and ZooKeeper, a [Java Runtime Environment needs to be installed and configured](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (with JAVA_HOME correctly set). If you are not sure if Java is installed on your machine, open a console and execute following command:
 
 ``` plaintext
 java -version
@@ -30,7 +31,9 @@ java -version
     <img src="{{ site.url }}/assets/images/logos/apache-zookeeper-logo.jpg" alt="apache zookeeper logo">
 </figure>
 
-Head over to the [Apache ZooKeeper download](https://zookeeper.apache.org/releases.html) page and and click on the download link in the <var>Download</var> section. This will redirect to a mirror site, click on the suggested mirror link and from the <var>index</var> select the <var>stable</var> directory as shown below. Download the gzipped TAR file, at the moment of writing this tutorial the latest stable release was [zookeeper-3.4.9](http://www-us.apache.org/dist/zookeeper/stable/).
+Head over to the [Apache ZooKeeper download](https://zookeeper.apache.org/releases.html) page and and click on the download link in the <var>Download</var> section. This will redirect to a mirror site, click on the suggested mirror link and from the <var>index</var> select the <var>stable</var> directory as shown below. Download the gzipped TAR file.
+
+At the moment of writing this tutorial the latest stable release was [zookeeper-3.4.9](http://www-us.apache.org/dist/zookeeper/stable/).
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-kafka/apache-zookeeper-stable-releases.png" alt="apache zookeeper stable releases">
@@ -71,7 +74,9 @@ By default ZooKeeper will generate a number of log statements at start-up as sho
 
 Open the [Kafka releases page](http://kafka.apache.org/downloads.html) which contains the latest binary downloads. Kafka is written in [Scala](https://www.scala-lang.org/), which is programming language that has full support for functional programming. Scala source code is intended to be compiled to Java bytecode, so that the resulting executable code runs on a Java virtual machine.
 
-You'll notice that the release page contains multiple versions of Scala for a specific Kafka release. This only matters if you are using Scala yourself. If not the case, go ahead and choose the highest supported version. At the moment of writing the latest stable release was [kafka_2.11-0.10.0.1.tgz](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.1/kafka_2.11-0.10.0.1.tgz).
+You'll notice that the release page contains multiple versions of Scala for a specific Kafka release. This only matters if you are using Scala yourself. If not the case, go ahead and choose the highest supported version.
+
+At the moment of writing the latest stable release was [kafka_2.11-0.10.0.1.tgz](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.1/kafka_2.11-0.10.0.1.tgz).
 
 Extract the gzipped TAR file, downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: <var>[kafka_install_dir]</var>.
 
@@ -102,4 +107,6 @@ Kafka will generate a number of log statements at start-up as shown below. The l
 
 ---
 
-This concludes installing ZooKeeper and Kafka on Windows. If you found this post helpful or have any questions or remarks, please leave a comment.
+This concludes installing ZooKeeper and Kafka on Windows.
+
+If you found this post helpful or have any questions or remarks, please leave a comment.
