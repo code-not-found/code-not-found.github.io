@@ -326,7 +326,7 @@ The below `ClientConfig` configuration class specifies the `WebServiceTemplate` 
 Note that the class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
 ``` java
-package com.codenotfound.client;
+package com.codenotfound.ws.client;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -336,26 +336,24 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 @Configuration
 public class ClientConfig {
 
-    @Bean
-    Jaxb2Marshaller jaxb2Marshaller() {
+  @Bean
+  Jaxb2Marshaller jaxb2Marshaller() {
 
-        Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
-        jaxb2Marshaller
-                .setContextPath("com.codenotfound.types.helloworld");
-        return jaxb2Marshaller;
-    }
+    Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+    jaxb2Marshaller.setContextPath("com.codenotfound.types.helloworld");
+    return jaxb2Marshaller;
+  }
 
-    @Bean
-    public WebServiceTemplate webServiceTemplate() {
+  @Bean
+  public WebServiceTemplate webServiceTemplate() {
 
-        WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
-        webServiceTemplate.setMarshaller(jaxb2Marshaller());
-        webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
-        webServiceTemplate.setDefaultUri(
-                "http://localhost:9090/codenotfound/ws/helloworld");
+    WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+    webServiceTemplate.setMarshaller(jaxb2Marshaller());
+    webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
+    webServiceTemplate.setDefaultUri("http://localhost:9090/codenotfound/ws/helloworld");
 
-        return webServiceTemplate;
-    }
+    return webServiceTemplate;
+  }
 }
 ```
 
@@ -366,7 +364,7 @@ The autowired `WebServiceTemplate` is used to marshal and send a person XML requ
 The `@Component` annotation will cause Spring to automatically import this bean into the container if automatic component scanning is enabled (adding the `@SpringBootApplication` annotation to the main `SpringWsApplication` class [is equivalent](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html) to using `@ComponentScan`).
 
 ``` java
-package com.codenotfound.client;
+package com.codenotfound.ws.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -381,30 +379,27 @@ import com.codenotfound.types.helloworld.Person;
 @Component
 public class HelloWorldClient {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(HelloWorldClient.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldClient.class);
 
-    @Autowired
-    private WebServiceTemplate webServiceTemplate;
+  @Autowired
+  private WebServiceTemplate webServiceTemplate;
 
-    public String sayHello(String firstName, String lastName) {
+  public String sayHello(String firstName, String lastName) {
 
-        ObjectFactory factory = new ObjectFactory();
-        Person person = factory.createPerson();
+    ObjectFactory factory = new ObjectFactory();
+    Person person = factory.createPerson();
 
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
+    person.setFirstName(firstName);
+    person.setLastName(lastName);
 
-        LOGGER.info("Client sending person=[firstName:{},lastName:{}]",
-                person.getFirstName(), person.getLastName());
+    LOGGER.info("Client sending person[firstName={},lastName={}]", person.getFirstName(),
+        person.getLastName());
 
-        Greeting greeting = (Greeting) webServiceTemplate
-                .marshalSendAndReceive(person);
+    Greeting greeting = (Greeting) webServiceTemplate.marshalSendAndReceive(person);
 
-        LOGGER.info("Client received greeting=[{}]",
-                greeting.getGreeting());
-        return greeting.getGreeting();
-    }
+    LOGGER.info("Client received greeting='{}'", greeting.getGreeting());
+    return greeting.getGreeting();
+  }
 }
 ```
 
@@ -417,7 +412,7 @@ The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced 
 By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the <var>'server.port'</var> property defined in the <var>application.properties</var> file.
 
 ``` java
-package com.codenotfound;
+package com.codenotfound.ws;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -428,20 +423,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.codenotfound.client.HelloWorldClient;
+import com.codenotfound.ws.client.HelloWorldClient;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 public class SpringWsApplicationTests {
 
-    @Autowired
-    private HelloWorldClient helloWorldClient;
+  @Autowired
+  private HelloWorldClient helloWorldClient;
 
-    @Test
-    public void testSayHello() {
-        assertThat(helloWorldClient.sayHello("John", "Doe"))
-                .isEqualTo("Hello John Doe!");
-    }
+  @Test
+  public void testSayHello() {
+    assertThat(helloWorldClient.sayHello("John", "Doe")).isEqualTo("Hello John Doe!");
+  }
 }
 ```
 
@@ -460,43 +454,16 @@ The result should be a successful build during which the embedded Tomcat is star
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.4.1.RELEASE)
+ :: Spring Boot ::        (v1.5.2.RELEASE)
 
-21:01:58.262 INFO  [main][SpringWsApplicationTests] Starting SpringWsApplicationTests on cnf-pc with PID 1212 (started by CodeNotFound in c:\code\spring-ws\springws-helloworld-example)
-21:01:58.262 DEBUG [main][SpringWsApplicationTests] Running with Spring Boot v1.4.1.RELEASE, Spring v4.3.3.RELEASE
-21:01:58.263 INFO  [main][SpringWsApplicationTests] No active profile set, falling back to default profiles: default
-21:01:58.288 INFO  [main][AnnotationConfigEmbeddedWebApplicationContext] Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@4d14b6c2: startup date [Wed
-Oct 12 21:01:58 CEST 2016]; root of context hierarchy
-21:01:59.373 INFO  [main][PostProcessorRegistrationDelegate$BeanPostProcessorChecker] Bean 'webServiceConfig' of type [class com.codenotfound.endpoint.WebServiceConfig$$EnhancerBySpringCGLIB$$fafbaf5a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-21:01:59.379 INFO  [main][PostProcessorRegistrationDelegate$BeanPostProcessorChecker] Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [class org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$d0dbd33d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-21:01:59.434 INFO  [main][AnnotationActionEndpointMapping] Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
-21:01:59.869 INFO  [main][TomcatEmbeddedServletContainer] Tomcat initialized with port(s): 9090 (http)
-21:01:59.976 INFO  [localhost-startStop-1][ContextLoader] Root WebApplicationContext: initialization completed in 1688 ms
-21:02:00.120 INFO  [localhost-startStop-1][ServletRegistrationBean] Mapping servlet: 'messageDispatcherServlet' to [/codenotfound/ws/*]
-21:02:00.122 INFO  [localhost-startStop-1][ServletRegistrationBean] Mapping servlet: 'dispatcherServlet' to [/]
-21:02:00.125 INFO  [localhost-startStop-1][FilterRegistrationBean] Mapping filter: 'characterEncodingFilter' to: [/*]
-21:02:00.126 INFO  [localhost-startStop-1][FilterRegistrationBean] Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
-21:02:00.126 INFO  [localhost-startStop-1][FilterRegistrationBean] Mapping filter: 'httpPutFormContentFilter' to: [/*]
-21:02:00.126 INFO  [localhost-startStop-1][FilterRegistrationBean] Mapping filter: 'requestContextFilter' to: [/*]
-21:02:00.334 INFO  [main][SaajSoapMessageFactory] Creating SAAJ 1.3 MessageFactory with SOAP 1.1 Protocol
-21:02:00.352 INFO  [main][Jaxb2Marshaller] Creating JAXBContext with context path [com.codenotfound.types.helloworld]
-21:02:00.582 INFO  [main][RequestMappingHandlerAdapter] Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@4d14b6c2: startup date [Wed Oct 12 21:01:58 CEST 2016]; root of context hierarchy
-21:02:00.720 INFO  [main][RequestMappingHandlerMapping] Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
-21:02:00.722 INFO  [main][RequestMappingHandlerMapping] Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
-21:02:00.756 INFO  [main][SimpleUrlHandlerMapping] Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-21:02:00.757 INFO  [main][SimpleUrlHandlerMapping] Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-21:02:00.797 INFO  [main][SimpleUrlHandlerMapping] Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-21:02:00.958 INFO  [main][TomcatEmbeddedServletContainer] Tomcat started on port(s): 9090 (http)
-21:02:00.963 INFO  [main][SpringWsApplicationTests] Started SpringWsApplicationTests in 3.202 seconds (JVM running for 3.942)
-21:02:00.981 INFO  [main][HelloWorldClient] Client sending person[firstName=John,lastName=Doe]
-21:02:01.190 INFO  [http-nio-9090-exec-1][MessageDispatcherServlet] FrameworkServlet 'messageDispatcherServlet': initialization started
-21:02:01.192 INFO  [http-nio-9090-exec-1][SaajSoapMessageFactory] Creating SAAJ 1.3 MessageFactory with SOAP 1.1 Protocol
-21:02:01.199 INFO  [http-nio-9090-exec-1][MessageDispatcherServlet] FrameworkServlet 'messageDispatcherServlet': initialization completed in 9 ms
-21:02:01.241 INFO  [http-nio-9090-exec-1][HelloWorldEndpoint] Endpoint received person[firstName=John,lastName=Doe]
-21:02:01.242 INFO  [http-nio-9090-exec-1][HelloWorldEndpoint] Endpoint sending greeting='Hello John Doe!'
-21:02:01.258 INFO  [main][HelloWorldClient] Client received greeting='Hello John Doe!'
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.589 sec - in com.codenotfound.SpringWsApplicationTests
-21:02:01.304 INFO  [Thread-2][AnnotationConfigEmbeddedWebApplicationContext] Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@4d14b6c2: startup date [Wed Oct 12 21:01:58 CEST 2016]; root of context hierarchy
+21:19:56.119 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 732 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-helloworld)
+21:19:56.122 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
+21:19:58.545 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 2.733 seconds (JVM running for 3.407)
+21:19:58.578 [main] INFO  c.c.ws.client.HelloWorldClient - Client sending person[firstName=John,lastName=Doe]
+21:19:58.893 [http-nio-9090-exec-1] INFO  c.c.ws.endpoint.HelloWorldEndpoint - Endpoint received person[firstName=John,lastName=Doe]
+21:19:58.893 [http-nio-9090-exec-1] INFO  c.c.ws.endpoint.HelloWorldEndpoint - Endpoint sending greeting='Hello John Doe!'
+21:19:58.908 [main] INFO  c.c.ws.client.HelloWorldClient - Client received greeting='Hello John Doe!'
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.22 sec - in com.codenotfound.ws.SpringWsApplicationTests
 
 Results :
 
@@ -505,9 +472,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 8.641 s
-[INFO] Finished at: 2016-10-12T21:02:01+02:00
-[INFO] Final Memory: 27M/221M
+[INFO] Total time: 6.566 s
+[INFO] Finished at: 2017-04-18T21:19:59+02:00
+[INFO] Final Memory: 27M/274M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -521,8 +488,10 @@ mvn spring-boot:run
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/springws-helloworld-example).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-helloworld).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This Spring WS example turned out a bit longer than expected but hopefully it helped to explain the core client and endpoint concepts. Feel free to leave a comment if you enjoyed reading or in case you have any additional questions.
+This Spring WS example turned out a bit longer than expected but hopefully it helped to explain the core client and endpoint concepts.
+
+Feel free to leave a comment if you enjoyed reading or in case you have any additional questions.
