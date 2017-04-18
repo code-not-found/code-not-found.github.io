@@ -160,7 +160,7 @@ public class AllSpringKafkaTests {
 
 # Testing the Producer
 
-In the `SpringKafkaSenderTest` unit test case we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify the correct sending by setting up a test-listener on the topic. All of the setup will be done before the test case runs using the `@Before` annotation.
+In the `SpringKafkaSenderTest` unit test case we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify the correct sending by setting up a _test-listener_ on the topic. All of the setup will be done before the test case runs using the `@Before` annotation.
 
 For creating the needed connection consumer properties a static `consumerProps()` method provided by `KafkaUtils` is used. We then create a `DefaultKafkaConsumerFactory` and `ContainerProperties` which contains runtime properties (in this case the topic name) for the listener container. Both are then used to set up the `KafkaMessageListenerContainer`.
 
@@ -270,7 +270,7 @@ public class SpringKafkaSenderTest {
 
 # Testing the Consumer
 
-The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> file. In order to check the correct working we will use a test-template to send a message to this topic. All of the setup will be done before the test case runs using the `@Before` annotation.
+The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> properties file. In order to check the correct working we will use a _test-template_ to send a message to this topic. All of the setup will be done before the test case runs using the `@Before` annotation.
 
 The producer connection properties are created using the static `senderProps()` method provided by `KafkaUtils`. These properties are then used to create a `DefaultKafkaProducerFactory` which is in turn used to create a `KafkaTemplate`. Finally we set the default topic that the template uses to <var>'receiver.t'</var>.
 
@@ -357,6 +357,8 @@ public class SpringKafkaReceiverTest {
 }
 ```
 
+# Running the Unit Test Cases
+
 Let's run above test cases by opening a command prompt and executing following Maven command:
 
 ``` plaintext
@@ -374,140 +376,28 @@ Maven will download the needed dependencies, compile the code and run the unit t
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.2.RELEASE)
 
-2017-03-12 07:15:23.991  INFO 4176 --- [           main] c.c.kafka.SpringKafkaSenderTest          : Starting SpringKafkaSenderTest on cnf-pc with PID 4176 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-embedded-test)
-2017-03-12 07:15:23.992  INFO 4176 --- [           main] c.c.kafka.SpringKafkaSenderTest          : No active profile set, falling back to default profiles: default
-2017-03-12 07:15:24.011  INFO 4176 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4985cbcb: startup date [Sun Mar 12 07:15:24 CET 2017]; root of context hierarchy
-2017-03-12 07:15:24.423  INFO 4176 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$9bfffabe] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2017-03-12 07:15:24.642  INFO 4176 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0
-2017-03-12 07:15:24.652  INFO 4176 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
-2017-03-12 07:15:24.653  INFO 4176 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
-2017-03-12 07:15:24.677  INFO 4176 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
-2017-03-12 07:15:24.677  INFO 4176 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
-2017-03-12 07:15:24.690  INFO 4176 --- [           main] c.c.kafka.SpringKafkaSenderTest          : Started SpringKafkaSenderTest in 0.937 seconds (JVM running for 5.031)
-2017-03-12 07:15:24.719  INFO 4176 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
-2017-03-12 07:15:24.721  INFO 4176 --- [           main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values:
-2017-03-12 07:15:24.725  INFO 4176 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
-2017-03-12 07:15:24.725  INFO 4176 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
-2017-03-12 07:15:24.812  INFO 4176 --- [quest-handler-4] kafka.admin.AdminUtils$                  : Topic creation {"version":1,"partitions":{"0":[0]}}
-2017-03-12 07:15:24.818  INFO 4176 --- [quest-handler-4] kafka.server.KafkaApis                   : [KafkaApi-0] Auto creation of topic helloworld-receiver.t with 1 partitions and replication factor 1 is successful
-2017-03-12 07:15:24.825  INFO 4176 --- [127.0.0.1:51286] artitionStateMachine$TopicChangeListener : [TopicChangeListener on Controller 0]: New topics: [Set(helloworld-receiver.t)], deleted topics: [Set()], new partition replica assignment [Map([helloworld-receiver.t,0] -> List(0))]
-2017-03-12 07:15:24.825  INFO 4176 --- [127.0.0.1:51286] kafka.controller.KafkaController         : [Controller 0]: New topic creation callback for [helloworld-receiver.t,0]
-2017-03-12 07:15:24.828  INFO 4176 --- [127.0.0.1:51286] kafka.controller.KafkaController         : [Controller 0]: New partition creation callback for [helloworld-receiver.t,0]
-2017-03-12 07:15:24.829  INFO 4176 --- [127.0.0.1:51286] kafka.controller.PartitionStateMachine   : [Partition state machine on Controller 0]: Invoking state change to NewPartition for partitions [helloworld-receiver.t,0]
-2017-03-12 07:15:24.829  INFO 4176 --- [127.0.0.1:51286] kafka.controller.ReplicaStateMachine     : [Replica state machine on controller 0]: Invoking state change to NewReplica for replicas [Topic=helloworld-receiver.t,Partition=0,Replica=0]
-2017-03-12 07:15:24.833  INFO 4176 --- [127.0.0.1:51286] kafka.controller.PartitionStateMachine   : [Partition state machine on Controller 0]: Invoking state change to OnlinePartition for partitions [helloworld-receiver.t,0]
-2017-03-12 07:17:19.548  INFO 3880 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Discovered coordinator localhost:51386 (id: 2147483647 rack: null) for group helloworld.
-2017-03-12 07:17:19.548  INFO 3880 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : (Re-)joining group helloworld_sender_group
-2017-03-12 07:17:19.548  INFO 3880 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : (Re-)joining group helloworld
-2017-03-12 07:17:19.557  INFO 3880 --- [quest-handler-3] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Preparing to restabilize group helloworld with old generation 0
-2017-03-12 07:17:19.557  INFO 3880 --- [quest-handler-7] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Preparing to restabilize group helloworld_sender_group with old generation 0
-2017-03-12 07:17:19.567  INFO 3880 --- [quest-handler-7] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Stabilized group helloworld_sender_group generation 1
-2017-03-12 07:17:19.570  INFO 3880 --- [quest-handler-3] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Stabilized group helloworld generation 1
-2017-03-12 07:17:19.576  INFO 3880 --- [quest-handler-6] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Assignment received from leader for group helloworld_sender_group for generation 1
-2017-03-12 07:17:19.576  INFO 3880 --- [quest-handler-2] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Assignment received from leader for group helloworld for generation 1
-2017-03-12 07:17:19.635  INFO 3880 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Successfully joined group helloworld with generation 1
-2017-03-12 07:17:19.635  INFO 3880 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Successfully joined group helloworld_sender_group with generation 1
-2017-03-12 07:17:19.636  INFO 3880 --- [afka-consumer-1] o.a.k.c.c.internals.ConsumerCoordinator  : Setting newly assigned partitions [helloworld-receiver.t-0] for group helloworld
-2017-03-12 07:17:19.636  INFO 3880 --- [afka-consumer-1] o.a.k.c.c.internals.ConsumerCoordinator  : Setting newly assigned partitions [helloworld-sender.t-0, helloworld-sender.t-1] for group helloworld_sender_group
-2017-03-12 07:17:19.658  INFO 3880 --- [afka-consumer-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned:[helloworld-receiver.t-0]
-2017-03-12 07:17:19.658  INFO 3880 --- [afka-consumer-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned:[helloworld-sender.t-0, helloworld-sender.t-1]
-2017-03-12 07:17:19.733  INFO 3880 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
-2017-03-12 07:17:19.734  INFO 3880 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
-2017-03-12 07:17:19.744  INFO 3880 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
-2017-03-12 07:17:19.744  INFO 3880 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
-2017-03-12 07:17:19.929  INFO 3880 --- [ad | producer-1] com.codenotfound.kafka.producer.Sender   : sent message='Hello Spring Kafka Sender!' with offset=0
-2017-03-12 07:17:20.942  INFO 3880 --- [afka-consumer-1] essageListenerContainer$ListenerConsumer : Consumer stopped
-2017-03-12 07:17:20.954  INFO 3880 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
-2017-03-12 07:17:20.955  INFO 3880 --- [           main] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values:
-2017-03-12 07:17:20.958  INFO 3880 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 0.10.1.1
-2017-03-12 07:17:20.958  INFO 3880 --- [           main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : f10ef2720b03b247
-2017-03-12 07:17:21.073  INFO 3880 --- [afka-listener-1] c.codenotfound.kafka.consumer.Receiver   : received message='Hello Spring Kafka Receiver!'
-2017-03-12 07:17:21.078  INFO 3880 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], shutting down
-2017-03-12 07:17:21.079  INFO 3880 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], Starting controlled shutdown
-2017-03-12 07:17:21.090  INFO 3880 --- [quest-handler-6] kafka.controller.KafkaController         : [Controller 0]: Shutting down broker 0
-2017-03-12 07:17:21.103  INFO 3880 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], Controlled shutdown succeeded
-2017-03-12 07:17:21.106  INFO 3880 --- [           main] kafka.network.SocketServer               : [Socket Server on Broker 0], Shutting down
-2017-03-12 07:17:21.113  INFO 3880 --- [           main] kafka.network.SocketServer               : [Socket Server on Broker 0], Shutdown completed
-2017-03-12 07:17:21.114  INFO 3880 --- [           main] kafka.server.KafkaRequestHandlerPool     : [Kafka Request Handler on Broker 0], shutting down
-2017-03-12 07:17:21.115  INFO 3880 --- [           main] kafka.server.KafkaRequestHandlerPool     : [Kafka Request Handler on Broker 0], shut down completely
-2017-03-12 07:17:21.118  INFO 3880 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Shutting down
-2017-03-12 07:17:21.160  INFO 3880 --- [afka-consumer-1] o.a.k.c.c.internals.AbstractCoordinator  : Marking the coordinator localhost:51386 (id: 2147483647 rack: null) dead for group helloworld
-2017-03-12 07:17:21.456  INFO 3880 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Shutdown completed
-2017-03-12 07:17:21.456  INFO 3880 --- [estReaper-Fetch] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Fetch], Stopped
-2017-03-12 07:17:21.457  INFO 3880 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Shutting down
-2017-03-12 07:17:22.456  INFO 3880 --- [tReaper-Produce] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Stopped
-2017-03-12 07:17:22.456  INFO 3880 --- [           main] lientQuotaManager$ThrottledRequestReaper : [ThrottledRequestReaper-Produce], Shutdown completed
-2017-03-12 07:17:22.457  INFO 3880 --- [           main] kafka.server.KafkaApis                   : [KafkaApi-0] Shutdown complete.
-2017-03-12 07:17:22.459  INFO 3880 --- [           main] kafka.server.ReplicaManager              : [Replica Manager on Broker 0]: Shutting down
-2017-03-12 07:17:22.460  INFO 3880 --- [           main] kafka.server.ReplicaFetcherManager       : [ReplicaFetcherManager on broker 0] shutting down
-2017-03-12 07:17:22.461  INFO 3880 --- [           main] kafka.server.ReplicaFetcherManager       : [ReplicaFetcherManager on broker 0] shutdown completed
-2017-03-12 07:17:22.461  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-12 07:17:22.573  INFO 3880 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-12 07:17:22.573  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-12 07:17:22.573  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-12 07:17:22.754  INFO 3880 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-12 07:17:22.754  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-12 07:17:22.762  INFO 3880 --- [           main] kafka.server.ReplicaManager              : [Replica Manager on Broker 0]: Shut down completely
-2017-03-12 07:17:22.762  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-12 07:17:22.933  INFO 3880 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-12 07:17:22.933  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-12 07:17:22.934  INFO 3880 --- [           main] kafka.log.LogManager                     : Shutting down.
-2017-03-12 07:17:22.935  INFO 3880 --- [           main] kafka.log.LogCleaner                     : Shutting down the log cleaner.
-2017-03-12 07:17:22.936  INFO 3880 --- [           main] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Shutting down
-2017-03-12 07:17:22.936  INFO 3880 --- [leaner-thread-0] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Stopped
-2017-03-12 07:17:22.936  INFO 3880 --- [           main] kafka.log.LogCleaner                     : [kafka-log-cleaner-thread-0], Shutdown completed
-2017-03-12 07:17:23.260  INFO 3880 --- [           main] kafka.log.LogManager                     : Shutdown complete.
-2017-03-12 07:17:23.262  INFO 3880 --- [           main] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Shutting down.
-2017-03-12 07:17:23.262  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-12 07:17:23.325  INFO 3880 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-12 07:17:23.325  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-12 07:17:23.325  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutting down
-2017-03-12 07:17:23.470  INFO 3880 --- [           main] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Shutdown completed
-2017-03-12 07:17:23.470  INFO 3880 --- [irationReaper-0] perationPurgatory$ExpiredOperationReaper : [ExpirationReaper-0], Stopped
-2017-03-12 07:17:23.471  INFO 3880 --- [           main] kafka.coordinator.GroupCoordinator       : [GroupCoordinator 0]: Shutdown complete.
-2017-03-12 07:17:23.473  INFO 3880 --- [           main] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Shutting down
-2017-03-12 07:17:23.474  INFO 3880 --- [topics-thread-0] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Stopped
-2017-03-12 07:17:23.474  INFO 3880 --- [           main] .TopicDeletionManager$DeleteTopicsThread : [delete-topics-thread-0], Shutdown completed
-2017-03-12 07:17:23.477  INFO 3880 --- [           main] kafka.controller.PartitionStateMachine   : [Partition state machine on Controller 0]: Stopped partition state machine
-2017-03-12 07:17:23.478  INFO 3880 --- [           main] kafka.controller.ReplicaStateMachine     : [Replica state machine on controller 0]: Stopped replica state machine
-2017-03-12 07:17:23.480  INFO 3880 --- [           main] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Shutting down
-2017-03-12 07:17:23.480  INFO 3880 --- [r-0-send-thread] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Stopped
-2017-03-12 07:17:23.480  INFO 3880 --- [           main] kafka.controller.RequestSendThread       : [Controller-0-to-broker-0-send-thread], Shutdown completed
-2017-03-12 07:17:23.481  INFO 3880 --- [           main] kafka.controller.KafkaController         : [Controller 0]: Broker 0 resigned as the controller
-2017-03-12 07:17:23.482  INFO 3880 --- [127.0.0.1:51382] org.I0Itec.zkclient.ZkEventThread        : Terminate ZkClient event thread.
-2017-03-12 07:17:23.483  INFO 3880 --- [0 cport:51382):] o.a.z.server.PrepRequestProcessor        : Processed session termination for sessionid: 0x15ac129f2840001
-2017-03-12 07:17:23.489  INFO 3880 --- [           main] org.apache.zookeeper.ZooKeeper           : Session: 0x15ac129f2840001 closed
-2017-03-12 07:17:23.490  INFO 3880 --- [ain-EventThread] org.apache.zookeeper.ClientCnxn          : EventThread shut down for session: 0x15ac129f2840001
-2017-03-12 07:17:23.490  INFO 3880 --- [ry:/127.0.0.1:0] o.apache.zookeeper.server.NIOServerCnxn  : Closed socket connection for client /127.0.0.1:51389 which had sessionid 0x15ac129f2840001
-2017-03-12 07:17:23.491  INFO 3880 --- [           main] kafka.server.KafkaServer                 : [Kafka Server 0], shut down completed
-2017-03-12 07:17:23.585  INFO 3880 --- [127.0.0.1:51382] org.I0Itec.zkclient.ZkEventThread        : Terminate ZkClient event thread.
-2017-03-12 07:17:23.585  INFO 3880 --- [0 cport:51382):] o.a.z.server.PrepRequestProcessor        : Processed session termination for sessionid: 0x15ac129f2840000
-2017-03-12 07:17:23.590  INFO 3880 --- [           main] org.apache.zookeeper.ZooKeeper           : Session: 0x15ac129f2840000 closed
-2017-03-12 07:17:23.590  INFO 3880 --- [ry:/127.0.0.1:0] o.apache.zookeeper.server.NIOServerCnxn  : Closed socket connection for client /127.0.0.1:51385 which had sessionid 0x15ac129f2840000
-2017-03-12 07:17:23.590  INFO 3880 --- [ain-EventThread] org.apache.zookeeper.ClientCnxn          : EventThread shut down for session: 0x15ac129f2840000
-2017-03-12 07:17:23.590  INFO 3880 --- [           main] o.a.zookeeper.server.ZooKeeperServer     : shutting down
-2017-03-12 07:17:23.590  INFO 3880 --- [           main] o.a.zookeeper.server.SessionTrackerImpl  : Shutting down
-2017-03-12 07:17:23.590  INFO 3880 --- [           main] o.a.z.server.PrepRequestProcessor        : Shutting down
-2017-03-12 07:17:23.591  INFO 3880 --- [           main] o.a.z.server.SyncRequestProcessor        : Shutting down
-2017-03-12 07:17:23.591  INFO 3880 --- [   SyncThread:0] o.a.z.server.SyncRequestProcessor        : SyncRequestProcessor exited!
-2017-03-12 07:17:23.591  INFO 3880 --- [           main] o.a.z.server.FinalRequestProcessor       : shutdown of request processor complete
-2017-03-12 07:17:23.591  INFO 3880 --- [0 cport:51382):] o.a.z.server.PrepRequestProcessor        : PrepRequestProcessor exited loop!
-2017-03-12 07:17:23.592  INFO 3880 --- [ry:/127.0.0.1:0] o.a.z.server.NIOServerCnxnFactory        : NIOServerCnxn factory exited run method
-2017-03-12 07:17:24.000  INFO 3880 --- [ SessionTracker] o.a.zookeeper.server.SessionTrackerImpl  : SessionTrackerImpl exited loop!
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.366 sec - in com.codenotfound.kafka.AllSpringKafkaTests
-2017-03-12 07:17:24.622  INFO 3880 --- [       Thread-8] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@4985cbcb: startup
-date [Sun Mar 12 07:17:17 CET 2017]; root of context hierarchy
-2017-03-12 07:17:24.624  INFO 3880 --- [       Thread-8] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 0
+11:52:33.853 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 4008 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-embedded-test)
+11:52:33.854 [main] DEBUG c.c.kafka.SpringKafkaApplicationTest - Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
+11:52:33.855 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
+11:52:34.546 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.982 seconds (JVM running for 5.125)
+11:52:35.956 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='Hello Spring Kafka!' to topic='receiver.t'
+11:52:36.017 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='Hello Spring Kafka!'
+11:52:36.129 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='Hello Spring Kafka Sender!' to topic='sender.t'
+11:52:36.139 [-L-1] DEBUG c.c.k.producer.SpringKafkaSenderTest - test-listener received message='ConsumerRecord(topic = sender.t, partition = 0, offset = 0, CreateTime = 1492509156132, checksum = 3163075024, serialized key size = -1, serialized value size = 26, key = null, value = Hello Spring Kafka Sender!)'
+11:52:37.170 [main] DEBUG c.c.k.c.SpringKafkaReceiverTest - test-sender sent message='Hello Spring Kafka Receiver!'
+11:52:37.179 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='Hello Spring Kafka Receiver!'
+11:52:40.190 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.595 sec - in com.codenotfound.kafka.AllSpringKafkaTests
 
 Results :
 
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 43.265 s
-[INFO] Finished at: 2017-03-12T07:17:54+01:00
+[INFO] Total time: 43.630 s
+[INFO] Finished at: 2017-04-18T11:53:11+02:00
 [INFO] Final Memory: 16M/226M
 [INFO] ------------------------------------------------------------------------
 ```
@@ -520,4 +410,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes our example in which we test Spring Kafka by starting an embedded Kafka server. Feel free to drop a line in case of any questions or if you found this post helpful.
+This concludes our example in which we test Spring Kafka by starting an embedded Kafka server.
+
+Feel free to drop a line in case of any questions or if you found this post helpful.
