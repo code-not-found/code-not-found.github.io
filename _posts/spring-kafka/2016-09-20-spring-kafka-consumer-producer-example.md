@@ -119,6 +119,8 @@ public class SpringKafkaApplication {
 
 > The below sections will detail how to create a sender and receiver together with their respective configurations. Note that it is also possible to have [Spring Boot autoconfigure Spring Kafka]({{ site.url }}/2017/04/spring-kafka-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
+> This example will send/receive a simple `String`. If you would like to send more complex objects you could for example use an [Avro Kafka serializer]({{ site.url }}/2017/03/spring-kafka-apache-avro-example.html) or the [Kafka Jsonserializer]({{ site.url }}/2017/03/spring-kafka-json-serializer-example.html) that ships with Spring Kafka.
+
 # Create a Spring Kafka Message Producer
 
 For sending messages we will be using the `KafkaTemplate` which wraps a `Producer` and provides convenience methods to send data to Kafka topics. The template provides both asynchronous and synchronous send methods, with the asynchronous methods returning a `Future`.
