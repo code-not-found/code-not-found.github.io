@@ -23,6 +23,8 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
+# General Project Setup
+
 Avro relies on schemas which are defined using JSON. Schemas are composed of primitive types. For this example we will use [the 'User' schema from the Apache Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema) as shown below. This schema is stored in the <var>user.avsc</var> file located under <var>src/main/resources/avro</var>.
 
 ``` json
@@ -538,7 +540,7 @@ public class SpringKafkaApplicationTest {
 
 > Note that the sample code also contains `AvroSerializerTest` and `AvroDeserializerTest` unit test cases to verify the serialization classes.
 
-In order to run the above tests open a command prompt and execute following Maven command: 
+In order to run the above tests open a command prompt and execute following Maven command:
 
 ``` plaintext
 mvn test
