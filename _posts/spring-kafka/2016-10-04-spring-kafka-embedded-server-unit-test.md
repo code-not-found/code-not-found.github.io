@@ -160,9 +160,9 @@ public class AllSpringKafkaTests {
 
 # Testing the Producer
 
-In the `SpringKafkaSenderTest` test class we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify the correct sending by setting up a test-listener on the topic. All of the setup will be done before the test case runs using the `@Before` annotation.
+In the `SpringKafkaSenderTest` unit test case we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify the correct sending by setting up a test-listener on the topic. All of the setup will be done before the test case runs using the `@Before` annotation.
 
-For creating the needed consumer properties a static `consumerProps()` method provided by `KafkaUtils` is used. We then create a `DefaultKafkaConsumerFactory` and `ContainerProperties` which contains runtime properties (in this case the topic name) for the listener container. Both are then used to set up the `KafkaMessageListenerContainer`.
+For creating the needed connection consumer properties a static `consumerProps()` method provided by `KafkaUtils` is used. We then create a `DefaultKafkaConsumerFactory` and `ContainerProperties` which contains runtime properties (in this case the topic name) for the listener container. Both are then used to set up the `KafkaMessageListenerContainer`.
 
 Received messages need to be stored somewhere. In this example a thread safe `BlockingQueue` is used. We create a new `MessageListener` and in the `onMessage()` method we add the received message to the `BlockingQueue`. The listener is started by starting the container.
 
@@ -270,11 +270,15 @@ public class SpringKafkaSenderTest {
 
 # Testing the Consumer
 
-The second test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.properties</var> file. In order to check the correct working we will use a producer to send a message to this topic. The producer properties are created using the static method provided by `KafkaUtils` and used to create a `KafkaTemplate`. 
+The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> file. In order to check the correct working we will use a test-template to send a message to this topic. All of the setup will be done before the test case runs using the `@Before` annotation.
 
-We need to ensure that the `Receiver` is initialized before sending the test message. For this we use the `waitForAssignment()` of `ContainerTestUtils`. The link to the message listener container is acquired by autowiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually. We check that the message was received by asserting that the latch of the `Receiver` was lowered to zero. 
+The producer connection properties are created using the static `senderProps()` method provided by `KafkaUtils`. These properties are then used to create a `DefaultKafkaProducerFactory` which is in turn used to create a `KafkaTemplate`. Finally we set the default topic that the template uses to <var>'receiver.t'</var>.
 
-> Note that we manually set the partitions per topic to 1 in the `waitForAssignment()` method instead getting the partitions from the embedded Kafka server. The reason for this is that [it looks like 1 is used as a default for the number of partitions in case topics are created implicitly](http://stackoverflow.com/a/38660145/4201470). 
+We need to ensure that the `Receiver` is initialized before sending the test message. For this we use the `waitForAssignment()` of `ContainerTestUtils`. The link to the message listener container is acquired by autowiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually.
+
+> Note that if you do not manually create the topics using the `KafkaEmbedded` constructor (see `AllSpringKafkaTests`) you need to manually set the partitions per topic to 1 in the `waitForAssignment()` method instead getting the partitions from the embedded Kafka server. The reason for this is that [it looks like 1 is used as a default for the number of partitions in case topics are created implicitly](http://stackoverflow.com/a/38660145/4201470). 
+
+In the test we send a greeting and check that the message was received by asserting that the latch of the `Receiver` was lowered to zero.
 
 ``` java
 package com.codenotfound.kafka.consumer;
