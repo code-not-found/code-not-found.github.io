@@ -14,9 +14,9 @@ published: true
 </figure>
 
 The [Spring Kafka project](https://projects.spring.io/spring-kafka/) comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.0.RELEASE/reference/html/_reference.html#testing). to assist you with your application testing. These include:
-* an embedded Kafka server
-* some static methods to setup consumers/producers
-* utility methods to fetch results
+1. an embedded Kafka server
+2. some static methods to setup consumers/producers
+3. utility methods to fetch results
 
 Let's demonstrate how above can be used with a simple code sample. We will reuse the Spring Kafka Hello World project from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot and Maven.
 
@@ -116,9 +116,11 @@ The message consumer and producer classes from the Hello World example are uncha
 
 In order to support multiple unit test classes (in this example: `SpringKafkaApplicationTest`, `SpringKafkaSenderTest` and `SpringKafkaReceiverTest`), we will trigger the `@ClassRule` from a `Suite` class that bundles these test cases together.
 
-As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the <var>'kafka.servers.bootstrap'</var> property.
+The `KafkaEmbedded` constructor takes as parameters: the number of Kafka brokers to start, whether a controlled shutdown is needed and the topics that need to be created on the broker.
 
-> Note that we pass the <var>'sender.t'</var> topic as a parameter to the embedded kafka server. This assures that the topic is present when the `MessageListener` in the `SpringKafkaSenderTest` connects.
+> Note that we pass the <var>'sender.t'</var> and <var>'receiver.t'</var> topics as a parameter to the embedded kafka server. This assures that the topic is not auto-created and present when the `MessageListener` connects.
+
+As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the <var>'kafka.bootstrap-servers'</var> property.
 
 ``` java
 package com.codenotfound.kafka;
@@ -159,6 +161,8 @@ public class AllSpringKafkaTests {
   }
 }
 ```
+
+# Testing the Producer
 
 In the first test class we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify the correct sending by setting up a message listener on the topic. For creating the consumer properties we use a static method provided by `KafkaUtils`. After setting up the `KafkaMessageListenerContainer` we setup a `MessageListener` and start the container. 
 
@@ -247,6 +251,8 @@ public class SpringKafkaSenderTest {
   }
 }
 ```
+
+# Testing the Consumer
 
 The second test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.properties</var> file. In order to check the correct working we will use a producer to send a message to this topic. The producer properties are created using the static method provided by `KafkaUtils` and used to create a `KafkaTemplate`. 
 
