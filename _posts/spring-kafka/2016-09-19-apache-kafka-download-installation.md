@@ -1,15 +1,16 @@
 ---
-title: Apache Kafka - Download &amp; Installation
+title: "Apache Kafka - Download &amp; Installation"
 permalink: /2016/09/apache-kafka-download-installation.html
-excerpt: A step-by-step tutorial on how to install and run Apache Kafka on Windows.
-date: 2016-09-19 21:00
+excerpt: "A step-by-step tutorial on how to install and run Apache Kafka on Windows."
+date: 2016-09-19
+modified: 2017-04-15
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache ZooKeeper, Download, Installation, Kafka, Windows, ZooKeeper]
-last_modified_at: 2017-03-11 21:00
+published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-kafka-logo.png" alt="apache kafka logo">
+    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
 [Apache Kafka](http://kafka.apache.org/) is an open-source message broker project developed by the Apache Software Foundation written in Scala. The project aims to provide a high-throughput, low-latency platform capable of handling hundreds of megabytes of reads and writes per second from thousands of clients. Following tutorial shows how to download and install Apache Kafka on Windows and perform a start/stop of the installed instance.
