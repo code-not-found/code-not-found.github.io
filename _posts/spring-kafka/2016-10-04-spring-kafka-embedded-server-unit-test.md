@@ -114,7 +114,7 @@ The message consumer and producer classes from the Hello World example are uncha
 
 `spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/) and [Kafka](https://kafka.apache.org/) server instance on a random port before all the test cases are run, and stops the instances one the test cases are finished.
 
-In order to support multiple unit test classes (in this example: `SpringKafkaApplicationTest`, `SpringKafkaSenderTest` and `SpringKafkaReceiverTest`), we will trigger the `@ClassRule` from a `Suite` class that bundles these test cases together.
+In order to support multiple unit test classes (in this example: `SpringKafkaApplicationTest`, `SpringKafkaSenderTest` and `SpringKafkaReceiverTest`), we will trigger the `@ClassRule` from a `Suite` class that bundles these test cases together. This allows us to only start the embedded broker once for all test cases. If you have only one test class then you can [trigger the `@ClassRule` directly from the test case](https://github.com/code-not-found/spring-kafka/blob/master/spring-kafka-helloworld/src/test/java/com/codenotfound/kafka/SpringKafkaApplicationTest.java).
 
 The `KafkaEmbedded` constructor takes as parameters: the number of Kafka brokers to start, whether a controlled shutdown is needed and the topics that need to be created on the broker.
 
