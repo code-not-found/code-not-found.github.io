@@ -19,7 +19,7 @@ published: true
 
 Tools used:
 * Apache Avro 1.8
-* Spring Kafka 1.1
+* Spring Kafka 1.2
 * Spring Boot 1.5
 * Maven 3.5
 
@@ -464,7 +464,7 @@ public class Receiver {
 
 # Test Sending and Receiving Avro Messages on Kafka
 
-The `SpringKafkaApplicationTest` test case demonstrates the above sample code. [An Spring Kafka embedded Kafka and ZooKeeper server are automatically started]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) using a JUnit ClassRule. Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+The `SpringKafkaApplicationTest` test case demonstrates the above sample code. [An embedded Kafka and ZooKeeper server are automatically started]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) using a JUnit ClassRule. Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
 In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>'avro.t'</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
@@ -536,7 +536,7 @@ public class SpringKafkaApplicationTest {
 }
 ```
 
-> The sample code also contains `AvroSerializerTest` and `AvroDeserializerTest` unit test cases to verify the serialization classes.
+> Note that the sample code also contains `AvroSerializerTest` and `AvroDeserializerTest` unit test cases to verify the serialization classes.
 
 In order to run the above tests open a command prompt and execute following Maven command: 
 
@@ -584,4 +584,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the example on how to send/receive Avro messages using Spring Kafka. I created this blog post based on a user request so if you found this tutorial useful or would like to see another variation, let me know.
+This concludes the example on how to send/receive Avro messages using Spring Kafka.
+
+I created this blog post based on a user request so if you found this tutorial useful or would like to see another variation, let me know.
