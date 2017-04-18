@@ -18,9 +18,9 @@ modified: 2017-04-18
 
 ## References
 
-[http://projects.spring.io/spring-ws/](http://projects.spring.io/spring-ws/)
+* [http://projects.spring.io/spring-ws/](http://projects.spring.io/spring-ws/)
 
-[Spring Web Services Reference Documentation](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/)
+* [Spring Web Services Reference Documentation](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/)
 
 * [GitHub - spring-projects/spring-ws](https://github.com/spring-projects/spring-ws)
 
