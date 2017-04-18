@@ -1,30 +1,39 @@
 ---
-title: Spring Kafka - Embedded Server Unit Test
+title: "Spring Kafka - Embedded Server Unit Test"
 permalink: /2016/10/spring-kafka-embedded-server-unit-test.html
-excerpt: A detailed step-by-step tutorial on how to test your application using an embedded Apache Kafka server together with Spring Kafka and Spring Boot.
-date: 2016-10-04 21:00
+excerpt: "A detailed step-by-step tutorial on how to test your application using an embedded Apache Kafka server together with Spring Kafka and Spring Boot."
+date: 2016-10-04
+modified: 2017-04-17
 categories: [Spring Kafka]
 tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit]
-last_modified_at: 2017-03-12 21:00
+published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
+    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-The [Spring Kafka project](https://projects.spring.io/spring-kafka/) comes with a `spring-kafka-test` JAR that contains a number of useful utilities to assist you with your application testing. These include: [an embedded Kafka server, some static methods to setup consumers/producers and some utility methods to fetch results](http://docs.spring.io/spring-kafka/docs/1.1.2.RELEASE/reference/html/_reference.html#testing).
+The [Spring Kafka project](https://projects.spring.io/spring-kafka/) comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.0.RELEASE/reference/html/_reference.html#testing). to assist you with your application testing. These include:
+* an embedded Kafka server
+* some static methods to setup consumers/producers
+* utility methods to fetch results
 
-Let's demonstrate how you can use these utilities with a simple code sample. We will reuse the [Spring Kafka Hello World project]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot and Maven.
+Let's demonstrate how above can be used with a simple code sample. We will reuse the Spring Kafka Hello World project from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot and Maven.
 
 
 Tools used:
-* Spring Kafka 1.1
+* Spring Kafka 1.2
 * Spring Boot 1.5
-* Maven 3
+* Maven 3.5
 
-We need to add the `spring-kafka-test` dependency to the Maven POM file in addition to the Spring Kafka and Spring Boot dependencies. In the plugins section we included the `maven-surefire-plugin` to trigger a `AllSpringKafkaTests` test suite class that will be used to start the embedded server for the different unit test cases in our project.
+# General Project Setup
+
+Add the `spring-kafka-test` dependency to the Maven POM file in addition to the Spring Kafka and Spring Boot dependencies.
+
+In the plugins section we included the `maven-surefire-plugin` to trigger an `AllSpringKafkaTests` test suite class that will be used to start the embedded server for the different unit test cases in our project. This allows us to start a single embedded Kafka server and reuse it for the different unit test cases.
 
 ``` xml
+<?xml version="1.0" encoding="UTF-8"?>
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -47,12 +56,12 @@ We need to add the `spring-kafka-test` dependency to the Maven POM file in addit
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
+    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
     <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
   </properties>
 
   <dependencies>
-    <!-- Spring Boot -->
+    <!-- spring-boot -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
@@ -62,7 +71,7 @@ We need to add the `spring-kafka-test` dependency to the Maven POM file in addit
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- Spring Kafka -->
+    <!-- spring-kafka -->
     <dependency>
       <groupId>org.springframework.kafka</groupId>
       <artifactId>spring-kafka</artifactId>
@@ -103,7 +112,9 @@ The message consumer and producer classes from the Hello World example are uncha
 
 # Unit Testing with an Embedded Kafka Server
 
-`spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/) and [Kafka](https://kafka.apache.org/) server instance on a random port before all the test cases are run, and stops the instances one the test cases are finished. In order to support multiple unit test classes (in this example `SpringKafkaSenderTest` and `SpringKafkaReceiverTest`), we will trigger the `@ClassRule` from a `Suite` class that bundles these test cases together.
+`spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/) and [Kafka](https://kafka.apache.org/) server instance on a random port before all the test cases are run, and stops the instances one the test cases are finished.
+
+In order to support multiple unit test classes (in this example: `SpringKafkaApplicationTest`, `SpringKafkaSenderTest` and `SpringKafkaReceiverTest`), we will trigger the `@ClassRule` from a `Suite` class that bundles these test cases together.
 
 As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the <var>'kafka.servers.bootstrap'</var> property.
 
@@ -121,24 +132,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.test.rule.KafkaEmbedded;
 
+import com.codenotfound.kafka.consumer.SpringKafkaReceiverTest;
+import com.codenotfound.kafka.producer.SpringKafkaSenderTest;
+
 @RunWith(Suite.class)
-@SuiteClasses({SpringKafkaSenderTest.class, SpringKafkaReceiverTest.class})
+@SuiteClasses({SpringKafkaApplicationTest.class, SpringKafkaSenderTest.class,
+    SpringKafkaReceiverTest.class})
 public class AllSpringKafkaTests {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AllSpringKafkaTests.class);
 
-  protected static final String SENDER_TOPIC = "sender.t";
-  protected static final String RECEIVER_TOPIC = "receiver.t";
+  public static final String SENDER_TOPIC = "sender.t";
+  public static final String RECEIVER_TOPIC = "receiver.t";
 
   @ClassRule
-  public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, SENDER_TOPIC);
+  public static KafkaEmbedded embeddedKafka =
+      new KafkaEmbedded(1, true, SENDER_TOPIC, RECEIVER_TOPIC);
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
     String kafkaBootstrapServers = embeddedKafka.getBrokersAsString();
+
     LOGGER.debug("kafkaServers='{}'", kafkaBootstrapServers);
     // override the property in application.properties
-    System.setProperty("kafka.servers.bootstrap", kafkaBootstrapServers);
+    System.setProperty("kafka.bootstrap-servers", kafkaBootstrapServers);
   }
 }
 ```

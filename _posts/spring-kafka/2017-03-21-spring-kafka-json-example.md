@@ -3,7 +3,7 @@ title: "Spring Kafka - JSON Serializer Example"
 permalink: /2017/03/spring-kafka-json-serializer-example.html
 excerpt: "A detailed step-by-step tutorial on how to send/receive JSON messages using Spring Kafka and Spring Boot."
 date: 2017-03-21
-modified: 2017-04-15
+modified: 2017-04-17
 categories: [Spring Kafka]
 tags: [Apache Kafka, Example, Maven, JSON, Deserializer, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial]
 redirect_from:
@@ -336,7 +336,7 @@ public class Receiver {
 
 # Test Sending and Receiving JSON Messages on Kafka
 
-The Maven project contains a `SpringKafkaApplicationTest` test case to demonstrate the above sample code. A JUnit ClassRule [starts an Spring Kafka embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+The Maven project contains a `SpringKafkaApplicationTest` test case to demonstrate the above sample code. A JUnit ClassRule [starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
 In the `testReceiver()` test case we create a `Car` object and send  it to the <var>'json.t'</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
