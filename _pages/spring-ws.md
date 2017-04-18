@@ -1,9 +1,29 @@
 ---
-title: Spring Web Services
+title: "Spring Web Services"
 permalink: /spring-ws/
-layout: single-ads-footer
+excerpt: "Step by step tutorials on Spring WS"
+date: 2017-04-18
+modified: 2017-04-18
 ---
 
-Apache CXF is an open source services framework. CXF helps to build and develop services using front end programming APIs like JAX-WS and JAX-RS. These services can speak a variety of protocols such as SOAP, XML/HTTP or RESTful HTTP and work over a variety of transports such as HTTP or JMS.
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+</figure>
 
-The below links provide many step-by-step examples on how to use the Apache CXF API. 
+[Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads.
+
+## Quick Start
+
+* [Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html)
+
+## References
+
+[http://projects.spring.io/spring-ws/](http://projects.spring.io/spring-ws/)
+
+[Spring Web Services Reference Documentation](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/)
+
+* [GitHub - spring-projects/spring-ws](https://github.com/spring-projects/spring-ws)
+
+* [StackOverflow - Spring-WS Questions](http://stackoverflow.com/questions/tagged/spring-ws)
+
+---
