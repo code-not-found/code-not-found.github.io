@@ -160,13 +160,15 @@ public class AllSpringKafkaTests {
 
 # Testing the Producer
 
-In the first test class we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify the correct sending by setting up a message listener on the topic.
+In the `SpringKafkaSenderTest` test class we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify the correct sending by setting up a test-listener on the topic. All of the setup will be done before the test case runs using the `@Before` annotation.
 
-For creating the consumer properties a static `consumerProps()` method provided by `KafkaUtils` is used. We then create a `DefaultKafkaConsumerFactory` and `ContainerProperties` which contains runtime properties for a listener container (in this case the topic name). Both are then used to set up the `KafkaMessageListenerContainer`.
+For creating the needed consumer properties a static `consumerProps()` method provided by `KafkaUtils` is used. We then create a `DefaultKafkaConsumerFactory` and `ContainerProperties` which contains runtime properties (in this case the topic name) for the listener container. Both are then used to set up the `KafkaMessageListenerContainer`.
 
-Received messages need to be stored somewhere. In this example a thread safe `BlockingQueue` is used. We create a new `MessageListener` and in the `onMessage()` method we add the received message to the `BlockingQueue`. Followed by a start of the container.
+Received messages need to be stored somewhere. In this example a thread safe `BlockingQueue` is used. We create a new `MessageListener` and in the `onMessage()` method we add the received message to the `BlockingQueue`. The listener is started by starting the container.
 
-In order to avoid that we send a message before the container has required the number of assigned partitions, we use the `waitForAssignment()` method on the `ContainerTestUtils` helper class. We then send a greeting and assert that the received value is the same as the one that was sent using an AssertJ condition that is provided by `KafkaConditions` (also included in the `spring-kafka-test` dependency). 
+In order to avoid that we send a message before the container has required the number of assigned partitions, we use the `waitForAssignment()` method on the `ContainerTestUtils` helper class.
+
+The actual test itself consists out of sending a greeting and asserting that the received value is the same as the one that was sent using an AssertJ condition that is provided by `KafkaConditions` (also included in the `spring-kafka-test` dependency). 
 
 ``` java
 package com.codenotfound.kafka.producer;
