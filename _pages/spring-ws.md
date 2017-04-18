@@ -18,7 +18,7 @@ modified: 2017-04-18
 
 ## References
 
-* [http://projects.spring.io/spring-ws/](http://projects.spring.io/spring-ws/)
+* [Spring Web Services](http://projects.spring.io/spring-ws/)
 
 * [Spring Web Services Reference Documentation](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/)
 

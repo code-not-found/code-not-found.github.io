@@ -1,15 +1,16 @@
 ---
-title: Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example
+title: "Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example"
 permalink: /2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html
-excerpt: A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Spring-WS and Spring Boot.
-date: 2016-10-12 21:00
+excerpt: "A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Spring-WS and Spring Boot."
+date: 2016-10-12
+modified: 2017-04-18
 categories: [Spring-WS]
 tags: [Client, Consumer, Endpoint, Example, Hello World, Maven, Provider, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, WSDL]
-last_modified_at: 2017-02-27 21:00
+published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
+    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
 [Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads. The following step by step tutorial illustrates a basic example in which we will configure, build and run a Hello World contract first client and endpoint using a WSDL, Spring-WS, Spring Boot and Maven.
