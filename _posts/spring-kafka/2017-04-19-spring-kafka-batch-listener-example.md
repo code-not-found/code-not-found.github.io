@@ -25,9 +25,9 @@ The general project setup and Sender configuration is identical to a previous [S
 
 # Configuring a Batch Listener
 
-Enabling batch receiving of messages can be achieved by setting the `batchListener` property. This is done by calling the `setBatchListener()` method on the listener container factory  with a value `true` as shown below.
+Enabling batch receiving of messages can be achieved by setting the `batchListener` property. This is done by calling the `setBatchListener()` method on the listener container factory (`ConcurrentKafkaListenerContainerFactory` in this example) with a value `true` as shown below.
 
-By default the number of records received in each batch are dynamically calculated. By setting the <var>'MAX_POLL_RECORDS_CONFIG'</var> property on the `ConsumerConfig` we can set an upper limit. For this example we define a maximum 10 messages to be returned per poll.
+By default the number of records received in each batch are dynamically calculated. By setting the <var>'MAX_POLL_RECORDS_CONFIG'</var> property on the `ConsumerConfig` we can set an upper limit. For this example we define a maximum of 10 messages to be returned per poll.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -207,13 +207,13 @@ public class SpringKafkaApplicationTest {
 }
 ```
 
-Run the test case by entering following Maven command using the command prompt: 
+Run the test case by entering following Maven command at the command prompt: 
 
 ``` plaintext
 mvn test
 ```
 
-The result should be 20 message that get sent and received from the <var>'batch.t'</var> as shown below:
+The result should be 20 message that get sent and received from a <var>'batch.t'</var> topic as shown below:
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -291,7 +291,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-helloworld).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-batch-listener).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
