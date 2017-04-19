@@ -139,7 +139,9 @@ public class Receiver {
 
 # Testing the Batch Listener
 
-TODO
+The `SpringKafkaApplicationTest` test case starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) using a JUnit ClassRule. Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+
+The `testReceiver()` method uses a for loop to send out as many messages as were configured on the `CountDownLatch`. The result is that our listener starts receiving batches of message from the Kafka broker partitions (2 partitions are created by default on the embedded broker).
 
 ``` java
 package com.codenotfound.kafka;
