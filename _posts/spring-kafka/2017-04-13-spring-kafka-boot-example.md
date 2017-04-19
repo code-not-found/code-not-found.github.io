@@ -173,7 +173,7 @@ public class Receiver {
 ```
 
 For the `Receiver`, Spring Boot takes care of most of the configuration. There are however two properties that need to be explicitly set in the <var>application.yml</var> properties file:
-1. The <var>'kafka.consumer.group-id'</var> property needs to be specified as we are [using group management to assign topic partitions to consumers](https://www.confluent.io/blog/tutorial-getting-started-with-the-new-apache-kafka-0-9-consumer-client/). In this example we will assign it the value <var>'boot'</var>.
+1. The <var>'kafka.consumer.group-id'</var> property needs to be specified as we are [using group management to assign topic partitions to consumers](http://docs.confluent.io/current/clients/consumer.html#concepts). In this example we will assign it the value <var>'boot'</var>.
 2. The <var>'kafka.consumer.auto-offset-reset'</var> property needs to be set to <var>'earliest'</var> which ensures the new consumer group will get the message sent in case the container started after the send was completed.
 
 ``` yml
