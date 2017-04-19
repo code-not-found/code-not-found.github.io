@@ -8,6 +8,7 @@ categories: [Spring Kafka]
 tags: [Apache Kafka, Apache Avro, Avro, Deserializer, Example, Maven, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial]
 redirect_from:
   - /2017/03/spring-kafka-avro-serializer-deserializer.html
+  - /2017/03/spring-kafka-avro-example.html
 published: true
 ---
 
