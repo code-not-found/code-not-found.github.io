@@ -89,7 +89,11 @@ public class ReceiverConfig {
 }
 ```
 
-The `Receiver` listener POJO
+The `receive()` method of the `Receiver` listener POJO needs to be updated to receive a `List` of payloads (in this example these are simple `String` objects). Alternatively [a List of Message<?> or ConsumerRecord<?, ?> objects can be configured](http://docs.spring.io/spring-kafka/docs/1.2.0.RELEASE/reference/html/_reference.html#__kafkalistener_annotation).
+
+For logging purpose we also add the partition and offset headers of each message. These headers are also available in a `List` and map to the message based on the index.
+
+The `CountDownLatch` value is increased so that the included unit test case can send out a batch of 20 messages.
 
 ``` java
 package com.codenotfound.kafka.consumer;
