@@ -3,7 +3,7 @@ title: "JSON API - Spring Boot &amp; Katharsis Example"
 permalink: /2017/04/json-api-spring-boot-katharsis-example.html
 excerpt: "A detailed step-by-step tutorial on how to provide and consume a RESTful Hello World JSON API using Katharsis and Spring Boot."
 date: 2017-04-15
-modified: 2017-04-15
+modified: 2017-04-20
 categories: [Spring Kafka]
 tags: [Example, Hello World, JSON API, Katharsis, Maven, Spring, Spring Boot, Tutorial]
 published: false
@@ -156,7 +156,7 @@ The ResourceRepositoryBase is a base class that takes care of some boiler-plate,
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-boot).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/json-api/tree/master/json-api-katharsis-helloworld).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
