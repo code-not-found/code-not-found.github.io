@@ -105,93 +105,7 @@ Running and testing of the example is based on the `spring-boot-starter` and `sp
 </project>
 ```
 
-
-spring logo
-
-The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a ‘template’ as a high-level abstraction for sending messages. It also provides support for Message-driven POJOs with @KafkaListener annotations and a ‘listener container’.
-
-In the following tutorial we will configure, build and run a Hello World example in which we will send/receive messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
-
-    Spring Kafka 1.2 uses the Apache Kafka 0.10.2.x client.
-
-Tools used:
-
-    Spring Kafka 1.2
-    Spring Boot 1.5
-    Maven 3.5
-
-General Project Setup
-
-We start by defining a Maven POM file which contains the dependencies for the needed Spring projects. The POM inherits from the spring-boot-starter-parent project and declares dependencies to spring-boot-starter and spring-boot-starter-test starters.
-
-A dependency to spring-kafka is added in addition to a property that specifies the version. At the time of writing the latest stable release was '1.2.0.RELEASE'. We also include spring-kafka-test in order to have access to an embedded Kafka broker when creating our unit test.
-
-The spring-boot-maven-plugin Maven plugin is added so that we can build a single, runnable “uber-jar”, which is convenient to execute and transport the written code.
-
-``` xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <groupId>com.codenotfound</groupId>
-  <artifactId>spring-kafka-helloworld</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-
-  <name>spring-kafka-helloworld</name>
-  <description>Spring Kafka - Consumer &amp; Producer Example</description>
-  <url>https://www.codenotfound.com/2016/09/spring-kafka-consumer-producer-example.html</url>
-
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.2.RELEASE</version>
-  </parent>
-
-  <properties>
-    <java.version>1.8</java.version>
-
-    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
-  </properties>
-
-  <dependencies>
-    <!-- spring-boot -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <!-- spring-kafka -->
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka</artifactId>
-      <version>${spring-kafka.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka-test</artifactId>
-      <version>${spring-kafka.version}</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <!-- spring-boot-maven-plugin -->
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-</project>
-```
-
-Spring Boot is used in order to make a stand-alone Katharsis example application that we can “just run”. The `SpringKatharsisApplication` class contains the `main()` method that uses Spring Boot’s `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
+Spring Boot is used in order to make a stand-alone Katharsis example application that we can "just run". The `SpringKatharsisApplication` class contains the `main()` method that uses Spring Boot’s `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
 
 ``` java
 package com.codenotfound.katharsis;
@@ -258,6 +172,8 @@ public class Greeting {
   }
 }
 ```
+
+
 
 # Creating the Repository
 
