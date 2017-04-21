@@ -182,9 +182,9 @@ To allow Katharsis to operate on defined resources, a special type of class call
 For our `Greeting` resource we will create a `GreetingRepositoryImpl` which extends the `ResourceRepositoryBase` implementation of the `ResourceRepositoryV2` repository interface. 
 The [ResourceRepositoryBase](https://github.com/katharsis-project/katharsis-framework/blob/master/katharsis-core/src/main/java/io/katharsis/repository/ResourceRepositoryBase.java) is a base class that takes care of some boiler-plate code like for example implementing `findOne()` with `findAll()`.
 
-> Note that only `findAll()` needs to be implemented to have a working read-only repository.
+> Note that when extending the `ResourceRepositoryBase` only `findAll()` needs to be implemented to have a working read-only repository.
 
-In this example we will store the greeting resources in a simple `HashMap` and add a "Hello World" greeting as a resource via the constructor.
+In this example we will store the greeting resources in a simple `HashMap` and add a "Hello World!" greeting as a resource via the constructor.
 
 Katharsis passes JSON API query parameters to repositories through a `QuerySpec` parameter. The implementation of the `findAll()` uses the `apply()` method which evaluates the querySpec against the provided list and returns the result.
 
@@ -220,9 +220,46 @@ public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Lon
 }
 ```
 
+# Setting up the ResourceRegistry
 
 
 
+``` java
+package com.codenotfound.katharsis.server;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.katharsis.resource.registry.RegistryEntry;
+import io.katharsis.resource.registry.ResourceRegistry;
+import io.katharsis.spring.boot.v3.KatharsisConfigV3;
+
+@RestController
+@Import({KatharsisConfigV3.class})
+public class GreetingController {
+
+  @Autowired
+  private ResourceRegistry resourceRegistry;
+
+  @RequestMapping("/resources-info")
+  public Map<String, String> getResources() {
+    Map<String, String> result = new HashMap<>();
+    // Add all resources
+    for (RegistryEntry entry : resourceRegistry.getResources()) {
+      result.put(entry.getResourceInformation().getResourceType(),
+          resourceRegistry.getResourceUrl(entry.getResourceInformation()));
+    }
+    return result;
+  }
+}
+```
+
+# Testing
 
 
 ``` plaintext
