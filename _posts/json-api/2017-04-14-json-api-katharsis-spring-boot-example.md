@@ -226,7 +226,7 @@ public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Lon
 
 Katharsis comes with [out-of-the-box support for Spring Boot](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#spring-integration). The entry point is a `KatharsisConfig` class which configures Katharsis using Spring properties. Additionally we have to make sure that each repository is annotated with `@Component` (as we did with the above `GreetingRepositoryImpl`).
 
-Spring's `@RestController` annotation is used to mark the class as a controller for handling HTTP requests. The `KatharsisConfigV3` import will setup and expose the resource endpoints based on auto-scanning for specific annotations in addition to some properties which we will see further below.
+Spring's `@RestController` annotation is used to mark the `KatharsisController` class as a controller for handling HTTP requests. The `KatharsisConfigV3` import will setup and expose the resource endpoints based on auto-scanning for specific annotations in addition to some properties which we will see further below.
 
 Katharsis also ships with a `ResourceRegistry` which holds information on all the registered repositories. We expose this information on <var>/resources-info</var> by iterating over all the entries in the auto-wired `ResourceRegistry`.
 
@@ -269,8 +269,8 @@ public class KatharsisController {
 In addition to the above auto-configuration, a number of items are configured using the <var>application.yml</var> properties file:
 
 * The <var>katharsis:resourcePackage</var> property specifies which package(s) should be searched to find models and repositories used by the core and exception mappers. Multiple packages can be passed by specifying a comma separated string of packages.
-* The <var>katharsis:domainName</var> property specifies the domain name as well as protocol and optionally port number to be used when building links objects in responses. The value must not end with a '/'.
-* The <var>katharsis:pathPrefix</var> property defines the default prefix of a URL path used when building link objects in responses and when performing method matching.
+* The <var>katharsis:domainName</var> property specifies the domain name as well as protocol and optionally port number to be used when building links objects in responses. The value must not end with a backslash (/).
+* The <var>katharsis:pathPrefix</var> property defines the default prefix of the URL path used when building link objects in responses and when performing method matching.
 
 ``` yml
 katharsis:
@@ -283,7 +283,53 @@ server:
   port: 9090
 ```
 
-# Testing
+# Setting up the Client
+
+Katharsis includes a [Java client](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#client) which allows to communicate with JSON-API compliant servers.
+
+
+
+``` java
+package com.codenotfound.katharsis.client;
+
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import com.codenotfound.katharsis.domain.model.Greeting;
+
+import io.katharsis.client.KatharsisClient;
+import io.katharsis.queryspec.QuerySpec;
+import io.katharsis.repository.ResourceRepositoryV2;
+
+@Component
+public class GreetingClient {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(GreetingClient.class);
+
+  private KatharsisClient katharsisClient =
+      new KatharsisClient("http://localhost:9090/codenotfound/api");
+  private ResourceRepositoryV2<Greeting, Long> resourceRepositoryV2;
+
+  @PostConstruct
+  public void init() {
+    resourceRepositoryV2 = katharsisClient.getRepositoryForType(Greeting.class);
+  }
+
+  public Greeting findOne(long id) {
+    Greeting result = resourceRepositoryV2.findOne(id, new QuerySpec(Greeting.class));
+
+    LOGGER.info("found {}", result.toString());
+    return result;
+  }
+}
+```
+
+# Testing the Hello World JSON API
+
+
 
 
 ``` plaintext
