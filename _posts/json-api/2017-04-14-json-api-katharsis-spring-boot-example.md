@@ -224,7 +224,9 @@ public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Lon
 
 # Setting up the Server
 
-Katharsis comes with out-of-the-box support for Spring Boot. The entry point is a `KatharsisConfig` class which configures Katharsis using Spring properties. Additionally we have to make sure that each repository is annotated with `@Component` (as we did with the above `GreetingRepositoryImpl`).
+Katharsis comes with [out-of-the-box support for Spring Boot](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#spring-integration). The entry point is a `KatharsisConfig` class which configures Katharsis using Spring properties. Additionally we have to make sure that each repository is annotated with `@Component` (as we did with the above `GreetingRepositoryImpl`).
+
+The below `KatharsisController` imports the `KatharsisConfigV3` which will setup and expose the resource endpoints based on the 
 
 The `ResourceRegistry` holds information about all the repositories registered to Katharsis. For our example we will expose this information as a REST endpoint using Spring's `@RestController` annotation. 
 
@@ -245,7 +247,7 @@ import io.katharsis.spring.boot.v3.KatharsisConfigV3;
 
 @RestController
 @Import({KatharsisConfigV3.class})
-public class ResourceRegistryController {
+public class KatharsisController {
 
   @Autowired
   private ResourceRegistry resourceRegistry;
