@@ -6,12 +6,12 @@ date: 2017-04-15
 modified: 2017-04-20
 categories: [Spring Kafka]
 tags: [Example, Hello World, JSON API, Katharsis, Maven, Spring, Spring Boot, Tutorial]
-published: false
+published: true
 ---
 
 {% include figure image_path="/assets/images/logos/katharsis-logo.jpg" alt="katharsis logo" %}
 
-[JSON API](http://jsonapi.org/) is a specification for building APIs in JSON. It details how clients should request resources to be fetched or modified, and how servers should respond to those requests. JSON API is designed to minimize both the number of requests and the amount of data transmitted between clients and servers.
+[JSON API](http://jsonapi.org/) is a specification for building APIs using JSON. It details how clients should request resources to be fetched or modified, and how servers should respond to those requests. JSON API is designed to minimize both the number of requests and the amount of data transmitted between clients and servers.
 
 [Katharsis](http://katharsis.io) is a Java library that implements the JSON API specification. It is an additional layer that can be plugged on top of existing server side Java implementations in order to provide easy [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) support. Katharsis defines resources which can be shared over a RESTful interface and a repository for handling them.
 
@@ -27,9 +27,9 @@ Tools used:
 
 The example will be built and run using [Apache Maven](https://maven.apache.org/). In order to use the Katharsis framework we need to include the `katharsis-core` dependency. As Spring Boot will be used for running the server part we also need to include `katharsis-spring`. For the client part the `katharsis-client` dependency is needed.
 
-Katharsis aims to have as little dependencies as possible, as such a HTTP client library needs to be provided on the classpath that will be automatically picked up. Both [OkHttp](https://square.github.io/okhttp) and [Apache Http Client](https://hc.apache.org/httpcomponents-client-ga/index.html) are supported. For this example we will use `okhttp`.
+Katharsis aims to have as little dependencies as possible, as such a HTTP client library is not included by default. It needs to be [provided on the classpath where it will be automatically picked up](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#client) by the framework. Both [OkHttp](https://square.github.io/okhttp) and [Apache Http Client](https://hc.apache.org/httpcomponents-client-ga/index.html) are supported. For this example we will use the `okhttp` library.
 
-The running and testing of the example is based on the `spring-boot-starter` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters). The `spring-boot-maven-plugin` is used to spin up an embedded Tomcat server that will host the RESTful Hello World API.
+Running and testing of the example is based on the `spring-boot-starter` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters). The `spring-boot-maven-plugin` is used to spin up an embedded Tomcat server that will host the RESTful Hello World API.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -106,6 +106,92 @@ The running and testing of the example is based on the `spring-boot-starter` and
 ```
 
 
+spring logo
+
+The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a ‘template’ as a high-level abstraction for sending messages. It also provides support for Message-driven POJOs with @KafkaListener annotations and a ‘listener container’.
+
+In the following tutorial we will configure, build and run a Hello World example in which we will send/receive messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
+
+    Spring Kafka 1.2 uses the Apache Kafka 0.10.2.x client.
+
+Tools used:
+
+    Spring Kafka 1.2
+    Spring Boot 1.5
+    Maven 3.5
+
+General Project Setup
+
+We start by defining a Maven POM file which contains the dependencies for the needed Spring projects. The POM inherits from the spring-boot-starter-parent project and declares dependencies to spring-boot-starter and spring-boot-starter-test starters.
+
+A dependency to spring-kafka is added in addition to a property that specifies the version. At the time of writing the latest stable release was '1.2.0.RELEASE'. We also include spring-kafka-test in order to have access to an embedded Kafka broker when creating our unit test.
+
+The spring-boot-maven-plugin Maven plugin is added so that we can build a single, runnable “uber-jar”, which is convenient to execute and transport the written code.
+
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.codenotfound</groupId>
+  <artifactId>spring-kafka-helloworld</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <name>spring-kafka-helloworld</name>
+  <description>Spring Kafka - Consumer &amp; Producer Example</description>
+  <url>https://www.codenotfound.com/2016/09/spring-kafka-consumer-producer-example.html</url>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.2.RELEASE</version>
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+
+    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
+  </properties>
+
+  <dependencies>
+    <!-- spring-boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- spring-kafka -->
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+      <version>${spring-kafka.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka-test</artifactId>
+      <version>${spring-kafka.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- spring-boot-maven-plugin -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+
+Spring Boot is used in order to make a stand-alone Katharsis example application that we can “just run”. The `SpringKatharsisApplication` class contains the `main()` method that uses Spring Boot’s `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
 
 ``` java
 package com.codenotfound.katharsis;
@@ -126,11 +212,54 @@ public class SpringKatharsisApplication {
 
 We start by defining a simple model that will represent our `Greeting` resource. It contains an `id` in addition to the actual greeting `content`. We also define the constructors and getters/setters for the two fields.
 
-The @JsonApiResource annotation defines a resource. It requires the type parameter to be defined which will be used to form the URI and populate the type field which is passed as part of the JSON message. According to JSON API standard, the name defined in type can be either plural or singular
+The `@JsonApiResource` annotation [defines a resource](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#jsonapiresource). It requires the type parameter to be set which will be used to form the URI and populate the [type field](http://jsonapi.org/format/#document-resource-objects) which is passed as part of the resource object.
 
-The @JsonApiId defines a field which will be used as an identifier of the Greeting resource. Each resource requires this annotation to be present on a field which is of primitive type or which type implements the Serializable interface.
+> According to JSON API standard, the name defined in type can be either plural or singular. However, the same value should be used consistently throughout an implementation.
 
----
+The `@JsonApiId` [defines a field which will be used as an identifier](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#jsonapiid) of the Greeting resource. Each resource requires this annotation to be present on a field which is of primitive type or a type that implements the `Serializable` interface.
+
+``` java
+package com.codenotfound.katharsis.domain.model;
+
+import io.katharsis.resource.annotations.JsonApiId;
+import io.katharsis.resource.annotations.JsonApiResource;
+
+@JsonApiResource(type = "greetings")
+public class Greeting {
+
+  @JsonApiId
+  private long id;
+
+  private String content;
+
+  public Greeting() {
+    super();
+  }
+
+  public Greeting(long id, String content) {
+    this.id = id;
+    this.content = content;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+}
+```
+
+# Creating the Repository
 
 Modelled resources must be complemented by a corresponding repository implementation. This can be achieved by implementing one of those two repository interfaces:
 1. ResourceRepositoryV2 for a resource
