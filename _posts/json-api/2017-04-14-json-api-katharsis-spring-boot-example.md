@@ -177,7 +177,54 @@ public class Greeting {
 
 # Creating the Repository
 
-Modelled resources must be complemented by a corresponding [repository implementation](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#repositories).
+To allow Katharsis to operate on defined resources, a special type of class called [repository](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#repositories) needs to be created. Katharsis will scan for these classes and using annotations it will find out the available methods.
+
+For our `Greeting` resource we will create a `GreetingRepositoryImpl` which extends the `ResourceRepositoryBase` implementation of the `ResourceRepositoryV2` repository interface. 
+The [ResourceRepositoryBase](https://github.com/katharsis-project/katharsis-framework/blob/master/katharsis-core/src/main/java/io/katharsis/repository/ResourceRepositoryBase.java) is a base class that takes care of some boiler-plate, like for example implementing `findOne()` with `findAll()`.
+
+
+
+
+will be used by Katharsis to operate on the resource. The implementation consists of five basic methods which provide CRUD operations for a resource and two parameters: the first is a type of a resource and the second is the type of the resource's identifier.
+
+
+
+``` java
+package com.codenotfound.katharsis.domain.repository;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.stereotype.Component;
+
+import com.codenotfound.katharsis.domain.model.Greeting;
+
+import io.katharsis.queryspec.QuerySpec;
+import io.katharsis.repository.ResourceRepositoryBase;
+import io.katharsis.resource.list.ResourceList;
+
+@Component
+public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Long> {
+
+  private Map<Long, Greeting> greetings = new HashMap<>();
+
+  public GreetingRepositoryImpl() {
+    super(Greeting.class);
+    save(new Greeting(123L, "Hello World!"));
+  }
+
+  @Override
+  public synchronized <S extends Greeting> S save(S greeting) {
+    greetings.put(greeting.getId(), greeting);
+    return greeting;
+  }
+
+  @Override
+  public synchronized ResourceList<Greeting> findAll(QuerySpec querySpec) {
+    return querySpec.apply(greetings.values());
+  }
+}
+```
 
 
 
@@ -185,7 +232,7 @@ Modelled resources must be complemented by a corresponding [repository implement
 1. ResourceRepositoryV2 for a resource
 2. RelationshipRepositoryV2 resp. BulkRelationshipRepositoryV2 for resource relationships
 
-For our Greeting resource we will create a GreetingRepositoryImpl which extends the ResourceRepositoryBase implmentation of the ResourceRepositoryV2 repository interface. This base repository will be used by Katharsis to operate on the resource. The implementation consists of five basic methods which provide CRUD operation for a resource and two parameters: the first is a type of a resource and the second is the type of the resource's identifier.
+
 
 For this example we will use a HashMap to store the greetings and in the constructor we already populate the Map with a greeting that contains <var>'Hello World!</var> as content.
 
