@@ -20,7 +20,7 @@ The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/
 
 ## Serializer/Deserializer
 
-* [Spring Kafka - JSON Example]({{ site.url }}/2017/03/spring-kafka-json-example.html)
+* [Spring Kafka - JSON Example]({{ site.url }}/2017/03/spring-kafka-json-serializer-example.html)
 
 * [Spring Kafka - Apache Avro Example]({{ site.url }}/2017/03/spring-kafka-apache-avro-example.html)
 

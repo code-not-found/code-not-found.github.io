@@ -24,6 +24,8 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
+# General Project Setup
+
 [Apache Kafka](https://kafka.apache.org/) stores and transports `Byte` arrays in its topics. It ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html) but a JSON one is not included. Luckily, the [Spring Kafka framework](https://projects.spring.io/spring-kafka/) includes a support package that contains a [JSON (de)serializer](https://github.com/spring-projects/spring-kafka/tree/master/spring-kafka/src/main/java/org/springframework/kafka/support/serializer) that uses a [Jackson](https://github.com/FasterXML/jackson) `ObjectMapper` under the covers.
 
 We base the below example on a previous [Spring Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html). The only thing that needs to be added to the Maven POM file for working with JSON is the `spring-boot-starter-web` dependency which will indirectly include the needed `jackson-*` JAR dependencies.
