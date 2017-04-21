@@ -2,8 +2,8 @@
 title: "JSON API - Spring Boot &amp; Katharsis Example"
 permalink: /2017/04/json-api-spring-boot-katharsis-example.html
 excerpt: "A detailed step-by-step tutorial on how to provide and consume a RESTful Hello World JSON API using Katharsis and Spring Boot."
-date: 2017-04-15
-modified: 2017-04-20
+date: 2017-04-21
+modified: 2017-04-21
 categories: [Spring Kafka]
 tags: [Example, Hello World, JSON API, Katharsis, Maven, Spring, Spring Boot, Tutorial]
 published: true
@@ -25,7 +25,7 @@ Tools used:
 
 # General Project Setup
 
-The example will be built and run using [Apache Maven](https://maven.apache.org/). In order to use the Katharsis framework we need to include the `katharsis-core` dependency. As Spring Boot will be used for running the server part we also need to include `katharsis-spring`. For the client part the `katharsis-client` dependency is needed.
+The example will be built and run using [Apache Maven](https://maven.apache.org/). In order to use the Katharsis framework we need to include the `katharsis-core` dependency. As Spring Boot will be used for running the server part we also need to include `katharsis-spring`. For implementing the client part the `katharsis-client` dependency is needed.
 
 Katharsis aims to have as little dependencies as possible, as such a HTTP client library is not included by default. It needs to be [provided on the classpath where it will be automatically picked up](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#client) by the framework. Both [OkHttp](https://square.github.io/okhttp) and [Apache Http Client](https://hc.apache.org/httpcomponents-client-ga/index.html) are supported. For this example we will use the `okhttp` library.
 
@@ -105,7 +105,9 @@ Running and testing of the example is based on the `spring-boot-starter` and `sp
 </project>
 ```
 
-Spring Boot is used in order to make a stand-alone Katharsis example application that we can "just run". The `SpringKatharsisApplication` class contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
+Spring Boot is used in order to make a stand-alone Katharsis example application that we can "just run". The `SpringKatharsisApplication` class contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch the application.
+
+The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
 
 ``` java
 package com.codenotfound.katharsis;
@@ -124,7 +126,7 @@ public class SpringKatharsisApplication {
 
 # Creating the Domain Model
 
-We start by defining a simple model that will represent our `Greeting` resource. It contains an `id` in addition to the actual greeting `content`. We also define the constructors and getters/setters for the two fields.
+We start by defining a simple model that will represent a `Greeting` resource. It contains an `id` in addition to the actual greeting `content`. We also need to define the constructors and getters/setters for the two fields.
 
 The `@JsonApiResource` annotation [defines a resource](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#jsonapiresource). It requires the type parameter to be set which will be used to form the URI and populate the [type field](http://jsonapi.org/format/#document-resource-objects) which is passed as part of the resource object.
 
@@ -173,11 +175,13 @@ public class Greeting {
 }
 ```
 
-
-
 # Creating the Repository
 
-Modelled resources must be complemented by a corresponding repository implementation. This can be achieved by implementing one of those two repository interfaces:
+Modelled resources must be complemented by a corresponding [repository implementation](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#repositories).
+
+
+
+ This can be achieved by implementing one of two repository interfaces:
 1. ResourceRepositoryV2 for a resource
 2. RelationshipRepositoryV2 resp. BulkRelationshipRepositoryV2 for resource relationships
 
@@ -192,10 +196,33 @@ The ResourceRepositoryBase is a base class that takes care of some boiler-plate,
 
 
 
+``` plaintext
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.5.2.RELEASE)
 
+09:35:41.763 [main] INFO  c.c.k.SpringKatharsisApplicationTest - Starting SpringKatharsisApplicationTest on cnf-pc with PID 1740 (started by CodeNotFound in c:\code\st\json-api\json-api-katharsis-helloworld)
+09:35:41.765 [main] INFO  c.c.k.SpringKatharsisApplicationTest - No active profile set, falling back to default profiles: default
+09:35:44.476 [main] INFO  c.c.k.SpringKatharsisApplicationTest - Started SpringKatharsisApplicationTest in 3.02 seconds (JVM running for 3.693)
+09:35:44.900 [main] INFO  c.c.katharsis.client.GreetingClient - found com.codenotfound.katharsis.domain.model.Greeting@a52ca2e
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.574 sec - in com.codenotfound.katharsis.SpringKatharsisApplicationTest
 
+Results :
 
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 6.963 s
+[INFO] Finished at: 2017-04-21T09:35:45+02:00
+[INFO] Final Memory: 28M/262M
+[INFO] ------------------------------------------------------------------------
+```
 
 ---
 
