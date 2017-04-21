@@ -399,11 +399,13 @@ public class SpringKatharsisApplicationTest {
 }
 ```
 
-Triggering the test case is done using followig maven command.
+Triggering the test case is done using following maven command.
 
 ``` plaintext
 mvn test
 ```
+
+Output should be as shown below.
 
 ``` plaintext
   .   ____          _            __ _ _
