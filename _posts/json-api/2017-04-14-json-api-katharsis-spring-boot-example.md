@@ -9,7 +9,9 @@ tags: [Example, Hello World, JSON API, Katharsis, Maven, Spring, Spring Boot, Tu
 published: true
 ---
 
-{% include figure image_path="/assets/images/logos/katharsis-logo.jpg" alt="katharsis logo" %}
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/katharsis-logo.jpg" alt="katharsis logo" class="logo">
+</figure>
 
 [JSON API](http://jsonapi.org/) is a specification for building APIs using JSON. It details how clients should request resources to be fetched or modified, and how servers should respond to those requests. JSON API is designed to minimize both the number of requests and the amount of data transmitted between clients and servers.
 
@@ -287,7 +289,7 @@ server:
 
 Katharsis includes a [Java client](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#client) which allows to communicate with JSON-API compliant servers. To start using the client just create an instance of `KatharsisClient` and pass the service URL. Then use the client to create a repository that gives access to the different resource CRUD operations.
 
-In the below client we have create a `findOne()` method that returns a single `Greeting` based on the identifier.
+In below `GreetingClient` we have created a `findOne()` method that returns a single `Greeting` based on the identifier.
 
 ``` java
 package com.codenotfound.katharsis.client;
@@ -329,6 +331,21 @@ public class GreetingClient {
 
 # Testing the Hello World JSON API
 
+Let's test our greeting resource! If you are running Google Chrome you can simply do this from the browser. Make sure you start the application by starting up Spring Boot:
+
+``` plaintext
+mvn spring-boot:run
+```
+
+Next open following URL which should show all our registered resources (in this example the greetings resource).
+
+``` plaintext
+http://localhost:9090/codenotfound/resources-info
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/json-api/hello-world-resource-registry.jpg" alt="hello world resource registry">
+</figure>
 
 
 
