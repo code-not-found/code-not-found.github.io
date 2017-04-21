@@ -344,9 +344,32 @@ http://localhost:9090/codenotfound/resources-info
 ```
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/json-api/hello-world-resource-registry.jpg" alt="hello world resource registry">
+    <img src="{{ site.url }}/assets/images/logos/json-api/hello-world-resource-registry.png" alt="hello world resource registry">
 </figure>
 
+Go ahead and use the greetings endpoint as next URL. This will show us all the available greetings.
+
+``` plaintext
+http://localhost:9090/codenotfound/api/greetings
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/json-api/hello-world-greetings.png" alt="hello world greetings">
+</figure>
+
+For the details of our Hello World resource we enter below URL.
+
+``` plaintext
+http://localhost:9090/codenotfound/api/greetings/1
+```
+
+<figure>
+    <img src="{{ site.url }}/assets/images/logos/json-api/hello-world-greeting-1.png" alt="hello world greeting 1">
+</figure>
+
+> Notice that above flow is fully driven using hypermedia!
+
+To wrap up we will also add a simple unit test case.
 
 
 ``` plaintext
