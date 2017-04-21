@@ -369,8 +369,41 @@ http://localhost:9090/codenotfound/api/greetings/1
 
 > Notice that above flow is fully driven using hypermedia!
 
-To wrap up we will also add a simple unit test case.
+To wrap up we will also add a simple `SpringKatharsisApplicationTest` unit test case in which we lookup the Hello World greeting resource using it's identifier.
 
+``` java
+package com.codenotfound.katharsis;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.codenotfound.katharsis.client.GreetingClient;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
+public class SpringKatharsisApplicationTest {
+
+  @Autowired
+  GreetingClient greetingClient;
+
+  @Test
+  public void testFindOne() {
+    assertThat(greetingClient.findOne(1L).getContent()).isEqualTo("Hello World!");
+  }
+}
+```
+
+Triggering the test case is done using followig maven command.
+
+``` plaintext
+mvn test
+```
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -408,4 +441,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Using Spring Boot's autoconfiguration we were able to setup a sender and receiver using only a couple of lines of code. Hopefully this example will kick-start your Spring Kafka development. Drop a line below in case something was not clear or just to let me know if everything worked.
+This wraps up the Katharsis JSON API tutorial in which we developed a simple hello world resource from scratch and exposed it via a RESTful API.
+
+If you liked this tutorial or if you would like other Katharsis topics to be covered please leave a comment below.
+ 
