@@ -1,5 +1,5 @@
 ---
-title: "JSON API - Spring Boot &amp; Katharsis Example"
+title: "JSON API - Spring Boot Katharsis Example"
 permalink: /2017/04/json-api-spring-boot-katharsis-example.html
 excerpt: "A detailed step-by-step tutorial on how to provide and consume a RESTful Hello World JSON API using Katharsis and Spring Boot."
 date: 2017-04-21
