@@ -285,9 +285,9 @@ server:
 
 # Setting up the Client
 
-Katharsis includes a [Java client](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#client) which allows to communicate with JSON-API compliant servers.
+Katharsis includes a [Java client](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#client) which allows to communicate with JSON-API compliant servers. To start using the client just create an instance of `KatharsisClient` and pass the service URL. Then use the client to create a repository that gives access to the different resource CRUD operations.
 
-
+In the below client we have create a `findOne()` method that returns a single `Greeting` based on the identifier.
 
 ``` java
 package com.codenotfound.katharsis.client;
