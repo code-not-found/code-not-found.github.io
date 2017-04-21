@@ -188,7 +188,7 @@ In this example we will store the greeting resources in a simple `HashMap` and a
 
 Katharsis passes JSON API query parameters to repositories through a `QuerySpec` parameter. The implementation of the `findAll()` uses the `apply()` method which evaluates the querySpec against the provided list and returns the result.
 
-> Note that the `@Component` annotation is needed so that Katharsis picks up the repository.
+> Note that the `@Component` annotation is needed so that Katharsis is able to find the repository.
 
 ``` java
 package com.codenotfound.katharsis.domain.repository;
@@ -226,9 +226,9 @@ public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Lon
 
 Katharsis comes with [out-of-the-box support for Spring Boot](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#spring-integration). The entry point is a `KatharsisConfig` class which configures Katharsis using Spring properties. Additionally we have to make sure that each repository is annotated with `@Component` (as we did with the above `GreetingRepositoryImpl`).
 
-The below `KatharsisController` imports the `KatharsisConfigV3` which will setup and expose the resource endpoints based on the 
+Spring's `@RestController` annotation is used to mark the class as a controller for handling HTTP requests. The `KatharsisConfigV3` import will setup and expose the resource endpoints based on auto-scanning for specific annotations in addition to some properties which we will see further below.
 
-The `ResourceRegistry` holds information about all the repositories registered to Katharsis. For our example we will expose this information as a REST endpoint using Spring's `@RestController` annotation. 
+Katharsis also ships with a `ResourceRegistry` which holds information on all the registered repositories. We expose this information on <var>/resources-info</var> by iterating over all the entries in the auto-wired `ResourceRegistry`.
 
 ``` java
 package com.codenotfound.katharsis.server;
@@ -264,6 +264,23 @@ public class KatharsisController {
     return result;
   }
 }
+```
+
+In addition to the above auto-configuration, a number of items are configured using the <var>application.yml</var> properties file:
+
+* The <var>katharsis:resourcePackage</var> property specifies which package(s) should be searched to find models and repositories used by the core and exception mappers. Multiple packages can be passed by specifying a comma separated string of packages.
+* The <var>katharsis:domainName</var> property specifies the domain name as well as protocol and optionally port number to be used when building links objects in responses. The value must not end with a '/'.
+* The <var>katharsis:pathPrefix</var> property defines the default prefix of a URL path used when building link objects in responses and when performing method matching.
+
+``` yml
+katharsis:
+  resourcePackage: com.codenotfound.katharsis.domain
+  domainName: http://localhost:9090/codenotfound
+  pathPrefix: /api
+
+server:
+  context-path: /codenotfound
+  port: 9090
 ```
 
 # Testing
