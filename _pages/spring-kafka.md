@@ -18,6 +18,10 @@ The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/
 
 * [Spring Kafka - Spring Boot Example]({{ site.url }}/2017/04/spring-kafka-boot-example.html)
 
+## Concepts
+
+* [Spring Kafka - Batch Listener Example]({{ site.url }}//2017/04/spring-kafka-batch-listener-example.html)
+
 ## Serializer/Deserializer
 
 * [Spring Kafka - JSON Example]({{ site.url }}/2017/03/spring-kafka-json-serializer-example.html)
