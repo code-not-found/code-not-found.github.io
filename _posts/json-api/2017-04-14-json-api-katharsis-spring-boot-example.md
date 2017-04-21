@@ -177,7 +177,7 @@ public class Greeting {
 
 # Creating the Repository
 
-To allow Katharsis to operate on defined resources, a special type of class called [repository](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#repositories) needs to be created. Katharsis will scan for these classes and using annotations it will find out the available methods.
+To allow Katharsis to operate on defined resources, a special type of class called [repository](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#repositories) needs to be created. Katharsis will scan for these classes and using annotations it will discover the available methods.
 
 For our `Greeting` resource we will create a `GreetingRepositoryImpl` which extends the `ResourceRepositoryBase` implementation of the `ResourceRepositoryV2` repository interface. 
 The [ResourceRepositoryBase](https://github.com/katharsis-project/katharsis-framework/blob/master/katharsis-core/src/main/java/io/katharsis/repository/ResourceRepositoryBase.java) is a base class that takes care of some boiler-plate code like for example implementing `findOne()` with `findAll()`.
@@ -187,6 +187,8 @@ The [ResourceRepositoryBase](https://github.com/katharsis-project/katharsis-fram
 In this example we will store the greeting resources in a simple `HashMap` and add a "Hello World!" greeting as a resource via the constructor.
 
 Katharsis passes JSON API query parameters to repositories through a `QuerySpec` parameter. The implementation of the `findAll()` uses the `apply()` method which evaluates the querySpec against the provided list and returns the result.
+
+> Note that the `@Component` annotation is needed so that Katharsis picks up the repository.
 
 ``` java
 package com.codenotfound.katharsis.domain.repository;
@@ -220,9 +222,11 @@ public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Lon
 }
 ```
 
-# Setting up the ResourceRegistry
+# Setting up the Server
 
+Katharsis comes with out-of-the-box support for Spring Boot. The entry point is a `KatharsisConfig` class which configures Katharsis using Spring properties. Additionally we have to make sure that each repository is annotated with `@Component` (as we did with the above `GreetingRepositoryImpl`).
 
+The `ResourceRegistry` holds information about all the repositories registered to Katharsis. For our example we will expose this information as a REST endpoint using Spring's `@RestController` annotation. 
 
 ``` java
 package com.codenotfound.katharsis.server;
@@ -241,7 +245,7 @@ import io.katharsis.spring.boot.v3.KatharsisConfigV3;
 
 @RestController
 @Import({KatharsisConfigV3.class})
-public class GreetingController {
+public class ResourceRegistryController {
 
   @Autowired
   private ResourceRegistry resourceRegistry;
@@ -254,6 +258,7 @@ public class GreetingController {
       result.put(entry.getResourceInformation().getResourceType(),
           resourceRegistry.getResourceUrl(entry.getResourceInformation()));
     }
+
     return result;
   }
 }
