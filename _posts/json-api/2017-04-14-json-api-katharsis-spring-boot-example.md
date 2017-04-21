@@ -180,14 +180,13 @@ public class Greeting {
 To allow Katharsis to operate on defined resources, a special type of class called [repository](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#repositories) needs to be created. Katharsis will scan for these classes and using annotations it will find out the available methods.
 
 For our `Greeting` resource we will create a `GreetingRepositoryImpl` which extends the `ResourceRepositoryBase` implementation of the `ResourceRepositoryV2` repository interface. 
-The [ResourceRepositoryBase](https://github.com/katharsis-project/katharsis-framework/blob/master/katharsis-core/src/main/java/io/katharsis/repository/ResourceRepositoryBase.java) is a base class that takes care of some boiler-plate, like for example implementing `findOne()` with `findAll()`.
+The [ResourceRepositoryBase](https://github.com/katharsis-project/katharsis-framework/blob/master/katharsis-core/src/main/java/io/katharsis/repository/ResourceRepositoryBase.java) is a base class that takes care of some boiler-plate code like for example implementing `findOne()` with `findAll()`.
 
+> Note that only `findAll()` needs to be implemented to have a working read-only repository.
 
+In this example we will store the greeting resources in a simple `HashMap` and add a "Hello World" greeting as a resource via the constructor.
 
-
-will be used by Katharsis to operate on the resource. The implementation consists of five basic methods which provide CRUD operations for a resource and two parameters: the first is a type of a resource and the second is the type of the resource's identifier.
-
-
+Katharsis passes JSON API query parameters to repositories through a `QuerySpec` parameter. The implementation of the `findAll()` uses the `apply()` method which evaluates the querySpec against the provided list and returns the result.
 
 ``` java
 package com.codenotfound.katharsis.domain.repository;
@@ -210,13 +209,8 @@ public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Lon
 
   public GreetingRepositoryImpl() {
     super(Greeting.class);
-    save(new Greeting(123L, "Hello World!"));
-  }
 
-  @Override
-  public synchronized <S extends Greeting> S save(S greeting) {
-    greetings.put(greeting.getId(), greeting);
-    return greeting;
+    greetings.put(1L, new Greeting(1L, "Hello World!"));
   }
 
   @Override
@@ -225,18 +219,6 @@ public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Lon
   }
 }
 ```
-
-
-
- This can be achieved by implementing one of two repository interfaces:
-1. ResourceRepositoryV2 for a resource
-2. RelationshipRepositoryV2 resp. BulkRelationshipRepositoryV2 for resource relationships
-
-
-
-For this example we will use a HashMap to store the greetings and in the constructor we already populate the Map with a greeting that contains <var>'Hello World!</var> as content.
-
-The ResourceRepositoryBase is a base class that takes care of some boiler-plate, like implementing findOne with findAll. An implementation can then look as simple as:
 
 
 
