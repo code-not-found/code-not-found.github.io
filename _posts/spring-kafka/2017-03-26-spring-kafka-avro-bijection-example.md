@@ -22,7 +22,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-# General Project Setup 2
+# General Project Setup
 
 We base this example on a previous [Spring Kafka Avro serializer/deserializer example]({{ site.url }}//2017/03/spring-kafka-apache-avro-example.html) in which we used the Avro API's to serialize and deserialize objects. For this tutorial we will be using the Bijection APIs which are a bit easier to use as we will see further down below.
 
@@ -40,7 +40,7 @@ Starting point is again the <var>user.avsc</var> schema from the [Avro getting s
 }
 ```
 
-We setup our project using [Maven](https://maven.apache.org/). In the POM file we add the `bijection-avro_2.11` dependency. The <var>artifactId</var> suffix of the dependency (in this case **_2.11**) highlights the [Scala](https://www.scala-lang.org/) version used to compile the JAR.
+We setup our project using [Maven](https://maven.apache.org/). In the POM file we add the `bijection-avro_2.11` dependency. The <var>artifactId</var> suffix of the dependency (in this case __2.11_) highlights the [Scala](https://www.scala-lang.org/) version used to compile the JAR.
 
 > Note that we choose the <var>2.11</var> version of `bijection-avro` since `spring-kafka-test` includes a dependency on the <var>2.11</var> version of the `scala-library`.
 
@@ -146,7 +146,7 @@ mvn generate-sources
 ```
 
 <figure>
-    <img src="{{ site.url }}/assets/images/bijection-avro-generated-java-classes.png" alt="bijection avro generated java classes">
+    <img src="{{ site.url }}/assets/images/spring-kafka/bijection-avro-generated-java-classes.png" alt="bijection avro generated java classes">
 </figure>
 
 # Producing Avro Messages to a Kafka Topic
