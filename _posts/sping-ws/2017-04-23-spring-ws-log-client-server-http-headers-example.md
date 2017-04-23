@@ -277,7 +277,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
 # Testing the Logging of the Headers
 
-Now that the interceptors are setup, let's use Maven to trigger the included unit test case in which the client makes a service call to the endpoint.
+Now that the interceptors are setup, let's use Maven to trigger the included unit test case in which the client makes a web service call to the endpoint.
 
 ``` plaintext
 mvn test
@@ -382,6 +382,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This Spring WS example turned out a bit longer than expected but hopefully it helped to explain the core client and endpoint concepts.
+I created this post based on a [StackOverFlow question and answer on logging outgoing HTTP requests using Spring-WS](http://stackoverflow.com/a/28380492/4201470).
 
-Feel free to leave a comment if you enjoyed reading or in case you have any additional questions.
+Hopefully it will help you out during testing/debugging of your Spring-WS project.
