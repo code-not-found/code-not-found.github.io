@@ -106,7 +106,7 @@ public class HttpLoggingUtils extends TransformerObjectSupport {
 
 # Adding Client HTTP Header Logging
 
-We create a `CustomClientInterceptor` by implementing the `ClientInterceptor` interface. We call the `logMessage()` method of our `HttpLoggingUtils` utility class in the `handleRequest()` and `handleResponse()` methods. These are responsible for processing the outgoing request message and incoming response message respectively.
+We start with the client were we create a `CustomClientInterceptor` by implementing the `ClientInterceptor` interface. We call the `logMessage()` method of our `HttpLoggingUtils` utility class in the `handleRequest()` and `handleResponse()` methods. These are responsible for processing the outgoing request message and incoming response message respectively.
 
 > Note that `true` needs to be returned on each handle method otherwise the processing is interrupted.
 
