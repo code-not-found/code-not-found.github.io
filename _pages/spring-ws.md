@@ -16,6 +16,10 @@ modified: 2017-04-18
 
 * [Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html)
 
+## Logging
+
+* [Spring WS - Log Client Server HTTP Headers Example]({{ site.url }}/2017/04/log-client-server-http-headers.html)
+
 ## References
 
 * [Spring Web Services](http://projects.spring.io/spring-ws/)
