@@ -6,16 +6,18 @@ date: 2017-04-23
 modified: 2017-04-23
 categories: [Spring-WS]
 tags: [Client, Consumer, Endpoint, Example, Headers, HTTP, Log, Logging, Maven, Provider, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: true
+published: false
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-Contrary to a framework like for example [Apache CXF](http://cxf.apache.org/), [Spring Web Services](http://projects.spring.io/spring-ws/) does not provide out-of-the box logging of HTTP headers. Reason for this is that Spring-WS tries to be transport-agnostic and as such only ships with [logging at SOAP message level](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#logging).
+[Spring Web Services](http://projects.spring.io/spring-ws/), contrary to a framework like for example [Apache CXF](http://cxf.apache.org/), does not provide out-of-the box logging of HTTP headers. Reason for this is that Spring-WS tries to be transport-agnostic and as such only ships with [logging at SOAP message level](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#logging).
 
-It is however still possible to log the client or server HTTP headers by creating a custom `Interceptor` which offers the possibility to add common pre- and postprocessing behavior without the need of modifying the payload handling code. The following example shows how to log the HTTP headers of messages that are being sent/received using Spring-WS, Spring Boot and Maven.
+It is however still possible to log the client and server HTTP headers by creating a custom `Interceptor` which offers the possibility to add common pre- and postprocessing behavior without the need of modifying the core payload handling code.
+
+The following example shows how to log the HTTP headers of messages that are being sent/received using Spring-WS, Spring Boot and Maven.
 
 Tools used:
 * Spring-WS 2.4
@@ -24,11 +26,11 @@ Tools used:
 
 # General Project Setup
 
-The setup of the project is based on a previous [Spring Web Services example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the W3C WSDL specification.
+The setup of the project is based on a previous [Spring Web Services example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
 # Getting Access to the HTTP Headers
 
-In this example we will get access to the HTTP headers by using the `writeTo()` method from the `WebServiceMessage`. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream)).
+In this example we will get access to the HTTP headers by using the `writeTo()` method from the `WebServiceMessage` interface. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream)).
 
 So first thing to do is to extend the abstract `TransportOutputStream` class as there is no public implementation available that we could use. 
 
