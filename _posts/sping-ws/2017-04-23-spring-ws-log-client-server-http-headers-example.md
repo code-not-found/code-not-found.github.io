@@ -6,7 +6,7 @@ date: 2017-04-23
 modified: 2017-04-23
 categories: [Spring-WS]
 tags: [Client, Consumer, Endpoint, Example, Headers, HTTP, Log, Logging, Maven, Provider, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: false
+published: true
 ---
 
 <figure>
@@ -28,11 +28,9 @@ Tools used:
 
 The setup of the project is based on a previous [Spring Web Services example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
-# Getting Access to the HTTP Headers
-
 In this example we will get access to the HTTP headers by using the `writeTo()` method from the `WebServiceMessage` interface. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream)).
 
-So first thing to do is to extend the abstract `TransportOutputStream` class as there is no public implementation available that we could use. 
+So first thing to do is to extend the abstract `TransportOutputStream` class as there is no public implementation available that we could use. We implement the `addHeader()` method which writes a header that is being added to the `ByteArrayOutputStream`. In addition we also complete the `createOutputStream()` method with logic to create or reuse the classes `ByteArrayOutputStream` variable.
 
 ``` java
 package com.codenotfound.ws.interceptor;
@@ -70,12 +68,164 @@ public class ByteArrayTransportOutputStream extends TransportOutputStream {
 }
 ```
 
+Next we create a small `HttpLoggingUtils` utility class that contains a single static `logMessage()` method that will be called from our custom client and endpoint interceptors.
+
+The method takes as input a `WebServiceMessage` from which the content is written to our `ByteArrayTransportOutputStream` class. As we have extended `TransportOutputStream` the `writeTo()` method will output both the message and the HTTP headers. We then simply format the log message and pass it to our `LOGGER`.
+
+``` java
+package com.codenotfound.ws.interceptor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ws.WebServiceMessage;
+import org.springframework.xml.transform.TransformerObjectSupport;
+
+public class HttpLoggingUtils extends TransformerObjectSupport {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(HttpLoggingUtils.class);
+
+  private static final String NEW_LINE = System.getProperty("line.separator");
+
+  private HttpLoggingUtils() {}
+
+  public static void logMessage(String id, WebServiceMessage webServiceMessage) {
+    try {
+      ByteArrayTransportOutputStream byteArrayTransportOutputStream =
+          new ByteArrayTransportOutputStream();
+      webServiceMessage.writeTo(byteArrayTransportOutputStream);
+
+      String httpMessage = new String(byteArrayTransportOutputStream.toByteArray());
+      LOGGER.info(NEW_LINE + "----------------------------" + NEW_LINE + id + NEW_LINE
+          + "----------------------------" + NEW_LINE + httpMessage + NEW_LINE);
+    } catch (Exception e) {
+      LOGGER.error("Unable to log HTTP message.", e);
+    }
+  }
+}
+```
+
+# Adding Client HTTP Header Logging
+
+We create a `CustomClientInterceptor` by implementing the `ClientInterceptor` interface. We call the `logMessage()` method of our `HttpLoggingUtils` utility class in the `handleRequest()` and `handleResponse()` methods. These are responsible for processing the outgoing request message and incoming response message respectively.
+
+``` java
+package com.codenotfound.ws.interceptor;
+
+import org.springframework.ws.client.WebServiceClientException;
+import org.springframework.ws.client.support.interceptor.ClientInterceptor;
+import org.springframework.ws.context.MessageContext;
+
+public class CustomClientInterceptor implements ClientInterceptor {
+
+  @Override
+  public void afterCompletion(MessageContext arg0, Exception arg1)
+      throws WebServiceClientException {
+    // No-op
+  }
+
+  @Override
+  public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
+    // No-op
+    return true;
+  }
+
+  @Override
+  public boolean handleRequest(MessageContext messageContext) throws WebServiceClientException {
+    HttpLoggingUtils.logMessage("Client Request Message", messageContext.getRequest());
+
+    return true;
+  }
+
+  @Override
+  public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
+    HttpLoggingUtils.logMessage("Client Response Message", messageContext.getResponse());
+
+    return true;
+  }
+}
+```
+
+In order to enable the `CustomClientInterceptor` we define it on the `WebServiceTemplate`, using the `setInterceptors()` method.
+
+``` java
+package com.codenotfound.ws.client;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.client.support.interceptor.ClientInterceptor;
+
+import com.codenotfound.ws.interceptor.CustomClientInterceptor;
+
+@Configuration
+public class ClientConfig {
+
+  @Bean
+  Jaxb2Marshaller jaxb2Marshaller() {
+
+    Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+    jaxb2Marshaller.setContextPath("org.example.ticketagent");
+    return jaxb2Marshaller;
+  }
+
+  @Bean
+  public WebServiceTemplate webServiceTemplate() {
+
+    WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+    webServiceTemplate.setMarshaller(jaxb2Marshaller());
+    webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
+    webServiceTemplate.setDefaultUri("http://localhost:9090/codenotfound/ws/ticketagent");
+
+    // register the CustomEndpointInterceptor
+    ClientInterceptor[] interceptors = new ClientInterceptor[] {new CustomClientInterceptor()};
+    webServiceTemplate.setInterceptors(interceptors);
+
+    return webServiceTemplate;
+  }
+}
+```
+
+# Adding Server HTTP Header Logging
 
 
 
+``` java
+package com.codenotfound.ws.interceptor;
 
+import org.springframework.ws.context.MessageContext;
+import org.springframework.ws.server.EndpointInterceptor;
 
+public class CustomEndpointInterceptor implements EndpointInterceptor {
 
+  @Override
+  public void afterCompletion(MessageContext arg0, Object arg1, Exception arg2) throws Exception {
+    // No-op
+  }
+
+  @Override
+  public boolean handleFault(MessageContext messageContext, Object arg1) throws Exception {
+    // No-op
+    return true;
+  }
+
+  @Override
+  public boolean handleRequest(MessageContext messageContext, Object arg1) throws Exception {
+    HttpLoggingUtils.logMessage("Server Request Message", messageContext.getRequest());
+
+    return true;
+  }
+
+  @Override
+  public boolean handleResponse(MessageContext messageContext, Object arg1) throws Exception {
+    HttpLoggingUtils.logMessage("Server Response Message", messageContext.getResponse());
+
+    return true;
+  }
+}
+```
+
+#Testing the Logging of the Headers
 
 
 
