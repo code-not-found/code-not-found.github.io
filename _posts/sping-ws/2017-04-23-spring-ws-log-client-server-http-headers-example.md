@@ -108,6 +108,8 @@ public class HttpLoggingUtils extends TransformerObjectSupport {
 
 We create a `CustomClientInterceptor` by implementing the `ClientInterceptor` interface. We call the `logMessage()` method of our `HttpLoggingUtils` utility class in the `handleRequest()` and `handleResponse()` methods. These are responsible for processing the outgoing request message and incoming response message respectively.
 
+> Note that `true` needs to be returned on each handle method otherwise the processing is interrupted.
+
 ``` java
 package com.codenotfound.ws.interceptor;
 
@@ -188,9 +190,9 @@ public class ClientConfig {
 
 # Adding Server HTTP Header Logging
 
+For the server-side we create an `CustomEndpointInterceptor` which implements the `EndpointInterceptor` interface. We add the `logMessage()` method to the request and response processing flows respectively.
 
-
-Similar to the client we create an CustomEndpointInterceptor which implements the `EndpointInterceptor` interface.
+> Note that `true` needs to be returned on each handle method otherwise the processing is interrupted. 
 
 ``` java
 package com.codenotfound.ws.interceptor;
@@ -226,6 +228,8 @@ public class CustomEndpointInterceptor implements EndpointInterceptor {
   }
 }
 ```
+
+Now that our custom `EndpointInterceptor` is ready we need to tell Spring WS to use it. We do this by overriding the `addInterceptors()` method of the `WsConfigurerAdapter`. Simply add a new instance of the `CustomEndpointInterceptor` to the `interceptors` list in order to activate it.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -275,7 +279,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 }
 ```
 
-# Testing the Logging of the Headers
+# Testing the Logging of the HTTP Headers
 
 Now that the interceptors are setup, let's use Maven to trigger the included unit test case in which the client makes a web service call to the endpoint.
 
@@ -382,6 +386,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-I created this post based on a [StackOverFlow question and answer on logging outgoing HTTP requests using Spring-WS](http://stackoverflow.com/a/28380492/4201470).
+I created this post based on a [StackOverFlow question and answer on logging outgoing HTTP requests using Spring-WS](http://stackoverflow.com/q/28380277/4201470).
 
-Hopefully it will help you out during testing/debugging of your Spring-WS project.
+Hopefully it will help you out during the testing/debugging of your Spring-WS project.
