@@ -26,6 +26,52 @@ Tools used:
 
 The setup of the project is based on a previous [Spring Web Services example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the W3C WSDL specification.
 
+# Getting Access to the HTTP Headers
+
+In this example we will get access to the HTTP headers by using the `writeTo()` method from the `WebServiceMessage`. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream)).
+
+So first thing to do is to extend the abstract `TransportOutputStream` class as there is no public implementation available that we could use. 
+
+``` java
+package com.codenotfound.ws.interceptor;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import org.springframework.ws.transport.TransportOutputStream;
+
+public class ByteArrayTransportOutputStream extends TransportOutputStream {
+
+  private static final String NEW_LINE = System.getProperty("line.separator");
+
+  private ByteArrayOutputStream byteArrayOutputStream;
+
+  @Override
+  public void addHeader(String name, String value) throws IOException {
+    createOutputStream();
+    String header = name + ": " + value + NEW_LINE;
+    byteArrayOutputStream.write(header.getBytes());
+  }
+
+  @Override
+  protected OutputStream createOutputStream() throws IOException {
+    if (byteArrayOutputStream == null) {
+      byteArrayOutputStream = new ByteArrayOutputStream();
+    }
+    return byteArrayOutputStream;
+  }
+
+  public byte[] toByteArray() {
+    return byteArrayOutputStream.toByteArray();
+  }
+}
+```
+
+
+
+
+
 
 
 
