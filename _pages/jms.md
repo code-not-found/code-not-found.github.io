@@ -40,6 +40,6 @@ The [Java Message Service (JMS) API](http://docs.oracle.com/javaee/6/tutorial/do
 
 Some useful references when studying JMS:
 
-[The Java EE 6 Tutorial - Java Message Service Concepts](http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html)
+* [The Java EE 6 Tutorial - Java Message Service Concepts](http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html)
 
 ---
