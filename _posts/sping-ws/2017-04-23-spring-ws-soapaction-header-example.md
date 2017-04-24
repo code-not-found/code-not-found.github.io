@@ -6,16 +6,16 @@ date: 2017-04-24
 modified: 2017-04-24
 categories: [Spring-WS]
 tags: [Client, Endpoint, Example, Header, Maven, SOAPAction, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: true
+published: false
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528) can be used to indicate the intent of the SOAP HTTP request. SOAP places no restrictions on the format or specificity of the URI or that it is resolvable. An HTTP client MUST use this header field when issuing a SOAP HTTP Request.
+According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528) can be used to indicate the intent of a request. There are no restrictions on the format and a client MUST use this header field when sending a SOAP HTTP request.
 
-The below example illustrates how a client can set the SOAPAction header on a SOAP request. In addition we will illustrate the use of the `@SoapAction` annotation at server side using Spring-WS, Spring Boot and Maven. 
+The below example illustrates how a client can set the SOAPAction header and how an endpoint leverages the `@SoapAction` annotation using Spring-WS, Spring Boot and Maven. 
 
 Tools used:
 * Spring-WS 2.4
