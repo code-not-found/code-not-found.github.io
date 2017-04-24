@@ -1,12 +1,12 @@
 ---
 title: "Spring WS - SOAPAction Header Example"
 permalink: /2017/04/spring-ws-soapaction-header-example.html
-excerpt: "A detailed step-by-step tutorial on how to set a SOAPAction header on a web service request using Spring-WS and Spring Boot."
-date: 2017-04-21
-modified: 2017-04-21
+excerpt: "A detailed step-by-step tutorial on how to set the SOAPAction header using Spring-WS and Spring Boot."
+date: 2017-04-24
+modified: 2017-04-24
 categories: [Spring-WS]
-tags: [Client, Consumer, Endpoint, Example, Header, Maven, Provider, SOAPAction, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: false
+tags: [Client, Endpoint, Example, Header, Maven, SOAPAction, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
+published: true
 ---
 
 <figure>
@@ -15,6 +15,8 @@ published: false
 
 According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528) can be used to indicate the intent of the SOAP HTTP request. SOAP places no restrictions on the format or specificity of the URI or that it is resolvable. An HTTP client MUST use this header field when issuing a SOAP HTTP Request.
 
+The below example illustrates how a client can set the SOAPAction header on a SOAP request. In addition we will illustrate the use of the `@SoapAction` annotation at server side using Spring-WS, Spring Boot and Maven. 
+
 Tools used:
 * Spring-WS 2.4
 * Spring Boot 1.5
@@ -22,8 +24,19 @@ Tools used:
 
 # General Project Setup
 
+The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
+``` xml
 
+```
+
+# Client Set SoapAction 
+
+spring ws soapaction empty 
+
+# Endpoint @SoapAction Annotation 
+
+ the given soapaction does not match an operation 
 
 
 ---
