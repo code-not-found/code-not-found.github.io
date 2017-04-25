@@ -6,7 +6,7 @@ date: 2017-04-24
 modified: 2017-04-24
 categories: [Spring-WS]
 tags: [Client, Endpoint, Example, Header, Maven, SOAPAction, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: false
+published: true
 ---
 
 <figure>
@@ -15,7 +15,7 @@ published: false
 
 According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528) can be used to indicate the intent of a request. There are no restrictions on the format and a client MUST use this header field when sending a SOAP HTTP request.
 
-The below example illustrates how a client can set the SOAPAction header and how an endpoint leverages the `@SoapAction` annotation using Spring-WS, Spring Boot and Maven. 
+The below example illustrates how a client can set the SOAPAction header and how a server can leverage the `@SoapAction` annotation using Spring-WS, Spring Boot and Maven. 
 
 Tools used:
 * Spring-WS 2.4
@@ -26,24 +26,173 @@ Tools used:
 
 The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
-``` xml
+As the example is missing a SOAPAction we will add it in the context of this example.
 
+> Note that Spring-WS will not automatically extract the SOAPAction value from the WSDL file, it needs to be programmed manually as we will see further below.
+
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://example.org/TicketAgent.wsdl11"
+  xmlns:tns="http://example.org/TicketAgent.wsdl11" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsTicketAgent="http://example.org/TicketAgent.xsd"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+  <wsdl:types>
+    <xs:schema xmlns:xsTicketAgent="http://example.org/TicketAgent.xsd"
+      targetNamespace="http://example.org/TicketAgent.xsd">
+
+      <xs:element name="listFlightsRequest" type="xsTicketAgent:tListFlights" />
+      <xs:complexType name="tListFlights">
+        <xs:sequence>
+          <xs:element name="travelDate" type="xs:date" />
+          <xs:element name="startCity" type="xs:string" />
+          <xs:element name="endCity" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:element name="listFlightsResponse" type="xsTicketAgent:tFlightsResponse" />
+      <xs:complexType name="tFlightsResponse">
+        <xs:sequence>
+          <xs:element name="flightNumber" type="xs:integer"
+            minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+
+  <wsdl:message name="listFlightsRequest">
+    <wsdl:part name="body" element="xsTicketAgent:listFlightsRequest" />
+  </wsdl:message>
+
+  <wsdl:message name="listFlightsResponse">
+    <wsdl:part name="body" element="xsTicketAgent:listFlightsResponse" />
+  </wsdl:message>
+
+  <wsdl:portType name="TicketAgent">
+    <wsdl:operation name="listFlights">
+      <wsdl:input message="tns:listFlightsRequest" />
+      <wsdl:output message="tns:listFlightsResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="TicketAgentSoap" type="tns:TicketAgent">
+    <soap:binding style="document"
+      transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="listFlights">
+      <soap:operation soapAction="http://example.com/TicketAgent/listFlights" />
+      <wsdl:input>
+        <soap:body parts="body" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="body" use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>
 ```
 
-# Client Set SoapAction 
+# Client SoapActionCallback
 
-spring ws soapaction empty 
+Spring WS by default sends an empty SOAPAction header. In order to set the value we need to configure it on the `WebServiceTemplate` by passing a `WebServiceMessageCallback` which [gives access to the message after it has been created, but before it is sent](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e1912).
 
-# Endpoint @SoapAction Annotation 
+There is a dedicated `SoapActionCallback` class which already implements a `WebServiceMessageCallback` that sets the SOAPAction header. Just pass a new instance to the `WebServiceTemplate` in order to set it up.
+
+``` java
+package com.codenotfound.ws.client;
+
+import java.math.BigInteger;
+import java.util.List;
+
+import javax.xml.bind.JAXBElement;
+
+import org.example.ticketagent.ObjectFactory;
+import org.example.ticketagent.TFlightsResponse;
+import org.example.ticketagent.TListFlights;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.soap.client.core.SoapActionCallback;
+
+@Component
+public class TicketAgentClient {
+
+  @Autowired
+  private WebServiceTemplate webServiceTemplate;
+
+  @SuppressWarnings("unchecked")
+  public List<BigInteger> listFlights() {
+
+    ObjectFactory factory = new ObjectFactory();
+    TListFlights tListFlights = factory.createTListFlights();
+
+    JAXBElement<TListFlights> request = factory.createListFlightsRequest(tListFlights);
+
+    JAXBElement<TFlightsResponse> response =
+        (JAXBElement<TFlightsResponse>) webServiceTemplate.marshalSendAndReceive(request,
+            new SoapActionCallback("http://example.com/TicketAgent/listFlights"));
+
+    return response.getValue().getFlightNumber();
+  }
+}
+```
+
+# Endpoint @SoapAction Annotation
 
  the given soapaction does not match an operation 
+ 
+``` java
+package com.codenotfound.ws.endpoint;
+
+import java.math.BigInteger;
+
+import javax.xml.bind.JAXBElement;
+
+import org.example.ticketagent.ObjectFactory;
+import org.example.ticketagent.TFlightsResponse;
+import org.example.ticketagent.TListFlights;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ws.WebServiceMessage;
+import org.springframework.ws.context.MessageContext;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import org.springframework.ws.soap.SoapMessage;
+import org.springframework.ws.soap.server.endpoint.annotation.SoapAction;
+
+@Endpoint
+public class TicketAgentEndpoint {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(TicketAgentEndpoint.class);
+
+  @SoapAction(value = "http://example.com/TicketAgent/listFlights")
+  @ResponsePayload
+  public JAXBElement<TFlightsResponse> listFlights(
+      @RequestPayload JAXBElement<TListFlights> request, MessageContext messageContext) {
+
+    // access the SOAPAction
+    WebServiceMessage webServiceMessage = messageContext.getRequest();
+    SoapMessage soapMessage = (SoapMessage) webServiceMessage;
+    LOGGER.info("SOAPAction: '{}'", soapMessage.getSoapAction());
+
+    ObjectFactory factory = new ObjectFactory();
+    TFlightsResponse tFlightsResponse = factory.createTFlightsResponse();
+    tFlightsResponse.getFlightNumber().add(BigInteger.valueOf(101));
+
+    return factory.createListFlightsResponse(tFlightsResponse);
+  }
+}
+```
+
+# Testing the SOAPAction Header
+
 
 
 ---
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-helloworld).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-soapaction-header).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
