@@ -15,7 +15,7 @@ published: true
 
 According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528) can be used to indicate the intent of a request. There are no restrictions on the format and a client MUST use this header field when sending a SOAP HTTP request.
 
-The below example illustrates how a client can set the SOAPAction header and how a server can leverage the `@SoapAction` annotation using Spring-WS, Spring Boot and Maven. 
+The below example illustrates how a client can set the SOAPAction header and how a server endpoint can leverage the `@SoapAction` annotation to receive the request using Spring-WS, Spring Boot and Maven. 
 
 Tools used:
 * Spring-WS 2.4
@@ -26,7 +26,7 @@ Tools used:
 
 The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
-As the example is missing a SOAPAction we will add it in the context of this example.
+As the WSDL is missing a SOAPAction we will add it in the context of this tutorial.
 
 > Note that Spring-WS will not automatically extract the SOAPAction value from the WSDL file, it needs to be programmed manually as we will see further below.
 
@@ -97,6 +97,8 @@ Spring WS by default sends an empty SOAPAction header. In order to set the value
 
 There is a dedicated `SoapActionCallback` class which already implements a `WebServiceMessageCallback` that sets the SOAPAction header. Just pass a new instance to the `WebServiceTemplate` in order to set it up.
 
+Alternatively you can implement your own `WebServiceMessageCallback` class and set the SOAPAction on the `SoapMessage` using the `setSoapAction()` method.
+
 ``` java
 package com.codenotfound.ws.client;
 
@@ -127,6 +129,7 @@ public class TicketAgentClient {
 
     JAXBElement<TListFlights> request = factory.createListFlightsRequest(tListFlights);
 
+    // use SoapActionCallback to add the SOAPAction
     JAXBElement<TFlightsResponse> response =
         (JAXBElement<TFlightsResponse>) webServiceTemplate.marshalSendAndReceive(request,
             new SoapActionCallback("http://example.com/TicketAgent/listFlights"));
@@ -138,8 +141,12 @@ public class TicketAgentClient {
 
 # Endpoint @SoapAction Annotation
 
- the given soapaction does not match an operation 
- 
+The [endpoint mapping](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#server-endpoint-mapping) is responsible for mapping incoming messages to appropriate endpoints. The `@SoapAction` annotation marks methods with a particular SOAP Action. Whenever a message comes in which has this SOAPAction header, the method will be invoked.
+
+In this example instead of the `@PayloadRoot` mapping, we will use `@SoapAction` to trigger the `listFlights()` method of our `TicketAgentEndpoint` class. The annotation takes as `value` the SOAPAction string.
+
+The value of the SOAPAction header can be accessed within the endpoint logic by calling the `getSoapAction()` method on the request `SoapMessage`. Just add the `MessageContext` as input parameter in order to retrieve it.
+
 ``` java
 package com.codenotfound.ws.endpoint;
 
@@ -165,12 +172,13 @@ public class TicketAgentEndpoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(TicketAgentEndpoint.class);
 
+  // map a message to this endpoint based on the SOAPAction
   @SoapAction(value = "http://example.com/TicketAgent/listFlights")
   @ResponsePayload
   public JAXBElement<TFlightsResponse> listFlights(
       @RequestPayload JAXBElement<TListFlights> request, MessageContext messageContext) {
 
-    // access the SOAPAction
+    // access the SOAPAction value
     WebServiceMessage webServiceMessage = messageContext.getRequest();
     SoapMessage soapMessage = (SoapMessage) webServiceMessage;
     LOGGER.info("SOAPAction: '{}'", soapMessage.getSoapAction());
