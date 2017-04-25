@@ -196,7 +196,7 @@ public class TicketAgentEndpoint {
 
 Now that we have setup the SOAPAction in both client and server let's write some unit test cases to test the correct working.
 
-For the client we will use a `MockWebServiceServer` in combination with a custom `SoapActionMatcher` in order to verify that the SOAPAction header has been set. Based on following [Stack Overflow example](http://stackoverflow.com/a/31202927/4201470) we implment the `RequestMatcher` inteface and assert that an expected SOAPAction is present.
+For the client we will use a `MockWebServiceServer` in combination with a custom `SoapActionMatcher` in order to verify that the SOAPAction header has been set. Based on following [Stack Overflow example](http://stackoverflow.com/a/31202927/4201470) we implement the [RequestMatcher interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#client-test-request-matcher) and assert that an expected SOAPAction is present.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -230,7 +230,7 @@ public class SoapActionMatcher implements RequestMatcher {
 }
 ```
 
-In the test case we add the `SoapActionMatcher` as expected to the `MockWebServiceServer` and check the result by calling the `verify()` method. 
+In the test case we add the `SoapActionMatcher` as expected match to the `MockWebServiceServer` and check the result by calling the `verify()` method. 
 
 ``` java
 package com.codenotfound.ws.client;
@@ -292,6 +292,106 @@ public class TicketAgentClientTest {
   }
 }
 ```
+
+The endpoint setup is tested by first creating a custom `SoapActionCreator` which implements the [RequestCreator interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#server-test-request-creator). This is done to provide a `WebServiceMessage` on which the SOAPAction has been set as this is not the case with the default request creators.
+
+Simply create the message using the supplied XML `Source` and then set the SOAPAction using the `setSoapAction()` method.
+
+``` java
+package com.codenotfound.ws.endpoint;
+
+import java.io.IOException;
+
+import javax.xml.transform.Source;
+
+import org.springframework.ws.WebServiceMessage;
+import org.springframework.ws.WebServiceMessageFactory;
+import org.springframework.ws.soap.SoapMessage;
+import org.springframework.ws.test.server.RequestCreator;
+import org.springframework.ws.test.support.creator.PayloadMessageCreator;
+
+public class SoapActionCreator implements RequestCreator {
+
+  private final Source payload;
+
+  private final String soapAction;
+
+  public SoapActionCreator(Source payload, String soapAction) {
+    this.payload = payload;
+    this.soapAction = soapAction;
+  }
+
+  @Override
+  public WebServiceMessage createRequest(WebServiceMessageFactory webServiceMessageFactory)
+      throws IOException {
+    WebServiceMessage webServiceMessage =
+        new PayloadMessageCreator(payload).createMessage(webServiceMessageFactory);
+
+    SoapMessage soapMessage = (SoapMessage) webServiceMessage;
+    soapMessage.setSoapAction(soapAction);
+
+    return webServiceMessage;
+  }
+}
+```
+
+The test calls the `sendRequest()` of the `MockWebServiceClient` with the custom `SoapActionCreator` which results in a a request message for the endpoint to consume. If the correct SOAPAction is present the request is mapped to the endpoint and a response is returned.
+
+A log statement with the SOAPAction value will also be created.
+
+
+``` java
+package com.codenotfound.ws.endpoint;
+
+import static org.springframework.ws.test.server.ResponseMatchers.payload;
+
+import javax.xml.transform.Source;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.ws.test.server.MockWebServiceClient;
+import org.springframework.xml.transform.StringSource;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class TicketAgentEndpointTest {
+
+  @Autowired
+  private ApplicationContext applicationContext;
+
+  private MockWebServiceClient mockClient;
+
+  @Before
+  public void createClient() {
+    mockClient = MockWebServiceClient.createClient(applicationContext);
+  }
+
+  @Test
+  public void testListFlights() {
+    Source requestPayload =
+        new StringSource("<ns3:listFlightsRequest xmlns:ns3=\"http://example.org/TicketAgent.xsd\">"
+            + "</ns3:listFlightsRequest>");
+
+    Source responsePayload =
+        new StringSource("<v1:listFlightsResponse xmlns:v1=\"http://example.org/TicketAgent.xsd\">"
+            + "<flightNumber>101</flightNumber>" + "</v1:listFlightsResponse>");
+
+    mockClient
+        .sendRequest(
+            new SoapActionCreator(requestPayload, "http://example.com/TicketAgent/listFlights"))
+        .andExpect(payload(responsePayload));
+  }
+}
+```
+
+
+
+
 
 ---
 
