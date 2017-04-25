@@ -389,9 +389,43 @@ public class TicketAgentEndpointTest {
 }
 ```
 
+Run the test cases by calling below Maven command.
 
+``` plaintext
+mvn test
+```
 
+The result should be a successful run as shown below. 
 
+``` plaintext
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.5.2.RELEASE)
+
+11:19:34.091 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on cnf-pc with PID 4524 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-soapaction-header)
+11:19:34.093 [main] INFO  c.c.ws.client.TicketAgentClientTest - No active profile set, falling back to default profiles: default
+11:19:36.002 [main] INFO  c.c.ws.client.TicketAgentClientTest - Started TicketAgentClientTest in 2.166 seconds (JVM running for 2.858)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.381 sec - in com.codenotfound.ws.client.TicketAgentClientTest
+Running com.codenotfound.ws.endpoint.TicketAgentEndpointTest
+11:19:36.177 [main] INFO  c.c.ws.endpoint.TicketAgentEndpoint - SOAPAction: '"http://example.com/TicketAgent/listFlights"'
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 sec - in com.codenotfound.ws.endpoint.TicketAgentEndpointTest
+
+Results :
+
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 4.883 s
+[INFO] Finished at: 2017-04-25T11:19:36+02:00
+[INFO] Final Memory: 17M/222M
+[INFO] ------------------------------------------------------------------------
+```
 
 ---
 
