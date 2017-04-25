@@ -22,7 +22,7 @@ modified: 2017-04-18
 
 ## Logging
 
-* [Spring WS - Log Client Server HTTP Headers Example]({{ site.url }}/2017/04/log-client-server-http-headers.html)
+* [Spring WS - Log Client Server HTTP Headers Example]({{ site.url }}/2017/04/spring-ws-log-client-server-http-headers.html)
 
 ## References
 
