@@ -91,7 +91,7 @@ As the WSDL is missing a SOAPAction we will add it in the context of this tutori
 </wsdl:definitions>
 ```
 
-# Client SoapActionCallback
+# Client SoapActionCallback Setup
 
 Spring WS by default sends an empty SOAPAction header. In order to set the value we need to configure it on the `WebServiceTemplate` by passing a `WebServiceMessageCallback` which gives access to the message after it has been created, but before it is sent.
 
@@ -432,6 +432,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Spring WS provides support for setting and mapping the SOAPAction header as we have illustrated in above example.
+Spring WS provides good support for setting and mapping the SOAPAction header as we have illustrated in above example.
 
 If you have any additional thoughts let me know down below. Thanks!
