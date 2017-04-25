@@ -337,9 +337,6 @@ public class SoapActionCreator implements RequestCreator {
 
 The test calls the `sendRequest()` of the `MockWebServiceClient` with the custom `SoapActionCreator` which results in a a request message for the endpoint to consume. If the correct SOAPAction is present the request is mapped to the endpoint and a response is returned.
 
-A log statement with the SOAPAction value will also be created.
-
-
 ``` java
 package com.codenotfound.ws.endpoint;
 
@@ -395,7 +392,7 @@ Run the test cases by calling below Maven command.
 mvn test
 ```
 
-The result should be a successful run as shown below. 
+The result should be a successful run as shown below. Note that a log statement with the SOAPAction value is created by the endpoint.
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -411,7 +408,7 @@ The result should be a successful run as shown below.
 11:19:36.002 [main] INFO  c.c.ws.client.TicketAgentClientTest - Started TicketAgentClientTest in 2.166 seconds (JVM running for 2.858)
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.381 sec - in com.codenotfound.ws.client.TicketAgentClientTest
 Running com.codenotfound.ws.endpoint.TicketAgentEndpointTest
-11:19:36.177 [main] INFO  c.c.ws.endpoint.TicketAgentEndpoint - SOAPAction: '"http://example.com/TicketAgent/listFlights"'
+11:19:36.177 [main] INFO  c.c.ws.endpoint.TicketAgentEndpoint - SOAPAction header: "http://example.com/TicketAgent/listFlights"
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 sec - in com.codenotfound.ws.endpoint.TicketAgentEndpointTest
 
 Results :
@@ -435,6 +432,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This Spring WS example turned out a bit longer than expected but hopefully it helped to explain the core client and endpoint concepts.
+Spring WS provides support for setting and mapping the SOAPAction header as we have illustrated in above example.
 
-Feel free to leave a comment if you enjoyed reading or in case you have any additional questions.
+If you have any additional thoughts let me know down below. Thanks!
