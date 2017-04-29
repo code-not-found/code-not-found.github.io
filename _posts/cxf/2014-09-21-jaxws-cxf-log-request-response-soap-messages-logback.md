@@ -7,6 +7,7 @@ categories: [Apache CXF]
 tags: [Apache CXF, CXF, Feature, Interceptor, JAX-WS, Log, logback, logging, Messages, Request, Response, SOAP]
 redirect_from:
   - /2014/09/jaxws-cxf-logging-request-response-soap-messages-logback.html
+  - /2014/09/jaxws-cxf-logging-inbound-outbound-soap-messages-logback.html
 ---
 
 <figure>

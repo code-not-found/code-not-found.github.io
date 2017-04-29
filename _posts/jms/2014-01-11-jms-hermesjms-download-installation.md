@@ -7,6 +7,7 @@ categories: [JMS]
 tags: [Configuration, Download, Hermes JMS, HermesJMS, Installation, Java, JMS, Tutorial, Unix, Windows]
 redirect_from:
   - /2014/01/jms-install-hermesjms-windows.html
+  - /2014/01/jms-installing-hermesjms.html
 ---
 
 <figure>
