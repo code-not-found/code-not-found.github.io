@@ -6,14 +6,14 @@ date: 2017-04-24
 modified: 2017-04-24
 categories: [Spring-WS]
 tags: [Basic Authentication, Client, Endpoint, Example, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: true
+published: false
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) is a method for a HTTP client to provide a user name and password when making a request. There is no [confidentiality](https://en.wikipedia.org/wiki/Confidentiality) protection for the transmitted credentials. therefore it is strongly advised to use it in conjunction with HTTPS.
+[Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) (BA) is a method for a HTTP client to provide a user name and password when making a request. There is no [confidentiality](https://en.wikipedia.org/wiki/Confidentiality) protection for the transmitted credentials. therefore it is strongly advised to use it in conjunction with HTTPS.
 
 The credentials are provided as an HTTP header field called <var>'Authorization'</var> which is constructed as follows:
 
@@ -23,18 +23,18 @@ The credentials are provided as an HTTP header field called <var>'Authorization'
 codenotofound:p455w0rd
 ```
 
-2. The resulting string is encoded into an [octet sequence](https://tools.ietf.org/html/rfc7617#section-2) and then [Base64 encoded](https://tools.ietf.org/html/rfc4648#section-4). You can use an [online Base64 encoder/decoder](https://www.base64encode.org/) to check below value.
+2. The resulting string is encoded into an [octet sequence](https://tools.ietf.org/html/rfc7617#section-2) and then [Base64 encoded](https://tools.ietf.org/html/rfc4648#section-4). You can use an [online Base64 decoder](https://www.base64decode.org/) to check below value.
 
 ``` plaintext
 Y29kZW5vdG9mb3VuZDpwNDU1dzByZA==
 ```
-3. The authorization method and a space i.e. "Basic " is then put before the encoded string.
+3. The authorization method and a space i.e. <kbd>"Basic "</kbd> is then put before the encoded string.
 
 ``` plaintext
 Authorization: Basic Y29kZW5vdG9mb3VuZDpwNDU1dzByZA==
 ```
 
-Instead of writing custom code in order to create and check the authorization header we will configure Spring WS to do the work for us. The below example illustrates how a client and server can be configured to apply basic authentication using Spring-WS, Spring Boot and Maven. 
+Instead of writing custom code to create and check the HTTP authorization header we will configure Spring WS to do the work for us. The below example illustrates how a client and server can be configured to apply basic access authentication using Spring-WS, Spring Boot and Maven. 
 
 Tools used:
 * Spring-WS 2.4
