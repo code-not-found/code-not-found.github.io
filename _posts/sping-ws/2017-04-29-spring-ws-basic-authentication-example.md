@@ -139,7 +139,7 @@ In this example we use the Apache HTTP Client, as it comes with built-in support
 
 The `@Value` annotation is used to inject the <var>name</var> and <var>password</var> values from the application properties YAML file which are set on the `UsernamePasswordCredentials` bean.
 
-We finish be setting the `HttpComponentsMessageSender` on our `WebServiceTemplate`.
+We finish by setting the `HttpComponentsMessageSender` on our `WebServiceTemplate`.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -178,7 +178,7 @@ public class ClientConfig {
     webServiceTemplate.setMarshaller(jaxb2Marshaller());
     webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
     webServiceTemplate.setDefaultUri("http://localhost:9090/codenotfound/ws/ticketagent");
-    // set
+    // set the Apache HttpClient which provides support for basic authentication
     webServiceTemplate.setMessageSender(httpComponentsMessageSender());
 
     return webServiceTemplate;
@@ -187,6 +187,7 @@ public class ClientConfig {
   @Bean
   public HttpComponentsMessageSender httpComponentsMessageSender() {
     HttpComponentsMessageSender httpComponentsMessageSender = new HttpComponentsMessageSender();
+    // set the basic authorization credentials
     httpComponentsMessageSender.setCredentials(usernamePasswordCredentials());
 
     return httpComponentsMessageSender;
@@ -194,6 +195,7 @@ public class ClientConfig {
 
   @Bean
   public UsernamePasswordCredentials usernamePasswordCredentials() {
+    // pass the user name and password to be used
     return new UsernamePasswordCredentials(name, password);
   }
 }
@@ -205,7 +207,7 @@ The Spring Boot security starter that we added to our Maven setup has a dependen
 
 The default user that will be configured has as name <var>'user'</var>. The password is randomly generated at startup.
 
-Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) in your application properties file. In this example we set the <var>'user'</var> to <kbd>codenotfound</kbd> and the <var>'password'</var> to <kbd>p455w0rd</kbd> using the YAML variant as shown below. 
+Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) in your application properties file. In this example we set the <var>'user'</var> to <kbd>"codenotfound"</kbd> and the <var>'password'</var> to <kbd>"p455w0rd"</kbd> using the YAML variant as shown below. 
 
 ``` yml
 security:
@@ -216,13 +218,13 @@ security:
 
 # Testing the Basic Authentication Configuration
 
-In order to test the configuration we just run the `SpringWsApplicationTests` unit test case unsing the following Maven command.
+In order to test the configuration we just run the `SpringWsApplicationTests` unit test case by issuing the following Maven command.
 
 ``` plaintext
 mvn test
 ```
 
-The result is shown below. By default the basic authentication header is not logged but if you want you can add some custom code in order to have [Spring-WS log the client HTTP headers]({{ site.url }}/2017/04/spring-ws-log-client-server-http-headers.html).
+The test case will run successfully as basic authentication is correctly configured on both sides. By default the basic authentication header is not logged but if you want you can add some custom code in order to have [Spring-WS log all the client HTTP headers]({{ site.url }}/2017/04/spring-ws-log-client-server-http-headers.html).
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -251,7 +253,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
-Change the password in the <var>application.yml</var> file to a different value and rerun the test case. This time the test case will fail as a <var>401 Unauthorized</var> is returned by our service.
+Now change the password in the <var>application.yml</var> file to a different value and rerun the test case. This time the test case will fail as a <var>401 Unauthorized</var> is returned by our service.
 
 ``` plaintext
   .   ____          _            __ _ _
