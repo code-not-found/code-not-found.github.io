@@ -46,6 +46,6 @@ The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/
 
 * [GitHub - spring-projects/spring-kafka](https://github.com/spring-projects/spring-kafka)
 
-* [StackOverflow - Spring-Kafka Questions](http://stackoverflow.com/questions/tagged/spring-kafka)
+* [Stack Overflow - Spring-Kafka Questions](http://stackoverflow.com/questions/tagged/spring-kafka)
 
 ---

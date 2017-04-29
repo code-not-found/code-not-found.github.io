@@ -32,6 +32,6 @@ modified: 2017-04-18
 
 * [GitHub - spring-projects/spring-ws](https://github.com/spring-projects/spring-ws)
 
-* [StackOverflow - Spring-WS Questions](http://stackoverflow.com/questions/tagged/spring-ws)
+* [Stack Overflow - Spring-WS Questions](http://stackoverflow.com/questions/tagged/spring-ws)
 
 ---
