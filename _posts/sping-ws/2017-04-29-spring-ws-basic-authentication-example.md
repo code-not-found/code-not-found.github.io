@@ -6,7 +6,7 @@ date: 2017-04-24
 modified: 2017-04-24
 categories: [Spring-WS]
 tags: [Basic Authentication, Client, Endpoint, Example, HTTP, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: true
+published: false
 ---
 
 <figure>
@@ -28,10 +28,10 @@ The credentials are provided as an HTTP header field called <var>'Authorization'
     ``` plaintext
     Y29kZW5vdGZvdW5kOnA0NTV3MHJk
     ```
-3. The authorization method and a space i.e. <kbd>"Basic "</kbd> is then put before the encoded string.
+3. The authorization method and a space (<kbd>"Basic "</kbd>) is then put before the encoded string.
 
     ``` plaintext
-    Authorization: Basic Y29kZW5vdGZvdW5kOnA0NTV3MHJk
+    Basic Y29kZW5vdGZvdW5kOnA0NTV3MHJk
     ```
 
 Instead of writing custom code to create and check the HTTP authorization header we will configure Spring WS to do the work for us. The below example illustrates how a client and server can be configured to apply basic access authentication using Spring-WS, Spring Boot and Maven. 
@@ -47,9 +47,7 @@ The setup of the project is based on a previous [Spring WS tutorial]({{ site.url
 
 There are two additional dependencies that we need to add to the Maven POM file in order for our example to work.
 
-The first one is `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) dependency which will be used for the server setup.
-
-The second one is the Apache `httpclient` dependency that we need for the client setup part.
+The first one is `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) dependency which will be used for the server setup. The second one is the Apache `httpclient` dependency that we need for the client setup part.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -142,11 +140,11 @@ The second one is the Apache `httpclient` dependency that we need for the client
 
 # Setup Server Basic Authentication
 
-The Spring Boot security starter that we added to our Maven setup has a dependency on Spring Security. If Spring Security is on the classpath then [web applications will be secured by default with HTTP basic authentication](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security) on all HTTP endpoints. In other words our `TicketAgentEndpoint` is secured with basic auth.
+The Spring Boot security starter that we added to our Maven setup has a dependency on Spring Security. If Spring Security is on the classpath then [web applications will be secured by default with HTTP basic authentication](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security) on all HTTP endpoints. In other words our `TicketAgentEndpoint` is now secured with basic auth.
 
-The default user that will be configured has as name <var>user</var>. The password is randomly generated at startup. Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) in your application properties file.
+The default user that will be configured has as name <var>'user'</var>. The password is randomly generated at startup.
 
-In this example set <var>'security:user'</var> name and password properties using the YAML variant as shown below. 
+Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) in your application properties file. In this example we set the <var>'user'</var> to <kbd>codenotfound</kbd> and the <var>'password'</var> to <kbd>p455w0rd</kbd> using the YAML variant as shown below. 
 
 ``` yml
 security:
