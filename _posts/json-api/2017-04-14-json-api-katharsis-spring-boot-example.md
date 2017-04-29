@@ -6,6 +6,8 @@ date: 2017-04-21
 modified: 2017-04-21
 categories: [Spring Kafka]
 tags: [Example, Hello World, JSON API, Katharsis, Maven, Spring, Spring Boot, Tutorial]
+redirect_from:
+  - /2017/04/json-api-katharsis-spring-boot-example.html
 published: true
 ---
 

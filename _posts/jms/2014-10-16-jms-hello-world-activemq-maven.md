@@ -7,6 +7,7 @@ categories: [JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Example, Hello World, Java Message Service, JMS, Maven]
 redirect_from:
   - /2014/10/jms-hello-world-using-activemq.html
+  - /2014/04/jms-spring-hello-world-using-activemq.html
 ---
 
 <figure>

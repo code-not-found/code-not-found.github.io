@@ -9,6 +9,7 @@ last_modified_at: 2017-03-26
 redirect_from:
   - /2013/07/jaxb-unmarshal-xml-string.html
   - /2013/07/jaxb-unmarshal-an-xml-string.html
+  - /2013/07/jaxb-unmarshalling-xml-string.html
 ---
 
 <figure>
