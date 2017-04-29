@@ -6,7 +6,7 @@ date: 2017-04-24
 modified: 2017-04-24
 categories: [Spring-WS]
 tags: [Basic Authentication, Client, Endpoint, Example, HTTP, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: false
+published: true
 ---
 
 <figure>
@@ -131,12 +131,73 @@ The first one is `spring-boot-starter-security` [Spring Boot starter](https://gi
 </project>
 ```
 
+# Setup Client Basic Authentication
+
+There are [two implementations of the WebServiceMessageSender interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e1793) for sending messages via HTTP. The default implementation is the `HttpUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the Apache [HttpComponents Client](https://hc.apache.org/httpcomponents-client-ga/).
+
+In this example we use the Apache HTTP Client, as it comes with built-in support for setting the basic authentication header. We update the `ClientConfig` class with a bean that creates an `HttpComponentsMessageSender` on which we set a `UsernamePasswordCredentials` bean. This bean will automatically create the HTTP basic authentication header.
+
+The `@Value` annotation is used to inject the <var>name</var> and <var>password</var> values from the application properties YAML file which are set on the `UsernamePasswordCredentials` bean.
+
+We finish be setting the `HttpComponentsMessageSender` on our `WebServiceTemplate`.
+
+``` java
+package com.codenotfound.ws.client;
+
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 
 
-# Setup Client Basic Authentication 
 
+@Configuration
+public class ClientConfig {
 
+  @Value("${client.user.name}")
+  private String name;
 
+  @Value("${client.user.password}")
+  private String password;
+
+  @Bean
+  Jaxb2Marshaller jaxb2Marshaller() {
+
+    Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
+    jaxb2Marshaller.setContextPath("org.example.ticketagent");
+    return jaxb2Marshaller;
+  }
+
+  @Bean
+  public WebServiceTemplate webServiceTemplate() {
+
+    WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+    webServiceTemplate.setMarshaller(jaxb2Marshaller());
+    webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
+    webServiceTemplate.setDefaultUri("http://localhost:9090/codenotfound/ws/ticketagent");
+    // set
+    webServiceTemplate.setMessageSender(httpComponentsMessageSender());
+
+    return webServiceTemplate;
+  }
+
+  @Bean
+  public HttpComponentsMessageSender httpComponentsMessageSender() {
+    HttpComponentsMessageSender httpComponentsMessageSender = new HttpComponentsMessageSender();
+    httpComponentsMessageSender.setCredentials(usernamePasswordCredentials());
+
+    return httpComponentsMessageSender;
+  }
+
+  @Bean
+  public UsernamePasswordCredentials usernamePasswordCredentials() {
+    return new UsernamePasswordCredentials(name, password);
+  }
+}
+```
 
 # Setup Server Basic Authentication
 
@@ -155,7 +216,83 @@ security:
 
 # Testing the Basic Authentication Configuration
 
+In order to test the configuration we just run the `SpringWsApplicationTests` unit test case unsing the following Maven command.
 
+``` plaintext
+mvn test
+```
+
+The result is shown below. By default the basic authentication header is not logged but if you want you can add some custom code in order to have [Spring-WS log the client HTTP headers]({{ site.url }}/2017/04/spring-ws-log-client-server-http-headers.html).
+
+``` plaintext
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.5.3.RELEASE)
+
+21:06:58.016 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 2176 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-basic-authentication)
+21:06:58.018 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
+21:07:01.275 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.568 seconds (JVM running for 4.234)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.039 sec - in com.codenotfound.ws.SpringWsApplicationTests
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 7.454 s
+[INFO] Finished at: 2017-04-29T21:07:01+02:00
+[INFO] Final Memory: 27M/217M
+[INFO] ------------------------------------------------------------------------
+```
+
+Change the password in the <var>application.yml</var> file to a different value and rerun the test case. This time the test case will fail as a <var>401 Unauthorized</var> is returned by our service.
+
+``` plaintext
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.5.3.RELEASE)
+
+21:52:41.786 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 5908 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-basic-authentication)
+21:52:41.789 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
+21:52:45.159 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.666 seconds (JVM running for 4.281)
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.004 sec <<< FAILURE! - in com.codenotfound.ws.SpringWsApplicationTests
+testListFlights(com.codenotfound.ws.SpringWsApplicationTests)  Time elapsed: 0.263 sec  <<< ERROR!
+org.springframework.ws.client.WebServiceTransportException:  [401]
+        at org.springframework.ws.client.core.WebServiceTemplate.handleError(WebServiceTemplate.java:699)
+        at org.springframework.ws.client.core.WebServiceTemplate.doSendAndReceive(WebServiceTemplate.java:609)
+        at org.springframework.ws.client.core.WebServiceTemplate.sendAndReceive(WebServiceTemplate.java:555)
+        at org.springframework.ws.client.core.WebServiceTemplate.marshalSendAndReceive(WebServiceTemplate.java:390)
+        at org.springframework.ws.client.core.WebServiceTemplate.marshalSendAndReceive(WebServiceTemplate.java:383)
+        at org.springframework.ws.client.core.WebServiceTemplate.marshalSendAndReceive(WebServiceTemplate.java:373)
+        at com.codenotfound.ws.client.TicketAgentClient.listFlights(TicketAgentClient.java:30)
+        at com.codenotfound.ws.SpringWsApplicationTests.testListFlights(SpringWsApplicationTests.java:26)
+
+
+Results :
+
+Tests in error:
+  SpringWsApplicationTests.testListFlights:26 ╗ WebServiceTransport  [401]
+
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 6.460 s
+[INFO] Finished at: 2017-04-29T21:52:45+02:00
+[INFO] Final Memory: 18M/227M
+[INFO] ------------------------------------------------------------------------
+```
 
 ---
 
@@ -165,6 +302,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Spring WS provides good support for setting and mapping the SOAPAction header as we have illustrated in above example.
+Setting up basic authentication on the client side using Spring WS is pretty simple when using the Apache client. The server side is even easier when running on Spring Boot.
 
-If you have any additional thoughts let me know down below. Thanks!
+Drop me a line if you found the example useful. Or let me know in case of questions.
