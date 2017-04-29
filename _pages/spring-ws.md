@@ -18,7 +18,11 @@ modified: 2017-04-18
 
 ## Headers
 
-* [Spring WS - SOAPAction Header Example](https://www.codenotfound.com/2017/04/spring-ws-soapaction-header-example.html)
+* [Spring WS - SOAPAction Header Example]({{ site.url }}/2017/04/spring-ws-soapaction-header-example.html)
+
+## Security
+
+* [Spring WS - Basic Authentication Example]({{ site.url }}/2017/04/spring-ws-basic-authentication-example.html)
 
 ## Logging
 
