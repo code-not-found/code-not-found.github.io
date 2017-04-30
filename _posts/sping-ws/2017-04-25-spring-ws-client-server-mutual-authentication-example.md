@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to setup mutual authentication
 date: 2017-04-25
 modified: 2017-04-25
 categories: [Spring-WS]
-tags: [Certificate, Client, Endpoint, Example, Header, HTTPS, Maven, Mutual Authentication, Server, SOAP, Spring, Spring Boot, Spring Web Services, Spring-WS, SSL, TLS, Tutorial]
+tags: [Certificate, Client, Endpoint, Example, Header, HTTPS, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, SSL, TLS, Tutorial]
 published: false
 ---
 
