@@ -28,9 +28,9 @@ Tools used:
 
 The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) but the basic <var>helloworld.wsdl</var> has been replaced by a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
-Security related features of SPring-WS are not part of the `spring-boot-starter-web-services` Spring Boot starter. As such we have to add two extra dependencies to the Maven POM file in order for the example to work.
+Security related features of Spring-WS are not part of the `spring-boot-starter-web-services` Spring Boot starter. As such we have to add two extra dependencies to the Maven POM file in order for the example to work.
 
-The first one is `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) dependency which will be used for the server setup. The second one is the Apache `httpclient` dependency that we need for the client setup part.
+First the `spring-ws-security` dependency which contains a `FactoryBean` for setting up the client's `TrustStore`. Second the `spring-ws-support` dependency which contains a `MessageSender` that adds support for (self-signed) HTTPS certificates.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -112,7 +112,33 @@ The first one is `spring-boot-starter-security` [Spring Boot starter](https://gi
 </project>
 ```
 
-# Setup Client Basic Authentication
+Since applications can communicate either with or without TLS (or SSL), it is necessary for the client to indicate to the server the setup of a TLS connection. In order to achieve this we will use port 9443 instead of port 9090.
+
+Once the client and server have agreed to use TLS, they negotiate a stateful connection by using a handshaking procedure. During this procedure, the server usually then sends back its identification in the form of a [digital certificate](https://en.wikipedia.org/wiki/Public_key_certificate). The certificate contains the server name, the trusted certificate authority (CA) and the server's public encryption key.
+
+Java programs store certificates in a repository called Java KeyStore (JKS). To generate the keystores and certificates we use [keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html) which is a key and certificate management utility that ships with Java.
+
+Open a command prompt at the root of your Maven project and execute following statement to generate a [public/private keypair](https://en.wikipedia.org/wiki/Public-key_cryptography) for the server side. The result will be a <var>server-keystore.jks</var> Java Keystore file that contains a key pair caller <var>'server-keypair'</var>.
+
+``` plaintext
+keytool -genkeypair -alias server-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=server,O=codenotfound.com" -keypass server-key-p455w0rd -keystore server-keystore.jks -storepass server-keystore-p455w0rd
+```
+
+If you would like to visualize the content of the keystore you can use a tool like [Portecle](http://portecle.sourceforge.net/). Navigate to the <var>server-keystore.jks</var> JKS file and when prompted enter the keystore password (in the above command we used <kbd>"server-keystore-p455w0rd"</kbd>). Double click on the <var>'server-keypair'</var> entry and the result should be should be similar to what is shown below.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/spring-ws/server-certificate-portecle.png" alt="server certificate portecle">
+</figure>
+
+From the keypair we will export the servers public certificate. 
+
+
+
+
+
+# Setup HTTPS on the Client
+
+As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate`. 
 
 There are [two implementations of the WebServiceMessageSender interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e1793) for sending messages via HTTP. The default implementation is the `HttpUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the Apache [HttpComponents Client](https://hc.apache.org/httpcomponents-client-ga/).
 
@@ -125,59 +151,85 @@ We finish by setting the `HttpComponentsMessageSender` on our `WebServiceTemplat
 ``` java
 package com.codenotfound.ws.client;
 
-import org.apache.http.auth.UsernamePasswordCredentials;
+import javax.net.ssl.HostnameVerifier;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
-import org.springframework.ws.transport.http.HttpComponentsMessageSender;
-
-
+import org.springframework.ws.soap.security.support.KeyStoreFactoryBean;
+import org.springframework.ws.soap.security.support.TrustManagersFactoryBean;
+import org.springframework.ws.transport.http.HttpsUrlConnectionMessageSender;
 
 @Configuration
 public class ClientConfig {
 
-  @Value("${client.user.name}")
-  private String name;
+  @Value("${client.default-uri}")
+  private String defaultUri;
 
-  @Value("${client.user.password}")
-  private String password;
+  @Value("${client.ssl.trust-store}")
+  private Resource trustStore;
+
+  @Value("${client.ssl.trust-store-password}")
+  private String trustStorePassword;
 
   @Bean
   Jaxb2Marshaller jaxb2Marshaller() {
-
     Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
     jaxb2Marshaller.setContextPath("org.example.ticketagent");
+
     return jaxb2Marshaller;
   }
 
   @Bean
-  public WebServiceTemplate webServiceTemplate() {
-
+  public WebServiceTemplate webServiceTemplate() throws Exception {
     WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
     webServiceTemplate.setMarshaller(jaxb2Marshaller());
     webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
-    webServiceTemplate.setDefaultUri("http://localhost:9090/codenotfound/ws/ticketagent");
-    // set the Apache HttpClient which provides support for basic authentication
-    webServiceTemplate.setMessageSender(httpComponentsMessageSender());
+    webServiceTemplate.setDefaultUri(defaultUri);
+    // set a httpsUrlConnectionMessageSender to handle the HTTPS session
+    webServiceTemplate.setMessageSender(httpsUrlConnectionMessageSender());
 
     return webServiceTemplate;
   }
 
   @Bean
-  public HttpComponentsMessageSender httpComponentsMessageSender() {
-    HttpComponentsMessageSender httpComponentsMessageSender = new HttpComponentsMessageSender();
-    // set the basic authorization credentials
-    httpComponentsMessageSender.setCredentials(usernamePasswordCredentials());
+  public HttpsUrlConnectionMessageSender httpsUrlConnectionMessageSender() throws Exception {
+    HttpsUrlConnectionMessageSender httpsUrlConnectionMessageSender =
+        new HttpsUrlConnectionMessageSender();
+    httpsUrlConnectionMessageSender.setTrustManagers(trustManagersFactoryBean().getObject());
+    // allows the client to skip host name verification as otherwise following error is thrown:
+    // java.security.cert.CertificateException: No name matching localhost found
+    httpsUrlConnectionMessageSender.setHostnameVerifier(new HostnameVerifier() {
+      @Override
+      public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
+        if ("localhost".equals(hostname)) {
+          return true;
+        }
+        return false;
+      }
+    });
 
-    return httpComponentsMessageSender;
+    return httpsUrlConnectionMessageSender;
   }
 
   @Bean
-  public UsernamePasswordCredentials usernamePasswordCredentials() {
-    // pass the user name and password to be used
-    return new UsernamePasswordCredentials(name, password);
+  public KeyStoreFactoryBean trustStore() {
+    KeyStoreFactoryBean keyStoreFactoryBean = new KeyStoreFactoryBean();
+    keyStoreFactoryBean.setLocation(trustStore);
+    keyStoreFactoryBean.setPassword(trustStorePassword);
+
+    return keyStoreFactoryBean;
+  }
+
+  @Bean
+  public TrustManagersFactoryBean trustManagersFactoryBean() {
+    TrustManagersFactoryBean trustManagersFactoryBean = new TrustManagersFactoryBean();
+    trustManagersFactoryBean.setKeyStore(trustStore().getObject());
+
+    return trustManagersFactoryBean;
   }
 }
 ```
