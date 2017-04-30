@@ -6,7 +6,7 @@ date: 2017-04-30
 modified: 2017-04-30
 categories: [Spring-WS]
 tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: true
+published: false
 ---
 
 <figure>
@@ -15,7 +15,7 @@ published: true
 
 [HTTPS](https://en.wikipedia.org/wiki/HTTPS) is a communications protocol for secure communication over a computer network. It consists of communication over Hypertext Transfer Protocol (HTTP) within a connection encrypted by [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security) (TLS), or its predecessor, Secure Sockets Layer (SSL).
 
-A web service exposed on HTTPS provides authentication of associated web server with which one is communicating. In addition it provides bidirectional encryption of communications between a client and server, which protects against eavesdropping and tampering with or forging the contents of the communication.
+A web service exposed on HTTPS provides **authentication** of associated web server with which one is communicating. In addition it provides **bidirectional encryption** of communications between the client and server, which protects against eavesdropping and tampering with or forging the contents of the communication.
 
 The following example shows how to configure both client and server in order to consume and respectively expose a web service over HTTPS using Spring-WS, Spring Boot and Maven. 
 
@@ -28,7 +28,7 @@ Tools used:
 
 The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) but the basic <var>helloworld.wsdl</var> has been replaced by a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
-Security related features of SPring-WS are not part of the `spring-boot-starter-web-services` starter. As such we have to add two extra dependencies to the Maven POM file in order for the example to work.
+Security related features of SPring-WS are not part of the `spring-boot-starter-web-services` Spring Boot starter. As such we have to add two extra dependencies to the Maven POM file in order for the example to work.
 
 The first one is `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) dependency which will be used for the server setup. The second one is the Apache `httpclient` dependency that we need for the client setup part.
 
@@ -39,13 +39,13 @@ The first one is `spring-boot-starter-security` [Spring Boot starter](https://gi
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.codenotfound</groupId>
-  <artifactId>spring-ws-basic-authentication</artifactId>
+  <artifactId>spring-ws-https</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>spring-ws-basic-authentication</name>
-  <description>Spring WS - Basic Authentication Example</description>
-  <url>https://www.codenotfound.com/spring-ws-basic-authentication-example.html</url>
+  <name>spring-ws-https</name>
+  <description>Spring WS - HTTPS Client Server Example</description>
+  <url>https://www.codenotfound.com/2017/04/spring-ws-https-client-server-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -56,7 +56,6 @@ The first one is `spring-boot-starter-security` [Spring Boot starter](https://gi
   <properties>
     <java.version>1.8</java.version>
 
-    <httpclient.version>4.5.3</httpclient.version>
     <maven-jaxb2-plugin.version>0.13.2</maven-jaxb2-plugin.version>
   </properties>
 
@@ -71,15 +70,14 @@ The first one is `spring-boot-starter-security` [Spring Boot starter](https://gi
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- spring-ws -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
+      <groupId>org.springframework.ws</groupId>
+      <artifactId>spring-ws-security</artifactId>
     </dependency>
-    <!-- httpclient -->
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>${httpclient.version}</version>
+      <groupId>org.springframework.ws</groupId>
+      <artifactId>spring-ws-support</artifactId>
     </dependency>
   </dependencies>
 
