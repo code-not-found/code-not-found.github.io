@@ -6,7 +6,7 @@ date: 2017-04-30
 modified: 2017-04-30
 categories: [Spring-WS]
 tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: false
+published: true
 ---
 
 <figure>
@@ -112,11 +112,11 @@ First the `spring-ws-security` dependency which contains a `FactoryBean` for set
 </project>
 ```
 
-Since applications can communicate either with or without TLS (or SSL), it is necessary for the client to indicate to the server the setup of a TLS connection. In order to achieve this we will use port 9443 instead of port 9090.
+Since applications can communicate either with or without TLS (or SSL), it is necessary for the client to indicate to the server the setup of a TLS connection. One of the main ways of achieving this is to use a different port number for TLS connections. In this example we will use port 9443 instead of port 9090.
 
-Once the client and server have agreed to use TLS, they negotiate a stateful connection by using a handshaking procedure. During this procedure, the server usually then sends back its identification in the form of a [digital certificate](https://en.wikipedia.org/wiki/Public_key_certificate). The certificate contains the server name, the trusted certificate authority (CA) and the server's public encryption key.
+Once the client and server have agreed to use TLS, they negotiate a stateful connection by using a handshaking procedure. During this procedure, the server usually then sends back its identification in the form of a [digital certificate](https://en.wikipedia.org/wiki/Public_key_certificate).
 
-Java programs store certificates in a repository called Java KeyStore (JKS). To generate the keystores and certificates we use [keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html) which is a key and certificate management utility that ships with Java.
+Java programs store certificates in a repository called Java KeyStore (JKS). To generate the keystore and certificate for this example we use [keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html) which is a key and certificate management utility that ships with Java.
 
 Open a command prompt at the root of your Maven project and execute following statement to generate a [public/private keypair](https://en.wikipedia.org/wiki/Public-key_cryptography) for the server side. The result will be a <var>server-keystore.jks</var> Java Keystore file that contains a key pair caller <var>'server-keypair'</var>.
 
@@ -124,16 +124,37 @@ Open a command prompt at the root of your Maven project and execute following st
 keytool -genkeypair -alias server-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=server,O=codenotfound.com" -keypass server-key-p455w0rd -keystore server-keystore.jks -storepass server-keystore-p455w0rd
 ```
 
-If you would like to visualize the content of the keystore you can use a tool like [Portecle](http://portecle.sourceforge.net/). Navigate to the <var>server-keystore.jks</var> JKS file and when prompted enter the keystore password (in the above command we used <kbd>"server-keystore-p455w0rd"</kbd>). Double click on the <var>'server-keypair'</var> entry and the result should be should be similar to what is shown below.
+If you would like to visualize the content of the keystore you can use a tool like [Portecle](http://portecle.sourceforge.net/). Navigate to the <var>server-keystore.jks</var> JKS file and when prompted enter the keystore password (in the above command we used <kbd>"server-keystore-p455w0rd"</kbd>) and the result should be should be similar to what is shown below.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/server-certificate-portecle.png" alt="server certificate portecle">
+    <img src="{{ site.url }}/assets/images/spring-ws/server-keystore.png" alt="server keystore">
 </figure>
 
-From the keypair we will export the servers public certificate. 
+For the client we need to create a truststore which contains certificates from other parties that you expect to communicate with, or from [Certificate Authorities](https://en.wikipedia.org/wiki/Certificate_authority) that you trust to identify other parties. In this example we will add the server's public certificate to the client's truststore. As a result our client will 'trust' and thus allow an HTTPS connection to the server.
 
+To create the truststore we first need to export the public key certificate or digital certificate of the server. Use following command to generate a <var>server-public-key.cer</var> certificate file.
 
+``` plaintext
+keytool -exportcert -alias server-keypair -file server-public-key.cer -keystore server-keystore.jks -storepass server-keystore-p455w0rd
+```
 
+Use the <var>Examine Certificate</var> menu in Portecle to visualize the certificate.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/spring-ws/server-public-key.png" alt="server public key">
+</figure>
+
+Now we create a <var>client-truststore.jks</var> using the exported certificate by executing following keytool command.
+
+``` plaintext
+keytool -importcert -keystore client-truststore.jks -alias server-public-key -file server-public-key.cer -storepass client-truststore-p455w0rd -noprompt
+```
+
+Similar to the keystore we can open the truststore suing Portecle to inspect its contents.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/spring-ws/client-truststore.png" alt="client truststore">
+</figure>
 
 
 # Setup HTTPS on the Client
