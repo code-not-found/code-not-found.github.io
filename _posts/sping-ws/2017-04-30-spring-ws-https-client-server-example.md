@@ -6,35 +6,18 @@ date: 2017-04-30
 modified: 2017-04-30
 categories: [Spring-WS]
 tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: false
+published: true
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) (BA) is a method for a HTTP client to provide a user name and password when making a request. There is no [confidentiality](https://en.wikipedia.org/wiki/Confidentiality) protection for the transmitted credentials. therefore it is strongly advised to use it in conjunction with HTTPS.
+[HTTPS](https://en.wikipedia.org/wiki/HTTPS) is a communications protocol for secure communication over a computer network. It consists of communication over Hypertext Transfer Protocol (HTTP) within a connection encrypted by [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security) (TLS), or its predecessor, Secure Sockets Layer (SSL).
 
-The credentials are provided as an HTTP header field called <var>'Authorization'</var> which is constructed as follows:
+A web service exposed on HTTPS provides authentication of associated web server with which one is communicating. In addition it provides bidirectional encryption of communications between a client and server, which protects against eavesdropping and tampering with or forging the contents of the communication.
 
-1. The username and password are combined with a single colon.
-
-    ``` plaintext
-    codenotofound:p455w0rd
-    ```
-
-2. The resulting string is encoded into an [octet sequence](https://tools.ietf.org/html/rfc7617#section-2) and then [Base64 encoded](https://tools.ietf.org/html/rfc4648#section-4). You can use an [online Base64 decoder](https://www.base64decode.org/) to check below value.
-
-    ``` plaintext
-    Y29kZW5vdGZvdW5kOnA0NTV3MHJk
-    ```
-3. The authorization method and a space (<kbd>"Basic "</kbd>) is then put before the encoded string.
-
-    ``` plaintext
-    Basic Y29kZW5vdGZvdW5kOnA0NTV3MHJk
-    ```
-
-Instead of writing custom code to create and check the HTTP authorization header we will configure Spring WS to do the work for us. The below example illustrates how a client and server can be configured to apply basic access authentication using Spring-WS, Spring Boot and Maven. 
+The following example shows how to configure both client and server in order to consume and respectively expose a web service over HTTPS using Spring-WS, Spring Boot and Maven. 
 
 Tools used:
 * Spring-WS 2.4
@@ -43,9 +26,9 @@ Tools used:
 
 # General Project Setup
 
-The setup of the project is based on a previous [Spring WS tutorial]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
+The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) but the basic <var>helloworld.wsdl</var> has been replaced by a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
-There are two additional dependencies that we need to add to the Maven POM file in order for our example to work.
+Security related features of SPring-WS are not part of the `spring-boot-starter-web-services` starter. As such we have to add two extra dependencies to the Maven POM file in order for the example to work.
 
 The first one is `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) dependency which will be used for the server setup. The second one is the Apache `httpclient` dependency that we need for the client setup part.
 
