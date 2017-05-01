@@ -282,7 +282,7 @@ public class ClientConfig {
 
 # Setup HTTPS on the Server
 
-
+As our web service runs on Spring Boot, we just need to configure the underlying web server with the correct parameters. This is done via the [Spring boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
 
 ``` yaml
 server:
