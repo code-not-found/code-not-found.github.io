@@ -6,7 +6,7 @@ date: 2017-04-30
 modified: 2017-04-30
 categories: [Spring-WS]
 tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: false
+published: true
 ---
 
 <figure>
@@ -156,18 +156,25 @@ Similar to the keystore we can open the truststore using Portecle to inspect its
     <img src="{{ site.url }}/assets/images/spring-ws/client-truststore.png" alt="client truststore">
 </figure>
 
+As a last step we more the three artifacts we have just generated: <var>client-truststore.jks</var>, <var>server-keystore.jks</var> and <var>server-public-key.cer</var> to the <var>src/main/resources</var> folder so that they are available on the classpath for both client and server setup.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/spring-ws/https-jks-files.png" alt="https jks files">
+</figure>
 
 # Setup HTTPS on the Client
 
-As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate`. 
+As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate`. The `@Value` annotation is used to inject the <var>client.default-uri</var> from the application properties YAML file.
 
-There are [two implementations of the WebServiceMessageSender interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e1793) for sending messages via HTTP. The default implementation is the `HttpUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the Apache [HttpComponents Client](https://hc.apache.org/httpcomponents-client-ga/).
+There are two other values that are configured in our <var>application.yml</var> configuration file which are the location of the truststore JKS and it's password as shown below.
 
-In this example we use the Apache HTTP Client, as it comes with built-in support for setting the basic authentication header. We update the `ClientConfig` class with a bean that creates an `HttpComponentsMessageSender` on which we set a `UsernamePasswordCredentials` bean. This bean will automatically create the HTTP basic authentication header.
-
-The `@Value` annotation is used to inject the <var>name</var> and <var>password</var> values from the application properties YAML file which are set on the `UsernamePasswordCredentials` bean.
-
-We finish by setting the `HttpComponentsMessageSender` on our `WebServiceTemplate`.
+``` yaml
+client:
+  default-uri: https://localhost:9443/codenotfound/ws/ticketagent
+  ssl:
+    trust-store: classpath:jks/client-truststore.jks
+    trust-store-password: client-truststore-p455w0rd
+```
 
 ``` java
 package com.codenotfound.ws.client;
