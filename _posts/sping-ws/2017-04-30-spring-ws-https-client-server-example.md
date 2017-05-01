@@ -284,7 +284,7 @@ public class ClientConfig {
 
 As our web service runs on Spring Boot, we just need to configure the underlying web server with the correct parameters. This is done via the [Spring boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
 
-Configure the server's keystore (that was generated during the project's setup) and corresponding password in addition to the alias of the key pair to be used and it's password. Also change the port to <var>'9443'</var>.
+Configure the server's keystore (that was generated at the beginning of this tutorial) and corresponding password in addition to the alias of the key pair to be used and it's password. Also change the port to <var>'9443'</var>.
 
 ``` yaml
 server:
@@ -304,11 +304,11 @@ mvn spring-boot:run
 
 Open below URL in your browser and the ticket agent service WSDL definition will now be served over HTTPS.
 
-> Notice that your browser will probably flag the connection as being not secure (go ahead and accept an exception). The reason for this is that we are using self-signed certificates which are by default untrusted by your browser.
-
 ``` plaintext
 https://localhost:9443/codenotfound/ws/ticketagent.wsdl
 ```
+
+> Notice that your browser will probably flag the connection as being not secure (go ahead and accept an exception). The reason for this is that we are using self-signed certificates which are by default untrusted by your browser.
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-ws/https-ticketagent-wsdl.png" alt="https ticketagent wsdl">
