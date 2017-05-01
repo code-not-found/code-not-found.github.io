@@ -282,7 +282,7 @@ public class ClientConfig {
 
 # Setup HTTPS on the Server
 
-As our web service runs on Spring Boot, we just need to configure the underlying web server with the correct parameters. This is done via the [Spring boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
+As our web service runs on Spring Boot, we just need to configure the [underlying web server with the correct parameters](http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-configure-ssl). This is done via the [Spring boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
 
 Configure the server's keystore (that was generated at the beginning of this tutorial) and corresponding password in addition to the alias of the key pair to be used and it's password. Also change the port to <var>'9443'</var>.
 
