@@ -296,13 +296,13 @@ server:
 
 # Testing Spring WS over HTTPS
 
-In order to test the configuration we just run the `SpringWsApplicationTests` unit test case by issuing the following Maven command.
+In order to test the example we can trigger the existing `SpringWsApplicationTests` unit test case by running following Maven command.
 
 ``` plaintext
 mvn test
 ```
 
-The test case will run successfully as basic authentication is correctly configured on both sides. By default the basic authentication header is not logged but if you want you can add some custom code in order to have [Spring-WS log all the client HTTP headers]({{ site.url }}/2017/04/spring-ws-log-client-server-http-headers.html).
+This will result in a successful test run as shown below.
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -313,10 +313,10 @@ The test case will run successfully as basic authentication is correctly configu
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.3.RELEASE)
 
-21:06:58.016 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 2176 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-basic-authentication)
-21:06:58.018 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
-21:07:01.275 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.568 seconds (JVM running for 4.234)
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.039 sec - in com.codenotfound.ws.SpringWsApplicationTests
+08:42:52.929 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 5352 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-https)
+08:42:52.932 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
+08:42:55.727 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.096 seconds (JVM running for 3.798)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.484 sec - in com.codenotfound.ws.SpringWsApplicationTests
 
 Results :
 
@@ -325,52 +325,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 7.454 s
-[INFO] Finished at: 2017-04-29T21:07:01+02:00
-[INFO] Final Memory: 27M/217M
-[INFO] ------------------------------------------------------------------------
-```
-
-Now change the password in the <var>application.yml</var> file to a different value and rerun the test case. This time the test case will fail as a <var>401 Unauthorized</var> is returned by our service.
-
-``` plaintext
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.3.RELEASE)
-
-21:52:41.786 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 5908 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-basic-authentication)
-21:52:41.789 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
-21:52:45.159 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.666 seconds (JVM running for 4.281)
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.004 sec <<< FAILURE! - in com.codenotfound.ws.SpringWsApplicationTests
-testListFlights(com.codenotfound.ws.SpringWsApplicationTests)  Time elapsed: 0.263 sec  <<< ERROR!
-org.springframework.ws.client.WebServiceTransportException:  [401]
-        at org.springframework.ws.client.core.WebServiceTemplate.handleError(WebServiceTemplate.java:699)
-        at org.springframework.ws.client.core.WebServiceTemplate.doSendAndReceive(WebServiceTemplate.java:609)
-        at org.springframework.ws.client.core.WebServiceTemplate.sendAndReceive(WebServiceTemplate.java:555)
-        at org.springframework.ws.client.core.WebServiceTemplate.marshalSendAndReceive(WebServiceTemplate.java:390)
-        at org.springframework.ws.client.core.WebServiceTemplate.marshalSendAndReceive(WebServiceTemplate.java:383)
-        at org.springframework.ws.client.core.WebServiceTemplate.marshalSendAndReceive(WebServiceTemplate.java:373)
-        at com.codenotfound.ws.client.TicketAgentClient.listFlights(TicketAgentClient.java:30)
-        at com.codenotfound.ws.SpringWsApplicationTests.testListFlights(SpringWsApplicationTests.java:26)
-
-
-Results :
-
-Tests in error:
-  SpringWsApplicationTests.testListFlights:26 ╗ WebServiceTransport  [401]
-
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
-
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time: 6.460 s
-[INFO] Finished at: 2017-04-29T21:52:45+02:00
-[INFO] Final Memory: 18M/227M
+[INFO] Total time: 6.275 s
+[INFO] Finished at: 2017-05-01T08:42:56+02:00
+[INFO] Final Memory: 20M/227M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -382,6 +339,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Setting up basic authentication on the client side using Spring WS is pretty simple when using the Apache client. The server side is even easier when running on Spring Boot.
+Although setting up HTTPs using Spring WS is not extensively covered in the reference documentation, it can be done quite easily using configuration and some support classes.
 
-Drop me a line if you found the example useful. Or let me know in case of questions.
+If you found this tutorial helpful or if you run into some problems let me know in the comments section below.
