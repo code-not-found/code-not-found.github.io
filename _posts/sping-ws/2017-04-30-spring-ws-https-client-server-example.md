@@ -13,9 +13,9 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[HTTPS](https://en.wikipedia.org/wiki/HTTPS) is a communications protocol for secure communication over a computer network. It consists of communication over Hypertext Transfer Protocol (HTTP) within a connection encrypted by [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security) (TLS), or its predecessor, Secure Sockets Layer (SSL).
+[HTTPS](https://en.wikipedia.org/wiki/HTTPS) is a protocol for secure communication over a computer network. It consists of communication over Hypertext Transfer Protocol (HTTP) within a connection encrypted by [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security) (TLS), or its predecessor, Secure Sockets Layer (SSL).
 
-A web service exposed on HTTPS provides **authentication** of associated web server with which one is communicating. In addition it provides **bidirectional encryption** of communications between the client and server, which protects against eavesdropping and tampering with or forging the contents of the communication.
+A web service exposed on HTTPS provides **authentication** of the associated web server with which one is communicating. In addition it provides **bidirectional encryption** of communications between the client and server, which protects against eavesdropping and tampering with or forging the contents of the communication.
 
 The following example shows how to configure both client and server in order to consume and respectively expose a web service over HTTPS using Spring-WS, Spring Boot and Maven. 
 
@@ -28,9 +28,9 @@ Tools used:
 
 The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) but the basic <var>helloworld.wsdl</var> has been replaced by a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
-Security related features of Spring-WS are not part of the `spring-boot-starter-web-services` Spring Boot starter. As such we have to add two extra dependencies to the Maven POM file in order for the example to work.
+Security related features of Spring-WS are not part of the `spring-boot-starter-web-services` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters). As such we have to add two extra dependencies to the Maven POM file in order for the example to work.
 
-First the `spring-ws-security` dependency which contains a `FactoryBean` for setting up the client's `TrustStore`. Second the `spring-ws-support` dependency which contains a `MessageSender` that adds support for (self-signed) HTTPS certificates.
+First, the `spring-ws-security` dependency which contains a `FactoryBean` for setting up the client's `TrustStore`. Second, the `spring-ws-support` dependency which contains a `MessageSender` that adds support for (self-signed) HTTPS certificates.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -124,7 +124,7 @@ Open a command prompt at the root of your Maven project and execute following st
 keytool -genkeypair -alias server-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=server,O=codenotfound.com" -keypass server-key-p455w0rd -keystore server-keystore.jks -storepass server-keystore-p455w0rd
 ```
 
-If you would like to visualize the content of the keystore you can use a tool like [Portecle](http://portecle.sourceforge.net/). Navigate to the <var>server-keystore.jks</var> JKS file and when prompted enter the keystore password (in the above command we used <kbd>"server-keystore-p455w0rd"</kbd>) and the result should be should be similar to what is shown below.
+If you would like to visualize the content of the keystore you can use a tool like [Portecle](http://portecle.sourceforge.net/). Using the file menu, navigate to the <var>server-keystore.jks</var> JKS file and when prompted enter the keystore password (in the above command we used <kbd>"server-keystore-p455w0rd"</kbd>) and the result should be should be similar to what is shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-ws/server-keystore.png" alt="server keystore">
@@ -138,7 +138,7 @@ To create the truststore we first need to export the public key certificate or d
 keytool -exportcert -alias server-keypair -file server-public-key.cer -keystore server-keystore.jks -storepass server-keystore-p455w0rd
 ```
 
-Use the <var>Examine Certificate</var> menu in Portecle to visualize the certificate.
+If you want you can use the <var>Examine Certificate</var> menu in Portecle to visualize the certificate.
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-ws/server-public-key.png" alt="server public key">
@@ -156,7 +156,7 @@ Similar to the keystore we can open the truststore using Portecle to inspect its
     <img src="{{ site.url }}/assets/images/spring-ws/client-truststore.png" alt="client truststore">
 </figure>
 
-As a last step we more the three artifacts we have just generated: <var>client-truststore.jks</var>, <var>server-keystore.jks</var> and <var>server-public-key.cer</var> to the <var>src/main/resources</var> folder so that they are available on the classpath for both client and server setup.
+As a last step we move the three artifacts we have just generated: <var>client-truststore.jks</var>, <var>server-keystore.jks</var> and <var>server-public-key.cer</var> to the <var>src/main/resources</var> folder so that they are available on the classpath for both client and server setup.
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-ws/https-jks-files.png" alt="https jks files">
@@ -176,7 +176,7 @@ client:
     trust-store-password: client-truststore-p455w0rd
 ```
 
-In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connect using the HTTPS protocol. This is done by creating and setting a `HttpsUrlConnectionMessageSender`.
+In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connect using the HTTPS protocol. This is done by creating and setting a `HttpsUrlConnectionMessageSender` which is an extension of the default `HttpUrlConnectionMessageSender` but with support for HTTPS.
 
 > Note that the `HttpsUrlConnectionMessageSender` is in the `spring-ws-support` package.
 
