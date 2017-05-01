@@ -192,7 +192,7 @@ javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No
 
 The reason for this is that when the HTTPS client connects to a server, it's not enough for a certificate to be trusted, it has to match the server you want to talk to too. In other words the client verifies that the hostname in the certificate matches the hostname of the server. For more detailed information check [this answer on Stack Overflow](http://stackoverflow.com/a/3093650/4201470).
 
-So in order to fix this problem we need to regenerate the keypair so it contains <var>'localhost'</var>. Another option, which we will use in this example, is to override the `HostnameVerifier` so that it returns `true` in the case localhost is used.
+So in order to fix this problem we need to regenerate the server keypair so it contains <var>'localhost'</var>. Another option, which we will use in this example, is to override the `HostnameVerifier` so that it returns `true` in the case a URI on localhost is used. Note that this is not something you would want to do in production!
 
 ``` java
 package com.codenotfound.ws.client;
