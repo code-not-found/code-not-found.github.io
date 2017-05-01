@@ -6,14 +6,14 @@ date: 2017-05-01
 modified: 2017-05-01
 categories: [Spring-WS]
 tags: [Client, Example, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, Two-Way Authentication]
-published: true
+published: false
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Mutual authentication or two-way authentication](https://en.wikipedia.org/wiki/Mutual_authentication) refers to two parties authenticating each other at the same time. In other words the client must prove its identity to the server, and the server must prove its identity to the client, before any traffic is sent over the client-to-server connection.
+[Mutual authentication or two-way authentication](https://en.wikipedia.org/wiki/Mutual_authentication) refers to **two parties authenticating each other at the same time**. In other words the client must prove its identity to the server, and the server must prove its identity to the client, before any traffic is sent over the client-to-server connection.
 
 This example shows how to configure both client and server so that mutual authentication is enabled on a web service using Spring-WS, Spring Boot and Maven. 
 
@@ -24,9 +24,9 @@ Tools used:
 
 # General Project Setup
 
-The setup of the project is based on a previous [Spring WS HTTPS example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html) in which we configured the server authentication part. We will extend this setup so that also the client authenticates itself towards the server.
+The setup of the project is based on a previous [Spring WS HTTPS example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html) in which we configured the server authentication part. We will extend this setup so that the client also authenticates itself towards the server.
 
-We will use [keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html) to generate the different [Java KeyStores](https://en.wikipedia.org/wiki/Keystore) (JKS) which contain the key pair and public certificate for both client and server.
+We will use [keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html) to generate the different [Java KeyStores](https://en.wikipedia.org/wiki/Keystore) (JKS) which contain the key pairs and public certificates for both client and server.
 
 Subsequently execute the following three commands in order to generate the <var>server-keystore.jks</var> and <var>client-truststore.jks</var>.
 
@@ -186,7 +186,7 @@ public class ClientConfig {
 }
 ```
 
-# Setup HTTPS on the Server
+# Setup the Server Keystore and Truststore
 
 As our web service runs on Spring Boot, we just need to configure the [underlying web server with the correct parameters](http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-configure-ssl). This is done via the [Spring boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
 
@@ -261,7 +261,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-https).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-mutual-authentication).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
