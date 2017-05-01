@@ -168,7 +168,7 @@ As the server will expose the ticket agent service on HTTPS we need to change th
 
 There are two other values that are configured in our <var>application.yml</var> configuration file. These are are the location of the truststore JKS file and it's password as shown below.
 
-``` yml
+``` yaml
 client:
   default-uri: https://localhost:9443/codenotfound/ws/ticketagent
   ssl:
@@ -280,22 +280,21 @@ public class ClientConfig {
 }
 ```
 
-# Setup Server Basic Authentication
+# Setup HTTPS on the Server
 
-The Spring Boot security starter that we added to our Maven setup has a dependency on Spring Security. If Spring Security is on the classpath then [web applications will be secured by default with HTTP basic authentication](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security) on all HTTP endpoints. In other words our `TicketAgentEndpoint` is now secured with basic auth.
 
-The default user that will be configured has as name <var>'user'</var>. The password is randomly generated at startup.
 
-Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) in your application properties file. In this example we set the <var>'user'</var> to <kbd>"codenotfound"</kbd> and the <var>'password'</var> to <kbd>"p455w0rd"</kbd> using the YAML variant as shown below. 
-
-``` yml
-security:
-  user:
-    name: codenotfound
-    password: p455w0rd
+``` yaml
+server:
+  port: 9443
+  ssl:
+    key-store: classpath:jks/server-keystore.jks
+    key-store-password: server-keystore-p455w0rd
+    key-alias: server-keypair
+    key-password: server-key-p455w0rd
 ```
 
-# Testing the Basic Authentication Configuration
+# Testing Spring WS over HTTPS
 
 In order to test the configuration we just run the `SpringWsApplicationTests` unit test case by issuing the following Maven command.
 
