@@ -6,7 +6,7 @@ date: 2017-05-01
 modified: 2017-05-01
 categories: [Spring-WS]
 tags: [Client, Example, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, Two-Way Authentication]
-published: true
+published: false
 ---
 
 <figure>
