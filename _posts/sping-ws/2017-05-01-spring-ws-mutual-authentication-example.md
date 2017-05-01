@@ -6,7 +6,7 @@ date: 2017-05-01
 modified: 2017-05-01
 categories: [Spring-WS]
 tags: [Client, Example, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, Two-Way Authentication]
-published: false
+published: true
 ---
 
 <figure>
@@ -34,9 +34,13 @@ Subsequently execute the following three commands in order to generate the <var>
 
 ``` plaintext
 keytool -genkeypair -alias server-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=server,O=codenotfound.com" -keypass server-key-p455w0rd -keystore server-keystore.jks -storepass server-keystore-p455w0rd -ext san=dns:localhost
+```
 
+``` plaintext
 keytool -exportcert -alias server-keypair -file server-public-key.cer -keystore server-keystore.jks -storepass server-keystore-p455w0rd
+```
 
+``` plaintext
 keytool -importcert -keystore client-truststore.jks -alias server-public-key -file server-public-key.cer -storepass client-truststore-p455w0rd -noprompt
 ```
 
@@ -44,86 +48,41 @@ Next execute following three commands to generate the <var>client-keystore.jks</
 
 ``` plaintext
 keytool -genkeypair -alias client-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=client,O=codenotfound.com" -keypass client-key-p455w0rd -keystore client-keystore.jks -storepass client-keystore-p455w0rd
+```
 
+``` plaintext
 keytool -exportcert -alias client-keypair -file client-public-key.cer -keystore client-keystore.jks -storepass client-keystore-p455w0rd
+```
 
+``` plaintext
 keytool -importcert -keystore server-truststore.jks -alias client-public-key -file client-public-key.cer -storepass server-truststore-p455w0rd -noprompt
 ```
 
-<figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/server-keystore.png" alt="server keystore">
-</figure>
-
----
-
-For the client we need to create a truststore (also a JKS file) which contains certificates from other parties that you expect to communicate with, or from [Certificate Authorities](https://en.wikipedia.org/wiki/Certificate_authority) (CA) that you trust to identify other parties. In this example we will add the server's public certificate to the client's truststore. As a result our client will "trust" and thus allow an HTTPS connection to the server.
-
-To create the truststore we first need to export the public key certificate or digital certificate of the server. Use following command to generate a <var>server-public-key.cer</var> certificate file.
-
-``` plaintext
-keytool -exportcert -alias server-keypair -file server-public-key.cer -keystore server-keystore.jks -storepass server-keystore-p455w0rd
-```
-
-If you want you can use the <var>Examine Certificate</var> menu in Portecle to visualize the certificate.
+Now (if needed) move the created JKS files into <var>src/main/resources</var>. The result should be as shown below.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/server-public-key.png" alt="server public key">
+    <img src="{{ site.url }}/assets/images/spring-ws/mutual-authentication-jks-files.png" alt="mutual authentication jks files">
 </figure>
 
-Now we create a <var>client-truststore.jks</var> that contains the exported certificate by executing following keytool command.
+# Setup the Client Keystore and Truststore
 
-``` plaintext
-keytool -importcert -keystore client-truststore.jks -alias server-public-key -file server-public-key.cer -storepass client-truststore-p455w0rd -noprompt
-```
-
-Similar to the keystore we can open the truststore using Portecle to inspect its contents.
-
-<figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/client-truststore.png" alt="client truststore">
-</figure>
-
-As a last step we move the three artifacts we have just generated: <var>client-truststore.jks</var>, <var>server-keystore.jks</var> and <var>server-public-key.cer</var> to the <var>src/main/resources</var> folder so that they are available on the classpath for both client and server setup.
-
-<figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/https-jks-files.png" alt="https jks files">
-</figure>
-
-# Setup HTTPS on the Client
-
-As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate`. The `@Value` annotation is used to inject the <var>'client.default-uri'</var> value from the application properties YAML file.
-
-There are two other values that are configured in our <var>application.yml</var> configuration file. These are are the location of the truststore JKS file and it's password as shown below.
+TODO
 
 ``` yaml
 client:
   default-uri: https://localhost:9443/codenotfound/ws/ticketagent
   ssl:
+    key-store: classpath:jks/client-keystore.jks
+    key-store-password: client-keystore-p455w0rd
+    key-password: client-key-p455w0rd
     trust-store: classpath:jks/client-truststore.jks
     trust-store-password: client-truststore-p455w0rd
 ```
 
-In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connect using the HTTPS protocol. This is done by creating and setting a `HttpsUrlConnectionMessageSender` which is an extension of the default `HttpUrlConnectionMessageSender` but with support for HTTPS.
-
-> Note that the `HttpsUrlConnectionMessageSender` is in the `spring-ws-support` package.
-
-During the TLS handshaking procedure, the client needs to decide whether it trusts the public key certificate that the server provides. This is done based on whether or not this certificate (or one of it's issuing CA's) is present in (one of) the client's truststores. We specify a `TrustManagersFactoryBean` to handle the configured truststores.
-
-To easily [load one ore more truststores using Spring configuration](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e2263), we can use the `KeyStoreFactoryBean` that ships with the `spring-ws-security` dependency that was added to the project's <var>pom.xml</var>. The bean has a resource location property and password, which both need to be set.
-
-If we were to test the client with above settings we would run into the following exception
-
-``` plaintext
-javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No name matching localhost found
-```
-
-The reason for this is that when the HTTPS client connects to a server, it's not enough for a certificate to be trusted, it has to match the server you want to talk to too. In other words the client verifies that the hostname in the certificate matches the hostname of the server. For more detailed information check [this answer on Stack Overflow](http://stackoverflow.com/a/3093650/4201470).
-
-So in order to fix this problem we need to regenerate the server keypair so it contains <var>'localhost'</var>. Another option, which we will use in this example, is to override the `HostnameVerifier` so that it returns `true` in the case a URI on localhost is used. Note that this is not something you would want to do in production!
+TODO
 
 ``` java
 package com.codenotfound.ws.client;
-
-import javax.net.ssl.HostnameVerifier;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -131,6 +90,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.soap.security.support.KeyManagersFactoryBean;
 import org.springframework.ws.soap.security.support.KeyStoreFactoryBean;
 import org.springframework.ws.soap.security.support.TrustManagersFactoryBean;
 import org.springframework.ws.transport.http.HttpsUrlConnectionMessageSender;
@@ -146,6 +106,15 @@ public class ClientConfig {
 
   @Value("${client.ssl.trust-store-password}")
   private String trustStorePassword;
+
+  @Value("${client.ssl.key-store}")
+  private Resource keyStore;
+
+  @Value("${client.ssl.key-store-password}")
+  private String keyStorePassword;
+
+  @Value("${client.ssl.key-password}")
+  private String keyPassword;
 
   @Bean
   Jaxb2Marshaller jaxb2Marshaller() {
@@ -171,18 +140,10 @@ public class ClientConfig {
   public HttpsUrlConnectionMessageSender httpsUrlConnectionMessageSender() throws Exception {
     HttpsUrlConnectionMessageSender httpsUrlConnectionMessageSender =
         new HttpsUrlConnectionMessageSender();
+    // set the trust store(s)
     httpsUrlConnectionMessageSender.setTrustManagers(trustManagersFactoryBean().getObject());
-    // allows the client to skip host name verification as otherwise following error is thrown:
-    // java.security.cert.CertificateException: No name matching localhost found
-    httpsUrlConnectionMessageSender.setHostnameVerifier(new HostnameVerifier() {
-      @Override
-      public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
-        if ("localhost".equals(hostname)) {
-          return true;
-        }
-        return false;
-      }
-    });
+    // set the key store(s)
+    httpsUrlConnectionMessageSender.setKeyManagers(keyManagersFactoryBean().getObject());
 
     return httpsUrlConnectionMessageSender;
   }
@@ -202,6 +163,25 @@ public class ClientConfig {
     trustManagersFactoryBean.setKeyStore(trustStore().getObject());
 
     return trustManagersFactoryBean;
+  }
+
+  @Bean
+  public KeyStoreFactoryBean keyStore() {
+    KeyStoreFactoryBean keyStoreFactoryBean = new KeyStoreFactoryBean();
+    keyStoreFactoryBean.setLocation(keyStore);
+    keyStoreFactoryBean.setPassword(keyStorePassword);
+
+    return keyStoreFactoryBean;
+  }
+
+  @Bean
+  public KeyManagersFactoryBean keyManagersFactoryBean() {
+    KeyManagersFactoryBean keyManagersFactoryBean = new KeyManagersFactoryBean();
+    keyManagersFactoryBean.setKeyStore(keyStore().getObject());
+    // set the password of the key pair to be used
+    keyManagersFactoryBean.setPassword(keyPassword);
+
+    return keyManagersFactoryBean;
   }
 }
 ```
