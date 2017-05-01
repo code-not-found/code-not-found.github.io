@@ -164,17 +164,21 @@ As a last step we more the three artifacts we have just generated: <var>client-t
 
 # Setup HTTPS on the Client
 
-As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate`. The `@Value` annotation is used to inject the <var>client.default-uri</var> from the application properties YAML file.
+As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate`. The `@Value` annotation is used to inject the <var>'client.default-uri'</var> value from the application properties YAML file.
 
-There are two other values that are configured in our <var>application.yml</var> configuration file which are the location of the truststore JKS and it's password as shown below.
+There are two other values that are configured in our <var>application.yml</var> configuration file. These are are the location of the truststore JKS file and it's password as shown below.
 
-``` yaml
+``` yml
 client:
   default-uri: https://localhost:9443/codenotfound/ws/ticketagent
   ssl:
     trust-store: classpath:jks/client-truststore.jks
     trust-store-password: client-truststore-p455w0rd
 ```
+
+The `ClientConfig` class 
+
+To easily [load the truststore using Spring configuration](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e2263), we can use the `KeyStoreFactoryBean` that ships with the `spring-ws-security` dependency that was added to the project's <var>pom.xml</var>. The bean has a resource location property and password, which both need to be set.
 
 ``` java
 package com.codenotfound.ws.client;
