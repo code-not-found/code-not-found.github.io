@@ -130,7 +130,7 @@ If you would like to visualize the content of the keystore you can use a tool li
     <img src="{{ site.url }}/assets/images/spring-ws/server-keystore.png" alt="server keystore">
 </figure>
 
-For the client we need to create a truststore (also a JKS file) which contains certificates from other parties that you expect to communicate with, or from [Certificate Authorities](https://en.wikipedia.org/wiki/Certificate_authority) that you trust to identify other parties. In this example we will add the server's public certificate to the client's truststore. As a result our client will "trust" and thus allow an HTTPS connection to the server.
+For the client we need to create a truststore (also a JKS file) which contains certificates from other parties that you expect to communicate with, or from [Certificate Authorities](https://en.wikipedia.org/wiki/Certificate_authority) (CA) that you trust to identify other parties. In this example we will add the server's public certificate to the client's truststore. As a result our client will "trust" and thus allow an HTTPS connection to the server.
 
 To create the truststore we first need to export the public key certificate or digital certificate of the server. Use following command to generate a <var>server-public-key.cer</var> certificate file.
 
@@ -176,9 +176,11 @@ client:
     trust-store-password: client-truststore-p455w0rd
 ```
 
-The `ClientConfig` class 
+In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connect using the HTTPS protocol. This is done by creating and setting a `HttpsUrlConnectionMessageSender`.
 
-To easily [load the truststore using Spring configuration](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e2263), we can use the `KeyStoreFactoryBean` that ships with the `spring-ws-security` dependency that was added to the project's <var>pom.xml</var>. The bean has a resource location property and password, which both need to be set.
+During the TLS handshaking procedure, the client needs to decide whether it trusts the public key certificate that the server provides. This is done based on whether or not this certificate (or one of it's issuing CA's) is present in (one of) the client's truststores. We specify a `TrustManagersFactoryBean` to handle the configured truststores.
+
+To easily [load one ore more truststores using Spring configuration](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e2263), we can use the `KeyStoreFactoryBean` that ships with the `spring-ws-security` dependency that was added to the project's <var>pom.xml</var>. The bean has a resource location property and password, which both need to be set.
 
 ``` java
 package com.codenotfound.ws.client;
