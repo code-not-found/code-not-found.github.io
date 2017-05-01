@@ -184,6 +184,16 @@ During the TLS handshaking procedure, the client needs to decide whether it trus
 
 To easily [load one ore more truststores using Spring configuration](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e2263), we can use the `KeyStoreFactoryBean` that ships with the `spring-ws-security` dependency that was added to the project's <var>pom.xml</var>. The bean has a resource location property and password, which both need to be set.
 
+If we were to test the client with above settings we would run into the following exception
+
+``` plaintext
+javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No name matching localhost found
+```
+
+The reason for this is that when the HTTPS client connects to a server, it's not enough for a certificate to be trusted, it has to match the server you want to talk to too. In other words the client verifies that the hostname in the certificate matches the hostname of the server. For more information check [this answer on Stack Overflow](http://stackoverflow.com/a/3093650/4201470).
+
+
+
 ``` java
 package com.codenotfound.ws.client;
 
