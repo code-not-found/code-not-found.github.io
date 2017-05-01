@@ -23,6 +23,7 @@ modified: 2017-04-18
 ## Security
 
 * [Spring WS - Basic Authentication Example]({{ site.url }}/2017/04/spring-ws-basic-authentication-example.html)
+* [Spring WS - HTTPS Client Server Example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html)
 
 ## Logging
 
