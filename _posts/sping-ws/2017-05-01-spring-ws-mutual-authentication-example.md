@@ -5,19 +5,17 @@ excerpt: "A detailed step-by-step tutorial on how setup mutual certificate authe
 date: 2017-05-01
 modified: 2017-05-01
 categories: [Spring-WS]
-tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: false
+tags: [Client, Example, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, Two-Way Authentication]
+published: true
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[HTTPS](https://en.wikipedia.org/wiki/HTTPS) is a protocol for secure communication over a computer network. It consists of communication over Hypertext Transfer Protocol (HTTP) within a connection encrypted by [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security) (TLS), or its predecessor, Secure Sockets Layer (SSL).
+[Mutual authentication or two-way authentication](https://en.wikipedia.org/wiki/Mutual_authentication) refers to two parties authenticating each other at the same time. In other words the client must prove its identity to the server, and the server must prove its identity to the client, before any traffic is sent over the client-to-server connection.
 
-A web service exposed on HTTPS provides **authentication** of the associated web server with which one is communicating. In addition it provides **bidirectional encryption** of communications between the client and server, which protects against eavesdropping and tampering with or forging the contents of the communication.
-
-The following example shows how to configure both client and server in order to consume and respectively expose a web service over HTTPS using Spring-WS, Spring Boot and Maven. 
+This example shows how to configure both client and server so that mutual authentication is enabled on a web service using Spring-WS, Spring Boot and Maven. 
 
 Tools used:
 * Spring-WS 2.4
@@ -26,109 +24,37 @@ Tools used:
 
 # General Project Setup
 
-The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) but the basic <var>helloworld.wsdl</var> has been replaced by a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
+The setup of the project is based on a previous [Spring WS HTTPS example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html) in which we configured the server authentication part. We will extend this setup so that also the client authenticates itself towards the server.
 
-Security related features of Spring-WS are not part of the `spring-boot-starter-web-services` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters). As such we have to add two extra dependencies to the Maven POM file in order for the example to work.
+We will use [keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html) to generate the different [Java KeyStores](https://en.wikipedia.org/wiki/Keystore) (JKS) which contain the key pair and public certificate for both client and server.
 
-First, the `spring-ws-security` dependency which contains a `FactoryBean` for setting up the client's `TrustStore`. Second, the `spring-ws-support` dependency which contains a `MessageSender` that adds support for (self-signed) HTTPS certificates.
+Subsequently execute the following three commands in order to generate the <var>server-keystore.jks</var> and <var>client-truststore.jks</var>.
 
-``` xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <groupId>com.codenotfound</groupId>
-  <artifactId>spring-ws-https</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
-  <name>spring-ws-https</name>
-  <description>Spring WS - HTTPS Client Server Example</description>
-  <url>https://www.codenotfound.com/2017/04/spring-ws-https-client-server-example.html</url>
-
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.3.RELEASE</version>
-  </parent>
-
-  <properties>
-    <java.version>1.8</java.version>
-
-    <maven-jaxb2-plugin.version>0.13.2</maven-jaxb2-plugin.version>
-  </properties>
-
-  <dependencies>
-    <!-- spring-boot -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web-services</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <!-- spring-ws -->
-    <dependency>
-      <groupId>org.springframework.ws</groupId>
-      <artifactId>spring-ws-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.ws</groupId>
-      <artifactId>spring-ws-support</artifactId>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <!-- spring-boot-maven-plugin -->
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-      <!-- maven-jaxb2-plugin -->
-      <plugin>
-        <groupId>org.jvnet.jaxb2.maven2</groupId>
-        <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>${maven-jaxb2-plugin.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
-          <schemaIncludes>
-            <include>*.wsdl</include>
-          </schemaIncludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-</project>
-```
-
-Since applications can communicate either with or without TLS (or SSL), it is necessary for the client to indicate to the server the setup of a TLS connection. One of the main ways of achieving this is to use a different port number for TLS connections. In this example we will use port <var>9443</var> instead of port <var>9090</var>.
-
-Once the client and server have agreed to use TLS, they negotiate a stateful connection by using a handshaking procedure. During this procedure, the server usually then sends back its identification in the form of a [digital certificate](https://en.wikipedia.org/wiki/Public_key_certificate).
-
-Java programs store certificates in a repository called [Java KeyStore](https://en.wikipedia.org/wiki/Keystore) (JKS). To generate the keystore and certificate for this example we use [keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html) which is a key and certificate management utility that ships with Java.
-
-Open a command prompt at the root of your Maven project and execute following statement to generate a [public/private keypair](https://en.wikipedia.org/wiki/Public-key_cryptography) for the server side. The result will be a <var>server-keystore.jks</var> Java Keystore file that contains a key pair called <var>'server-keypair'</var>.
+> Note that we are specifying a DNS subject alternative name entry (<kbd>"-ext san=dns:localhost"</kbd>) matching the <var>'localhost'</var> hostname on the first keytool command. This way we do not need to override the `HostnameVerifier` like we did in the [HTTPS client example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html).
 
 ``` plaintext
-keytool -genkeypair -alias server-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=server,O=codenotfound.com" -keypass server-key-p455w0rd -keystore server-keystore.jks -storepass server-keystore-p455w0rd
+keytool -genkeypair -alias server-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=server,O=codenotfound.com" -keypass server-key-p455w0rd -keystore server-keystore.jks -storepass server-keystore-p455w0rd -ext san=dns:localhost
+
+keytool -exportcert -alias server-keypair -file server-public-key.cer -keystore server-keystore.jks -storepass server-keystore-p455w0rd
+
+keytool -importcert -keystore client-truststore.jks -alias server-public-key -file server-public-key.cer -storepass client-truststore-p455w0rd -noprompt
 ```
 
-If you would like to visualize the content of the keystore you can use a tool like [Portecle](http://portecle.sourceforge.net/). Using the file menu, navigate to the <var>server-keystore.jks</var> JKS file and when prompted enter the keystore password (in the above command we used <kbd>"server-keystore-p455w0rd"</kbd>) and the result should be should be similar to what is shown below.
+Next execute following three commands to generate the <var>client-keystore.jks</var> and <var>server-truststore.jks</var>.
+
+``` plaintext
+keytool -genkeypair -alias client-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=client,O=codenotfound.com" -keypass client-key-p455w0rd -keystore client-keystore.jks -storepass client-keystore-p455w0rd
+
+keytool -exportcert -alias client-keypair -file client-public-key.cer -keystore client-keystore.jks -storepass client-keystore-p455w0rd
+
+keytool -importcert -keystore server-truststore.jks -alias client-public-key -file client-public-key.cer -storepass server-truststore-p455w0rd -noprompt
+```
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-ws/server-keystore.png" alt="server keystore">
 </figure>
+
+---
 
 For the client we need to create a truststore (also a JKS file) which contains certificates from other parties that you expect to communicate with, or from [Certificate Authorities](https://en.wikipedia.org/wiki/Certificate_authority) (CA) that you trust to identify other parties. In this example we will add the server's public certificate to the client's truststore. As a result our client will "trust" and thus allow an HTTPS connection to the server.
 

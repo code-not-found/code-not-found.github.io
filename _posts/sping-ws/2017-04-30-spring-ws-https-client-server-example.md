@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how setup HTTPS on client and serv
 date: 2017-04-30
 modified: 2017-04-30
 categories: [Spring-WS]
-tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
+tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, SSL, TLS, Tutorial]
 published: true
 ---
 
