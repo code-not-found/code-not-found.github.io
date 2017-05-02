@@ -6,6 +6,7 @@ date: 2017-04-30
 modified: 2017-04-30
 header:
   teaser: "assets/images/spring-ws-teaser.jpg"
+  thumb: "assets/images/spring-ws-thumb.jpg"
 categories: [Spring-WS]
 tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, SSL, TLS, Tutorial]
 published: true
