@@ -4,6 +4,8 @@ permalink: /2017/04/spring-ws-https-client-server-example.html
 excerpt: "A detailed step-by-step tutorial on how setup HTTPS on client and server side using Spring-WS and Spring Boot."
 date: 2017-04-30
 modified: 2017-04-30
+header:
+  teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
 tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, SSL, TLS, Tutorial]
 published: true
