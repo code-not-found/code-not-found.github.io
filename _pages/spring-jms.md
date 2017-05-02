@@ -10,7 +10,7 @@ modified: 2017-05-01
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-Spring provides a JMS integration framework that simplifies the use of the JMS API much like Spring’s integration does for the JDBC API.
+Spring provides a JMS integration framework that simplifies the use of the JMS API much like Spring's integration does for the JDBC API.
 
 ## Quick Start
 
