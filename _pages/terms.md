@@ -3,6 +3,7 @@ permalink: /terms/
 title: "Terms and Privacy Policy"
 date: 2017-02-26
 modified: 2017-05-03
+share: false
 ---
 
 ## Privacy Policy
@@ -57,8 +58,8 @@ Just like this website, my Disclosure Policy is a work in progress. As the reven
 
 ## License
 
-All original content (e.g. articles, blog posts and illustrations) available on CodeNotFound.com is released under a [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License](https://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US) unless otherwise noted. Basically this means you are free to copy and redistribute the material in any medium or format as long as you give appropriate credit and don't use it for commercial purposes without my prior written consent.
+All original content (e.g. articles, blog posts and illustrations) available on CodeNotFound.com is released under a [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License](https://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US) unless otherwise noted. Basically this means you are free to copy and redistribute the material in any medium or format as long as you give appropriate credit and don't use it for commercial purposes without our prior written consent.
 
 ## Attribution
 
-When giving credit, link back to the source article attributed to [CodeNotFound.com]({{ site.url }}). Just don't go stealing our stuff and republishing it as your own.
+When giving credit, link back to the source article attributed to [CodeNotFound.com]({{ site.url }}). Just don't go stealing our stuff and republishing it as your own. Thanks!
