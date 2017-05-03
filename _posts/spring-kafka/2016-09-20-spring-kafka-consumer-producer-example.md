@@ -3,7 +3,9 @@ title: "Spring Kafka - Consumer Producer Example"
 permalink: /2016/09/spring-kafka-consumer-producer-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an Apache Kafka Consumer and Producer using Spring Kafka and Spring Boot."
 date: 2016-09-20
-modified: 2017-04-15
+modified: 2017-05-30
+header:
+  teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring Kafka, Tutorial]
 redirect_from:
