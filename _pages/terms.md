@@ -3,6 +3,8 @@ permalink: /terms/
 title: "Terms and Privacy Policy"
 date: 2017-02-26
 modified: 2017-05-03
+share: false
+comments: false
 ---
 
 ## Privacy Policy
