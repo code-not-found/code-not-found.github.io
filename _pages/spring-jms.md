@@ -20,7 +20,7 @@ Spring provides a JMS integration framework that simplifies the use of the JMS A
 
 * [Spring Framework - Projects](http://projects.spring.io/spring-framework/)
 
-* [JMS (Java Message Service) - Reference Documentation](http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#jms)
+* [JMS (Java Message Service) - Reference Documentation](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/jms.html)
 
 * [GitHub - spring-projects/spring-framework/spring-jms](https://github.com/spring-projects/spring-framework/tree/master/spring-jms)
 
