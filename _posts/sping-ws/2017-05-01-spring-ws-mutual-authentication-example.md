@@ -66,7 +66,7 @@ Now (if needed) move the created JKS files into <var>src/main/resources</var>. T
 
 # Setup the Client Keystore and Truststore
 
-TODO
+The details on the keystore and trustore are injected in the `ClientConfig` class using the `@Value` annotation. The values are defined in the <var>application.yml</var> properties file which is located under <var>src/main/resources</var>.
 
 ``` yaml
 client:
@@ -79,7 +79,7 @@ client:
     trust-store-password: client-truststore-p455w0rd
 ```
 
-TODO
+As the client needs to authenticate itself
 
 ``` java
 package com.codenotfound.ws.client;
