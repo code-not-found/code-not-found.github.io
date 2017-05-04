@@ -27,7 +27,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -40,9 +40,9 @@
      inkscape:window-maximized="1"
      inkscape:window-y="-8"
      inkscape:window-x="1272"
-     inkscape:cy="160.97071"
-     inkscape:cx="198.83361"
-     inkscape:zoom="1.8964604"
+     inkscape:cy="129.28916"
+     inkscape:cx="185.69474"
+     inkscape:zoom="2.682"
      showgrid="false"
      id="namedview4"
      inkscape:window-height="1018"
@@ -65,7 +65,7 @@
        id="guide8098" />
   </sodipodi:namedview>
   <ellipse
-     style="opacity:1;fill:#009688;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="path8281"
      cx="201.56261"
      cy="126.94338"
@@ -123,7 +123,7 @@
      x="166.1851"
      y="73.661064" />
   <rect
-     style="opacity:1;fill:#009688;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect4209"
      width="47.583832"
      height="5.6395645"
@@ -131,7 +131,7 @@
      y="140.35753"
      ry="0" />
   <rect
-     style="opacity:1;fill:#009688;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect4209-2"
      width="47.583832"
      height="5.6395645"
@@ -139,7 +139,7 @@
      y="151.60664"
      ry="0" />
   <rect
-     style="opacity:1;fill:#009688;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect4209-1"
      width="47.583832"
      height="5.6395645"
@@ -148,7 +148,7 @@
      ry="0" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#009688;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
      x="205.38329"
      y="117.18704"
      id="text4246"
@@ -158,7 +158,7 @@
        id="tspan4248"
        x="205.38329"
        y="117.18704"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#009688;fill-opacity:1">/</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#4caf50;fill-opacity:1;">/</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:29.91014481px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -172,7 +172,7 @@
        y="106.16767" /></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#009688;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
      x="-237.53737"
      y="101.42862"
      id="text4246-2-7"
@@ -182,10 +182,10 @@
        id="tspan4248-9-2"
        x="-237.53737"
        y="101.42862"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#009688;fill-opacity:1">/</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#4caf50;fill-opacity:1;">/</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#009688;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
      x="-237.54601"
      y="-101.37933"
      id="text4246-2-7-0"
@@ -195,10 +195,10 @@
        id="tspan4248-9-2-9"
        x="-237.54601"
        y="-101.37933"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#009688;fill-opacity:1">/</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#4caf50;fill-opacity:1;">/</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#009688;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
      x="191.45442"
      y="101.42812"
      id="text4246-2-7-5"
@@ -208,7 +208,7 @@
        id="tspan4248-9-2-96"
        x="191.45442"
        y="101.42812"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#009688;fill-opacity:1">/</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#4caf50;fill-opacity:1;">/</tspan></text>
   <rect
      style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect8222"
@@ -218,7 +218,7 @@
      y="74.108513" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#009688;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:42.56175995px;line-height:125%;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';letter-spacing:0px;word-spacing:0px;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
      x="191.4458"
      y="-101.37884"
      id="text4246-2-7-0-0"
@@ -228,7 +228,7 @@
        id="tspan4248-9-2-9-5"
        x="191.4458"
        y="-101.37884"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#009688;fill-opacity:1">/</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#4caf50;fill-opacity:1;">/</tspan></text>
   <rect
      style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect8222-2"
@@ -237,14 +237,14 @@
      x="173.86208"
      y="124.49625" />
   <rect
-     style="opacity:1;fill:#009688;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect8285"
      width="5.0764718"
      height="0.83786434"
      x="180.6745"
      y="107.33049" />
   <rect
-     style="opacity:1;fill:#009688;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#4caf50;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect8285-4"
      width="5.0764718"
      height="0.83786434"
