@@ -1,5 +1,5 @@
 ---
-title: "Spring for Apache Kafka"
+title: "Spring JMS"
 permalink: /spring-jms/
 excerpt: "Step-by-step tutorials on Spring JMS"
 date: 2017-05-01

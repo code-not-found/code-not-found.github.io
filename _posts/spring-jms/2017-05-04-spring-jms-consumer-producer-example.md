@@ -1,36 +1,33 @@
 ---
 title: "Spring JMS - ActiveMQ Consumer Producer Example"
 permalink: /2017/05/spring-jms-activemq-consumer-producer-example.html
-excerpt: "A detailed step-by-step tutorial on how to implement an Apache Kafka Consumer and Producer using Spring Kafka and Spring Boot."
+excerpt: "A detailed step-by-step tutorial on how to implement an ActiveMQ Consumer and Producer using Spring JMS and Spring Boot."
 date: 2017-05-04
 modified: 2017-05-04
-header:
-  teaser: "assets/images/spring-jms-teaser.jpg"
 categories: [Spring JMS]
-tags: [Apache Kafka, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring Kafka, Tutorial]
-published: false
+tags: [ActiveMQ, Apache ActiveMQ, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
+published: true
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/spring-kafka/) applies core Spring concepts to the development of Kafka-based messaging solutions. It provides a 'template' as a high-level abstraction for sending messages. It also provides support for Message-driven POJOs with `@KafkaListener` annotations and a 'listener container'.
+Spring provides a [JMS integration framework](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/jms.html) that simplifies the use of the JMS API much like Spring's integration does for the JDBC API. The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html).
 
-In the following tutorial we will configure, build and run a Hello World example in which we will send/receive messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
-
-> Spring Kafka 1.2 uses the Apache Kafka 0.10.2.x client.
+The below tutorial illustrates how to build and run a Hello World example in which we will send/receive messages to/from Apache ActiveMQ using Spring JMS, Spring Boot and Maven.
 
 Tools used:
-* Spring Kafka 1.2
+* ActiveMQ 5.14
+* Spring JMS 4.3
 * Spring Boot 1.5
 * Maven 3.5
 
 # General Project Setup
 
-We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters).
+We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter-activemq` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters).
 
-A dependency to `spring-kafka` is added in addition to a property that specifies the version. At the time of writing the latest stable release was <var>'1.2.0.RELEASE'</var>. We also include `spring-kafka-test` in order to have access to an embedded Kafka broker when running our unit test.
+A dependency to `activemq-junit` is also added as we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker. The version of the dependency is specified in a property that needs to match with the ActiveMQ version supported by the `spring-boot-starter-activemq` starter. At the time of writing this was version <var>'5.14.5'</var>.
 
 The `spring-boot-maven-plugin` Maven plugin is added so that we can build a single, runnable "uber-jar", which is convenient to execute and transport our written code.
 
@@ -41,12 +38,12 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.codenotfound</groupId>
-  <artifactId>spring-kafka-helloworld</artifactId>
+  <artifactId>spring-jms-activemq-helloworld</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>spring-kafka-helloworld</name>
-  <description>Spring Kafka - Consumer Producer Example</description>
-  <url>https://www.codenotfound.com/2016/09/spring-kafka-consumer-producer-example.html</url>
+  <name>spring-jms-activemq-helloworld</name>
+  <description>Spring JMS - ActiveMQ Consumer Producer Example</description>
+  <url>https://www.codenotfound.com/2017/05/spring-jms-activemq-consumer-producer-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -57,30 +54,25 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
+    <activemq.version>5.14.5</activemq.version>
   </properties>
 
   <dependencies>
     <!-- spring-boot -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
+      <artifactId>spring-boot-starter-activemq</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- spring-kafka -->
+    <!-- activemq -->
     <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka</artifactId>
-      <version>${spring-kafka.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka-test</artifactId>
-      <version>${spring-kafka.version}</version>
+      <groupId>org.apache.activemq.tooling</groupId>
+      <artifactId>activemq-junit</artifactId>
+      <version>${activemq.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -97,127 +89,99 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
 </project>
 ```
 
-We will use Spring Boot in order to make a Spring Kafka example application that you can "just run". We start by creating an `SpringKafkaApplication` which contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
+Spring Boot is used in order to make a Spring JMS example application that you can "just run". We start by creating an `SpringJmsApplication` which contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
 
-For more information on Spring Boot you can check out the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
+For more information on Spring Boot check out the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
 
 ``` java
-package com.codenotfound.kafka;
+package com.codenotfound.jms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringKafkaApplication {
+public class SpringJmsApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringKafkaApplication.class, args);
+    SpringApplication.run(SpringJmsApplication.class, args);
   }
 }
 ```
 
-> The below sections will detail how to create a sender and receiver together with their respective configurations. Note that it is also possible to have [Spring Boot autoconfigure Spring Kafka]({{ site.url }}/2017/04/spring-kafka-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
+> The below sections will detail how to create a sender and receiver together with their respective configurations. Note that it is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/2017/04/spring-jms-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
-> This example will send/receive a simple `String`. If you would like to send more complex objects you could for example use an [Avro Kafka serializer]({{ site.url }}/2017/03/spring-kafka-apache-avro-example.html) or the [Kafka Jsonserializer]({{ site.url }}/2017/03/spring-kafka-json-serializer-example.html) that ships with Spring Kafka.
+# Create a Spring JMS Message Producer
 
-# Create a Spring Kafka Message Producer
+For sending messages we will be using the `JmsTemplate` which requires a reference to a `ConnectionFactory` and provides convenience methods which handles the creation and release of resources when sending or synchronously receiving messages.
 
-For sending messages we will be using the `KafkaTemplate` which wraps a `Producer` and provides convenience methods to send data to Kafka topics. The template provides both asynchronous and synchronous send methods, with the asynchronous methods returning a `Future`.
+> Note that instances of the JmsTemplate class are thread-safe once configured.
 
-In the below `Sender` class, the `KafkaTemplate` is autowired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class.
+In the below `Sender` class, the `JmsTemplate` is autowired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class.
 
-In this example we will be using the async `send()` method and we will also configure the returned `ListenableFuture` with a `ListenableFutureCallback` to get an async callback with the results of the send (success or failure) instead of waiting for the `Future` to complete. If the sending of a message is successful we simply create a log statement.
-
-> Note that a Kafka broker by default auto-creates a topic when it receives a request for an unknown topic.
+In this example we will use the `convertAndSend()` method which sends the given object to the specified destination, converting the object to a JMS message. The [type of JMS message]({{ site.url }}/2014/01/jms-message-structure-overview.html#jms-message-body) depends on the type of the object being passed. In the case of a `String` a JMS `TextMessage` will be created.
 
 ``` java
-package com.codenotfound.kafka.producer;
+package com.codenotfound.jms.producer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
+import org.springframework.jms.core.JmsTemplate;
 
 public class Sender {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
 
   @Autowired
-  private KafkaTemplate<String, String> kafkaTemplate;
+  private JmsTemplate jmsTemplate;
 
-  public void send(String topic, String message) {
-    // the KafkaTemplate provides asynchronous send methods returning a Future
-    ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, message);
-
-    // register a callback with the listener to receive the result of the send asynchronously
-    future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
-
-      @Override
-      public void onSuccess(SendResult<String, String> result) {
-        LOGGER.info("sent message='{}' with offset={}", message,
-            result.getRecordMetadata().offset());
-      }
-
-      @Override
-      public void onFailure(Throwable ex) {
-        LOGGER.error("unable to send message='{}'", message, ex);
-      }
-    });
-
-    // or, to block the sending thread to await the result, invoke the future's get() method
+  public void send(String queue, String message) {
+    LOGGER.info("sending message='{}' to queue='{}'", message, queue);
+    jmsTemplate.convertAndSend(queue, message);
   }
 }
 ```
 
-The creation of the `KafkaTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
-In order to be able to use the Spring Kafka template we need to configure a `ProducerFactory` and provide it in the template's constructor. The producer factory needs to be set with a number of properties amongst which the <var>'BOOTSTRAP_SERVERS_CONFIG'</var> property that is fetched from the <var>application.yml</var> configuration file.
+In order to be able to use the Spring JMS template we need to provide a reference to a `ConnectionFactory` which is used to [create connections with the JMS provider](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html). In addition it encapsulates various configuration parameters, many of which are vendor specific. In the case of ActiveMQ we use the `ActiveMQConnectionFactory`.
 
-For a complete list of the available configuration parameters you can consult the [Kafka ProducerConfig API](https://kafka.apache.org/0100/javadoc/org/apache/kafka/clients/producer/ProducerConfig.html).
+On the `ActiveMQConnectionFactory` we set the broker URL which is fetched from the <var>application.yml</var> properties file using the `@Value` annotation.
+
+The `JmsTemplate` was originally designed to be used in combination with a J2EE container where the container would provide the necessary pooling of the JMS resources. As we are running this example on Spring Boot, we will wrap `ActiveMQConnectionFactory` using Spring's `CachingConnectionFactory` in order to still have the benefit of caching of sessions, connections and producers as well as automatic connection recovery.
 
 ``` java
-package com.codenotfound.kafka.producer;
+package com.codenotfound.jms.producer;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringSerializer;
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.core.DefaultKafkaProducerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.jms.connection.CachingConnectionFactory;
+import org.springframework.jms.core.JmsTemplate;
 
 @Configuration
 public class SenderConfig {
 
-  @Value("${kafka.bootstrap-servers}")
-  private String bootstrapServers;
+  @Value("${activemq.broker-url}")
+  private String brokerUrl;
 
   @Bean
-  public Map<String, Object> producerConfigs() {
-    Map<String, Object> props = new HashMap<>();
-    // list of host:port pairs used for establishing the initial connections to the Kakfa cluster
-    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+  public ActiveMQConnectionFactory activeMQConnectionFactory() {
+    ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
+    activeMQConnectionFactory.setBrokerURL(brokerUrl);
 
-    return props;
+    return activeMQConnectionFactory;
   }
 
   @Bean
-  public ProducerFactory<String, String> producerFactory() {
-    return new DefaultKafkaProducerFactory<>(producerConfigs());
+  public CachingConnectionFactory cachingConnectionFactory() {
+    return new CachingConnectionFactory(activeMQConnectionFactory());
   }
 
   @Bean
-  public KafkaTemplate<String, String> kafkaTemplate() {
-    return new KafkaTemplate<>(producerFactory());
+  public JmsTemplate jmsTemplate() {
+    return new JmsTemplate(cachingConnectionFactory());
   }
 
   @Bean
@@ -227,24 +191,22 @@ public class SenderConfig {
 }
 ```
 
-# Create a Spring Kafka Message Consumer
+# Create a Spring JMS Message Consumer
 
-Like with any messaging-based application, you need to create a receiver that will handle the published messages. The `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In the below example we named the method `receive()`, but you can name it anything you like.
+Like with any messaging-based application, you need to create a receiver that will handle the messages that have been sent. The below `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In this example we named the method `receive()`, but you can name it anything you like.
 
-The `@KafkaListener` annotation creates a message listener container behind the scenes for each annotated method, using a `ConcurrentMessageListenerContainer`. By default, a bean with name `kafkaListenerContainerFactory` is expected that we will setup in the next section. Using the `topics` element, we specify the topics for this listener.
-
-For more information on the other available elements, you can consult the [KafkaListener API documentation](http://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html).
+The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name `jmsListenerContainerFactory` is expected that we will setup in the next section. Using the `destination` element, we specify the destination for this listener.
 
 > For testing convenience, we added a `CountDownLatch`. This allows the POJO to signal that a message is received. This is something you are not likely to implement in a production application. 
 
 ``` java
-package com.codenotfound.kafka.consumer;
+package com.codenotfound.jms.consumer;
 
 import java.util.concurrent.CountDownLatch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.jms.annotation.JmsListener;
 
 public class Receiver {
 
@@ -256,7 +218,7 @@ public class Receiver {
     return latch;
   }
 
-  @KafkaListener(topics = "${topic.helloworld}")
+  @JmsListener(destination = "${queue.helloworld}")
   public void receive(String message) {
     LOGGER.info("received message='{}'", message);
     latch.countDown();
@@ -264,56 +226,48 @@ public class Receiver {
 }
 ```
 
-The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class. Note that we need to add the `@EnableKafka` annotation to enable support for the `@KafkaListener` annotation that was used on the `Receiver`.
+The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class. Note that we need to add the `@EnableJms` annotation to enable support for the `@JmsListener` annotation that was used on the `Receiver`.
 
-The `kafkaListenerContainerFactory()` is used by the `@KafkaListener` annotation from the `Receiver`. In order to create it, a `ConsumerFactory` and accompanying configuration `Map` is needed. Apart from the <var>'AUTO_OFFSET_RESET_CONFIG'</var> property all configuration parameters are mandatory, for a complete list consult the [Kafka ConsumerConfig API](https://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/consumer/ConsumerConfig.html). 
+The `jmsListenerContainerFactory()` is used by the `@JmsListener` annotation from the `Receiver`. Similar to the `JmsTemplate` it is wrapped in a `CachingConnectionFactory` to provide caching of sessions, connections and consumers.
+
+As we are connecting to ActiveMQ, an `ActiveMQConnectionFactory` is created and passed in the constructor of the `CachingConnectionFactory`.
 
 ``` java
-package com.codenotfound.kafka.consumer;
+package com.codenotfound.jms.consumer;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
+import org.springframework.jms.connection.CachingConnectionFactory;
 
 @Configuration
-@EnableKafka
+@EnableJms
 public class ReceiverConfig {
 
-  @Value("${kafka.bootstrap-servers}")
-  private String bootstrapServers;
+  @Value("${activemq.broker-url}")
+  private String brokerUrl;
 
   @Bean
-  public Map<String, Object> consumerConfigs() {
-    Map<String, Object> props = new HashMap<>();
-    // list of host:port pairs used for establishing the initial connections to the Kakfa cluster
-    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-    // allows a pool of processes to divide the work of consuming and processing records
-    props.put(ConsumerConfig.GROUP_ID_CONFIG, "helloworld");
+  public ActiveMQConnectionFactory activeMQConnectionFactory() {
+    ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
+    activeMQConnectionFactory.setBrokerURL(brokerUrl);
 
-    return props;
+    return activeMQConnectionFactory;
   }
 
   @Bean
-  public ConsumerFactory<String, String> consumerFactory() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs());
+  public CachingConnectionFactory cachingConnectionFactory() {
+    return new CachingConnectionFactory(activeMQConnectionFactory());
   }
 
   @Bean
-  public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, String> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactory());
+  public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
+    DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+    factory.setConnectionFactory(cachingConnectionFactory());
+    factory.setConcurrency("3-10");
 
     return factory;
   }
@@ -325,42 +279,55 @@ public class ReceiverConfig {
 }
 ```
 
-# Testing the Spring Kafka Template & Listener
+# Testing the Spring JMS Template & Listener
 
-In order to verify that we are able to send and receive a message to and from Kafka, a basic `SpringKafkaApplicationTest` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.t'</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
+In order to verify that we are able to send and receive a message to and from ActiveMQ, a basic `SpringJmsApplicationTest` test case is used. It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.q'</var> queue on the ActiveMQ message broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
-An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) for more detailed information on this topic.
+An embedded ActiveMQ broker is automatically started by using an [EmbeddedActiveMQBroker JUnit Rule](http://activemq.apache.org/how-to-unit-test-jms-code.html#HowToUnitTestJMSCode-UsingTheEmbeddedActiveMQBrokerJUnitRule(ActiveMQ5.13)).
 
-Below test case can also be executed after you [install kafka and zookeeper]({{ site.url }}/2016/09/apache-kafka-download-installation.html) on your local system. You just need to comment out the lines annotated with `@ClassRule` and `@BeforeClass`.
+> Note that as the embedded broker gets shutdown once the unit test cases are finished, we need to stop our `Sender` and `Receiver` before this happens in order to avoid connection errors. This is done by calling a `close()` on the `ApplicationContext` using the `@AfterClass` annotation.
+
+Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/2014/01/jms-apache-activemq-installation.html) on your local system. You need to comment out the lines annotated with `@ClassRule` and `@AfterClass` to avoid the embedded broker gets created. In addition you need to change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case you are the default URL value.
 
 ``` java
-package com.codenotfound.kafka;
+package com.codenotfound.jms;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.apache.activemq.junit.EmbeddedActiveMQBroker;
+import org.junit.AfterClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
-import org.springframework.kafka.listener.MessageListenerContainer;
-import org.springframework.kafka.test.rule.KafkaEmbedded;
-import org.springframework.kafka.test.utils.ContainerTestUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.codenotfound.kafka.consumer.Receiver;
-import com.codenotfound.kafka.producer.Sender;
+import com.codenotfound.jms.consumer.Receiver;
+import com.codenotfound.jms.producer.Sender;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringKafkaApplicationTest {
+public class SpringJmsApplicationTest {
 
-  private static String HELLOWORLD_TOPIC = "helloworld.t";
+  private static ApplicationContext applicationContext;
+
+  @Autowired
+  void setContext(ApplicationContext applicationContext) {
+    SpringJmsApplicationTest.applicationContext = applicationContext;
+  }
+
+  @AfterClass
+  public static void afterClass() {
+    ((ConfigurableApplicationContext) applicationContext).close();
+  }
+
+  @ClassRule
+  public static EmbeddedActiveMQBroker broker = new EmbeddedActiveMQBroker();
 
   @Autowired
   private Sender sender;
@@ -368,30 +335,9 @@ public class SpringKafkaApplicationTest {
   @Autowired
   private Receiver receiver;
 
-  @Autowired
-  private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
-
-  @ClassRule
-  public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, HELLOWORLD_TOPIC);
-
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {
-    System.setProperty("kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
-  }
-
-  @Before
-  public void setUp() throws Exception {
-    // wait until the partitions are assigned
-    for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
-        .getListenerContainers()) {
-      ContainerTestUtils.waitForAssignment(messageListenerContainer,
-          embeddedKafka.getPartitionsPerTopic());
-    }
-  }
-
   @Test
   public void testReceive() throws Exception {
-    sender.send(HELLOWORLD_TOPIC, "Hello Spring Kafka!");
+    sender.send("helloworld.q", "Hello Spring JMS ActiveMQ!");
 
     receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
     assertThat(receiver.getLatch().getCount()).isEqualTo(0);
@@ -399,13 +345,13 @@ public class SpringKafkaApplicationTest {
 }
 ```
 
-In order to run the above example open a command prompt and execute following Maven command: 
+In order to execute above example open a command prompt and run following Maven command: 
 
 ``` plaintext
 mvn test
 ```
 
-Maven will download the needed dependencies, compile the code and run the unit test case. The result should be a successful build during which following logs are generated:
+Maven will download the dependencies, compile the code and run the unit test case. The result should be a successful build as shown below:
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -416,13 +362,12 @@ Maven will download the needed dependencies, compile the code and run the unit t
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.3.RELEASE)
 
-00:29:56.628 [main] INFO  c.c.k.SpringKafkaApplicationTests - Starting SpringKafkaApplicationTests on cnf-pc with PID 3280 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-helloworld)
-00:29:56.628 [main] INFO  c.c.k.SpringKafkaApplicationTests - No active profile set, falling back to default profiles: default
-00:29:57.303 [main] INFO  c.c.k.SpringKafkaApplicationTests - Started SpringKafkaApplicationTests in 0.991 seconds (JVM running for 5.285)
-00:29:57.443 [kafka-producer-network-thread | producer-1] INFO  c.codenotfound.kafka.producer.Sender - sent message='Hello Spring Kafka!' with offset=0
-00:29:58.649 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='Hello Spring Kafka!'
-00:29:59.681 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.135 sec - in com.codenotfound.kafka.SpringKafkaApplicationTests
+21:26:38.419 [main] INFO  c.c.jms.SpringJmsApplicationTest - Starting SpringJmsApplicationTest on cnf-pc with PID 5124 (started by CodeNotFound in c:\code\st\spring-jms\spring-jms-activemq-helloworld)
+21:26:38.419 [main] INFO  c.c.jms.SpringJmsApplicationTest - No active profile set, falling back to default profiles: default
+21:26:39.187 [main] INFO  c.c.jms.SpringJmsApplicationTest - Started SpringJmsApplicationTest in 1.025 seconds (JVM running for 2.021)
+21:26:39.233 [main] INFO  com.codenotfound.jms.producer.Sender - sending message='Hello Spring JMS ActiveMQ!' to destination='helloworld.q'
+21:26:39.253 [DefaultMessageListenerContainer-2] INFO  c.codenotfound.jms.consumer.Receiver - received message='Hello Spring JMS ActiveMQ!'
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.541 sec - in com.codenotfound.jms.SpringJmsApplicationTest
 
 Results :
 
@@ -431,9 +376,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 40.252 s
-[INFO] Finished at: 2017-04-16T00:30:30+02:00
-[INFO] Final Memory: 17M/220M
+[INFO] Total time: 4.915 s
+[INFO] Finished at: 2017-05-04T21:26:40+02:00
+[INFO] Final Memory: 17M/226M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -441,10 +386,10 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-helloworld).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-activemq-helloworld).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This wraps up our example in which we used a Spring Kafka template to create a producer and Spring Kafka listener to create a consumer.
+This concludes our example in which we used a Spring JMS template to create a producer and Spring JMS listener to create a consumer.
 
-If you found this sample useful or have a question you would like to ask, drop a line below!
+If you found this sample useful or have a question you would like to ask, leave a comment below!
