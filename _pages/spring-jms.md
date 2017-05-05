@@ -14,7 +14,7 @@ Spring provides a JMS integration framework that simplifies the use of the JMS A
 
 ## Quick Start
 
-* [Spring JMS - ActiveMQ Example]({{ site.url }}/2017/05/spring-jms-activemq-example.html)
+* [Spring JMS - ActiveMQ Consumer Producer Example]({{ site.url }}/2017/05/spring-jms-activemq-consumer-producer-example.html)
 
 ## References
 
