@@ -230,7 +230,7 @@ The creation and configuration of the different Spring Beans needed for the `Rec
 
 The `jmsListenerContainerFactory()` is expected by the `@JmsListener` annotation from the `Receiver`. We set the concurrency between 3 and 10. This means that listener container will always hold on to the minimum number of consumers and will slowly scale up to the maximum number of consumers in case of increasing load.
 
-Contrary to the `JmsTemplate` [ideally don't use Spring's `CachingConnectionFactory` with a message listener container at all](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html). Reason for this is that it is generally preferable to let the listener container itself handle appropriate caching within its lifecycle.
+Contrary to the `JmsTemplate` [ideally don't use Spring's CachingConnectionFactory with a message listener container at all](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html). Reason for this is that it is generally preferable to let the listener container itself handle appropriate caching within its lifecycle.
 
 As we are connecting to ActiveMQ, an `ActiveMQConnectionFactory` is created and passed in the constructor of the `CachingConnectionFactory`.
 
