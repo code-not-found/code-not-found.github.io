@@ -3,7 +3,7 @@ title: "Spring JMS - ActiveMQ Consumer Producer Example"
 permalink: /2017/05/spring-jms-activemq-consumer-producer-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an ActiveMQ Consumer and Producer using Spring JMS and Spring Boot."
 date: 2017-05-04
-modified: 2017-05-04
+modified: 2017-05-06
 categories: [Spring JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
 published: true
@@ -108,7 +108,7 @@ public class SpringJmsApplication {
 }
 ```
 
-> The below sections will detail how to create a sender and receiver together with their respective configurations. Note that it is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/2017/04/spring-jms-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
+> The below sections will detail how to create a sender and receiver together with their respective configurations. Note that it is also possible to have Spring Boot autoconfigure Spring JMS using default values so that actual code that needs to be written is reduced to a bare minimum.
 
 # Create a Spring JMS Message Producer
 
@@ -135,9 +135,9 @@ public class Sender {
   @Autowired
   private JmsTemplate jmsTemplate;
 
-  public void send(String queue, String message) {
-    LOGGER.info("sending message='{}' to queue='{}'", message, queue);
-    jmsTemplate.convertAndSend(queue, message);
+  public void send(String destination, String message) {
+    LOGGER.info("sending message='{}' to destination='{}'", message, destination);
+    jmsTemplate.convertAndSend(destination, message);
   }
 }
 ```
@@ -228,7 +228,9 @@ public class Receiver {
 
 The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class. Note that we need to add the `@EnableJms` annotation to enable support for the `@JmsListener` annotation that was used on the `Receiver`.
 
-The `jmsListenerContainerFactory()` is used by the `@JmsListener` annotation from the `Receiver`. Similar to the `JmsTemplate` it is wrapped in a `CachingConnectionFactory` to provide caching of sessions, connections and consumers.
+The `jmsListenerContainerFactory()` is expected by the `@JmsListener` annotation from the `Receiver`. We set the concurrency between 3 and 10. This means that listener container will always hold on to the minimum number of consumers and will slowly scale up to the maximum number of consumers in case of increasing load.
+
+Contrary to the `JmsTemplate` [ideally don't use Spring's `CachingConnectionFactory` with a message listener container at all](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html). Reason for this is that it is generally preferable to let the listener container itself handle appropriate caching within its lifecycle.
 
 As we are connecting to ActiveMQ, an `ActiveMQConnectionFactory` is created and passed in the constructor of the `CachingConnectionFactory`.
 
@@ -241,7 +243,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
-import org.springframework.jms.connection.CachingConnectionFactory;
 
 @Configuration
 @EnableJms
@@ -259,14 +260,9 @@ public class ReceiverConfig {
   }
 
   @Bean
-  public CachingConnectionFactory cachingConnectionFactory() {
-    return new CachingConnectionFactory(activeMQConnectionFactory());
-  }
-
-  @Bean
   public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
     DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-    factory.setConnectionFactory(cachingConnectionFactory());
+    factory.setConnectionFactory(activeMQConnectionFactory());
     factory.setConcurrency("3-10");
 
     return factory;
