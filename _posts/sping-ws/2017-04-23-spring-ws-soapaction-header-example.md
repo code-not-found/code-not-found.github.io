@@ -4,6 +4,8 @@ permalink: /2017/04/spring-ws-soapaction-header-example.html
 excerpt: "A detailed step-by-step tutorial on how to set the SOAPAction header using Spring-WS and Spring Boot."
 date: 2017-04-24
 modified: 2017-04-24
+header:
+  teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
 tags: [Client, Endpoint, Example, Header, Maven, SOAPAction, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
 published: true

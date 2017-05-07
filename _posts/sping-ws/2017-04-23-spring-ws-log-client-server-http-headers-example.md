@@ -4,6 +4,8 @@ permalink: /2017/04/spring-ws-log-client-server-http-headers.html
 excerpt: "A detailed step-by-step tutorial on how to log the client and server HTTP headers using Spring-WS and Spring Boot."
 date: 2017-04-23
 modified: 2017-04-23
+header:
+  teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
 tags: [Client, Endpoint, Example, Headers, HTTP, Log, Logging, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
 redirect_from:

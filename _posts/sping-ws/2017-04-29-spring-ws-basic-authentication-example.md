@@ -3,7 +3,9 @@ title: "Spring WS - Basic Authentication Example"
 permalink: /2017/04/spring-ws-basic-authentication-example.html
 excerpt: "A detailed step-by-step tutorial on how to configure basic authentication using Spring-WS and Spring Boot."
 date: 2017-04-24
-modified: 2017-04-24
+modified: 2017-04-29
+header:
+  teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
 tags: [Basic Authentication, Client, Endpoint, Example, HTTP, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
 published: true

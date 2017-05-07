@@ -4,6 +4,8 @@ permalink: /2017/04/spring-ws-soap-header-example.html
 excerpt: "A detailed step-by-step tutorial on how to set and get a SOAP header using Spring-WS and Spring Boot."
 date: 2017-04-25
 modified: 2017-04-25
+header:
+  teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
 tags: [Client, Endpoint, Example, Header, Maven, SOAP, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
 published: false
