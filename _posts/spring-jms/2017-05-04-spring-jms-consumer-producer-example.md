@@ -4,6 +4,8 @@ permalink: /2017/05/spring-jms-activemq-consumer-producer-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an ActiveMQ Consumer and Producer using Spring JMS and Spring Boot."
 date: 2017-05-04
 modified: 2017-05-06
+header:
+  teaser: "assets/images/spring-jms-teaser.jpg"
 categories: [Spring JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
 published: true
