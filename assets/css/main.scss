@@ -97,7 +97,7 @@ ins.adsbygoogle {
 }
 /*splash*/
 .greedy-nav .visible-links a::before {
-  background: #087f23 !important;
+  background: #ba000d !important;
 }
 .page__hero--overlay .btn:hover {
   background-color: #087f23 !important;
@@ -143,6 +143,7 @@ blockquote {
 .notice--info {
   color: #fff;
   background-color: #4caf50;
+  min-height: 100px;
 }
 .notice--info p {
   font-size: 1.2em;
