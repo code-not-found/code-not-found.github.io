@@ -96,8 +96,8 @@ ins.adsbygoogle {
   border-bottom: none !important;
 }
 /*splash*/
-.greedy-nav .visible-links a::before {
-  background: #087f23 !important;
+.masthead__menu-item {
+  color: #e91e63;
 }
 .page__hero--overlay .btn:hover {
   background-color: #087f23 !important;
@@ -160,7 +160,4 @@ nav.pagination a.pagination--pager:hover, nav.pagination a.pagination--pager:act
 /*other*/
 figure img.logo {
   margin-bottom: -20px;
-}
-.masthead__menu-item {
-  color: #03af6c;
 }
