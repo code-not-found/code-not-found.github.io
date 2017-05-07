@@ -96,8 +96,8 @@ ins.adsbygoogle {
   border-bottom: none !important;
 }
 /*splash*/
-.masthead__menu-item {
-  color: #e91e63;
+.greedy-nav .visible-links a::before {
+  background: #087f23 !important;
 }
 .page__hero--overlay .btn:hover {
   background-color: #087f23 !important;
