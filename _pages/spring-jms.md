@@ -3,7 +3,7 @@ title: "Spring JMS"
 permalink: /spring-jms/
 excerpt: "Step-by-step tutorials on Spring JMS"
 date: 2017-05-01
-modified: 2017-05-01
+modified: 2017-05-08
 ---
 
 <figure>
@@ -15,6 +15,8 @@ Spring provides a JMS integration framework that simplifies the use of the JMS A
 ## Quick Start
 
 * [Spring JMS - ActiveMQ Consumer Producer Example]({{ site.url }}/2017/05/spring-jms-activemq-consumer-producer-example.html)
+
+* [Spring JMS - ActiveMQ Boot Example]({{ site.url }}/2017/05/spring-jms-activemq-boot-example.html)
 
 ## References
 
