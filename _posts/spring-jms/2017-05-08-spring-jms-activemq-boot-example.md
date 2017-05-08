@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/spring-jms-teaser.jpg"
 categories: [Spring JMS]
 tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
-published: false
+published: true
 ---
 
 <figure>
@@ -17,7 +17,7 @@ published: false
 
 [Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html) will try to automatically configure your Spring application based on the JAR dependencies that are available. In other words if the `spring-jms` and `activemq-broker` dependencies are on the classpath and you have not manually configured any `ConnectionFactory`, `JmsTemplate` or `JmsListenerContainerFactory` beans, then Spring Boot will auto-configure them for you using default values.
 
-To illustrate this behavior we will start from a previous [Spring JMS tutorial]({{ site.url }}/2017/05/spring-jms-activemq-consumer-producer-example.html) in which we send/receive messages to/from an Apache ActiveMQ queue using Spring JMS. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration.
+To illustrate this behavior we will start from a previous [Spring JMS tutorial]({{ site.url }}/2017/05/spring-jms-activemq-consumer-producer-example.html) in which we send/receive messages to/from an Apache ActiveMQ destination using Spring JMS. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration capabilities.
 
 Tools used:
 * ActiveMQ 5.14
@@ -160,17 +160,14 @@ public class Receiver {
 }
 ```
 
-In order to fine tune the different settign for the `ConnectionFactory` and `JmsListenerContainerFactory` beans 
-For the `Receiver`, Spring Boot takes care of most of the configuration. There are however two properties that need to be explicitly set in the <var>application.yml</var> properties file:
-1. The <var>'kafka.consumer.group-id'</var> property needs to be specified as we are [using group management to assign topic partitions to consumers](http://docs.confluent.io/current/clients/consumer.html#concepts). In this example we will assign it the value <var>'boot'</var>.
-2. The <var>'kafka.consumer.auto-offset-reset'</var> property needs to be set to <var>'earliest'</var> which ensures the new consumer group will get the message sent in case the container started after the send was completed.
+Using application properties we can further fine tune the different settings of the `ConnectionFactory`, `JmsTemplate` and `JmsListenerContainerFactory` beans. Scroll down to <var># ACTIVEMQ</var> and <var># JMS</var> [in the following link in order to get a complete overview on all the available ActiveMQ and JMS properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) 
+
+In this example we use default values and only specify the destination in the included <var>application.yml</var> properties file.
 
 ``` yml
 destiation:
   boot: boot.q
 ```
-
-> Scroll down to <var># ???</var> [in the following link in order to get a complete overview on all the Spring JMS ActiveMQ properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) that can be set for auto configuration using an Spring Boot application properties file.
 
 # Disable JMS Autoconfiguration
 
@@ -196,34 +193,29 @@ public class SpringJmsApplication {
 
 # Testing the Sender and Receiver
 
-In order to verify that our code works, a basic `SpringKafkaApplicationTest` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>'boot.t'</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received.
+In order to verify that our code works, a simple `SpringJmsApplicationTest` test case is used. It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'boot.q'</var> queue on the ActiveMQ broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received.
 
-The test case runs using [the embedded Kafka broker which is started via a JUnit @ClassRule]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
+Spring Boot auto-configuration will automatically start an embedded ActiveMQ broker instance, as such we don't need to include an `EmbeddedActiveMQBroker` JUnit Rule.
 
 ``` java
-package com.codenotfound.kafka;
+package com.codenotfound.jms;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.test.rule.KafkaEmbedded;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.codenotfound.kafka.consumer.Receiver;
-import com.codenotfound.kafka.producer.Sender;
+import com.codenotfound.jms.consumer.Receiver;
+import com.codenotfound.jms.producer.Sender;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringKafkaApplicationTest {
-
-  private static String BOOT_TOPIC = "boot.t";
+public class SpringJmsApplicationTest {
 
   @Autowired
   private Sender sender;
@@ -231,17 +223,9 @@ public class SpringKafkaApplicationTest {
   @Autowired
   private Receiver receiver;
 
-  @ClassRule
-  public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, BOOT_TOPIC);
-
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {
-    System.setProperty("spring.kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
-  }
-
   @Test
   public void testReceive() throws Exception {
-    sender.send(BOOT_TOPIC, "Hello Boot!");
+    sender.send("boot.q", "Hello Boot!");
 
     receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
     assertThat(receiver.getLatch().getCount()).isEqualTo(0);
@@ -249,13 +233,13 @@ public class SpringKafkaApplicationTest {
 }
 ```
 
-Fire up the above test case by opening a command prompt and execute following Maven command: 
+Let's run the test case by executing following Maven command at the command prompt: 
 
 ``` plaintext
 mvn test
 ```
 
-Maven will then download the dependencies, compile the code and run the unit test case during which following logs should be generated:
+The test case will be triggered resulting in following log statements:
 
 ``` plaintext
   .   ____          _            __ _ _
