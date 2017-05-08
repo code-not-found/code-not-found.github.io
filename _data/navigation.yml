@@ -2,10 +2,12 @@
 main:
   - title: "Blog"
     url: https://www.codenotfound.com/blog/
-  - title: "Spring-WS"
-    url: https://www.codenotfound.com/spring-ws/
   - title: "Spring-Kafka"
     url: https://www.codenotfound.com/spring-kafka/
+  - title: "Spring-WS"
+    url: https://www.codenotfound.com/spring-ws/
+  - title: "Spring-JMS"
+    url: https://www.codenotfound.com/spring-jms/
   - title: "JMS"
     url: https://www.codenotfound.com/jms/
   - title: "Terms and Privacy Policy"
