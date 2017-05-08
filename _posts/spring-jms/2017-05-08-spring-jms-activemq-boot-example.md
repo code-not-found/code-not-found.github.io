@@ -1,14 +1,14 @@
 ---
 title: "Spring JMS - ActiveMQ Boot Example"
 permalink: /2017/05/spring-jms-activemq-boot-example.html
-excerpt: "A detailed step-by-step tutorial on how to autoconfigure ActiveMQ in combination with Spring JMS using Spring Boot."
+excerpt: "A detailed step-by-step tutorial on how to autoconfigure ActiveMQ and Spring JMS using Spring Boot."
 date: 2017-05-08
 modified: 2017-05-08
 header:
   teaser: "assets/images/spring-jms-teaser.jpg"
 categories: [Spring JMS]
 tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
-published: true
+published: false
 ---
 
 <figure>
@@ -27,7 +27,7 @@ Tools used:
 
 # General Project Setup
 
-The project is managed using [Maven](https://maven.apache.org/). The Maven POM file contains the needed dependencies for [Spring Boot](https://projects.spring.io/spring-boot/) and [Spring JMS](https://projects.spring.io/spring-jms/) by declaring the `spring-boot-starter-activemq` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) as shown below.
+The example project is managed using [Maven](https://maven.apache.org/). Needed dependencies like [Spring Boot](https://projects.spring.io/spring-boot/) and [Spring JMS](http://projects.spring.io/spring-framework/) are included by declaring the `spring-boot-starter-activemq` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) in the POM file as shown below.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -96,28 +96,6 @@ public class SpringJmsApplication {
   }
 }
 ```
-
-# Disable JMS Autoconfiguration
-
-If you want Spring Boot to skip the autoconfiguring of ActiveMQ, you can do so by adding the `exclude` parameter to the `@SpringBootApplication` (or the `@EnableAutoConfiguration` annotation) annotation. Specify the `ActiveMQAutoConfiguration` class as shown below and JMS autoconfiguration for ActiveMQ is turned off.
-
-``` java
-package com.codenotfound.jms;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration;
-
-@SpringBootApplication(exclude = {ActiveMQAutoConfiguration.class})
-public class SpringJmsApplication {
-
-  public static void main(String[] args) {
-    SpringApplication.run(SpringJmsApplication.class, args);
-  }
-}
-```
-
-> Note that if Spring Boot finds any beans of type `ConnectionFactory`, the entire `ActiveMQAutoConfiguration` will be switched off.
 
 # Autoconfigure the Spring JMS Message Producer
 
@@ -193,6 +171,28 @@ destiation:
 ```
 
 > Scroll down to <var># ???</var> [in the following link in order to get a complete overview on all the Spring JMS ActiveMQ properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) that can be set for auto configuration using an Spring Boot application properties file.
+
+# Disable JMS Autoconfiguration
+
+If you want Spring Boot to skip the autoconfiguring of ActiveMQ, you can do so by adding the `exclude` parameter to the `@SpringBootApplication` (or the `@EnableAutoConfiguration` annotation) annotation. Specify the `ActiveMQAutoConfiguration` class as shown below and JMS autoconfiguration for ActiveMQ is turned off.
+
+``` java
+package com.codenotfound.jms;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration;
+
+@SpringBootApplication(exclude = {ActiveMQAutoConfiguration.class})
+public class SpringJmsApplication {
+
+  public static void main(String[] args) {
+    SpringApplication.run(SpringJmsApplication.class, args);
+  }
+}
+```
+
+> Note that if Spring Boot finds any beans of type `ConnectionFactory`, the entire `ActiveMQAutoConfiguration` will be switched off.
 
 # Testing the Sender and Receiver
 
