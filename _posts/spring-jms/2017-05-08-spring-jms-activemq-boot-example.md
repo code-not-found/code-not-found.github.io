@@ -1,21 +1,21 @@
 ---
 title: "Spring JMS - ActiveMQ Boot Example"
 permalink: /2017/05/spring-jms-activemq-boot-example.html
-excerpt: "A detailed step-by-step tutorial on how to setup ActiveMQ in combination with Spring JMS using Spring Boot autoconfiguration."
+excerpt: "A detailed step-by-step tutorial on how to autoconfigure ActiveMQ in combination with Spring JMS using Spring Boot."
 date: 2017-05-08
 modified: 2017-05-08
 header:
   teaser: "assets/images/spring-jms-teaser.jpg"
 categories: [Spring JMS]
-tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Consumer, Example, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
-published: false
+tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
+published: true
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html) will try to automatically configure your Spring application based on the JAR dependencies that are available. In other words if the <var>???</var> is on the classpath and you have not manually configured any `ConnectionFactory`, `JmsTemplate` or `JmsListenerContainerFactory` beans, then Spring Boot will auto-configure them for you using default values.
+[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html) will try to automatically configure your Spring application based on the JAR dependencies that are available. In other words if the `spring-jms` and `activemq-broker` dependencies are on the classpath and you have not manually configured any `ConnectionFactory`, `JmsTemplate` or `JmsListenerContainerFactory` beans, then Spring Boot will auto-configure them for you using default values.
 
 To illustrate this behavior we will start from a previous [Spring JMS tutorial]({{ site.url }}/2017/05/spring-jms-activemq-consumer-producer-example.html) in which we send/receive messages to/from an Apache ActiveMQ queue using Spring JMS. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration.
 
@@ -96,6 +96,28 @@ public class SpringJmsApplication {
   }
 }
 ```
+
+# Disable JMS Autoconfiguration
+
+If you want Spring Boot to skip the autoconfiguring of ActiveMQ, you can do so by adding the `exclude` parameter to the `@SpringBootApplication` (or the `@EnableAutoConfiguration` annotation) annotation. Specify the `ActiveMQAutoConfiguration` class as shown below and JMS autoconfiguration for ActiveMQ is turned off.
+
+``` java
+package com.codenotfound.jms;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration;
+
+@SpringBootApplication(exclude = {ActiveMQAutoConfiguration.class})
+public class SpringJmsApplication {
+
+  public static void main(String[] args) {
+    SpringApplication.run(SpringJmsApplication.class, args);
+  }
+}
+```
+
+> Note that if Spring Boot finds any beans of type `ConnectionFactory`, the entire `ActiveMQAutoConfiguration` will be switched off.
 
 # Autoconfigure the Spring JMS Message Producer
 
@@ -236,25 +258,22 @@ mvn test
 Maven will then download the dependencies, compile the code and run the unit test case during which following logs should be generated:
 
 ``` plaintext
--------------------------------------------------------
- T E S T S
--------------------------------------------------------
-Running com.codenotfound.kafka.SpringKafkaApplicationTest
-
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.2.RELEASE)
+ :: Spring Boot ::        (v1.5.3.RELEASE)
 
-23:11:15.145 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 4812 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-boot)
-23:11:15.146 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
-23:11:15.816 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.966 seconds (JVM running for 5.41)
-23:11:15.843 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='Hello Boot!' to topic='boot.t'
-23:11:17.299 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-kafka-listener-1] INFO  c.c.kafka.consumer.Receiver - received data='ConsumerRecord(topic = boot.t, partition = 0, offset = 0, CreateTime = 1492117875956, checksum = 2922779506, serialized key size = -1, serialized value size = 11, key = null, value = Hello Boot!)'
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.336 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
+20:44:45.934 [main] INFO  c.c.jms.SpringJmsApplicationTest - Starting SpringJmsApplicationTest on cnf-pc with PID 3756 (started by CodeNotFound in c:\code\st\spring-jms\spring-jms-activemq-boot)
+20:44:45.937 [main] INFO  c.c.jms.SpringJmsApplicationTest - No active profile set, falling back to default profiles: default
+20:44:47.073 [main] WARN  o.a.activemq.broker.BrokerService - Temporary Store limit is 51200 mb (current store usage is 0 mb). The data directory: c:\code\st\spring-jms\spring-jms-activemq-boot only has 14451 mb of usable space. - resetting to maximum available disk space: 14451 mb
+20:44:47.139 [main] INFO  c.c.jms.SpringJmsApplicationTest - Started SpringJmsApplicationTest in 1.461 seconds (JVM running for 2.271)
+20:44:47.183 [main] INFO  com.codenotfound.jms.producer.Sender - sending message='Hello Boot!' to destination='boot.q'
+20:44:47.206 [DefaultMessageListenerContainer-1] INFO  c.codenotfound.jms.consumer.Receiver - received message='Hello Boot!'
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.633 sec - in com.codenotfound.jms.SpringJmsApplicationTest
+20:44:47.260 [DefaultMessageListenerContainer-1] WARN  o.s.j.l.DefaultMessageListenerContainer - Setup of JMS message listener invoker failed for destination 'boot.q' - trying to recover. Cause: peer(vm://localhost#1) stopped.
 
 Results :
 
@@ -263,9 +282,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 42.525 s
-[INFO] Finished at: 2017-04-13T23:11:51+02:00
-[INFO] Final Memory: 16M/220M
+[INFO] Total time: 4.263 s
+[INFO] Finished at: 2017-05-08T20:44:47+02:00
+[INFO] Final Memory: 18M/226M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -273,11 +292,10 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-boot).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-activemq-boot).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Using Spring Boot's autoconfiguration we were able to setup a `Sender` and `Receiver` using only a couple of lines of code. Hopefully this example will kick-start your Spring Kafka development.
+In this example we are able to autoconfigure JMS using Spring Boot and a couple of lines of code.
 
-Feel free to leave a comment in case something was not clear or just to let me know if everything worked.
-
+Drop a comment in case you thought the example was helpful or if you found something was missing.
