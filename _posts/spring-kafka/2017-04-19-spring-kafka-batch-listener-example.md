@@ -4,6 +4,8 @@ permalink: /2017/04/spring-kafka-batch-listener-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement a Spring Kafka Batch Listener using Spring Boot."
 date: 2017-04-19
 modified: 2017-04-19
+header:
+  teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Batch, Example, Listener, Maven, Spring, Spring Boot, Spring Kafka, Tutorial]
 published: true

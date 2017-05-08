@@ -4,6 +4,8 @@ permalink: /2017/04/spring-kafka-boot-example.html
 excerpt: "A detailed step-by-step tutorial on how to setup Spring Kafka using Spring Boot autoconfiguration."
 date: 2017-04-13
 modified: 2017-04-16
+header:
+  teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]
 tags: [Autoconfig, Autoconfiguration, Apache Kafka, Example, Maven, Spring, Spring Boot, Spring Kafka, Tutorial]
 published: true

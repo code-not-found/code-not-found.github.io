@@ -4,6 +4,8 @@ permalink: /2016/10/spring-kafka-embedded-server-unit-test.html
 excerpt: "A detailed step-by-step tutorial on how to test your application using an embedded Apache Kafka server together with Spring Kafka and Spring Boot."
 date: 2016-10-04
 modified: 2017-04-17
+header:
+  teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit]
 published: true
