@@ -1,13 +1,13 @@
 ---
 title: "Spring JMS - ActiveMQ Boot Example"
 permalink: /2017/05/spring-jms-activemq-boot-example.html
-excerpt: "A detailed step-by-step tutorial on how to implement an ActiveMQ Consumer and Producer using Spring JMS and Spring Boot."
+excerpt: "A detailed step-by-step tutorial on how to setup ActiveMQ in combination with Spring JMS using Spring Boot autoconfiguration."
 date: 2017-05-08
 modified: 2017-05-08
 header:
   teaser: "assets/images/spring-jms-teaser.jpg"
 categories: [Spring JMS]
-tags: [ActiveMQ, Apache ActiveMQ, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
+tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Consumer, Example, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
 published: false
 ---
 
@@ -15,18 +15,19 @@ published: false
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html) attempts to automatically configure your Spring application based on the JAR dependencies that have been added. In other words if the <var>spring-kafka-1.2.0.RELEASE.jar</var> is on the classpath and you have not manually configured any `Consumer` or `Provider` beans, then Spring Boot will auto-configure them using default values.
+[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html) will try to automatically configure your Spring application based on the JAR dependencies that are available. In other words if the <var>???</var> is on the classpath and you have not manually configured any `ConnectionFactory`, `JmsTemplate` or `JmsListenerContainerFactory` beans, then Spring Boot will auto-configure them for you using default values.
 
-In order to demonstrate this behavior we will start from a previous [Spring Kafka tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) in which we send/receive messages to/from an Apache Kafka topic using Spring Kafka. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration.
+To illustrate this behavior we will start from a previous [Spring JMS tutorial]({{ site.url }}/2017/05/spring-jms-activemq-consumer-producer-example.html) in which we send/receive messages to/from an Apache ActiveMQ queue using Spring JMS. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration.
 
 Tools used:
-* Spring Kafka 1.2
+* ActiveMQ 5.14
+* Spring JMS 4.3
 * Spring Boot 1.5
 * Maven 3.5
 
 # General Project Setup
 
-The project is built using [Maven](https://maven.apache.org/). The Maven POM file contains the needed dependencies for [Spring Boot](https://projects.spring.io/spring-boot/) and [Spring Kafka](https://projects.spring.io/spring-kafka/) as shown below.
+The project is managed using [Maven](https://maven.apache.org/). The Maven POM file contains the needed dependencies for [Spring Boot](https://projects.spring.io/spring-boot/) and [Spring JMS](https://projects.spring.io/spring-jms/) by declaring the `spring-boot-starter-activemq` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) as shown below.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -35,46 +36,32 @@ The project is built using [Maven](https://maven.apache.org/). The Maven POM fil
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.codenotfound</groupId>
-  <artifactId>spring-kafka-boot</artifactId>
+  <artifactId>spring-jms-activemq-boot</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>spring-kafka-boot</name>
-  <description>Spring Kafka - Spring Boot Example</description>
-  <url>https://www.codenotfound.com/2017/04/spring-kafka-boot-example.html</url>
+  <name>spring-jms-activemq-boot</name>
+  <description>Spring JMS - Spring Boot ActiveMQ Example</description>
+  <url>https://www.codenotfound.com/2017/05/spring-jms-activemq-boot-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.2.RELEASE</version>
+    <version>1.5.3.RELEASE</version>
   </parent>
 
   <properties>
     <java.version>1.8</java.version>
-
-    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
   </properties>
 
   <dependencies>
     <!-- spring-boot -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
+      <artifactId>spring-boot-starter-activemq</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <!-- spring-kafka -->
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka</artifactId>
-      <version>${spring-kafka.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka-test</artifactId>
-      <version>${spring-kafka.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -91,38 +78,38 @@ The project is built using [Maven](https://maven.apache.org/). The Maven POM fil
 </project>
 ```
 
-The `SpringKafkaApplication` remains unchanged. What is important to note is that in order for the auto-configuration to work we need to opt-in by adding the `@EnableAutoConfiguration` or `@SpringBootApplication` (which is same as adding `@Configuration` `@EnableAutoConfiguration` `@ComponentScan`) annotation to one of our `@Configuration` classes.
+The `SpringJmsApplication` remains untouched. Note that in order for the auto-configuration to work we need to opt-in by adding the `@EnableAutoConfiguration` or `@SpringBootApplication` (which is same as adding `@Configuration` `@EnableAutoConfiguration` `@ComponentScan`) annotation to one of our `@Configuration` classes.
 
-> You should only ever add one `@EnableAutoConfiguration` annotation. It is recommended to add it to your primary `@Configuration` class.
+> Only ever add one `@EnableAutoConfiguration` annotation. It is recommended to add it to your primary `@Configuration` class.
 
 ``` java
-package com.codenotfound.kafka;
+package com.codenotfound.jms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringKafkaApplication {
+public class SpringJmsApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringKafkaApplication.class, args);
+    SpringApplication.run(SpringJmsApplication.class, args);
   }
 }
 ```
 
-# Autoconfigure the Spring Kafka Message Producer
+# Autoconfigure the Spring JMS Message Producer
 
-The setup and creation of the `KafkaTemplate` and `Producer` beans is automatically done by Spring Boot. The only thing left to do is autowiring the `KafkaTemplate` and using it in the `send()` method.
+The setup and creation of the `JmsTemplate` and `ConnectionFactory` beans is automatically done by Spring Boot. We just need to autowire the `JmsTemplate` and use it in the `send()` method.
 
-> By annotating the `Sender` class with `@Component`, Spring will instantiate this class as a bean that we will use in our test case. In order for this to work we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringKafkaApplication` by using the `@SpringBootApplication` annotation.
+> By annotating the `Sender` class with `@Component`, Spring will instantiate this class as a bean that we will use in a below test case. In order for this to work we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringKafkaApplication` by using the `@SpringBootApplication` annotation.
 
 ``` java
-package com.codenotfound.kafka.producer;
+package com.codenotfound.jms.producer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -131,28 +118,27 @@ public class Sender {
   private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
 
   @Autowired
-  private KafkaTemplate<String, String> kafkaTemplate;
+  private JmsTemplate jmsTemplate;
 
-  public void send(String topic, String data) {
-    LOGGER.info("sending data='{}' to topic='{}'", data, topic);
-    kafkaTemplate.send(topic, data);
+  public void send(String queue, String message) {
+    LOGGER.info("sending message='{}' to queue='{}'", message, queue);
+    jmsTemplate.convertAndSend(queue, message);
   }
 }
 ```
 
 # Autoconfigure the Spring Kafka Message Consumer
 
-Similar to the `Sender`, the setup and creation of the `ConcurrentKafkaListenerContainerFactory` and `KafkaMessageListenerContainer` bean is automatically done by Spring Boot. The `@KafkaListener` annotation creates a message listener container for the annotated `receive()` method. The topic name is specified using the `${topic.boot}` placeholder for which the value will be automatically fetched from the <var>application.yml</var> properties file.
+Similar to the `Sender`, the setup and creation of the `ConnectionFactory` and `JmsListenerContainerFactory` bean is automatically done by Spring Boot. The `@JmsListener` annotation creates a message listener container for the annotated `receive()` method. The destination name is specified using the `${destination.boot}` placeholder for which the value will be automatically fetched from the <var>application.yml</var> properties file.
 
 ``` java
-package com.codenotfound.kafka.consumer;
+package com.codenotfound.jms.consumer;
 
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -166,30 +152,25 @@ public class Receiver {
     return latch;
   }
 
-  @KafkaListener(topics = "${topic.boot}")
-  public void receive(ConsumerRecord<?, ?> consumerRecord) {
-    LOGGER.info("received data='{}'", consumerRecord.toString());
+  @JmsListener(destination = "${destination.boot}")
+  public void receive(String message) {
+    LOGGER.info("received message='{}'", message);
     latch.countDown();
   }
 }
 ```
 
+In order to fine tune the different settign for the `ConnectionFactory` and `JmsListenerContainerFactory` beans 
 For the `Receiver`, Spring Boot takes care of most of the configuration. There are however two properties that need to be explicitly set in the <var>application.yml</var> properties file:
 1. The <var>'kafka.consumer.group-id'</var> property needs to be specified as we are [using group management to assign topic partitions to consumers](http://docs.confluent.io/current/clients/consumer.html#concepts). In this example we will assign it the value <var>'boot'</var>.
 2. The <var>'kafka.consumer.auto-offset-reset'</var> property needs to be set to <var>'earliest'</var> which ensures the new consumer group will get the message sent in case the container started after the send was completed.
 
 ``` yml
-spring:
-  kafka:
-    consumer:
-      auto-offset-reset: earliest
-      group-id: boot
-
-topic:
-  boot: boot.t
+destiation:
+  boot: boot.q
 ```
 
-> Scroll down to <var># APACHE KAFKA</var> [in the following link in order to get a complete overview on all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) that can be set for auto configuration using the Spring Boot application properties file.
+> Scroll down to <var># ???</var> [in the following link in order to get a complete overview on all the Spring JMS ActiveMQ properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) that can be set for auto configuration using an Spring Boot application properties file.
 
 # Testing the Sender and Receiver
 
