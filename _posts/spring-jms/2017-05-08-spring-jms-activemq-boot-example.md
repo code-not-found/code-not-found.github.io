@@ -120,9 +120,9 @@ public class Sender {
   @Autowired
   private JmsTemplate jmsTemplate;
 
-  public void send(String queue, String message) {
-    LOGGER.info("sending message='{}' to queue='{}'", message, queue);
-    jmsTemplate.convertAndSend(queue, message);
+  public void send(String destination, String message) {
+    LOGGER.info("sending message='{}' to destination='{}'", message, destination);
+    jmsTemplate.convertAndSend(destination, message);
   }
 }
 ```
@@ -160,7 +160,7 @@ public class Receiver {
 }
 ```
 
-Using application properties we can further fine tune the different settings of the `ConnectionFactory`, `JmsTemplate` and `JmsListenerContainerFactory` beans. Scroll down to <var># ACTIVEMQ</var> and <var># JMS</var> [in the following link in order to get a complete overview on all the available ActiveMQ and JMS properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) 
+Using application properties we can further fine tune the different settings of the `ConnectionFactory`, `JmsTemplate` and `JmsListenerContainerFactory` beans. Scroll down to <var># ACTIVEMQ</var> and <var># JMS</var> sections in the following link in order to get a [complete overview on all the available ActiveMQ and JMS properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) 
 
 In this example we use default values and only specify the destination in the included <var>application.yml</var> properties file.
 
@@ -168,28 +168,6 @@ In this example we use default values and only specify the destination in the in
 destiation:
   boot: boot.q
 ```
-
-# Disable JMS Autoconfiguration
-
-If you want Spring Boot to skip the autoconfiguring of ActiveMQ, you can do so by adding the `exclude` parameter to the `@SpringBootApplication` (or the `@EnableAutoConfiguration` annotation) annotation. Specify the `ActiveMQAutoConfiguration` class as shown below and JMS autoconfiguration for ActiveMQ is turned off.
-
-``` java
-package com.codenotfound.jms;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration;
-
-@SpringBootApplication(exclude = {ActiveMQAutoConfiguration.class})
-public class SpringJmsApplication {
-
-  public static void main(String[] args) {
-    SpringApplication.run(SpringJmsApplication.class, args);
-  }
-}
-```
-
-> Note that if Spring Boot finds any beans of type `ConnectionFactory`, the entire `ActiveMQAutoConfiguration` will be switched off.
 
 # Testing the Sender and Receiver
 
