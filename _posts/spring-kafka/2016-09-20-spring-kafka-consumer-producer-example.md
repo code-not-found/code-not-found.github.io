@@ -3,7 +3,7 @@ title: "Spring Kafka - Consumer Producer Example"
 permalink: /2016/09/spring-kafka-consumer-producer-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an Apache Kafka Consumer and Producer using Spring Kafka and Spring Boot."
 date: 2016-09-20
-modified: 2017-05-03
+modified: 2016-09-20
 header:
   teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]
@@ -60,7 +60,7 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
+    <spring-kafka.version>1.2.1.RELEASE</spring-kafka.version>
   </properties>
 
   <dependencies>
@@ -259,7 +259,7 @@ public class Receiver {
     return latch;
   }
 
-  @KafkaListener(topics = "${topic.helloworld}")
+  @KafkaListener(topics = "${kafka.topic.helloworld}")
   public void receive(String message) {
     LOGGER.info("received message='{}'", message);
     latch.countDown();

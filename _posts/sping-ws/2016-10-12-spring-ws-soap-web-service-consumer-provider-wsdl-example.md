@@ -498,4 +498,4 @@ If you would like to run the above code sample you can get the full source code 
 
 This Spring WS example turned out a bit longer than expected but hopefully it helped to explain the core client and endpoint concepts.
 
-Feel free to leave a comment if you enjoyed reading or in case you have any additional questions.
+If you found this sample useful or have a question you would like to ask, drop a line below!

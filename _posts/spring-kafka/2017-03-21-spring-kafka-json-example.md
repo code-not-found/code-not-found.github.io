@@ -3,7 +3,7 @@ title: "Spring Kafka - JSON Serializer Example"
 permalink: /2017/03/spring-kafka-json-serializer-example.html
 excerpt: "A detailed step-by-step tutorial on how to send/receive JSON messages using Spring Kafka and Spring Boot."
 date: 2017-03-21
-modified: 2017-04-17
+modified: 2017-03-21
 header:
   teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]

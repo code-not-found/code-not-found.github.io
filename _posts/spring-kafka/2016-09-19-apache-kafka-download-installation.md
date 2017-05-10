@@ -3,7 +3,7 @@ title: "Apache Kafka - Download Installation"
 permalink: /2016/09/apache-kafka-download-installation.html
 excerpt: "A step-by-step tutorial on how to install and run Apache Kafka on Windows."
 date: 2016-09-19
-modified: 2017-04-15
+modified: 2016-09-19
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache ZooKeeper, Download, Installation, Kafka, Windows, ZooKeeper]
 published: true
