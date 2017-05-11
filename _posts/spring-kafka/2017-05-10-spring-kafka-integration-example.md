@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring Integration, Spring Kafka, Tutorial]
-published: true
+published: false
 ---
 
 <figure>
@@ -29,7 +29,7 @@ Tools used:
 
 Building of the project will be automated using [Maven](https://maven.apache.org/). We include the needed Spring Integration dependencies using the `spring-boot-starter-integration` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters). For testing support we also include the `spring-boot-starter-test` starter.
 
-As we will be using the Spring Integration Kafka extension we add the corresponding `spring-integration-kafka` dependency. Starting from version 2.0 this project is a complete rewrite based on the [Spring for Apache Kafka](https://projects.spring.io/spring-kafka/) project which uses the pure java Producer and Consumer clients provided by Kafka. As such we also add the dependencies for `spring-kafka` for core functionality as well as `spring-kafka-test` in order to have access to an embedded Kafka broker when running our unit test.
+As we will be using the Spring Integration Kafka extension we add the corresponding `spring-integration-kafka` dependency. Starting from version 2.0 this project is a complete rewrite based on the [Spring for Apache Kafka](https://projects.spring.io/spring-kafka/) project which uses the pure java _Producer_ and _Consumer_ clients provided by Kafka. As such we also add the dependencies for `spring-kafka` for core functionality as well as `spring-kafka-test` in order to have access to an embedded Kafka broker when running our unit test.
 
 The `spring-boot-maven-plugin` Maven plugin is added so that we can build a single, runnable JAR, which is convenient to execute and transport our written code.
 
@@ -103,7 +103,7 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
 </project>
 ```
 
-We create a `SpringKafkaIntegrationApplication` class that takes care of some basic setup and which also allows to launch the application.
+We create a `SpringKafkaIntegrationApplication` class that takes care of some basic setup and which also allows launching the application.
 
 ``` java
 package com.codenotfound.kafka.integration;
