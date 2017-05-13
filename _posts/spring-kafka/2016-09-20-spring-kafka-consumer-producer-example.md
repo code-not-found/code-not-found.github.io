@@ -22,7 +22,7 @@ The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/
 
 In the following tutorial we will configure, build and run a Hello World example in which we will send/receive messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
 
-Checkout following link for all [Spring Kafka tutorials]({{ site.url }}/spring-kafka/).
+If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
 
 Tools used:
