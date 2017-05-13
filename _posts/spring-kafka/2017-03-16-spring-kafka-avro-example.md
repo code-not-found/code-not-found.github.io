@@ -23,13 +23,13 @@ published: true
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
 
+# General Project Setup
+
 Tools used:
 * Apache Avro 1.8
 * Spring Kafka 1.2
 * Spring Boot 1.5
 * Maven 3.5
-
-# General Project Setup
 
 Avro relies on schemas which are defined using JSON. Schemas are composed of primitive types. For this example we will use [the 'User' schema from the Apache Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema) as shown below. This schema is stored in the <var>user.avsc</var> file located under <var>src/main/resources/avro</var>.
 

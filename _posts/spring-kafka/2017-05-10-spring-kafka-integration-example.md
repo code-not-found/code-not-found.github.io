@@ -22,13 +22,13 @@ The [Spring Integration Kafka](https://github.com/spring-projects/spring-integra
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
 
+# General Project Setup
+
 Tools used:
 * Spring Kafka 1.2
 * Spring Integration 2.1
 * Spring Boot 1.5
 * Maven 3.5
-
-# General Project Setup
 
 Building of the project will be automated using [Maven](https://maven.apache.org/). We include the needed Spring Integration dependencies using the `spring-boot-starter-integration` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters). For testing support we also include the `spring-boot-starter-test` starter.
 

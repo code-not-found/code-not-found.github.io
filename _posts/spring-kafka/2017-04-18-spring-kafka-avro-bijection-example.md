@@ -22,14 +22,14 @@ published: true
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
 
+# General Project Setup
+
 Tools used:
 * Twitter Bijection 0.9
 * Apache Avro 1.8
 * Spring Kafka 1.2
 * Spring Boot 1.5
 * Maven 3.5
-
-# General Project Setup
 
 We base this example on a previous [Spring Kafka Avro serializer/deserializer example]({{ site.url }}//2017/03/spring-kafka-apache-avro-example.html) in which we used the Avro API's to serialize and deserialize objects. For this tutorial we will be using the Bijection APIs which are a bit easier to use as we will see further down below.
 

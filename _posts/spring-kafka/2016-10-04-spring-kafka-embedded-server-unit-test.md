@@ -22,12 +22,12 @@ Let's demonstrate how above can be used with a simple code sample. We will reuse
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
 
+# General Project Setup
+
 Tools used:
 * Spring Kafka 1.2
 * Spring Boot 1.5
 * Maven 3.5
-
-# General Project Setup
 
 Add the `spring-kafka-test` dependency to the Maven POM file in addition to the Spring Kafka and Spring Boot dependencies.
 

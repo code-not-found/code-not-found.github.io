@@ -22,12 +22,12 @@ In order to demonstrate this behavior we will start from a previous [Spring Kafk
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
 
+# General Project Setup
+
 Tools used:
 * Spring Kafka 1.2
 * Spring Boot 1.5
 * Maven 3.5
-
-# General Project Setup
 
 The project is built using [Maven](https://maven.apache.org/). The Maven POM file contains the needed dependencies for [Spring Boot](https://projects.spring.io/spring-boot/) and [Spring Kafka](https://projects.spring.io/spring-kafka/) as shown below.
 
