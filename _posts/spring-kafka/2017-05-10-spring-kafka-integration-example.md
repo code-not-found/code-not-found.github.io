@@ -29,7 +29,7 @@ Tools used:
 
 Building of the project will be automated using [Maven](https://maven.apache.org/). We include the needed Spring Integration dependencies using the `spring-boot-starter-integration` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters). For testing support we also include the `spring-boot-starter-test` starter.
 
-As we will be using the Spring Integration Kafka extension we add the corresponding `spring-integration-kafka` dependency. Starting from version 2.0 this project is a complete rewrite based on the [Spring for Apache Kafka](https://projects.spring.io/spring-kafka/) project which uses the pure java _Producer_ and _Consumer_ clients provided by Kafka. As such we also add the dependencies for `spring-kafka` for core functionality as well as `spring-kafka-test` in order to have access to an embedded Kafka broker when running our unit test.
+As we will be using the Spring Integration Kafka extension we add the corresponding `spring-integration-kafka` dependency. Starting from version 2.0 this project is a complete rewrite based on the [Spring for Apache Kafka](https://projects.spring.io/spring-kafka/) project which uses the pure java `Producer` and `Consumer` clients provided by Kafka. As such we also add the `spring-kafka` dependency for core functionality as well as `spring-kafka-test` in order to have access to an embedded Kafka broker when running our unit test.
 
 The `spring-boot-maven-plugin` Maven plugin is added so that we can build a single, runnable JAR, which is convenient to execute and transport our written code.
 
@@ -44,8 +44,8 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
   <version>0.0.1-SNAPSHOT</version>
 
   <name>spring-kafka-integration-helloworld</name>
-  <description>Spring Kafka - Consumer Producer Example</description>
-  <url>https://www.codenotfound.com/2016/09/spring-kafka-consumer-producer-example.html</url>
+  <description>Spring Kafka - Integration Example</description>
+  <url>https://www.codenotfound.com/2017/05/spring-kafka-integration-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -103,7 +103,7 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
 </project>
 ```
 
-We create a `SpringKafkaIntegrationApplication` class that takes care of some basic setup and which also allows launching the application.
+We create a `SpringKafkaIntegrationApplication` class that takes care of some [basic Spring Boot setup](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html) and which also allows launching the application.
 
 ``` java
 package com.codenotfound.kafka.integration;
@@ -120,15 +120,15 @@ public class SpringKafkaIntegrationApplication {
 }
 ```
 
-# Spring Integration Example Overview
+# Example Setup Overview
 
 Spring Integration uses the concept of a **Message Channel** to pass along information from one component to another. It represents the "pipe" of a [pipes-and-filters architecture](http://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html). A Message Channel may follow either [Point-to-Point](http://www.enterpriseintegrationpatterns.com/patterns/messaging/PointToPointChannel.html) or [Publish/Subscribe](http://www.enterpriseintegrationpatterns.com/patterns/messaging/PublishSubscribeChannel.html) semantics.
 
 A **Message Endpoint** represents the "filter" of a [pipes-and-filters architecture](http://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html). Spring Integration has a number of endpoint types that are supported. In this example we will look a the endpoint types that allow us to connect to Kafka.
 
-The first one is a [Service Activator](http://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingAdapter.html) which simply connects any existing Spring-managed bean to a channel. Spring Integration Kafka provides `KafkaProducerMessageHandler` which handles a given message by using a `KafkaTemplate` to send data to Kafka topics. By connecting a channel as input to this Message Handler we can send messages to the Kafka bus. 
+The first one is a [Service Activator](http://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingAdapter.html) which simply connects any existing Spring-managed bean to a channel. Spring Integration Kafka provides a `KafkaProducerMessageHandler` which handles a given message by using a `KafkaTemplate` to send data to Kafka topics. By connecting a channel as input to this Message Handler we can send messages to the Kafka bus. 
 
-The second on is a [Channel Adapter](http://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html) endpoint that connects a Message Channel to some other system or transport. Channel Adapters may be either inbound (towards a channel) or outbound (from a channel). Spring Integration Kafka ships with an inbound `KafkaMessageDrivenChannelAdapter` which uses a spring-kafka `KafkaMessageListenerContainer` or `ConcurrentListenerContainer` to receive messages from Kafka topics.
+The second one is a [Channel Adapter](http://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html) endpoint that connects a Message Channel to some other system or transport. Channel Adapters may be either inbound (towards a channel) or outbound (from a channel). Spring Integration Kafka ships with an inbound `KafkaMessageDrivenChannelAdapter` which uses a spring-kafka `KafkaMessageListenerContainer` or `ConcurrentListenerContainer` to receive messages from Kafka topics.
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-kafka/integration-example-setup.jpg" alt="integration example setup">
@@ -142,11 +142,11 @@ We start by defining the _ProducingChannel_ as a `DirectChannel` bean. This is t
 
 Next we create the `KafkaProducerMessageHandler` that will send messages received from the _ProducingChannel_ towards a topic. The name of this topic is defined on the handler using the `setTopicExpression()` setter or it is obtained from the `TOPIC` message header. We will use the latter in this example as you will see in the unit test case further below.
 
-To illustrate that static values can also be set directly on the adapter, we assign a fix <var>kafka-integration</var> `kafka_messageKey` header by using `setMessageKeyExpression`.
+To illustrate that static values can also be set directly on the adapter, we assign a fix <var>'kafka-integration'</var> `kafka_messageKey` header by using `setMessageKeyExpression()`.
 
-The `KafkaProducerMessageHandler` constructor requires a `KafkaTemplate` to be passed as parameter. We construct the template using a `ProducerFactory` and corresponding configuration. For more detailed information you can check the [Spring Kakfa Producer tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html#create-a-spring-kafka-message-producer).
+The `KafkaProducerMessageHandler` constructor requires a `KafkaTemplate` to be passed as parameter. We create the template using a `ProducerFactory` and corresponding configuration. For more detailed information you can check the [Spring Kakfa Producer tutorial section]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html#create-a-spring-kafka-message-producer).
 
-The `KafkaProducerMessageHandler` is attached to the _ProducingChannel_ using the @ServiceActivator annotation. As `inputChannel` we need to specify the _ProducingChannel_ as a key/value pair in order to make the link.
+The `KafkaProducerMessageHandler` is attached to the _ProducingChannel_ using the `@ServiceActivator` annotation. As `inputChannel` we need to specify the _ProducingChannel_ as a key/value pair in order to make the link.
 
 ``` java
 package com.codenotfound.kafka.integration.channel;
@@ -221,7 +221,7 @@ We create a `KafkaMessageDrivenChannelAdapter` that can receive messages from on
 
 In order to test our setup a `CountDownLatchHandler` bean is defined that is linked to the _ConsumingChannel_ using the `@ServiceActivator` annotation.
 
-In this example we setup the `MessageListenerContainer` using the `KafkaMessageListenerContainer` implementation. This is very similar to the we did in the [Spring Kakfa Consumer tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html#create-a-spring-kafka-message-consumer). As such we won't go into further details.
+In this example we setup the `MessageListenerContainer` using the `KafkaMessageListenerContainer` implementation. This is very similar to what we did in the [Spring Kakfa Consumer tutorial section]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html#create-a-spring-kafka-message-consumer). As such we won't go into further details.
 
 > One small difference to note is the fact that we set the `AUTO_OFFSET_RESET_CONFIG` to <var>'earliest'</var>. This is done to avoid that the listener "misses" messages that have been sent before it was fully initialized.
 
@@ -337,7 +337,7 @@ public class CountDownLatchHandler implements MessageHandler {
 
 Let's test the example using below `SpringKafkaIntegrationApplicationTest` unit test case. We setup an embedded Kafka broker using the JUnit `@ClassRule` annotation as we have seen in a previous [Spring Kafka test example]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
 
-In order to get hold of our _ProducingChannel_, we auto-wire the `ApplicationContext` and use the `getBean()` method. We then create a for loop in which we sent 10 messages to the <var>'spring-integration-kafka.t'</var> topic using the channel's `send()` method. Note that we set the topic by adding a message header `Map` which contains the `KafkaHeaders.TOPIC` value which corresponds to the desired topic name.
+In order to get hold of our _ProducingChannel_, we auto-wire the `ApplicationContext` and use the `getBean()` method. We then create a for loop in which we sent 10 messages to the <var>'spring-integration-kafka.t'</var> topic using the channel's `send()` method. Note that we set the topic by adding a message header `Map` which contains the `KafkaHeaders.TOPIC` value which corresponds to the destination topic name.
 
 The sent messages should be picked up by the _ConsumingChannel_ bean and when passed to the `CountDownLatchHandler` the `CountDownLatch` will be lowered from it's initial value <var>'10'</var>. We then check if the 10 messages have been receive by asserting that the `CountDownLatch` value is equals to <var>'0'</var>.
 
@@ -478,6 +478,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the Spring Kafka Integration example in which we demonstrated how you can consume from and produce to a Kafka topic.
+This concludes the Spring Kafka Integration example in which we demonstrated how you can consume "from" and produce "to" a Kafka topic.
 
 Let me know if you enjoyed this post. Thanks!
