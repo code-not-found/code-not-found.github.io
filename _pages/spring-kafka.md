@@ -10,7 +10,7 @@ modified: 2017-04-15
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/spring-kafka/) applies core Spring concepts to the development of Kafka-based messaging solutions. The following tutorials illustrate different aspects of the framework using easy to follow code samples. 
+The **Spring for Apache Kafka (spring-kafka) project** applies core Spring concepts to the development of Kafka-based messaging solutions. The following tutorials illustrate different aspects of the framework using easy to follow code samples. 
 
 ## Quick Start
 
