@@ -18,10 +18,10 @@ published: true
 
 Starting with version 1.1 of Spring Kafka, `@KafkaListener` methods can be configured to receive the entire batch of consumer records received from the consumer poll. The following example shows how to setup a batch listener using Spring Kafka, Spring Boot and Maven.
 
+# General Project Setup
+
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
-
-# General Project Setup
 
 Tools used:
 * Spring Kafka 1.2

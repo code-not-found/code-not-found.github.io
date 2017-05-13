@@ -19,10 +19,10 @@ published: true
 
 [Twitter Bijection](https://github.com/twitter/bijection) is an invertible function library that converts back and forth between two types. It supports a number of types including Apache Avro. In the following tutorial we will configure, build and run an example in which we will send/receive an Avro message to/from Apache Kafka using Bijection, Apache Avro, Spring Kafka, Spring Boot and Maven.
 
+# General Project Setup
+
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
-
-# General Project Setup
 
 Tools used:
 * Twitter Bijection 0.9

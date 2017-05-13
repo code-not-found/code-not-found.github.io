@@ -20,10 +20,10 @@ published: true
 
 [Apache Avro](https://avro.apache.org/docs/current/) is a data serialization system. It uses JSON for defining data types and protocols, and serializes data in a compact binary format. In the following tutorial we will configure, build and run an example in which we will send/receive an Avro message to/from Apache Kafka using Apache Avro, Spring Kafka, Spring Boot and Maven.
 
+# General Project Setup
+
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
-
-# General Project Setup
 
 Tools used:
 * Apache Avro 1.8

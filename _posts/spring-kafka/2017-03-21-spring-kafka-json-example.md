@@ -21,10 +21,10 @@ published: true
 
 The following tutorial illustrates how to send/receive a Java object as a JSON `byte[]` array to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
 
+# General Project Setup
+
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
-
-# General Project Setup
 
 Tools used:
 * Spring Kafka 1.2

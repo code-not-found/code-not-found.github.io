@@ -19,10 +19,10 @@ The [Spring Kafka project](https://projects.spring.io/spring-kafka/) comes with 
 
 Let's demonstrate how above can be used with a simple code sample. We will reuse the Spring Kafka Hello World project from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot and Maven.
 
+# General Project Setup
+
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
-
-# General Project Setup
 
 Tools used:
 * Spring Kafka 1.2
