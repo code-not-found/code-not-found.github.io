@@ -19,6 +19,9 @@ published: true
 
 The [Spring Integration Kafka](https://github.com/spring-projects/spring-integration-kafka) extension project provides inbound and outbound channel adapters specifically for [Apache Kafka](https://kafka.apache.org/). In this tutorial we will configure, build and run a Hello World example in which we will send/receive messages to/from Apache Kafka using Spring Integration Kafka, Spring Boot and Maven.
 
+If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
+{: .notice--primary}
+
 Tools used:
 * Spring Kafka 1.2
 * Spring Integration 2.1
