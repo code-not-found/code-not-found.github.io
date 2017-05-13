@@ -30,7 +30,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-> Note that Spring Kafka 1.2 uses the Apache Kafka 0.10.2.x client.
+> Note that Spring Kafka 1.2 uses the Apache Kafka 0.10.2.x client. For more information consult [the complete Kafka client compatibility list](https://projects.spring.io/spring-kafka/#kafka-client-compatibility). 
 
 # General Project Setup
 
