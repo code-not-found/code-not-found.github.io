@@ -22,12 +22,15 @@ The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/
 
 In the following tutorial we will configure, build and run a Hello World example in which we will send/receive messages to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
 
-> Spring Kafka 1.2 uses the Apache Kafka 0.10.2.x client.
+Checkout following link for more [Spring Kafka tutorials]({{ site.url }}/spring-kafka/).
+{: .notice--primary}
 
 Tools used:
 * Spring Kafka 1.2
 * Spring Boot 1.5
 * Maven 3.5
+
+> Note that Spring Kafka 1.2 uses the Apache Kafka 0.10.2.x client.
 
 # General Project Setup
 
