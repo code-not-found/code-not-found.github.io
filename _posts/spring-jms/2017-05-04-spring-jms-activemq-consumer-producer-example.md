@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/spring-jms-teaser.jpg"
 categories: [Spring JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
+redirect_from:
+  - /2017/05/spring-jms-activemq-example.html
 published: true
 ---
 

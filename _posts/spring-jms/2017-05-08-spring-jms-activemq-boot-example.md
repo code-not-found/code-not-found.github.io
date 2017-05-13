@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/spring-jms-teaser.jpg"
 categories: [Spring JMS]
 tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
+redirect_from:
+  - /2017/04/spring-jms-boot-example.html
 published: true
 ---
 

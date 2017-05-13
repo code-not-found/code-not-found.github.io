@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache Avro, Avro, Bijection, Deserializer, Example, Maven, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial, Twitter Bijection]
+redirect_from:
+  - /2017/03/spring-kafka-avro-bijection-example.html
 published: true
 ---
 
