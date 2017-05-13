@@ -2,8 +2,8 @@
 title: "Spring Kafka - Integration Example"
 permalink: /2017/05/spring-kafka-integration-example.html
 excerpt: "A detailed step-by-step tutorial on how to connect Apache Kafka to a Spring Integration Channel using Spring Kafka and Spring Boot."
-date: 2017-05-11
-modified: 2017-05-11
+date: 2017-05-12
+modified: 2017-05-12
 header:
   teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]
@@ -120,16 +120,197 @@ public class SpringKafkaIntegrationApplication {
 }
 ```
 
-# Spring Integration Kafka Consumer Channel
+# Spring Integration Example Overview
 
+Spring Integration uses the concept of a **Message Channel** to pass along information from one component to another. It represents the "pipe" of a [pipes-and-filters architecture](http://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html). A Message Channel may follow either [Point-to-Point](http://www.enterpriseintegrationpatterns.com/patterns/messaging/PointToPointChannel.html) or [Publish/Subscribe](http://www.enterpriseintegrationpatterns.com/patterns/messaging/PublishSubscribeChannel.html) semantics.
 
+A **Message Endpoint** represents the "filter" of a [pipes-and-filters architecture](http://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html). Spring Integration has a number of endpoint types that are supported. In this example we will look a the endpoint types that allow us to connect to Kafka.
+
+The first one is a [Service Activator](http://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingAdapter.html) which simply connects any existing Spring-managed bean to a channel. Spring Integration Kafka provides `KafkaProducerMessageHandler` which handles a given message by using a `KafkaTemplate` to send data to Kafka topics. By connecting a channel as input to this Message Handler we can send messages to the Kafka bus. 
+
+The second on is a [Channel Adapter](http://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html) endpoint that connects a Message Channel to some other system or transport. Channel Adapters may be either inbound (towards a channel) or outbound (from a channel). Spring Integration Kafka ships with an inbound `KafkaMessageDrivenChannelAdapter` which uses a spring-kafka `KafkaMessageListenerContainer` or `ConcurrentListenerContainer` to receive messages from Kafka topics.
+
+???
+
+Our example will consist out of two channels as shown in above diagram. The first _ProducingChannel_ will have a `kafkaMessageHandler` that subscribes to the channel and writes all received messages to a <var>'spring-integration-kafka.t'</var> topic. A second _ConsumingChannel_ will connect to the same topic using a `KafkaMessageDrivenChannelAdapter`. A custom `CountDownLatchHandler` subscribes to this second channel and lowers a `CountDownLatch` in addition to logging the received message.
 
 # Spring Integration Kafka Producer Channel
 
+We start by defining the _ProducingChannel_ as a `DirectChannel` bean. This is the default channel provided by the framework, but you can use any of the [message channels Spring Integration provides](http://docs.spring.io/spring-integration/docs/current/reference/html/messaging-channels-section.html).
 
+Next we create the `KafkaProducerMessageHandler` that will send messages received from the _ProducingChannel_ towards a topic. The name of this topic is defined on the handler using the `setTopicExpression` setter or it is obtained from the `TOPIC` message header. We will use the latter in this example as you will see in the unit test case further below.
+
+To illustrate that static values can also be set directly on the adapter, we assign a fix <var>kafka-integration</var> `kafka_messageKey` header by using `setMessageKeyExpression`.
+
+The `KafkaProducerMessageHandler` constructor requires a `KafkaTemplate` to be passed as parameter. We construct the template using a `ProducerFactory` and corresponding configuration. For more detailed information you can check the [Spring Kakfa Producer tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html#???).
+
+The `KafkaProducerMessageHandler` is attached to the _ProducingChannel_ using the @ServiceActivator annotation. As `inputChannel` we need to specify the _ProducingChannel_ as a key/value pair in order to make the link.
+
+``` java
+package com.codenotfound.kafka.integration.channel;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.expression.common.LiteralExpression;
+import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.kafka.outbound.KafkaProducerMessageHandler;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.messaging.MessageHandler;
+
+@Configuration
+public class ProducingChannelConfig {
+
+  @Value("${kafka.bootstrap-servers}")
+  private String bootstrapServers;
+
+  @Bean
+  public DirectChannel producingChannel() {
+    return new DirectChannel();
+  }
+
+  @Bean
+  @ServiceActivator(inputChannel = "producingChannel")
+  public MessageHandler kafkaMessageHandler() {
+    KafkaProducerMessageHandler<String, String> handler =
+        new KafkaProducerMessageHandler<>(kafkaTemplate());
+    handler.setMessageKeyExpression(new LiteralExpression("kafka-integration"));
+
+    return handler;
+  }
+
+  @Bean
+  public KafkaTemplate<String, String> kafkaTemplate() {
+    return new KafkaTemplate<>(producerFactory());
+  }
+
+  @Bean
+  public ProducerFactory<String, String> producerFactory() {
+    return new DefaultKafkaProducerFactory<>(producerConfigs());
+  }
+
+  @Bean
+  public Map<String, Object> producerConfigs() {
+    Map<String, Object> properties = new HashMap<>();
+    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    // introduce a delay on the send to allow more messages to accumulate
+    properties.put(ProducerConfig.LINGER_MS_CONFIG, 1);
+
+    return properties;
+  }
+}
+```
+
+# Spring Integration Kafka Consumer Channel
+
+Similar to the _ProducingChannel_, a _ConsumingChannel_ bean is specified again using the `DirectChannel` channel type.
+
+We create a `KafkaMessageDrivenChannelAdapter` that can receive messages from one or more Kafka topics. The constructor takes a `MessageListenerContainer` as input parameter. We then connect this Channel Adapter to the _ConsumingChannel_ by using the `setOutputChannel` method.
+
+In order to test our setup a `CountDownLatchHandler` bean is defined that is linked to the _ConsumingChannel_ using the `@ServiceActivator` annotation.
+
+In this example we setup the `KafkaMessageListenerContainer` `MessageListenerContainer` implementation which is very similar to the we did in the [Spring Kakfa Consumer tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html#???). As such we won't go into further details.
+
+``` java
+???
+```
+
+
+
+In order to be able to verify the correct working of our two connected channels we will create a basic `CountDownLatchHandler` class that implements the `MessageHandler` interface. Similar to our `KafkaProducerMessageHandler` we will then attach below class to the _ConsumingChannel_ using the `@ServiceActivator` annotation.
+
+``` java
+package com.codenotfound.kafka.integration.channel;
+
+import java.util.concurrent.CountDownLatch;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHandler;
+import org.springframework.messaging.MessagingException;
+
+public class CountDownLatchHandler implements MessageHandler {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(CountDownLatchHandler.class);
+
+  private CountDownLatch latch = new CountDownLatch(10);
+
+  public CountDownLatch getLatch() {
+    return latch;
+  }
+
+  @Override
+  public void handleMessage(Message<?> message) throws MessagingException {
+    LOGGER.info("received message='{}'", message);
+    latch.countDown();
+  }
+}
+```
 
 # Spring Integration Kafka Test
 
+
+
+
+``` plaintext
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v1.5.3.RELEASE)
+
+08:15:06.232 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - Starting SpringKafkaIntegrationApplicationTest on cnf-pc with PID 4872 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-integration-helloworld)
+08:15:06.233 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - No active profile set, falling back to default profiles: default
+08:15:07.454 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - Started SpringKafkaIntegrationApplicationTest in 1.505 seconds (JVM running for 5.936)
+08:15:07.639 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sending 10 messages
+08:15:07.683 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 0!, headers={kafka_topic=spring-integration-kafka.t, id=16be84e9-cf8d-dcab-c1b4-0c48d65b53ff, timestamp=1494656107640}]'
+08:15:07.691 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 1!, headers={kafka_topic=spring-integration-kafka.t, id=f7412b5f-20b9-3668-d5fa-d395a633ba31, timestamp=1494656107685}]'
+08:15:07.691 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 2!, headers={kafka_topic=spring-integration-kafka.t, id=9e0f6210-f9ec-47db-2257-189f240f8c2f, timestamp=1494656107691}]'
+08:15:07.691 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 3!, headers={kafka_topic=spring-integration-kafka.t, id=820874b4-6f73-e4e0-6f71-18c10fb2bb7f, timestamp=1494656107691}]'
+08:15:07.692 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 4!, headers={kafka_topic=spring-integration-kafka.t, id=5447b799-0d7d-6b81-159c-01bfeae56ccf, timestamp=1494656107691}]'
+08:15:07.692 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 5!, headers={kafka_topic=spring-integration-kafka.t, id=4093e7fb-c44c-8934-e5c2-09bf1009d0f4, timestamp=1494656107692}]'
+08:15:07.692 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 6!, headers={kafka_topic=spring-integration-kafka.t, id=73439ebc-20af-5b58-49e4-fec30cfb3e7d, timestamp=1494656107692}]'
+08:15:07.692 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 7!, headers={kafka_topic=spring-integration-kafka.t, id=dd566697-bd30-0a4c-a878-f28b27fa4b83, timestamp=1494656107692}]'
+08:15:07.692 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 8!, headers={kafka_topic=spring-integration-kafka.t, id=37c4933d-f8c7-06f8-0f6c-29364146684b, timestamp=1494656107692}]'
+08:15:07.692 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sent message='GenericMessage [payload=Hello Spring Integration Kafka 9!, headers={kafka_topic=spring-integration-kafka.t, id=4746f1b2-e8e5-42b0-0d8e-df79e49cd109, timestamp=1494656107692}]'
+08:15:08.796 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 0!, headers={kafka_offset=0, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:08.797 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 1!, headers={kafka_offset=1, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:08.797 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 2!, headers={kafka_offset=2, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:08.797 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 3!, headers={kafka_offset=3, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:08.797 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 4!, headers={kafka_offset=4, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:08.797 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 5!, headers={kafka_offset=5, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:08.797 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 6!, headers={kafka_offset=6, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:08.797 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 7!, headers={kafka_offset=7, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:08.798 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 8!, headers={kafka_offset=8, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:08.798 [kafkaListenerContainer-0-C-1] INFO  c.c.k.i.c.CountDownLatchHandler - received message='GenericMessage [payload=Hello Spring Integration Kafka 9!, headers={kafka_offset=9, kafka_receivedMessageKey=kafka-integration, kafka_receivedPartitionId=0, kafka_receivedTopic=spring-integration-kafka.t}]'
+08:15:10.345 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.164 sec - in com.codenotfound.kafka.integration.SpringKafkaIntegrationApplicationTest
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 11.747 s
+[INFO] Finished at: 2017-05-13T08:15:11+02:00
+[INFO] Final Memory: 17M/227M
+[INFO] ------------------------------------------------------------------------
+```
 
 ---
 
