@@ -140,6 +140,17 @@ code span {
 blockquote {
   border-left-color: #4caf50;
 }
+.notice--primary {
+  color: #fff;
+  background-color: #4caf50;
+}
+.notice--primary p {
+  font-size: 1.2em;
+}
+.notice--primary a:link, .notice--info a:visited, .notice--info a:hover, .notice--info a:active {
+  color: #fff;
+  text-decoration: underline
+}
 .notice--info {
   color: #fff;
   background-color: #4caf50;
