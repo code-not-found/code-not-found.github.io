@@ -30,6 +30,10 @@ The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/
 
 * [Spring Kafka - Avro Bijection Example]({{ site.url }}/2017/04/spring-kafka-avro-bijection-example.html)
 
+## Integration
+
+* [Spring Kafka - Integration Example]({{ site.url }}/2017/05/spring-kafka-integration-example.html)
+
 ## Testing
 
 * [Spring Kafka - Embedded Server Unit Test]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html)
