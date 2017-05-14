@@ -1,9 +1,9 @@
 ---
 title: "Spring WS - SOAP Header Example"
-permalink: /2017/04/spring-ws-soap-header-example.html
+permalink: /2017/05/spring-ws-soap-header-example.html
 excerpt: "A detailed step-by-step tutorial on how to set and get a SOAP header using Spring-WS and Spring Boot."
-date: 2017-04-25
-modified: 2017-04-25
+date: 2017-05-13
+modified: 2017-05-13
 header:
   teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
@@ -17,16 +17,17 @@ published: false
 
 The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497) is an optional sub-element of the SOAP envelope. It is used to pass application related information that is processed by SOAP nodes along the message flow.
 
-According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528) can be used to indicate the intent of a request. There are no restrictions on the format and a client MUST use this header field when sending a SOAP HTTP request.
-
 The below example illustrates how a client can set the SOAPAction header and how a server endpoint can leverage the `@SoapAction` annotation to receive the request using Spring-WS, Spring Boot and Maven. 
+
+# General Project Setup
+
+If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
+{: .notice--primary}
 
 Tools used:
 * Spring-WS 2.4
 * Spring Boot 1.5
 * Maven 3.5
-
-# General Project Setup
 
 The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
