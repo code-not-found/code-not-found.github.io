@@ -21,13 +21,16 @@ Spring provides a [JMS integration framework](http://docs.spring.io/spring/docs/
 
 The below tutorial illustrates how to build and run a Hello World example in which we will send/receive messages to/from Apache ActiveMQ using Spring JMS, Spring Boot and Maven.
 
+# General Project Setup
+
+If you want to learn more about Spring JMS - head on over to the [Spring JMS tutorials page]({{ site.url }}/spring-jms/).
+{: .notice--primary}
+
 Tools used:
 * ActiveMQ 5.14
 * Spring JMS 4.3
 * Spring Boot 1.5
 * Maven 3.5
-
-# General Project Setup
 
 We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter-activemq` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters).
 

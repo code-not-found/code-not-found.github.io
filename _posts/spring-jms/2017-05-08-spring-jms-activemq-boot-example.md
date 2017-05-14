@@ -21,13 +21,16 @@ published: true
 
 To illustrate this behavior we will start from a previous [Spring JMS tutorial]({{ site.url }}/2017/05/spring-jms-activemq-consumer-producer-example.html) in which we send/receive messages to/from an Apache ActiveMQ destination using Spring JMS. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration capabilities.
 
+# General Project Setup
+
+If you want to learn more about Spring JMS - head on over to the [Spring JMS tutorials page]({{ site.url }}/spring-jms/).
+{: .notice--primary}
+
 Tools used:
 * ActiveMQ 5.14
 * Spring JMS 4.3
 * Spring Boot 1.5
 * Maven 3.5
-
-# General Project Setup
 
 The example project is managed using [Maven](https://maven.apache.org/). Needed dependencies like [Spring Boot](https://projects.spring.io/spring-boot/) and [Spring JMS](http://projects.spring.io/spring-framework/) are included by declaring the `spring-boot-starter-activemq` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) in the POM file as shown below.
 
