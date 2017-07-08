@@ -1,9 +1,9 @@
 ---
 title: "Spring WS - SOAP Header Example"
-permalink: /2017/05/spring-ws-soap-header-example.html
+permalink: /2017/07/spring-ws-soap-header-example.html
 excerpt: "A detailed step-by-step tutorial on how to set and get a SOAP header using Spring-WS and Spring Boot."
-date: 2017-05-13
-modified: 2017-05-13
+date: 2017-07-08
+modified: 2017-07-08
 header:
   teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
@@ -15,11 +15,9 @@ published: false
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497) is an optional sub-element of the SOAP envelope. It is used to pass application related information that is processed by SOAP nodes along the message flow.
+The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497){:target="_blank"} is an optional sub-element of the SOAP envelope. It is used to pass application related information that is processed by SOAP nodes along the message flow.
 
-The below example illustrates how a client can set the SOAPAction header and how a server endpoint can leverage the `@SoapAction` annotation to receive the request using Spring-WS, Spring Boot and Maven. 
-
-# General Project Setup
+The below example details how a web service client can set a SOAP header. It also illustrates how a server endpoint can access the SOAP header from the received request. Both client and server endpoint are realized using Spring-WS, Spring Boot, and Maven.
 
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
@@ -29,11 +27,11 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
+# General Project Setup
 
-As the WSDL is missing a SOAPAction we will add it in the context of this tutorial.
+The setup of the project is based on a previous [Spring SOAP web service example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-> Note that Spring-WS will not automatically extract the SOAPAction value from the WSDL file, it needs to be programmed manually as we will see further below.
+As the sample ticketing WSDL does not contain any SOAP headers we will add them in the context of this tutorial. For this example we define an <var>'isGoldClubMember'</var> and <var>'promotionalCode'</var> element that is available on the request.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -62,6 +60,15 @@ As the WSDL is missing a SOAPAction we will add it in the context of this tutori
             minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
       </xs:complexType>
+
+      <xs:element name="listFlightsSoapHeaders" type="xsTicketAgent:ListFlightsSoapHeaders" />
+      <xs:complexType name="ListFlightsSoapHeaders">
+        <xs:sequence>
+          <xs:element name="isGoldClubMember" type="xs:boolean" />
+          <xs:element name="promotionalCode" type="xs:string"
+            minOccurs="0" />
+        </xs:sequence>
+      </xs:complexType>
     </xs:schema>
   </wsdl:types>
 
@@ -71,6 +78,10 @@ As the WSDL is missing a SOAPAction we will add it in the context of this tutori
 
   <wsdl:message name="listFlightsResponse">
     <wsdl:part name="body" element="xsTicketAgent:listFlightsResponse" />
+  </wsdl:message>
+
+  <wsdl:message name="listFlightsSoapHeaders">
+    <wsdl:part name="header" element="xsTicketAgent:listFlightsSoapHeaders" />
   </wsdl:message>
 
   <wsdl:portType name="TicketAgent">
@@ -84,8 +95,9 @@ As the WSDL is missing a SOAPAction we will add it in the context of this tutori
     <soap:binding style="document"
       transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="listFlights">
-      <soap:operation soapAction="http://example.com/TicketAgent/listFlights" />
       <wsdl:input>
+        <soap:header use="literal" part="header"
+          message="tns:listFlightsSoapHeaders"></soap:header>
         <soap:body parts="body" use="literal" />
       </wsdl:input>
       <wsdl:output>
@@ -96,7 +108,102 @@ As the WSDL is missing a SOAPAction we will add it in the context of this tutori
 </wsdl:definitions>
 ```
 
-# Client SoapActionCallback Setup
+Running the below Maven command will generate the JAXB object that correspond to the added SOAP headers.
+
+``` plaintext
+mvn generate-sources
+```
+
+The project is built using [Apache Maven](https://maven.apache.org/){:target="_blank"}. As we will create some Spring-WS unit test cases to verify the example, we also include the `spring-ws-test` dependency in the project POM file.
+
+# Client Add SOAP Header
+
+In order to set the SOAP headers on the outgoing request, we need to get hold of the [SoapMessage](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#soap-message){:target="_blank"} which has a SOAP-specific method `getSoapHeader()` for getting the SOAP Header.
+
+The `SoapMessage` can be obtained by casting the `WebServiceMessage` which we get using the [WebServiceMessageCallback](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#d5e1912){:target="_blank"} interface that gives us access to the message after it has been created, but before it is sent.
+
+We create the different SOAP headers using the corresponding JAXB objects and marshal them into the `SOAPHeader` as shown below.
+
+``` java
+package com.codenotfound.ws.client;
+
+import java.math.BigInteger;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Marshaller;
+
+import org.example.ticketagent.ListFlightsSoapHeaders;
+import org.example.ticketagent.ObjectFactory;
+import org.example.ticketagent.TFlightsResponse;
+import org.example.ticketagent.TListFlights;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.ws.WebServiceMessage;
+import org.springframework.ws.client.core.WebServiceMessageCallback;
+import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.soap.SoapHeader;
+import org.springframework.ws.soap.SoapMessage;
+
+@Component
+public class TicketAgentClient {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(TicketAgentClient.class);
+
+  @Autowired
+  private WebServiceTemplate webServiceTemplate;
+
+  @SuppressWarnings("unchecked")
+  public List<BigInteger> listFlights() {
+
+    ObjectFactory factory = new ObjectFactory();
+    TListFlights tListFlights = factory.createTListFlights();
+
+    JAXBElement<TListFlights> request = factory.createListFlightsRequest(tListFlights);
+
+    JAXBElement<TFlightsResponse> response = (JAXBElement<TFlightsResponse>) webServiceTemplate
+        .marshalSendAndReceive(request, new WebServiceMessageCallback() {
+
+          @Override
+          public void doWithMessage(WebServiceMessage message) {
+            try {
+              // get the header from the SOAP message
+              SoapHeader soapHeader = ((SoapMessage) message).getSoapHeader();
+
+              // create the header element
+              ObjectFactory factory = new ObjectFactory();
+              ListFlightsSoapHeaders listFlightsSoapHeaders =
+                  factory.createListFlightsSoapHeaders();
+              listFlightsSoapHeaders.setIsGoldClubMember(true);
+              listFlightsSoapHeaders.setPromotionalCode("ABC123");
+
+              JAXBElement<ListFlightsSoapHeaders> headers =
+                  factory.createListFlightsSoapHeaders(listFlightsSoapHeaders);
+
+              // create a marshaller
+              JAXBContext context = JAXBContext.newInstance(ListFlightsSoapHeaders.class);
+              Marshaller marshaller = context.createMarshaller();
+
+              // marshal the headers into the specified result
+              marshaller.marshal(headers, soapHeader.getResult());
+            } catch (Exception e) {
+              LOGGER.error("error during marshalling of the SOAP headers", e);
+            }
+          }
+        });
+
+    return response.getValue().getFlightNumber();
+  }
+}
+```
+
+# Server Soap Header Annotation
+
+In order to access the SOAP headers in the web service provider, we need to specify them as an addition parameter on the `Endpoint` handling.
+
 
 Spring WS by default sends an empty SOAPAction header. In order to set the value we need to configure it on the `WebServiceTemplate` by passing a `WebServiceMessageCallback` which gives access to the message after it has been created, but before it is sent.
 

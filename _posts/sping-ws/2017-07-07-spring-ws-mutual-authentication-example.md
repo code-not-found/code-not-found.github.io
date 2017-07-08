@@ -2,12 +2,14 @@
 title: "Spring WS - Mutual Authentication Example"
 permalink: /2017/07/spring-ws-mutual-authentication-example.html
 excerpt: "A detailed step-by-step tutorial on how setup mutual certificate authentication using Spring-WS and Spring Boot."
-date: 2017-07-08
-modified: 2017-07-08
+date: 2017-07-07
+modified: 2017-07-07
 header:
   teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
 tags: [Certificate, Client, Example, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, Two-Way Authentication]
+redirect_from:
+  - /2017/04/spring-ws-mutual-authentication-example.html
 published: true
 ---
 
