@@ -1,21 +1,23 @@
 ---
 title: "Spring WS - Mutual Authentication Example"
-permalink: /2017/04/spring-ws-mutual-authentication-example.html
+permalink: /2017/07/spring-ws-mutual-authentication-example.html
 excerpt: "A detailed step-by-step tutorial on how setup mutual certificate authentication using Spring-WS and Spring Boot."
-date: 2017-05-01
-modified: 2017-05-01
+date: 2017-07-08
+modified: 2017-07-08
+header:
+  teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
-tags: [Client, Example, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, Two-Way Authentication]
-published: false
+tags: [Certificate, Client, Example, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, Two-Way Authentication]
+published: true
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Mutual authentication or two-way authentication](https://en.wikipedia.org/wiki/Mutual_authentication) refers to **two parties authenticating each other at the same time**. In other words the client must prove its identity to the server, and the server must prove its identity to the client, before any traffic is sent over the client-to-server connection.
+[Mutual authentication or two-way authentication](https://en.wikipedia.org/wiki/Mutual_authentication){:target="_blank"} refers to **two parties authenticating each other at the same time**. In other words, the client must prove its identity to the server, and the server must prove its identity to the client before any traffic is sent over the client-to-server connection.
 
-This example shows how to configure both client and server so that mutual authentication is enabled on a web service using Spring-WS, Spring Boot and Maven. 
+This example shows how to configure both client and server so that mutual authentication using certificates is enabled on a web service using Spring-WS, Spring Boot, and Maven.
 
 Tools used:
 * Spring-WS 2.4
@@ -26,9 +28,9 @@ Tools used:
 
 The setup of the project is based on a previous [Spring WS HTTPS example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html) in which we configured the server authentication part. We will extend this setup so that the client also authenticates itself towards the server.
 
-We will use [keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html) to generate the different [Java KeyStores](https://en.wikipedia.org/wiki/Keystore) (JKS) which contain the key pairs and public certificates for both client and server.
+[Keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html){:target="_blank"} is used to generate the different [Java KeyStores](https://en.wikipedia.org/wiki/Keystore){:target="_blank"} (JKS) which contain the key pairs and public certificates for both client and server.
 
-Subsequently execute the following three commands in order to generate the <var>server-keystore.jks</var> and <var>client-truststore.jks</var>.
+Subsequently execute the following three commands in order to generate the <var>server-keystore.jks</var> and <var>client-truststore.jks</var> needed to configure the server.
 
 > Note that we are specifying a DNS subject alternative name entry (<kbd>"-ext san=dns:localhost"</kbd>) matching the <var>'localhost'</var> hostname on the first keytool command. This way we do not need to override the `HostnameVerifier` like we did in the [HTTPS client example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html).
 
@@ -44,7 +46,7 @@ keytool -exportcert -alias server-keypair -file server-public-key.cer -keystore 
 keytool -importcert -keystore client-truststore.jks -alias server-public-key -file server-public-key.cer -storepass client-truststore-p455w0rd -noprompt
 ```
 
-Next execute following three commands to generate the <var>client-keystore.jks</var> and <var>server-truststore.jks</var>.
+Next execute following three commands to generate the <var>client-keystore.jks</var> and <var>server-truststore.jks</var> that will be used to setup the client.
 
 ``` plaintext
 keytool -genkeypair -alias client-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=client,O=codenotfound.com" -keypass client-key-p455w0rd -keystore client-keystore.jks -storepass client-keystore-p455w0rd
@@ -58,11 +60,13 @@ keytool -exportcert -alias client-keypair -file client-public-key.cer -keystore 
 keytool -importcert -keystore server-truststore.jks -alias client-public-key -file client-public-key.cer -storepass server-truststore-p455w0rd -noprompt
 ```
 
-Now (if needed) move the created JKS files into <var>src/main/resources</var>. The result should be as shown below.
+Now (if needed) move the created JKS files into <var>src/main/resources</var>. The result should be as shown below:
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-ws/mutual-authentication-jks-files.png" alt="mutual authentication jks files">
 </figure>
+
+If you would like to visualize the content of the above-generated artifacts you can use a tool like [Portecle](http://portecle.sourceforge.net/){:target="_blank"} which is a Java based GUI for managing keystores.
 
 # Setup the Client Keystore and Truststore
 
@@ -79,7 +83,9 @@ client:
     trust-store-password: client-truststore-p455w0rd
 ```
 
-As the client needs to authenticate itself
+As the client needs to authenticate itself, a keystore needs to be configured that contains the private/public key pair of the client that was generated in the previous section. Similar to the trustore setup, we use a `KeyManagersFactoryBean` to manage the configured keystores. We load the keystore by creating a `KeyStoreFactoryBean` on which we specify the keystore location and password.
+
+> Note that on the `keyManagersFactoryBean` we need to set the password of the key pair to be used.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -188,47 +194,32 @@ public class ClientConfig {
 
 # Setup the Server Keystore and Truststore
 
-As our web service runs on Spring Boot, we just need to configure the [underlying web server with the correct parameters](http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-configure-ssl). This is done via the [Spring boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
+In addition to the setup of the server authentication we need to specify some additional [Spring Boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} in the application properties file in order to trust the client that will connect to the exposed web service.
 
-Configure the server's keystore (that was generated at the beginning of this tutorial) and corresponding password in addition to the alias of the key pair to be used and it's password. Also change the port to <var>'9443'</var>.
+The <var>'client-auth'</var> property specifies whether client authentication is wanted ("want") or needed ("need"). In this example we set it to <var>'need'</var> as we want to assure two-way SSL is established. The server's truststore and the corresponding password are also configured so that the public certificated of the client is trusted.
 
 ``` yaml
 server:
   port: 9443
   ssl:
+    client-auth: need
     key-store: classpath:jks/server-keystore.jks
     key-store-password: server-keystore-p455w0rd
     key-alias: server-keypair
     key-password: server-key-p455w0rd
+    trust-store: classpath:jks/server-truststore.jks
+    trust-store-password: server-truststore-p455w0rd
 ```
 
-In order to quickly test if the setup was successful, start Spring Boot by running below Maven command at the command prompt.
+# Testing Spring WS Two Way TLS (SSL)
 
-``` plaintext
-mvn spring-boot:run
-```
-
-Open below URL in your browser and the ticket agent service WSDL definition will now be served over HTTPS.
-
-``` plaintext
-https://localhost:9443/codenotfound/ws/ticketagent.wsdl
-```
-
-> Notice that your browser will probably flag the connection as being not secure (go ahead and accept an exception). The reason for this is that we are using self-signed certificates which are by default untrusted by your browser.
-
-<figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/https-ticketagent-wsdl.png" alt="https ticketagent wsdl">
-</figure>
-
-# Testing Spring WS over HTTPS
-
-In order to test the example we can trigger the existing `SpringWsApplicationTests` unit test case by running following Maven command.
+In order to test the above setup we can trigger the existing `SpringWsApplicationTests` unit test case by executing following Maven command.
 
 ``` plaintext
 mvn test
 ```
 
-This will result in a successful test run as shown below.
+This triggers a test run which validates that mutual authentication between client and server was successfully achieved.
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -237,12 +228,12 @@ This will result in a successful test run as shown below.
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.3.RELEASE)
+ :: Spring Boot ::        (v1.5.4.RELEASE)
 
-08:42:52.929 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 5352 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-https)
-08:42:52.932 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
-08:42:55.727 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.096 seconds (JVM running for 3.798)
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.484 sec - in com.codenotfound.ws.SpringWsApplicationTests
+08:21:47.020 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on codenotfound-pc with PID 6745 (started by CodeNotFound in /home/codenotfound/spring-ws/spring-ws-mutual-authentication)
+08:21:48.067 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
+08:23:54.364 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 157.561 seconds (JVM running for 266.271)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 182.734 sec - in com.codenotfound.ws.SpringWsApplicationTests
 
 Results :
 
@@ -251,9 +242,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 6.275 s
-[INFO] Finished at: 2017-05-01T08:42:56+02:00
-[INFO] Final Memory: 20M/227M
+[INFO] Total time: 05:39 min
+[INFO] Finished at: 2017-07-08T08:24:17+02:00
+[INFO] Final Memory: 20M/126M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -265,6 +256,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Although setting up HTTPs using Spring WS is not extensively covered in the reference documentation, it can be done quite easily using configuration and some support classes.
+In this tutorial, we covered setting up mutual certificate authentication using Spring WS and Spring Boot. 
 
-If you found this tutorial helpful or if you run into some problems let me know in the comments section below.
+Drop a line below if you encounter some problems or just to say thanks.

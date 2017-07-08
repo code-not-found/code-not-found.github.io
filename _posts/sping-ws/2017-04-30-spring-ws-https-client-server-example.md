@@ -161,7 +161,7 @@ Similar to the keystore we can open the truststore using Portecle to inspect its
     <img src="{{ site.url }}/assets/images/spring-ws/client-truststore.png" alt="client truststore">
 </figure>
 
-As a last step we move the three artifacts we have just generated: <var>client-truststore.jks</var>, <var>server-keystore.jks</var> and <var>server-public-key.cer</var> to the <var>src/main/resources</var> folder so that they are available on the classpath for both client and server setup.
+Finally, we move the three artifacts we have just generated: <var>client-truststore.jks</var>, <var>server-keystore.jks</var> and <var>server-public-key.cer</var> to the <var>src/main/resources</var> folder so that they are available on the classpath for both client and server setup.
 
 <figure>
     <img src="{{ site.url }}/assets/images/spring-ws/https-jks-files.png" alt="https jks files">
@@ -169,7 +169,7 @@ As a last step we move the three artifacts we have just generated: <var>client-t
 
 # Setup HTTPS on the Client
 
-As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate`. The `@Value` annotation is used to inject the <var>'client.default-uri'</var> value from the application properties YAML file.
+As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate` used by the client. The `@Value` annotation is used to inject the <var>'client.default-uri'</var> value from the application properties YAML file.
 
 There are two other values that are configured in our <var>application.yml</var> configuration file. These are are the location of the truststore JKS file and it's password as shown below.
 
@@ -183,7 +183,7 @@ client:
 
 In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connect using the HTTPS protocol. This is done by creating and setting a `HttpsUrlConnectionMessageSender` which is an extension of the default `HttpUrlConnectionMessageSender` with support for HTTPS.
 
-> Note that the `HttpsUrlConnectionMessageSender` is in the `spring-ws-support` package.
+> Note that the `HttpsUrlConnectionMessageSender` is part of the `spring-ws-support` package.
 
 During the TLS handshaking procedure, the client needs to decide whether it trusts the public key certificate that the server provides. This is done based on whether or not this certificate (or one of it's issuing CA's) is present in (one of) the client's truststores. We specify a `TrustManagersFactoryBean` to handle the configured truststores.
 
@@ -197,9 +197,9 @@ javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No
 
 The reason for this is that when the HTTPS client connects to a server, it's not enough for a certificate to be trusted, it also has to match the server you want to talk to. In other words, the client verifies that the hostname in the certificate matches the hostname of the server. For more detailed information check [this answer on Stack Overflow](http://stackoverflow.com/a/3093650/4201470){:target="_blank"}.
 
-So in order to fix this problem, we need to regenerate the server keypair so it contains <var>'localhost'</var>. You can find the needed keytool command in the [Spring WS mutual authentication tutorial]({{ site.url }}/2017/04/spring-ws-mutual-authentication-example.html). 
+In order to fix this problem, we could regenerate the server keypair so it contains <var>'localhost'</var>. You can find the needed keytool command in the [Spring WS mutual authentication tutorial]({{ site.url }}/2017/04/spring-ws-mutual-authentication-example.html). 
 
-Another option, which we will use in this example, is to override the `HostnameVerifier` so that it returns `true` in the case a URI on <var>'localhost'</var> is used. Note that this is not something you would want to do in production!
+Another option, which we will use in this example, is to override the `HostnameVerifier` so that it returns `true` in the case a hostname equals to <var>'localhost'</var> is used. Note that this is not something you would want to do in production!
 
 ``` java
 package com.codenotfound.ws.client;
@@ -338,7 +338,7 @@ This will result in a successful test run as shown below.
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.3.RELEASE)
+ :: Spring Boot ::        (v1.5.4.RELEASE)
 
 08:42:52.929 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 5352 (started by CodeNotFound in c:\code\spring-ws\spring-ws-https)
 08:42:52.932 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
