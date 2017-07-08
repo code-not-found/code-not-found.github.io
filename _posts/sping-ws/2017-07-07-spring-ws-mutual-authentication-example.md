@@ -19,6 +19,9 @@ published: true
 
 This example shows how to configure both client and server so that mutual authentication using certificates is enabled on a web service using Spring-WS, Spring Boot, and Maven.
 
+If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
+{: .notice--primary}
+
 Tools used:
 * Spring-WS 2.4
 * Spring Boot 1.5
@@ -30,7 +33,7 @@ The setup of the project is based on a previous [Spring WS HTTPS example]({{ sit
 
 [Keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html){:target="_blank"} is used to generate the different [Java KeyStores](https://en.wikipedia.org/wiki/Keystore){:target="_blank"} (JKS) which contain the key pairs and public certificates for both client and server.
 
-Subsequently execute the following three commands in order to generate the <var>server-keystore.jks</var> and <var>client-truststore.jks</var> needed to configure the server.
+Subsequently execute the following three commands in order to generate the <var>server-keystore.jks</var> and <var>client-truststore.jks</var> needed to configure the server and client.
 
 > Note that we are specifying a DNS subject alternative name entry (<kbd>"-ext san=dns:localhost"</kbd>) matching the <var>'localhost'</var> hostname on the first keytool command. This way we do not need to override the `HostnameVerifier` like we did in the [HTTPS client example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html).
 
@@ -46,7 +49,7 @@ keytool -exportcert -alias server-keypair -file server-public-key.cer -keystore 
 keytool -importcert -keystore client-truststore.jks -alias server-public-key -file server-public-key.cer -storepass client-truststore-p455w0rd -noprompt
 ```
 
-Next execute following three commands to generate the <var>client-keystore.jks</var> and <var>server-truststore.jks</var> that will be used to setup the client.
+Next execute following three commands to generate the <var>client-keystore.jks</var> and <var>server-truststore.jks</var> that will be used to setup the client and server.
 
 ``` plaintext
 keytool -genkeypair -alias client-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=client,O=codenotfound.com" -keypass client-key-p455w0rd -keystore client-keystore.jks -storepass client-keystore-p455w0rd
@@ -194,9 +197,9 @@ public class ClientConfig {
 
 # Setup the Server Keystore and Truststore
 
-In addition to the setup of the server authentication we need to specify some additional [Spring Boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} in the application properties file in order to trust the client that will connect to the exposed web service.
+In addition to the setup of the server authentication we need to specify some additional [Spring Boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} in the application properties file in order to trust the client that will connect to the exposed ticketing web service.
 
-The <var>'client-auth'</var> property specifies whether client authentication is wanted ("want") or needed ("need"). In this example we set it to <var>'need'</var> as we want to assure two-way SSL is established. The server's truststore and the corresponding password are also configured so that the public certificated of the client is trusted.
+The <var>'client-auth'</var> property specifies whether client authentication is wanted ("want") or needed ("need"). In this example we set it to <var>'need'</var> as we want to assure two-way SSL is established. The server's truststore and the corresponding password are also configured so that the public certificate of the client is trusted.
 
 ``` yaml
 server:
@@ -219,7 +222,7 @@ In order to test the above setup we can trigger the existing `SpringWsApplicatio
 mvn test
 ```
 
-This triggers a test run which validates that mutual authentication between client and server was successfully achieved.
+This triggers a test run which validates that mutual authentication between client and server is successfully achieved.
 
 ``` plaintext
   .   ____          _            __ _ _
