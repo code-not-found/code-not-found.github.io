@@ -17,7 +17,7 @@ published: true
 
 The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497){:target="_blank"} is an optional sub-element of the SOAP envelope. It is used to pass application related information that is processed by SOAP nodes along the message flow.
 
-The below example details how a web service client can set a SOAP header. It also illustrates how a server endpoint can access the SOAP header from the received request. Both client and server endpoint are realized using Spring-WS, Spring Boot, and Maven.
+The below example details how a web service client can set a SOAP header. It also illustrates how a server endpoint can get the SOAP header from the received request. Both client and server are realized using Spring-WS, Spring Boot, and Maven.
 
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
@@ -201,15 +201,15 @@ public class TicketAgentClient {
 
 # Server Soap Header Annotation
 
-To access the SOAP header on the server side, we need to specify it as an addition parameter on the `Endpoint` handling method. [A handling method](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#d5e1137){:target="_blank"} typically has one or more parameters that refer to various parts of the incoming XML message. Most commonly, the handling method will have a single parameter that will map to the payload of the message, but it is also possible to map to other parts of the request message, such as for example a SOAP header.
+To access the SOAP header on the server side, we need to specify it as an additional parameter on the `Endpoint` handling method. [A handling method](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#d5e1137){:target="_blank"} typically has one or more parameters that refer to various parts of the incoming XML message. Most commonly, the handling method will have a single parameter that will map to the payload of the message, but it is also possible to map to other parts of the request message, such as for example a SOAP header.
 
-In this example the `listFlights()` handling method has two parameters. The first is the request payload which is mapped to the JAXB `TListFlights` object. The second parameter is a `SoapHeaderElement` which needs to be used in combination with the `@SoapHeader` annotation in order to extract the correct element from the received SOAP header.
+In this example, the `listFlights()` handling method has two parameters. The first is the request payload which is mapped to the JAXB `TListFlights` object. The second parameter is a `SoapHeaderElement` which needs to be used in combination with the `@SoapHeader` annotation in order to extract the correct element from the received SOAP header.
 
 In order to do this, the `@SoapHeader` annotation has a `value` element which needs to specify the qualified name of the target SOAP header element. The format used is that of a `QName` (i.e. namespace URI + local part, where the namespace is optional).
 
 > Note that it is also possible to specify the `SoapHeader` as a parameter of the handling method. You would then need to iterate over the available `SoapHeaderElement`(s) to get the one you need.
 
-From the `SoapHeaderElement` we obtain the `Source` which is unmarshalled into a `ListFlightsSoapHeaders` instance. In a next step the `isIsGoldClubMember` value is retrieved and used in order to determine whether we return an extra flight in the response.
+From the `SoapHeaderElement` we obtain the `Source` which is unmarshalled into a `ListFlightsSoapHeaders` instance. In a next step, the `isIsGoldClubMember` value is retrieved and used in order to determine whether we return an extra flight in the response.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -283,7 +283,7 @@ public class TicketAgentEndpoint {
 
 Now that we are able to set and get a SOAP header in both client and server let's write some unit test cases to verify the correct working of the example.
 
-For the client we will use a `MockWebServiceServer` in order to verify that the SOAP header has been set by the client. By configuring the `soapHeader()` method of the `RequestMatchers`, we expect the specified SOAP header to exist in the request message.
+For the client, we will use a `MockWebServiceServer` in order to verify that the SOAP header has been set by the client. By configuring the `soapHeader()` method of the `RequestMatchers`, we expect the specified SOAP header to exist in the request message.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -452,6 +452,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this tutorial we showed how you can add and read a SOAP header using Spring WS.
+In this tutorial, we showed how you can add and read a SOAP header using Spring WS.
 
 If you found this example useful or if you have a question you would like to ask, feel free to leave a comment below.
