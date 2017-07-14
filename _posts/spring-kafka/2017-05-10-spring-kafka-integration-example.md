@@ -220,7 +220,7 @@ public class ProducingChannelConfig {
 
 # Spring Integration Kafka Consumer Channel
 
-Similar to the _ProducingChannel_, a _ConsumingChannel_ bean is specified again using the `DirectChannel` channel type.
+Similar to the _ProducingChannel_, a _ConsumingChannel_ bean is specified, again using the `DirectChannel` channel type.
 
 We create a `KafkaMessageDrivenChannelAdapter` that can receive messages from one or more Kafka topics. The constructor takes a `MessageListenerContainer` as an input parameter. We then connect this Channel Adapter to the _ConsumingChannel_ by using the `setOutputChannel()` method.
 
