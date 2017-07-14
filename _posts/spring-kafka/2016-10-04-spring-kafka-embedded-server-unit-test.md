@@ -17,14 +17,14 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-The [Spring Kafka project](https://projects.spring.io/spring-kafka/) comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.0.RELEASE/reference/html/_reference.html#testing). to assist you with your application testing. These include: an embedded Kafka server, some static methods to setup consumers/producers and utility methods to fetch results
+The [Spring Kafka project](https://projects.spring.io/spring-kafka/){:target="_blank"} comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#testing){:target="_blank"}. to assist you with your application testing. These include: an embedded Kafka server, some static methods to setup consumers/producers and utility methods to fetch results
 
 Let's demonstrate how above can be used with a simple code sample. We will reuse the Spring Kafka Hello World project from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot and Maven.
 
-# General Project Setup
-
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
+
+# General Project Setup
 
 Tools used:
 * Spring Kafka 1.2
@@ -33,7 +33,7 @@ Tools used:
 
 Add the `spring-kafka-test` dependency to the Maven POM file in addition to the Spring Kafka and Spring Boot dependencies.
 
-In the plugins section we included the `maven-surefire-plugin` to trigger an `AllSpringKafkaTests` test suite class that will be used to start the embedded server for the different unit test cases in our project. This allows us to start a single embedded Kafka server and reuse it for the different unit test cases.
+In the plugins section, we included the `maven-surefire-plugin` to trigger an `AllSpringKafkaTests` test suite class that will be used to start the embedded server for the different unit test cases in our project. This allows us to start a single embedded Kafka server and reuse it for the different unit test cases.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -52,14 +52,14 @@ In the plugins section we included the `maven-surefire-plugin` to trigger an `Al
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.2.RELEASE</version>
+    <version>1.5.4.RELEASE</version>
   </parent>
 
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
-    <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+    <spring-kafka.version>1.2.2.RELEASE</spring-kafka.version>
+    <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
   </properties>
 
   <dependencies>
@@ -110,13 +110,13 @@ In the plugins section we included the `maven-surefire-plugin` to trigger an `Al
 </project>
 ```
 
-The message consumer and producer classes from the Hello World example are unchanged so we won't go into detail explaining them. You can checkout the [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) from a previous post for more details.
+The message consumer and producer classes from the Hello World example are unchanged so we won't go into detail explaining them. You can check out the [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) from a previous post for more details.
 
 # Unit Testing with an Embedded Kafka Server
 
-`spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/) and [Kafka](https://kafka.apache.org/) server instance on a random port before all the test cases are run, and stops the instances one the test cases are finished.
+`spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/){:target="_blank"} and [Kafka](https://kafka.apache.org/){:target="_blank"} server instance on a random port before all the test cases are run, and stops the instances once the test cases are finished.
 
-In order to support multiple unit test classes (in this example: `SpringKafkaApplicationTest`, `SpringKafkaSenderTest` and `SpringKafkaReceiverTest`), we will trigger the `@ClassRule` from a `Suite` class that bundles these test cases together. This allows us to only start the embedded broker once for all test cases. If you have only one test class then you can [trigger the @ClassRule directly from the test case](https://github.com/code-not-found/spring-kafka/blob/master/spring-kafka-helloworld/src/test/java/com/codenotfound/kafka/SpringKafkaApplicationTest.java).
+In order to support multiple unit test classes (in this example: `SpringKafkaApplicationTest`, `SpringKafkaSenderTest` and `SpringKafkaReceiverTest`), we will trigger the `@ClassRule` from a `Suite` class that bundles these test cases together. This allows us to only start the embedded broker once for all test cases. If you have only one test class then you can [trigger the @ClassRule directly from the test case](https://github.com/code-not-found/spring-kafka/blob/master/spring-kafka-helloworld/src/test/java/com/codenotfound/kafka/SpringKafkaApplicationTest.java){:target="_blank"}.
 
 The `KafkaEmbedded` constructor takes as parameters: the number of Kafka brokers to start, whether a controlled shutdown is needed and the topics that need to be created on the broker.
 
@@ -170,7 +170,7 @@ In the `SpringKafkaSenderTest` unit test case we will be testing the `Sender` by
 
 For creating the needed connection consumer properties a static `consumerProps()` method provided by `KafkaUtils` is used. We then create a `DefaultKafkaConsumerFactory` and `ContainerProperties` which contains runtime properties (in this case the topic name) for the listener container. Both are then used to set up the `KafkaMessageListenerContainer`.
 
-Received messages need to be stored somewhere. In this example a thread safe `BlockingQueue` is used. We create a new `MessageListener` and in the `onMessage()` method we add the received message to the `BlockingQueue`. The listener is started by starting the container.
+Received messages need to be stored somewhere. In this example, a thread safe `BlockingQueue` is used. We create a new `MessageListener` and in the `onMessage()` method we add the received message to the `BlockingQueue`. The listener is started by starting the container.
 
 In order to avoid that we send a message before the container has required the number of assigned partitions, we use the `waitForAssignment()` method on the `ContainerTestUtils` helper class.
 
@@ -276,15 +276,15 @@ public class SpringKafkaSenderTest {
 
 # Testing the Consumer
 
-The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> properties file. In order to check the correct working we will use a _test-template_ to send a message to this topic. All of the setup will be done before the test case runs using the `@Before` annotation.
+The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> properties file. In order to check the correct working, we will use a _test-template_ to send a message to this topic. All of the setup will be done before the test case runs using the `@Before` annotation.
 
 The producer connection properties are created using the static `senderProps()` method provided by `KafkaUtils`. These properties are then used to create a `DefaultKafkaProducerFactory` which is in turn used to create a `KafkaTemplate`. Finally we set the default topic that the template uses to <var>'receiver.t'</var>.
 
-We need to ensure that the `Receiver` is initialized before sending the test message. For this we use the `waitForAssignment()` of `ContainerTestUtils`. The link to the message listener container is acquired by autowiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually.
+We need to ensure that the `Receiver` is initialized before sending the test message. For this we use the `waitForAssignment()` of `ContainerTestUtils`. The link to the message listener container is acquired by auto-wiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually.
 
-> Note that if you do not manually create the topics using the `KafkaEmbedded` constructor (see `AllSpringKafkaTests`) you need to manually set the partitions per topic to 1 in the `waitForAssignment()` method instead getting the partitions from the embedded Kafka server. The reason for this is that [it looks like 1 is used as a default for the number of partitions in case topics are created implicitly](http://stackoverflow.com/a/38660145/4201470). 
+> Note that if you do not manually create the topics using the `KafkaEmbedded` constructor (see `AllSpringKafkaTests`) you need to manually set the partitions per topic to 1 in the `waitForAssignment()` method instead of getting the partitions from the embedded Kafka server. The reason for this is that [it looks like 1 is used as a default for the number of partitions in case topics are created implicitly](http://stackoverflow.com/a/38660145/4201470){:target="_blank"}. 
 
-In the test we send a greeting and check that the message was received by asserting that the latch of the `Receiver` was lowered to zero.
+In the test, we send a greeting and check that the message was received by asserting that the latch of the `Receiver` was lowered to zero.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -380,9 +380,9 @@ Maven will download the needed dependencies, compile the code and run the unit t
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.2.RELEASE)
+ :: Spring Boot ::        (v1.5.4.RELEASE)
 
-11:52:33.853 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 4008 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-embedded-test)
+11:52:33.853 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 4008 (started by CodeNotFound in c:\codenotfound\spring-kafka\spring-kafka-embedded-test)
 11:52:33.854 [main] DEBUG c.c.kafka.SpringKafkaApplicationTest - Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
 11:52:33.855 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
 11:52:34.546 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.982 seconds (JVM running for 5.125)
