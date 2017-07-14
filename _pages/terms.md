@@ -45,7 +45,7 @@ Google Analytics is a web analytics tool we use to help understand how visitors 
 
 We make money on this website through affiliate programs. If you click an affiliate link or ad banner and buy the product, you help support this website because we'll get a percentage of that sale.
 
-Currently We are an affiliate for Amazon and Google Adsense.
+Currently, we are an affiliate for Amazon and Google Adsense.
 
 What this means for you:
 
@@ -54,11 +54,11 @@ What this means for you:
 * We do not let the compensation we receive influence the content, topics, posts, or opinions expressed on this website.
 * We respect and value our readers too much to write anything other than our own genuine and objective opinions and advice.
 
-Just like this website, my Disclosure Policy is a work in progress. As the revenue streams evolve, so will this page.
+Just like this website, our Disclosure Policy is a work in progress. As the revenue streams evolve, so will this page.
 
 ## License
 
-All original content (e.g. articles, blog posts and illustrations) available on CodeNotFound.com is released under a [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License](https://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US) unless otherwise noted. Basically this means you are free to copy and redistribute the material in any medium or format as long as you give appropriate credit and don't use it for commercial purposes without our prior written consent.
+All original content (e.g. articles, blog posts and illustrations) available on CodeNotFound.com is released under a [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License](https://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US) unless otherwise noted. Basically, this means you are free to copy and redistribute the material in any medium or format as long as you give appropriate credit and don't use it for commercial purposes without our prior written consent.
 
 ## Attribution
 
