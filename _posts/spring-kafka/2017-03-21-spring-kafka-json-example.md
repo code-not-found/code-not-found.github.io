@@ -17,21 +17,21 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[JSON](http://www.json.org/) (JavaScript Object Notation) is a lightweight data-interchange format that uses human-readable text to transmit data objects. It is built on two structures: a collection of name/value pairs and an ordered list of values.
+[JSON](http://www.json.org/) (JavaScript Object Notation){:target="_blank"} is a lightweight data-interchange format that uses human-readable text to transmit data objects. It is built on two structures: a collection of name/value pairs and an ordered list of values.
 
 The following tutorial illustrates how to send/receive a Java object as a JSON `byte[]` array to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
 
-# General Project Setup
-
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
+
+# General Project Setup
 
 Tools used:
 * Spring Kafka 1.2
 * Spring Boot 1.5
 * Maven 3.5
 
-[Apache Kafka](https://kafka.apache.org/) stores and transports `Byte` arrays in its topics. It ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html) but a JSON one is not included. Luckily, the [Spring Kafka framework](https://projects.spring.io/spring-kafka/) includes a support package that contains a [JSON (de)serializer](https://github.com/spring-projects/spring-kafka/tree/master/spring-kafka/src/main/java/org/springframework/kafka/support/serializer) that uses a [Jackson](https://github.com/FasterXML/jackson) `ObjectMapper` under the covers.
+[Apache Kafka](https://kafka.apache.org/){:target="_blank"} stores and transports `Byte` arrays in its topics. It ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html){:target="_blank"} but a JSON one is not included. Luckily, the [Spring Kafka framework](https://projects.spring.io/spring-kafka/){:target="_blank"} includes a support package that contains a [JSON (de)serializer](https://github.com/spring-projects/spring-kafka/tree/master/spring-kafka/src/main/java/org/springframework/kafka/support/serializer){:target="_blank"} that uses a [Jackson](https://github.com/FasterXML/jackson){:target="_blank"} `ObjectMapper` under the covers.
 
 We base the below example on a previous [Spring Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html). The only thing that needs to be added to the Maven POM file for working with JSON is the `spring-boot-starter-web` dependency which will indirectly include the needed `jackson-*` JAR dependencies.
 
@@ -52,13 +52,13 @@ We base the below example on a previous [Spring Kafka example]({{ site.url }}/20
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.2.RELEASE</version>
+    <version>1.5.4.RELEASE</version>
   </parent>
 
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
+    <spring-kafka.version>1.2.2.RELEASE</spring-kafka.version>
   </properties>
 
   <dependencies>
@@ -161,7 +161,7 @@ public class Car {
 
 # Producing JSON Messages to a Kafka Topic
 
-In order to use the `JsonSerializer`, shipped with Spring Kafka, we need to set the value of the producer's <var>'VALUE_SERIALIZER_CLASS_CONFIG'</var> configuration property to the `JsonSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `Car` instead of `String`. This will result in the `Car` object to be serialized in a JSON `byte[]` message.
+In order to use the `JsonSerializer`, shipped with Spring Kafka, we need to set the value of the producer's <var>'VALUE_SERIALIZER_CLASS_CONFIG'</var> configuration property to the `JsonSerializer` class. In addition, we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `Car` instead of `String`. This will result in the `Car` object to be serialized in a JSON `byte[]` message.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -428,9 +428,9 @@ Maven will download the needed dependencies, compile the code and run the unit t
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.2.RELEASE)
+ :: Spring Boot ::        (v1.5.4.RELEASE)
 
-22:11:39.942 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 2760 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-json)
+22:11:39.942 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 2760 (started by CodeNotFound in c:\codenotfound\spring-kafka\spring-kafka-json)
 22:11:39.943 [main] DEBUG c.c.kafka.SpringKafkaApplicationTest - Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
 22:11:39.943 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
 22:11:39.978 [main] INFO  o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4cc61eb1: startup date [Sun Apr 16 22:11:39 CEST 2017]; root of context hierarchy
