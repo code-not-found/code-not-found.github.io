@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/spring-kafka-teaser.jpg"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit]
+redirect_from:
+  - /2016/09/spring-kafka-embedded-kafka-test-example.html
 published: true
 ---
 

@@ -19,8 +19,6 @@ According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](http
 
 The below example illustrates how a client can set the SOAPAction header and how a server endpoint can leverage the `@SoapAction` annotation to receive the request using Spring-WS, Spring Boot and Maven. 
 
-# General Project Setup
-
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
 
@@ -28,6 +26,8 @@ Tools used:
 * Spring-WS 2.4
 * Spring Boot 1.5
 * Maven 3.5
+
+# General Project Setup
 
 The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
 
@@ -95,6 +95,8 @@ As the WSDL is missing a SOAPAction we will add it in the context of this tutori
   </wsdl:binding>
 </wsdl:definitions>
 ```
+
+[Apache Maven](https://maven.apache.org/){:target="_blank"} is used to build the project. As we will include some Spring-WS unit test cases to verify the example, we also add the `spring-ws-test` dependency to the project POM file.
 
 # Client SoapActionCallback Setup
 

@@ -7,6 +7,7 @@ categories: [Java]
 tags: [Download, Install, Java, JDK, jdk1.6.0_45, Tutorial, Windows]
 redirect_from:
   - /2014/06/java-install-jdk-windows.html
+  - /2014/06/java-download-install-jdk
 ---
 
 <figure>

@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
 tags: [Basic Authentication, Client, Endpoint, Example, HTTP, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
+redirect_from:
+  - /spring-ws-basic-authentication-example.html
 published: true
 ---
 
