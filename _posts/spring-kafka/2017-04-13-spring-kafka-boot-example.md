@@ -15,21 +15,21 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html) attempts to automatically configure your Spring application based on the JAR dependencies that have been added. In other words if the <var>spring-kafka-1.2.0.RELEASE.jar</var> is on the classpath and you have not manually configured any `Consumer` or `Provider` beans, then Spring Boot will auto-configure them using default values.
+[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html){:target="_blank"} attempts to automatically configure your Spring application based on the JAR dependencies that have been added. In other words, if the <var>spring-kafka-1.2.0.RELEASE.jar</var> is on the classpath and you have not manually configured any `Consumer` or `Provider` beans, then Spring Boot will auto-configure them using default values.
 
 In order to demonstrate this behavior we will start from a previous [Spring Kafka tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) in which we send/receive messages to/from an Apache Kafka topic using Spring Kafka. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration.
 
-# General Project Setup
-
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
+
+# General Project Setup
 
 Tools used:
 * Spring Kafka 1.2
 * Spring Boot 1.5
 * Maven 3.5
 
-The project is built using [Maven](https://maven.apache.org/). The Maven POM file contains the needed dependencies for [Spring Boot](https://projects.spring.io/spring-boot/) and [Spring Kafka](https://projects.spring.io/spring-kafka/) as shown below.
+The project is built using [Maven](https://maven.apache.org/){:target="_blank"}. The Maven POM file contains the needed dependencies for [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} and [Spring Kafka](https://projects.spring.io/spring-kafka/){:target="_blank"} as shown below.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -48,13 +48,13 @@ The project is built using [Maven](https://maven.apache.org/). The Maven POM fil
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.2.RELEASE</version>
+    <version>1.5.4.RELEASE</version>
   </parent>
 
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
+    <spring-kafka.version>1.2.2.RELEASE</spring-kafka.version>
   </properties>
 
   <dependencies>
@@ -115,9 +115,9 @@ public class SpringKafkaApplication {
 
 # Autoconfigure the Spring Kafka Message Producer
 
-The setup and creation of the `KafkaTemplate` and `Producer` beans is automatically done by Spring Boot. The only thing left to do is autowiring the `KafkaTemplate` and using it in the `send()` method.
+The setup and creation of the `KafkaTemplate` and `Producer` beans is automatically done by Spring Boot. The only things left to do are auto-wiring the `KafkaTemplate` and using it in the `send()` method.
 
-> By annotating the `Sender` class with `@Component`, Spring will instantiate this class as a bean that we will use in our test case. In order for this to work we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringKafkaApplication` by using the `@SpringBootApplication` annotation.
+> By annotating the `Sender` class with `@Component`, Spring will instantiate this class as a bean that we will use in our test case. In order for this to work, we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringKafkaApplication` by using the `@SpringBootApplication` annotation.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -145,7 +145,7 @@ public class Sender {
 
 # Autoconfigure the Spring Kafka Message Consumer
 
-Similar to the `Sender`, the setup and creation of the `ConcurrentKafkaListenerContainerFactory` and `KafkaMessageListenerContainer` bean is automatically done by Spring Boot. The `@KafkaListener` annotation creates a message listener container for the annotated `receive()` method. The topic name is specified using the `${topic.boot}` placeholder for which the value will be automatically fetched from the <var>application.yml</var> properties file.
+Similar to the `Sender`, the setup and creation of the `ConcurrentKafkaListenerContainerFactory` and `KafkaMessageListenerContainer` beans is automatically done by Spring Boot. The `@KafkaListener` annotation creates a message listener container for the annotated `receive()` method. The topic name is specified using the `${topic.boot}` placeholder for which the value will be automatically fetched from the <var>application.yml</var> properties file.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -178,7 +178,7 @@ public class Receiver {
 ```
 
 For the `Receiver`, Spring Boot takes care of most of the configuration. There are however two properties that need to be explicitly set in the <var>application.yml</var> properties file:
-1. The <var>'kafka.consumer.group-id'</var> property needs to be specified as we are [using group management to assign topic partitions to consumers](http://docs.confluent.io/current/clients/consumer.html#concepts). In this example we will assign it the value <var>'boot'</var>.
+1. The <var>'kafka.consumer.group-id'</var> property needs to be specified as we are [using group management to assign topic partitions to consumers](http://docs.confluent.io/current/clients/consumer.html#concepts){:target="_blank"}. In this example we will assign it the value <var>'boot'</var>.
 2. The <var>'kafka.consumer.auto-offset-reset'</var> property needs to be set to <var>'earliest'</var> which ensures the new consumer group will get the message sent in case the container started after the send was completed.
 
 ``` yml
@@ -192,7 +192,7 @@ topic:
   boot: boot.t
 ```
 
-> Scroll down to <var># APACHE KAFKA</var> [in the following link in order to get a complete overview on all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) that can be set for auto configuration using the Spring Boot application properties file.
+> Scroll down to <var># APACHE KAFKA</var> [in the following link in order to get a complete overview of all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} that can be set for auto configuration using the Spring Boot application properties file.
 
 # Testing the Sender and Receiver
 
@@ -271,7 +271,7 @@ Running com.codenotfound.kafka.SpringKafkaApplicationTest
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.2.RELEASE)
 
-23:11:15.145 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 4812 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-boot)
+23:11:15.145 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 4812 (started by CodeNotFound in c:\codenotfound\spring-kafka\spring-kafka-boot)
 23:11:15.146 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
 23:11:15.816 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.966 seconds (JVM running for 5.41)
 23:11:15.843 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='Hello Boot!' to topic='boot.t'
@@ -299,6 +299,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Using Spring Boot's autoconfiguration we were able to setup a `Sender` and `Receiver` using only a couple of lines of code. Hopefully this example will kick-start your Spring Kafka development.
+Using Spring Boot's autoconfiguration we were able to setup a `Sender` and `Receiver` using only a couple of lines of code. Hopefully, this example will kick-start your Spring Kafka development.
 
 Feel free to leave a comment in case something was not clear or just to let me know if everything worked.
