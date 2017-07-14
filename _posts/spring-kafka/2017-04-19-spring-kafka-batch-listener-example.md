@@ -10,7 +10,7 @@ categories: [Spring Kafka]
 tags: [Apache Kafka, Batch, Example, Listener, Maven, Spring, Spring Boot, Spring Kafka, Tutorial]
 published: true
 ---
-
+ 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
@@ -66,7 +66,7 @@ public class ReceiverConfig {
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
     props.put(ConsumerConfig.GROUP_ID_CONFIG, "batch");
-    // maximum records per batch receive
+    // maximum records per poll
     props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10");
 
     return props;
@@ -82,7 +82,7 @@ public class ReceiverConfig {
     ConcurrentKafkaListenerContainerFactory<String, String> factory =
         new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
-    // enable batch listeners
+    // enable batch listening
     factory.setBatchListener(true);
 
     return factory;
@@ -95,9 +95,9 @@ public class ReceiverConfig {
 }
 ```
 
-The `receive()` method of the `Receiver` listener POJO needs to be updated to receive a `List` of payloads (in this example these are simple `String` objects). Alternatively [a List of Message&lt;?&gt; or ConsumerRecord&lt;?, ?&gt; objects can be configured](http://docs.spring.io/spring-kafka/docs/1.2.0.RELEASE/reference/html/_reference.html#__kafkalistener_annotation).
+The `receive()` method of the `Receiver` listener POJO needs to be updated to receive a `List` of payloads (in this example these are simple `String` objects). Alternatively a List of Message&lt;?&gt; or ConsumerRecord&lt;?, ?&gt; objects [can be configured](http://docs.spring.io/spring-kafka/docs/1.2.0.RELEASE/reference/html/_reference.html#__kafkalistener_annotation){:target="_blank"}.
 
-For logging purpose, we also add the partition and offset headers of each message. These headers are also available in a `List` and map to the received messages based on the index within the list.
+For logging purposes, we also add the partition and offset headers of each message. These headers are available in a `List` and map to the received messages based on the index within the list.
 
 The `CountDownLatch` value is increased so that the included unit test case can send out a batch of 20 messages.
 
@@ -234,57 +234,59 @@ The result should be 20 message that get sent and received from a <var>'batch.t'
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.2.RELEASE)
+ :: Spring Boot ::        (v1.5.4.RELEASE)
 
-20:40:48.195 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 2172 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-batch-listener)
-20:40:48.195 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
-20:40:48.860 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.939 seconds (JVM running for 4.995)
-20:40:50.277 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 0' to topic='batch.t'
-20:40:50.297 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 1' to topic='batch.t'
-20:40:50.297 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 2' to topic='batch.t'
-20:40:50.297 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 3' to topic='batch.t'
-20:40:50.298 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 4' to topic='batch.t'
-20:40:50.298 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 5' to topic='batch.t'
-20:40:50.298 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 6' to topic='batch.t'
-20:40:50.299 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 7' to topic='batch.t'
-20:40:50.299 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 8' to topic='batch.t'
-20:40:50.299 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 9' to topic='batch.t'
-20:40:50.299 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 10' to topic='batch.t'
-20:40:50.299 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 11' to topic='batch.t'
-20:40:50.299 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 12' to topic='batch.t'
-20:40:50.299 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 13' to topic='batch.t'
-20:40:50.299 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 14' to topic='batch.t'
-20:40:50.300 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 15' to topic='batch.t'
-20:40:50.300 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 16' to topic='batch.t'
-20:40:50.300 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 17' to topic='batch.t'
-20:40:50.300 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 18' to topic='batch.t'
-20:40:50.300 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 19' to topic='batch.t'
-20:40:50.332 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - start of batch receive
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 0' with partition-offset='0-0'
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 2' with partition-offset='0-1'
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 4' with partition-offset='0-2'
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 6' with partition-offset='0-3'
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 8' with partition-offset='0-4'
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 10' with partition-offset='0-5'
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 12' with partition-offset='0-6'
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 14' with partition-offset='0-7'
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 16' with partition-offset='0-8'
-20:40:50.333 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 18' with partition-offset='0-9'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - end of batch receive
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - start of batch receive
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 1' with partition-offset='1-0'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 3' with partition-offset='1-1'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 5' with partition-offset='1-2'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 7' with partition-offset='1-3'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 9' with partition-offset='1-4'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 11' with partition-offset='1-5'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 13' with partition-offset='1-6'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 15' with partition-offset='1-7'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 17' with partition-offset='1-8'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - received message='message 19' with partition-offset='1-9'
-20:40:50.334 [batch-listener-0-L-1] INFO  c.c.kafka.consumer.Receiver - end of batch receive
-20:40:51.419 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.953 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
+16:46:18.654 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 3636 (started by CodeNotFound in c:\blogs\codenotfound\code\spring-kafka\spring-kafka-batch-listener)
+16:46:18.655 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
+16:46:19.344 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.995 seconds (JVM running for 5.206)
+16:46:20.774 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 0' to topic='batch.t'
+16:46:20.821 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 1' to topic='batch.t'
+16:46:20.821 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 2' to topic='batch.t'
+16:46:20.822 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 3' to topic='batch.t'
+16:46:20.822 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 4' to topic='batch.t'
+16:46:20.822 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 5' to topic='batch.t'
+16:46:20.823 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 6' to topic='batch.t'
+16:46:20.824 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 7' to topic='batch.t'
+16:46:20.824 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 8' to topic='batch.t'
+16:46:20.824 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 9' to topic='batch.t'
+16:46:20.824 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 10' to topic='batch.t'
+16:46:20.825 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 11' to topic='batch.t'
+16:46:20.828 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 12' to topic='batch.t'
+16:46:20.829 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 13' to topic='batch.t'
+16:46:20.829 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 14' to topic='batch.t'
+16:46:20.829 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 15' to topic='batch.t'
+16:46:20.830 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 16' to topic='batch.t'
+16:46:20.830 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 17' to topic='batch.t'
+16:46:20.830 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 18' to topic='batch.t'
+16:46:20.831 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 19' to topic='batch.t'
+16:46:20.855 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - start of batch receive
+16:46:20.856 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 1' with partition-offset='0-0'
+16:46:20.856 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 3' with partition-offset='0-1'
+16:46:20.856 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 5' with partition-offset='0-2'
+16:46:20.856 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 7' with partition-offset='0-3'
+16:46:20.856 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 9' with partition-offset='0-4'
+16:46:20.856 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 11' with partition-offset='0-5'
+16:46:20.856 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 13' with partition-offset='0-6'
+16:46:20.856 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 15' with partition-offset='0-7'
+16:46:20.856 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - end of batch receive
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - start of batch receive
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 0' with partition-offset='1-0'
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 2' with partition-offset='1-1'
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 4' with partition-offset='1-2'
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 6' with partition-offset='1-3'
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 8' with partition-offset='1-4'
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 10' with partition-offset='1-5'
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 12' with partition-offset='1-6'
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 14' with partition-offset='1-7'
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 16' with partition-offset='1-8'
+16:46:20.861 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 18' with partition-offset='1-9'
+16:46:20.862 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - end of batch receive
+16:46:20.862 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - start of batch receive
+16:46:20.862 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 17' with partition-offset='0-8'
+16:46:20.862 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - received message='message 19' with partition-offset='0-9'
+16:46:20.862 [batch-listener-0-C-1] INFO  c.c.kafka.consumer.Receiver - end of batch receive
+16:46:22.857 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.168 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
 
 Results :
 
@@ -293,9 +295,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 40.044 s
-[INFO] Finished at: 2017-04-19T20:41:22+02:00
-[INFO] Final Memory: 16M/226M
+[INFO] Total time: 12.360 s
+[INFO] Finished at: 2017-07-14T16:46:23+02:00
+[INFO] Final Memory: 27M/218M
 [INFO] ------------------------------------------------------------------------
 ```
 
