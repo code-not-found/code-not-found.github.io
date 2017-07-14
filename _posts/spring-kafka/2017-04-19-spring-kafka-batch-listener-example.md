@@ -15,8 +15,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-
-Starting with version 1.1 of Spring Kafka, `@KafkaListener` methods can be configured to receive the entire batch of consumer records received from the consumer poll. The following example shows how to setup a batch listener using Spring Kafka, Spring Boot and Maven.
+Starting with version 1.1 of Spring Kafka, `@KafkaListener` methods can be configured to receive the entire batch of consumer records received from the consumer poll. The following example shows how to setup a batch listener using Spring Kafka, Spring Boot, and Maven.
 
 # General Project Setup
 
@@ -28,13 +27,13 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The general project setup and Sender configuration is identical to a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html). As such we won't go into detail on how these are setup.
+The general project and Sender configuration are identical to a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html). As such we won't go into detail on how these are setup.
 
 # Configuring a Batch Listener
 
 Enabling batch receiving of messages can be achieved by setting the `batchListener` property. This is done by calling the `setBatchListener()` method on the listener container factory (`ConcurrentKafkaListenerContainerFactory` in this example) with a value `true` as shown below.
 
-By default the number of records received in each batch are dynamically calculated. By setting the <var>'MAX_POLL_RECORDS_CONFIG'</var> property on the `ConsumerConfig` we can set an upper limit. For this example we define a maximum of 10 messages to be returned per poll.
+By default, the number of records received in each batch is dynamically calculated. By setting the <var>'MAX_POLL_RECORDS_CONFIG'</var> property on the `ConsumerConfig` we can set an upper limit. For this example, we define a maximum of 10 messages to be returned per poll.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -98,7 +97,7 @@ public class ReceiverConfig {
 
 The `receive()` method of the `Receiver` listener POJO needs to be updated to receive a `List` of payloads (in this example these are simple `String` objects). Alternatively [a List of Message&lt;?&gt; or ConsumerRecord&lt;?, ?&gt; objects can be configured](http://docs.spring.io/spring-kafka/docs/1.2.0.RELEASE/reference/html/_reference.html#__kafkalistener_annotation).
 
-For logging purpose we also add the partition and offset headers of each message. These headers are also available in a `List` and map to the received messages based on the index within the list.
+For logging purpose, we also add the partition and offset headers of each message. These headers are also available in a `List` and map to the received messages based on the index within the list.
 
 The `CountDownLatch` value is increased so that the included unit test case can send out a batch of 20 messages.
 
@@ -148,7 +147,7 @@ public class Receiver {
 
 The `SpringKafkaApplicationTest` test case starts an [embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) using a JUnit `ClassRule`. Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
-The `testReceiver()` method uses a for loop to send out as many messages as were configured on the `CountDownLatch` in the `Receiver`. The result is that our listener starts receiving batches of message from the Kafka broker partitions (2 partitions are created by default on the embedded broker).
+The `testReceiver()` method uses a for loop to send out as many messages as were configured on the `CountDownLatch` in the `Receiver`. The result is that our listener starts receiving batches of messages from the Kafka broker partitions (2 partitions are created by default on the embedded broker).
 
 ``` java
 package com.codenotfound.kafka;
@@ -220,7 +219,7 @@ public class SpringKafkaApplicationTest {
 }
 ```
 
-Run the test case by entering following Maven command at the command prompt: 
+Run the test case by entering following Maven command at the command prompt:
 
 ``` plaintext
 mvn test
