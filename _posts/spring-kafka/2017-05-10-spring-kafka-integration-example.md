@@ -433,9 +433,9 @@ Maven will do the needed and the outcome of the test should show 10 messages bei
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.3.RELEASE)
+ :: Spring Boot ::        (v1.5.4.RELEASE)
 
-08:15:06.232 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - Starting SpringKafkaIntegrationApplicationTest on cnf-pc with PID 4872 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-integration-helloworld)
+08:15:06.232 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - Starting SpringKafkaIntegrationApplicationTest on cnf-pc with PID 4872 (started by CodeNotFound in c:\codenotfound\spring-kafka\spring-kafka-integration-helloworld)
 08:15:06.233 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - No active profile set, falling back to default profiles: default
 08:15:07.454 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - Started SpringKafkaIntegrationApplicationTest in 1.505 seconds (JVM running for 5.936)
 08:15:07.639 [main] INFO  c.c.k.i.SpringKafkaIntegrationApplicationTest - sending 10 messages

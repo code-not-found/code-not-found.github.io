@@ -236,7 +236,7 @@ The result should be 20 message that get sent and received from a <var>'batch.t'
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.4.RELEASE)
 
-16:46:18.654 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 3636 (started by CodeNotFound in c:\blogs\codenotfound\code\spring-kafka\spring-kafka-batch-listener)
+16:46:18.654 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 3636 (started by CodeNotFound in c:\codenotfound\spring-kafka\spring-kafka-batch-listener)
 16:46:18.655 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
 16:46:19.344 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.995 seconds (JVM running for 5.206)
 16:46:20.774 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='message 0' to topic='batch.t'
