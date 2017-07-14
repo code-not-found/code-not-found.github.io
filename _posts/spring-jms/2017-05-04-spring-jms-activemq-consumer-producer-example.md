@@ -27,10 +27,10 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 {: .notice--primary}
 
 Tools used:
-* ActiveMQ 5.14
-* Spring JMS 4.3
-* Spring Boot 1.5
-* Maven 3.5
+  * ActiveMQ 5.14
+  * Spring JMS 4.3
+  * Spring Boot 1.5
+  * Maven 3.5
 
 We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter-activemq` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters).
 
