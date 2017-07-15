@@ -17,25 +17,25 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Spring Web Services](http://projects.spring.io/spring-ws/), contrary to a framework like for example [Apache CXF](http://cxf.apache.org/), does not provide out-of-the box logging of HTTP headers. Reason for this is that Spring-WS tries to be transport-agnostic and as such only ships with [logging at SOAP message level](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#logging).
+[Spring Web Services](http://projects.spring.io/spring-ws/){:target="_blank"}, contrary to a framework like for example [Apache CXF](http://cxf.apache.org/){:target="_blank"}, does not provide out-of-the box logging of HTTP headers. Reason for this is that Spring-WS tries to be transport-agnostic and as such only ships with [logging at SOAP message level](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#logging){:target="_blank"}.
 
 It is however still possible to log the client and server HTTP headers by creating a custom `Interceptor` which offers the possibility to add common pre- and postprocessing behavior without the need of modifying the core payload handling code.
 
 The following example shows how to log the HTTP headers of messages that are being sent/received using Spring-WS, Spring Boot and Maven.
 
-# General Project Setup
-
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
+
+# General Project Setup
 
 Tools used:
 * Spring-WS 2.4
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the project is based on a previous [Spring Web Services example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex).
+The setup of the project is based on a previous [Spring Web Services example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-In this example we will get access to the HTTP headers by using the `writeTo()` method of the `WebServiceMessage` interface. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream)).
+In this example we will get access to the HTTP headers by using the `writeTo()` method of the `WebServiceMessage` interface. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream){:target="_blank"}).
 
 So first thing to do is to extend the abstract `TransportOutputStream` class as there is no public implementation available that we could use. We implement the `addHeader()` method which writes a header that is being added to the `ByteArrayOutputStream`. In addition we also complete the `createOutputStream()` method with logic to create or reuse the class's `byteArrayOutputStream` variable.
 
@@ -303,9 +303,9 @@ The result is that both request and response messages are logged twice (once for
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.2.RELEASE)
+ :: Spring Boot ::        (v1.5.4.RELEASE)
 
-20:32:54.674 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 4924 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-log-http-headers)
+20:32:54.674 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 4924 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-log-http-headers)
 20:32:54.677 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
 20:32:57.076 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 2.719 seconds (JVM running for 3.38)
 20:32:57.178 [main] INFO  c.c.ws.interceptor.HttpLoggingUtils -
@@ -393,6 +393,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-I created this post based on a [StackOverFlow question and answer on logging outgoing HTTP requests using Spring-WS](http://stackoverflow.com/q/28380277/4201470).
+I created this post based on a [StackOverFlow question and answer](http://stackoverflow.com/q/28380277/4201470){:target="_blank"} on logging outgoing HTTP requests using Spring-WS.
 
 Hopefully it will help you out during the testing/debugging of your Spring-WS project.
