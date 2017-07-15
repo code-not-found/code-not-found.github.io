@@ -18,12 +18,12 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Apache Avro](https://avro.apache.org/docs/current/) is a data serialization system. It uses JSON for defining data types and protocols, and serializes data in a compact binary format. In the following tutorial we will configure, build and run an example in which we will send/receive an Avro message to/from Apache Kafka using Apache Avro, Spring Kafka, Spring Boot and Maven.
-
-# General Project Setup
+[Apache Avro](https://avro.apache.org/docs/current/){:target="_blank"} is a data serialization system. It uses JSON for defining data types/protocols and serializes data in a compact binary format. In the following tutorial, we will configure, build and run an example in which we will send/receive an Avro message to/from Apache Kafka using Apache Avro, Spring Kafka, Spring Boot and Maven.
 
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
+
+# General Project Setup
 
 Tools used:
 * Apache Avro 1.8
@@ -31,7 +31,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-Avro relies on schemas which are defined using JSON. Schemas are composed of primitive types. For this example we will use [the 'User' schema from the Apache Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema) as shown below. This schema is stored in the <var>user.avsc</var> file located under <var>src/main/resources/avro</var>.
+Avro relies on schemas composed of primitive types which are defined using JSON. For this example, we will use the <var>'User'</var> schema from the [Apache Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema){:target="_blank"} as shown below. This schema is stored in the <var>user.avsc</var> file located under <var>src/main/resources/avro</var>.
 
 ``` json
 {"namespace": "example.avro",
@@ -45,7 +45,7 @@ Avro relies on schemas which are defined using JSON. Schemas are composed of pri
 }
 ```
 
-Avro ships with code generation which allows us to automatically create Java classes based on the above defined <var>'User'</var> schema. Once we have generated the relevant classes, there is no need to use the schema directly in our program. The classes can be generated using the <var>avro-tools.jar</var> or via the [Avro Maven plugin](https://mvnrepository.com/artifact/org.apache.avro/avro-maven-plugin), we will use the latter in this example.
+Avro ships with code generation which allows us to automatically create Java classes based on the above defined <var>'User'</var> schema. Once we have generated the relevant classes, there is no need to use the schema directly in our program. The classes can be generated using the <var>avro-tools.jar</var> or via the [Avro Maven plugin](https://mvnrepository.com/artifact/org.apache.avro/avro-maven-plugin){:target="_blank"}, we will use the latter in this example.
 
 We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) and add the `avro` dependency to the Maven POM file. In addition we configure the `avro-maven-plugin` to run the <var>'schema'</var> goal on all schema's that are found in the <var>/src/main/resources/avro/</var> location as shown below.
 
@@ -66,13 +66,13 @@ We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spri
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.2.RELEASE</version>
+    <version>1.5.4.RELEASE</version>
   </parent>
 
   <properties>
     <java.version>1.8</java.version>
 
-    <spring-kafka.version>1.2.0.RELEASE</spring-kafka.version>
+    <spring-kafka.version>1.2.2.RELEASE</spring-kafka.version>
     <avro.version>1.8.1</avro.version>
   </properties>
 
@@ -153,9 +153,9 @@ This results in the generation of a `User` class which contains the schema and a
 
 Kafka stores and transports `Byte` arrays in its topics. But as we are working with Avro objects we need to transform to/from these `Byte` arrays. Before version 0.9.0.0, the Kafka Java API used implementations of `Encoder`/`Decoder` interfaces to handle transformations but these have been replaced by `Serializer`/`Deserializer` interface implementations in the new API.
 
-> Kafka ships with a number of [built in (de)serializers](https://kafka.apache.org/0102/javadoc/org/apache/kafka/common/serialization/Serializer.html) but an Avro one is not included.
+> Kafka ships with a number of [built in (de)serializers](https://kafka.apache.org/0102/javadoc/org/apache/kafka/common/serialization/Serializer.html){:target="_blank"} but an Avro one is not included.
 
-To tackle this we will create an `AvroSerializer` class that implements the `Serializer` interface specifically for Avro objects. We then implement the `serialize()` method which takes as input a topic name and a data object which in our case is an Avro object that extends `SpecificRecordBase`. The method [serializes the Avro object to a byte array](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray) and returns the result.
+To tackle this we will create an `AvroSerializer` class that implements the `Serializer` interface specifically for Avro objects. We then implement the `serialize()` method which takes as input a topic name and a data object which in our case is an Avro object that extends `SpecificRecordBase`. The method [serializes the Avro object to a byte array](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Serializingtoabytearray){:target="_blank"} and returns the result.
 
 ``` java
 package com.codenotfound.kafka.serializer;
@@ -221,7 +221,7 @@ public class AvroSerializer<T extends SpecificRecordBase> implements Serializer<
 }
 ```
 
-Now we need to change the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting the <var>'VALUE_SERIALIZER_CLASS_CONFIG'</var> property to the `AvroSerializer` class. In addition we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
+Now we need to change the `SenderConfig` to start using our custom `Serializer` implementation. This is done by setting the <var>'VALUE_SERIALIZER_CLASS_CONFIG'</var> property to the `AvroSerializer` class. In addition, we change the `ProducerFactory` and `KafkaTemplate` generic type so that it specifies `User` instead of `String`.
 
 ``` java
 package com.codenotfound.kafka.producer;
@@ -309,7 +309,7 @@ public class Sender {
 
 # Consuming Avro Messages from a Kafka Topic
 
-Received messages need to be deserialized back to the Avro format. To achieve this we create an `AvroDeserializer` class that implements the `Deserializer` interface. The `deserialize()` method takes as input a topic name and [a Byte array which is decoded back into an Avro object](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Deserializingfromabytearray). The schema that needs to be used for the decoding is retrieved from the `targetType` class parameter that needs to be passed as an argument to the `AvroDeserializer` constructor.
+Received messages need to be deserialized back to the Avro format. To achieve this we create an `AvroDeserializer` class that implements the `Deserializer` interface. The `deserialize()` method takes as input a topic name and [a Byte array which is decoded back into an Avro object](https://cwiki.apache.org/confluence/display/AVRO/FAQ#FAQ-Deserializingfromabytearray){:target="_blank"}. The schema that needs to be used for the decoding is retrieved from the `targetType` class parameter that needs to be passed as an argument to the `AvroDeserializer` constructor.
 
 ``` java
 package com.codenotfound.kafka.serializer;
@@ -474,7 +474,7 @@ public class Receiver {
 
 The `SpringKafkaApplicationTest` test case demonstrates the above sample code. [An embedded Kafka and ZooKeeper server are automatically started]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) using a JUnit ClassRule. Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
-In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>'avro.t'</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
+In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>'avro.t'</var> topic. Finally, the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
 ``` java
 package com.codenotfound.kafka;
@@ -561,9 +561,9 @@ Maven will download the needed dependencies, compile the code and run the unit t
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.2.RELEASE)
+ :: Spring Boot ::        (v1.5.4.RELEASE)
 
-08:36:56.175 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 700 (started by CodeNotFound in c:\code\st\spring-kafka\spring-kafka-avro)
+08:36:56.175 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 700 (started by CodeNotFound in c:\codenotfound\spring-kafka\spring-kafka-avro)
 08:36:56.175 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
 08:36:56.889 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 1.068 seconds (JVM running for 5.293)
 08:36:58.223 [main] INFO  c.codenotfound.kafka.producer.Sender - sending user='{"name": "John Doe", "favorite_number": null, "favorite_color": "green"}'
@@ -592,6 +592,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the example on how to send/receive Avro messages using Spring Kafka.
+This concludes the example of how to send/receive Avro messages using Spring Kafka.
 
 I created this blog post based on a user request so if you found this tutorial useful or would like to see another variation, let me know.
