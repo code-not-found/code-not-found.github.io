@@ -106,11 +106,11 @@ As Spring Web Services is **contract first only**, we need to start from a contr
 </wsdl:definitions>
 ```
 
-We will be building and running our example using [Apache Maven](https://maven.apache.org/). Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
+We will be building and running our example using [Apache Maven](https://maven.apache.org/){:target="_blank"}. Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
 
-In order to expose the Hello World service endpoint, we will use the [Spring Boot](https://projects.spring.io/spring-boot/) project that comes with an embedded Apache Tomcat server. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) are used which are a set of convenient dependency descriptors that you can include in your application.
+In order to expose the Hello World service endpoint, we will use the [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} project that comes with an embedded Apache Tomcat server. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application.
 
-The `spring-boot-starter-web-services` dependency includes the needed dependencies for using Spring Web Services. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/), [Hamcrest](http://hamcrest.org/JavaHamcrest/) and [Mockito](http://site.mockito.org/).
+The `spring-boot-starter-web-services` dependency includes the needed dependencies for using Spring Web Services. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
@@ -187,7 +187,7 @@ In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin 
 </project>
 ```
 
-In order to directly use the <var>'person'</var> and <var>'greeting'</var> elements (defined in the <var>'types'</var> section of the Hello World WSDL) in our Java code, we will use [JAXB](http://www.oracle.com/technetwork/articles/javase/index-140168.html) to generate the corresponding Java classes. The above POM file configures the [maven-jaxb2-plugin](https://java.net/projects/maven-jaxb2-plugin/pages/Home) that will handle the generation.
+In order to directly use the <var>'person'</var> and <var>'greeting'</var> elements (defined in the <var>'types'</var> section of the Hello World WSDL) in our Java code, we will use [JAXB](http://www.oracle.com/technetwork/articles/javase/index-140168.html){:target="_blank"} to generate the corresponding Java classes. The above POM file configures the [maven-jaxb2-plugin](https://java.net/projects/maven-jaxb2-plugin/pages/Home){:target="_blank"} that will handle the generation.
 
 The plugin will look into the defined <var>'&lt;schemaDirectory&gt;'</var> in order to find any WSDL files for which it needs to generate the Java classes. In order to trigger the generation via Maven, executed following command:
 
@@ -201,7 +201,7 @@ This results in a number of generated classes amongst which the `Person` and `Gr
     <img src="{{ site.url }}/assets/images/spring-ws/hello-world-jaxb-generated-java-classes.png" alt="helloworld jaxb generated java classes">
 </figure>
 
-We start by creating an `SpringWsApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap the application, starting Spring. For more information on Spring Boot, we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
+We start by creating an `SpringWsApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap the application, starting Spring. For more information on Spring Boot, we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
 
 ``` java
 package com.codenotfound.ws;
@@ -220,17 +220,17 @@ public class SpringWsApplication {
 
 # Creating the Endpoint (Provider)
 
-The server-side of Spring-WS is designed around a central class called `MessageDispatcher` that dispatches incoming XML messages to endpoints. For more detailed information check out the [Spring Web Services reference documentation on the MessageDispatcher](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e780).
+The server-side of Spring-WS is designed around a central class called `MessageDispatcher` that dispatches incoming XML messages to endpoints. For more detailed information check out the [Spring Web Services reference documentation on the MessageDispatcher](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e780){:target="_blank"}.
 
-Spring Web Services supports multiple transport protocols. The most common is the HTTP transport, for which a custom `MessageDispatcherServlet` servlet is supplied. This is a standard `Servlet` which extends from the standard Spring Web `DispatcherServlet` ([=central dispatcher for HTTP request handlers/controllers](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html)), and wraps a `MessageDispatcher`.
+Spring Web Services supports multiple transport protocols. The most common is the HTTP transport, for which a custom `MessageDispatcherServlet` servlet is supplied. This is a standard `Servlet` which extends from the standard Spring Web `DispatcherServlet` ([=central dispatcher for HTTP request handlers/controllers](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html){:target="_blank"}), and wraps a `MessageDispatcher`.
 
 > In other words: the `MessageDispatcherServlet` combines the attributes of the `MessageDispatcher` and `DispatcherServlet` and as a result allows the handling of XML messages over HTTP.
 
-In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>'messageDispatcherServlet'</var>, it does [not replace Spring Boot's default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet).
+In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>'messageDispatcherServlet'</var>, it does [not replace Spring Boot's default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet){:target="_blank"}.
 
 The servlet mapping URI pattern on the `ServletRegistrationBean` is set to "<kbd>/codenotfound/ws/*</kbd>". The web container will use this path to map incoming HTTP requests to the servlet.
 
-The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified Hello World WSDL file. The URL location at which this WSDL is available is determined by it's `Bean` name in combination with the URI mapping of the `MessageDispatcherServlet`. For the example below this is: [host]="<kbd>http://localhost:9090</kbd>"+[servlet mapping uri]="<kbd>/codenotfound/ws/</kbd>"+[WsdlDefinition bean name]="<kbd>helloworld</kbd>"+[WSDL postfix]="<kbd>.wsdl</kbd>" or [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl).
+The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified Hello World WSDL file. The URL location at which this WSDL is available is determined by it's `Bean` name in combination with the URI mapping of the `MessageDispatcherServlet`. For the example below this is: [host]="<kbd>http://localhost:9090</kbd>"+[servlet mapping uri]="<kbd>/codenotfound/ws/</kbd>"+[WsdlDefinition bean name]="<kbd>helloworld</kbd>"+[WSDL postfix]="<kbd>.wsdl</kbd>" or [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl){:target="_blank"}.
 
 To enable the support for `@Endpoint` annotation that we will use in the next section we need to annotate our configuration class with `@EnableWs`.
 
@@ -368,7 +368,7 @@ The client code is specified in the `HelloWorldClient` class. The sayHello metho
 
 The auto-wired `WebServiceTemplate` is used to marshal and send a person XML request towards the Hello World service. The result is unmarshalled to a `Greeting` object which is logged.
 
-The `@Component` annotation will cause Spring to automatically import this bean into the container if automatic component scanning is enabled (adding the `@SpringBootApplication` annotation to the main `SpringWsApplication` class [is equivalent](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html) to using `@ComponentScan`).
+The `@Component` annotation will cause Spring to automatically import this bean into the container if automatic component scanning is enabled (adding the `@SpringBootApplication` annotation to the main `SpringWsApplication` class [is equivalent](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html){:target="_blank"} to using `@ComponentScan`).
 
 ``` java
 package com.codenotfound.ws.client;
@@ -414,7 +414,7 @@ public class HelloWorldClient {
 
 We will create a basic unit test case in which the above client is used to send a request to the Hello World endpoint. We then verify if the response is equal to the expected Hello World greeting.
 
-The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced with Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications), are used to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
+The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced with Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications){:target="_blank"}, are used to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
 
 By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the <var>'server.port'</var> property defined in the <var>application.properties</var> file.
 
