@@ -148,11 +148,11 @@ public class TicketAgentClient {
 
 # Endpoint @SoapAction Annotation
 
-The [endpoint mapping](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#server-endpoint-mapping) is responsible for mapping incoming messages to appropriate endpoints. The `@SoapAction` annotation marks methods with a particular SOAP Action. Whenever a message comes in which has this SOAPAction header, the method will be invoked.
+The [endpoint mapping](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#server-endpoint-mapping){:target="_blank"} is responsible for mapping incoming messages to appropriate endpoints. The `@SoapAction` annotation marks methods with a particular SOAP Action. Whenever a message comes in which has this SOAPAction header, the method will be invoked.
 
 In this example instead of the `@PayloadRoot` mapping, we will use `@SoapAction` to trigger the `listFlights()` method of our `TicketAgentEndpoint` class. The annotation takes as `value` the SOAPAction string.
 
-The value of the SOAPAction header can be accessed within the endpoint logic by calling the `getSoapAction()` method on the request `SoapMessage`. Just add the `MessageContext` as input parameter in order to retrieve it.
+The value of the SOAPAction header can be accessed within the endpoint logic by calling the `getSoapAction()` method on the request `SoapMessage`. Just add the `MessageContext` as an input parameter in order to retrieve it.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -203,7 +203,7 @@ public class TicketAgentEndpoint {
 
 Now that we have setup the SOAPAction in both client and server let's write some unit test cases to test the correct working.
 
-For the client we will use a `MockWebServiceServer` in combination with a custom `SoapActionMatcher` in order to verify that the SOAPAction header has been set. Based on following [Stack Overflow example](http://stackoverflow.com/a/31202927/4201470) we implement the [RequestMatcher interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#client-test-request-matcher) and assert that an expected SOAPAction is present.
+For the client, we will use a `MockWebServiceServer` in combination with a custom `SoapActionMatcher` in order to verify that the SOAPAction header has been set. Based on following [Stack Overflow example](http://stackoverflow.com/a/31202927/4201470){:target="_blank"} we implement the [RequestMatcher interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#client-test-request-matcher){:target="_blank"} and assert that an expected SOAPAction is present.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -237,7 +237,7 @@ public class SoapActionMatcher implements RequestMatcher {
 }
 ```
 
-In the test case we add the `SoapActionMatcher` as expected match to the `MockWebServiceServer` and check the result by calling the `verify()` method. 
+In the test case, we add the `SoapActionMatcher` as expected match to the `MockWebServiceServer` and check the result by calling the `verify()` method. 
 
 ``` java
 package com.codenotfound.ws.client;
@@ -300,7 +300,7 @@ public class TicketAgentClientTest {
 }
 ```
 
-The endpoint setup is tested by first creating a custom `SoapActionCreator` which implements the [RequestCreator interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#server-test-request-creator). This is done to provide a `WebServiceMessage` on which the SOAPAction has been set as this is not the case with the default request creators.
+The endpoint setup is tested by first creating a custom `SoapActionCreator` which implements the [RequestCreator interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#server-test-request-creator){:target="_blank"}. This is done to provide a `WebServiceMessage` on which the SOAPAction has been set as this is not the case with the default request creators.
 
 Simply create the message using the supplied XML `Source` and then set the SOAPAction using the `setSoapAction()` method.
 
@@ -342,7 +342,7 @@ public class SoapActionCreator implements RequestCreator {
 }
 ```
 
-The test calls the `sendRequest()` of the `MockWebServiceClient` with the custom `SoapActionCreator` which results in a a request message for the endpoint to consume. If the correct SOAPAction is present the request is mapped to the endpoint and a response is returned.
+The test calls the `sendRequest()` of the `MockWebServiceClient` with the custom `SoapActionCreator` which results in a request message for the endpoint to consume. If the correct SOAPAction is present the request is mapped to the endpoint and a response is returned.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -408,7 +408,7 @@ The result should be a successful run as shown below. Note that a log statement 
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.2.RELEASE)
+ :: Spring Boot ::        (v1.5.4.RELEASE)
 
 11:19:34.091 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on cnf-pc with PID 4524 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-soapaction-header)
 11:19:34.093 [main] INFO  c.c.ws.client.TicketAgentClientTest - No active profile set, falling back to default profiles: default
