@@ -113,7 +113,7 @@ public class HttpLoggingUtils extends TransformerObjectSupport {
 
 # Adding Client HTTP Header Logging
 
-We start with the client were we create a `CustomClientInterceptor` by implementing the `ClientInterceptor` interface. We call the `logMessage()` method of our `HttpLoggingUtils` utility class in the `handleRequest()` and `handleResponse()` methods. These are responsible for processing the outgoing request message and incoming response message respectively.
+We start with the client were we create a `LogHttpHeaderClientInterceptor` by implementing the `ClientInterceptor` interface. We call the `logMessage()` method of our `HttpLoggingUtils` utility class in the `handleRequest()` and `handleResponse()` methods. These are responsible for processing the outgoing request message and incoming response message respectively.
 
 > Note that `true` needs to be returned on each handle method otherwise the processing is interrupted.
 
@@ -124,7 +124,7 @@ import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 
-public class CustomClientInterceptor implements ClientInterceptor {
+public class LogHttpHeaderClientInterceptor implements ClientInterceptor {
 
   @Override
   public void afterCompletion(MessageContext arg0, Exception arg1)
@@ -154,7 +154,7 @@ public class CustomClientInterceptor implements ClientInterceptor {
 }
 ```
 
-In order to enable the `CustomClientInterceptor` we define it on the `WebServiceTemplate`, using the `setInterceptors()` method.
+In order to enable the `LogHttpHeaderClientInterceptor` we define it on the `WebServiceTemplate`, using the `setInterceptors()` method.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -165,29 +165,29 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 
-import com.codenotfound.ws.interceptor.CustomClientInterceptor;
+import com.codenotfound.ws.interceptor.LogHttpHeaderClientInterceptor;
 
 @Configuration
 public class ClientConfig {
 
   @Bean
   Jaxb2Marshaller jaxb2Marshaller() {
-
     Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
     jaxb2Marshaller.setContextPath("org.example.ticketagent");
+
     return jaxb2Marshaller;
   }
 
   @Bean
   public WebServiceTemplate webServiceTemplate() {
-
     WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
     webServiceTemplate.setMarshaller(jaxb2Marshaller());
     webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
     webServiceTemplate.setDefaultUri("http://localhost:9090/codenotfound/ws/ticketagent");
 
-    // register the CustomEndpointInterceptor
-    ClientInterceptor[] interceptors = new ClientInterceptor[] {new CustomClientInterceptor()};
+    // register the LogHttpHeaderClientInterceptor
+    ClientInterceptor[] interceptors =
+        new ClientInterceptor[] {new LogHttpHeaderClientInterceptor()};
     webServiceTemplate.setInterceptors(interceptors);
 
     return webServiceTemplate;
@@ -197,7 +197,7 @@ public class ClientConfig {
 
 # Adding Server HTTP Header Logging
 
-For the server-side we create an `CustomEndpointInterceptor` which implements the `EndpointInterceptor` interface. We add the `logMessage()` method to the request and response processing flows respectively.
+For the server-side we create an `LogHttpHeaderEndpointInterceptor` which implements the `EndpointInterceptor` interface. We add the `logMessage()` method to the request and response processing flows respectively.
 
 > Note that `true` needs to be returned on each handle method otherwise the processing is interrupted. 
 
@@ -207,7 +207,7 @@ package com.codenotfound.ws.interceptor;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.server.EndpointInterceptor;
 
-public class CustomEndpointInterceptor implements EndpointInterceptor {
+public class LogHttpHeaderEndpointInterceptor implements EndpointInterceptor {
 
   @Override
   public void afterCompletion(MessageContext arg0, Object arg1, Exception arg2) throws Exception {
@@ -236,7 +236,7 @@ public class CustomEndpointInterceptor implements EndpointInterceptor {
 }
 ```
 
-Now that our custom `EndpointInterceptor` is ready we need to tell Spring WS to use it. We do this by overriding the `addInterceptors()` method of the `WsConfigurerAdapter`. Simply add a new instance of the `CustomEndpointInterceptor` to the `interceptors` list in order to activate it.
+Now that our custom `EndpointInterceptor` is ready we need to tell Spring WS to use it. We do this by overriding the `addInterceptors()` method of the `WsConfigurerAdapter`. Simply add a new instance of the `LogHttpHeaderEndpointInterceptor` to the `interceptors` list in order to activate it.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -281,7 +281,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
   @Override
   public void addInterceptors(List<EndpointInterceptor> interceptors) {
     // register the CustomEndpointInterceptor
-    interceptors.add(new CustomEndpointInterceptor());
+    interceptors.add(new LogHttpHeaderEndpointInterceptor());
   }
 }
 ```
