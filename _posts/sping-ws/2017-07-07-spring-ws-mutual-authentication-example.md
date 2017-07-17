@@ -17,19 +17,20 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-[Mutual authentication or two-way authentication](https://en.wikipedia.org/wiki/Mutual_authentication){:target="_blank"} refers to **two parties authenticating each other at the same time**. In other words, the client must prove its identity to the server, and the server must prove its identity to the client before any traffic is sent over the client-to-server connection.
+[Mutual authentication or two-way authentication](https://en.wikipedia.org/wiki/Mutual_authentication){:target="_blank"} refers to **two parties authenticating each other** at the same time. In other words, the client must prove its identity to the server, and the server must prove its identity to the client before any traffic is sent over the client-to-server connection.
 
 This example shows how to configure both client and server so that mutual authentication using certificates is enabled on a web service using Spring-WS, Spring Boot, and Maven.
 
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
 
+# General Project Setup
+
 Tools used:
 * Spring-WS 2.4
+* Spring Security 4.2
 * Spring Boot 1.5
 * Maven 3.5
-
-# General Project Setup
 
 The setup of the project is based on a previous [Spring WS HTTPS example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html) in which we configured the server authentication part. We will extend this setup so that the client also authenticates itself towards the server.
 

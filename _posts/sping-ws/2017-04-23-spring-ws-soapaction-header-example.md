@@ -130,7 +130,6 @@ public class TicketAgentClient {
 
   @SuppressWarnings("unchecked")
   public List<BigInteger> listFlights() {
-
     ObjectFactory factory = new ObjectFactory();
     TListFlights tListFlights = factory.createTListFlights();
 
@@ -184,7 +183,6 @@ public class TicketAgentEndpoint {
   @ResponsePayload
   public JAXBElement<TFlightsResponse> listFlights(
       @RequestPayload JAXBElement<TListFlights> request, MessageContext messageContext) {
-
     // access the SOAPAction value
     WebServiceMessage webServiceMessage = messageContext.getRequest();
     SoapMessage soapMessage = (SoapMessage) webServiceMessage;
