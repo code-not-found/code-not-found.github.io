@@ -219,7 +219,7 @@ server:
 
 # Testing Spring WS Two Way TLS (SSL)
 
-In order to test the above setup we can trigger the existing `SpringWsApplicationTests` unit test case by executing following Maven command.
+In order to test the above setup, we can trigger the existing `SpringWsApplicationTests` unit test case by executing following Maven command.
 
 ``` plaintext
 mvn test
@@ -236,10 +236,10 @@ This triggers a test run which validates that mutual authentication between clie
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.4.RELEASE)
 
-08:21:47.020 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on codenotfound-pc with PID 6745 (started by CodeNotFound in /home/codenotfound/spring-ws/spring-ws-mutual-authentication)
-08:21:48.067 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
-08:23:54.364 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 157.561 seconds (JVM running for 266.271)
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 182.734 sec - in com.codenotfound.ws.SpringWsApplicationTests
+07:46:17.288 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 1164 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-mutual-authentication)
+07:46:17.291 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
+07:46:20.176 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.18 seconds (JVM running for 3.827)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.59 sec - in com.codenotfound.ws.SpringWsApplicationTests
 
 Results :
 
@@ -248,9 +248,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 05:39 min
-[INFO] Finished at: 2017-07-08T08:24:17+02:00
-[INFO] Final Memory: 20M/126M
+[INFO] Total time: 6.833 s
+[INFO] Finished at: 2017-07-17T07:46:20+02:00
+[INFO] Final Memory: 33M/295M
 [INFO] ------------------------------------------------------------------------
 ```
 
