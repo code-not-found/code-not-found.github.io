@@ -3,14 +3,14 @@ title: "Spring for Apache Kafka"
 permalink: /spring-kafka/
 excerpt: "Step-by-step tutorials on Spring Kafka"
 date: 2017-04-15
-modified: 2017-04-15
+modified: 2017-07-15
 ---
 
 <figure>
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-The [Spring for Apache Kafka project](https://projects.spring.io/spring-kafka/){:target="_blank"} applies core Spring concepts to the development of Kafka-based messaging solutions. The following tutorials illustrate different aspects of the framework using easy to follow code samples. 
+The [Spring for Apache Kafka project](https://projects.spring.io/spring-kafka/){:target="_blank"} applies core Spring concepts to the development of Kafka-based messaging solutions. The following tutorials illustrate different aspects of the framework using easy to follow code samples.
 
 ## Quick Start
 

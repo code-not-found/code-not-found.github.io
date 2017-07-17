@@ -1,9 +1,9 @@
 ---
 title: "Spring Web Services"
 permalink: /spring-ws/
-excerpt: "Step-by-step tutorials on Spring WS"
+excerpt: "Step-by-step tutorials on Spring-WS"
 date: 2017-04-18
-modified: 2017-07-08
+modified: 2017-07-15
 ---
 
 <figure>
@@ -19,6 +19,7 @@ modified: 2017-07-08
 ## Headers
 
 * [Spring WS - SOAPAction Header Example]({{ site.url }}/2017/04/spring-ws-soapaction-header-example.html)
+* [Spring WS - SOAP Header Example]({{ site.url }}/2017/07/spring-ws-soap-header-example.html)
 
 ## Security
 
