@@ -17,21 +17,21 @@ published: true
 
 The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497){:target="_blank"} is an optional sub-element of the SOAP envelope. It is used to pass application related information that is processed by SOAP nodes along the message flow.
 
-The below example details how a web service client can set a SOAP header. It also illustrates how a server endpoint can get the SOAP header from the received request. Both client and server are realized using Spring-WS, Spring Boot, and Maven.
+The below example details how a web service client can set a SOAP header on an outgoing request. It also illustrates how a server endpoint can then get the SOAP header from an incoming request. Both client and server are realized using Spring-WS, Spring Boot, and Maven.
 
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
+
+# General Project Setup
 
 Tools used:
 * Spring-WS 2.4
 * Spring Boot 1.5
 * Maven 3.5
 
-# General Project Setup
-
 The setup of the project is based on a previous [Spring SOAP web service example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-As the sample ticketing WSDL does not contain any SOAP header we will add an <var>'isGoldClubMember'</var> element in the context of this tutorial.
+As the sample ticketing WSDL does not contain any SOAP header we will add an <var>'clientId'</var> element in the context of this tutorial.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -64,7 +64,7 @@ As the sample ticketing WSDL does not contain any SOAP header we will add an <va
       <xs:element name="listFlightsSoapHeaders" type="xsTicketAgent:ListFlightsSoapHeaders" />
       <xs:complexType name="ListFlightsSoapHeaders">
         <xs:sequence>
-          <xs:element name="isGoldClubMember" type="xs:boolean" />
+          <xs:element name="clientId" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
     </xs:schema>
@@ -120,7 +120,7 @@ In order to set the SOAP header on the outgoing request, we need to get hold of 
 
 The `SoapMessage` in turn can be obtained by casting the `WebServiceMessage` from the [WebServiceMessageCallback](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#d5e1912){:target="_blank"} interface that gives access to the message after it has been created, but before it is sent.
 
-As a final step, create the different SOAP headers using the corresponding JAXB objects and marshal them into the `SOAPHeader` as shown below.
+As a final step, create the SOAP header using the corresponding JAXB object and marshal it into the `SOAPHeader` as shown below.
 
 > Note that if JAXB objects are not available because the SOAP headers have not been specified in the WSDL, you can [manually add them](https://stackoverflow.com/a/20904164/4201470){:target="_blank"}.
 
@@ -177,7 +177,7 @@ public class TicketAgentClient {
               ObjectFactory factory = new ObjectFactory();
               ListFlightsSoapHeaders listFlightsSoapHeaders =
                   factory.createListFlightsSoapHeaders();
-              listFlightsSoapHeaders.setIsGoldClubMember(true);
+              listFlightsSoapHeaders.setClientId("abc123");
 
               JAXBElement<ListFlightsSoapHeaders> headers =
                   factory.createListFlightsSoapHeaders(listFlightsSoapHeaders);
@@ -209,7 +209,7 @@ In order to do this, the `@SoapHeader` annotation has a `value` element which ne
 
 > Note that it is also possible to specify the `SoapHeader` as a parameter of the handling method. You would then need to iterate over the available `SoapHeaderElement`(s) to get the one you need.
 
-From the `SoapHeaderElement` we obtain the `Source` which is unmarshalled into a `ListFlightsSoapHeaders` instance. In a next step, the `isIsGoldClubMember` value is retrieved and used in order to determine whether we return an extra flight in the response.
+From the `SoapHeaderElement` we obtain the `Source` which is unmarshalled into a `ListFlightsSoapHeaders` instance. In a next step, the `clientId` value is retrieved and used in order to determine whether we return an extra flight in the response.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -244,9 +244,7 @@ public class TicketAgentEndpoint {
   public JAXBElement<TFlightsResponse> listFlights(
       @RequestPayload JAXBElement<TListFlights> request, @SoapHeader(
           value = "{http://example.org/TicketAgent.xsd}listFlightsSoapHeaders") SoapHeaderElement soapHeaderElement) {
-
-    boolean isGoldClubMember = false;
-
+    String clientId = "unknown";
     try {
       // create an unmarshaller
       JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
@@ -259,7 +257,7 @@ public class TicketAgentEndpoint {
 
       // get the header values
       ListFlightsSoapHeaders requestSoapHeaders = headers.getValue();
-      isGoldClubMember = requestSoapHeaders.isIsGoldClubMember();
+      clientId = requestSoapHeaders.getClientId();
     } catch (Exception e) {
       LOGGER.error("error during unmarshalling of the SOAP headers", e);
     }
@@ -269,7 +267,7 @@ public class TicketAgentEndpoint {
     tFlightsResponse.getFlightNumber().add(BigInteger.valueOf(101));
 
     // add an extra flightNumber in the case of a GoldClubMember
-    if (isGoldClubMember) {
+    if ("abc123".equals(clientId)) {
       LOGGER.info("GoldClubMember found!");
       tFlightsResponse.getFlightNumber().add(BigInteger.valueOf(202));
     }
@@ -281,7 +279,7 @@ public class TicketAgentEndpoint {
 
 # Testing the SOAP Header
 
-Now that we are able to set and get a SOAP header in both client and server let's write some unit test cases to verify the correct working of the example.
+Now that we are able to set and get a SOAP header in both client and server, let's write some unit test cases to verify the correct working of the example.
 
 For the client, we will use a `MockWebServiceServer` in order to verify that the SOAP header has been set by the client. By configuring the `soapHeader()` method of the `RequestMatchers`, we expect the specified SOAP header to exist in the request message.
 
@@ -350,7 +348,7 @@ public class TicketAgentClientTest {
 }
 ```
 
-The endpoint setup is verified by creating a SOAP envelope request that contains the <var>'isGoldClubMember'</var> SOAP header with a value equals to `true`. The response should then contain a list with two flight numbers instead of one.
+The endpoint setup is verified by creating a SOAP envelope request that contains the <var>'clientId'</var> SOAP header with a value equals to <var>'abc123'</var>. The response should then contain a list with two flight numbers instead of one.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -423,13 +421,13 @@ The outcome should be a successful test run as shown below.
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.4.RELEASE)
 
-07:43:57.196 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on codenotfound-pc with PID 5042 (started by CodeNotFound in /home/codenotfound/spring-ws/spring-ws-soap-header)
-07:43:57.221 [main] INFO  c.c.ws.client.TicketAgentClientTest - No active profile set, falling back to default profiles: default
-07:44:07.546 [main] INFO  c.c.ws.client.TicketAgentClientTest - Started TicketAgentClientTest in 12.386 seconds (JVM running for 16.996)
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.361 sec - in com.codenotfound.ws.client.TicketAgentClientTest
+08:30:50.871 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on cnf-pc with PID 3692 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-soap-header)
+08:30:50.874 [main] INFO  c.c.ws.client.TicketAgentClientTest - No active profile set, falling back to default profiles: default
+08:30:52.758 [main] INFO  c.c.ws.client.TicketAgentClientTest - Started TicketAgentClientTest in 2.136 seconds (JVM running for 2.773)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.348 sec - in com.codenotfound.ws.client.TicketAgentClientTest
 Running com.codenotfound.ws.endpoint.TicketAgentEndpointTest
-07:44:09.423 [main] INFO  c.c.ws.endpoint.TicketAgentEndpoint - GoldClubMember found!
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.349 sec - in com.codenotfound.ws.endpoint.TicketAgentEndpointTest
+08:30:52.953 [main] INFO  c.c.ws.endpoint.TicketAgentEndpoint - GoldClubMember found!
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 sec - in com.codenotfound.ws.endpoint.TicketAgentEndpointTest
 
 Results :
 
@@ -438,9 +436,9 @@ Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 38.697 s
-[INFO] Finished at: 2017-07-09T07:44:09+02:00
-[INFO] Final Memory: 30M/181M
+[INFO] Total time: 4.555 s
+[INFO] Finished at: 2017-07-17T08:30:52+02:00
+[INFO] Final Memory: 19M/220M
 [INFO] ------------------------------------------------------------------------
 ```
 
