@@ -254,7 +254,6 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
   @Bean
   public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
-
     MessageDispatcherServlet servlet = new MessageDispatcherServlet();
     servlet.setApplicationContext(applicationContext);
 
@@ -345,15 +344,14 @@ public class ClientConfig {
 
   @Bean
   Jaxb2Marshaller jaxb2Marshaller() {
-
     Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
     jaxb2Marshaller.setContextPath("com.codenotfound.types.helloworld");
+
     return jaxb2Marshaller;
   }
 
   @Bean
   public WebServiceTemplate webServiceTemplate() {
-
     WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
     webServiceTemplate.setMarshaller(jaxb2Marshaller());
     webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
@@ -392,7 +390,6 @@ public class HelloWorldClient {
   private WebServiceTemplate webServiceTemplate;
 
   public String sayHello(String firstName, String lastName) {
-
     ObjectFactory factory = new ObjectFactory();
     Person person = factory.createPerson();
 
