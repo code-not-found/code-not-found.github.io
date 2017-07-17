@@ -172,7 +172,7 @@ Finally, we move the three artifacts we have just generated: <var>client-trustst
 
 As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate` used by the client. The `@Value` annotation is used to inject the <var>'client.default-uri'</var> value from the application properties YAML file.
 
-There are two other values that are configured in our <var>application.yml</var> configuration file. These are are the location of the truststore JKS file and it's password as shown below.
+There are two other values that are configured in our <var>application.yml</var> configuration file. These are are the location of the truststore JKS file and its password as shown below.
 
 ``` yaml
 client:
