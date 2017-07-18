@@ -158,7 +158,6 @@ public class TicketAgentClient {
 
   @SuppressWarnings("unchecked")
   public List<BigInteger> listFlights() {
-
     ObjectFactory factory = new ObjectFactory();
     TListFlights tListFlights = factory.createTListFlights();
 
@@ -245,6 +244,7 @@ public class TicketAgentEndpoint {
       @RequestPayload JAXBElement<TListFlights> request, @SoapHeader(
           value = "{http://example.org/TicketAgent.xsd}listFlightsSoapHeaders") SoapHeaderElement soapHeaderElement) {
     String clientId = "unknown";
+
     try {
       // create an unmarshaller
       JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
@@ -266,9 +266,9 @@ public class TicketAgentEndpoint {
     TFlightsResponse tFlightsResponse = factory.createTFlightsResponse();
     tFlightsResponse.getFlightNumber().add(BigInteger.valueOf(101));
 
-    // add an extra flightNumber in the case of a GoldClubMember
+    // add an extra flightNumber in the case of a clientId == abc123
     if ("abc123".equals(clientId)) {
-      LOGGER.info("GoldClubMember found!");
+      LOGGER.info("clientId == abc123");
       tFlightsResponse.getFlightNumber().add(BigInteger.valueOf(202));
     }
 
@@ -388,9 +388,8 @@ public class TicketAgentEndpointTest {
         "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">"
             + "<SOAP-ENV:Header>"
             + "<ns3:listFlightsSoapHeaders xmlns:ns3=\"http://example.org/TicketAgent.xsd\">"
-            + "<isGoldClubMember>true</isGoldClubMember>"
-            + "<promotionalCode>ABC123</promotionalCode>" + "</ns3:listFlightsSoapHeaders>"
-            + "</SOAP-ENV:Header>" + "<SOAP-ENV:Body>"
+            + "<isGoldClubMember>true</isGoldClubMember>" + "<clientId>abc123</clientId>"
+            + "</ns3:listFlightsSoapHeaders>" + "</SOAP-ENV:Header>" + "<SOAP-ENV:Body>"
             + "<ns3:listFlightsRequest xmlns:ns3=\"http://example.org/TicketAgent.xsd\">"
             + "</ns3:listFlightsRequest>" + "</SOAP-ENV:Body>" + "</SOAP-ENV:Envelope>");
 
@@ -421,13 +420,13 @@ The outcome should be a successful test run as shown below.
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.4.RELEASE)
 
-08:30:50.871 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on cnf-pc with PID 3692 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-soap-header)
-08:30:50.874 [main] INFO  c.c.ws.client.TicketAgentClientTest - No active profile set, falling back to default profiles: default
-08:30:52.758 [main] INFO  c.c.ws.client.TicketAgentClientTest - Started TicketAgentClientTest in 2.136 seconds (JVM running for 2.773)
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.348 sec - in com.codenotfound.ws.client.TicketAgentClientTest
+10:49:22.426 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on cnf-pc with PID 4268 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-soap-header)
+10:49:22.429 [main] INFO  c.c.ws.client.TicketAgentClientTest - No active profile set, falling back to default profiles: default
+10:49:24.243 [main] INFO  c.c.ws.client.TicketAgentClientTest - Started TicketAgentClientTest in 2.071 seconds (JVM running for 2.716)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.301 sec - in com.codenotfound.ws.client.TicketAgentClientTest
 Running com.codenotfound.ws.endpoint.TicketAgentEndpointTest
-08:30:52.953 [main] INFO  c.c.ws.endpoint.TicketAgentEndpoint - GoldClubMember found!
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 sec - in com.codenotfound.ws.endpoint.TicketAgentEndpointTest
+10:49:24.460 [main] INFO  c.c.ws.endpoint.TicketAgentEndpoint - clientId == abc123
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.043 sec - in com.codenotfound.ws.endpoint.TicketAgentEndpointTest
 
 Results :
 
@@ -436,9 +435,9 @@ Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 4.555 s
-[INFO] Finished at: 2017-07-17T08:30:52+02:00
-[INFO] Final Memory: 19M/220M
+[INFO] Total time: 4.612 s
+[INFO] Finished at: 2017-07-18T10:49:24+02:00
+[INFO] Final Memory: 19M/227M
 [INFO] ------------------------------------------------------------------------
 ```
 
