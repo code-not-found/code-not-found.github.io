@@ -198,7 +198,7 @@ javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No
 
 The reason for this is that when the HTTPS client connects to a server, it's not enough for a certificate to be trusted, it also has to match the server you want to talk to. In other words, the client verifies that the hostname in the certificate matches the hostname of the server. For more detailed information check [this answer on Stack Overflow](http://stackoverflow.com/a/3093650/4201470){:target="_blank"}.
 
-In order to fix this problem, we could regenerate the server keypair so it contains <var>'localhost'</var>. You can find the needed keytool command in the [Spring WS mutual authentication tutorial]({{ site.url }}/2017/04/spring-ws-mutual-authentication-example.html). 
+In order to fix this problem, we could regenerate the server keypair so it contains <var>'localhost'</var>. You can find the needed keytool command in the [Spring WS mutual authentication tutorial]({{ site.url }}/2017/07/spring-ws-mutual-authentication-example.html). 
 
 Another option, which we will use in this example, is to override the `HostnameVerifier` so that it returns `true` in the case a hostname equals to <var>'localhost'</var> is used. Note that this is not something you would want to do in production!
 
