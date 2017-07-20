@@ -7,8 +7,8 @@ modified: 2017-07-20
 header:
   teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
-tags: [Example, SOAP, Spring, Spring Boot, Spring Web Services, Spring-WS, Tolerant Reader, Tutorial]
-published: false
+tags: [Design Pattern, Example, SOAP, Spring, Spring Boot, Spring Web Services, Spring-WS, Tolerant Reader, Tutorial]
+published: true
 ---
 
 <figure>
@@ -400,11 +400,13 @@ public class OrderHistoryEndpoint {
 
 # Testing the Tolerant Reader Setup
 
+In order to test whether our example complies with the tolerant reader principles, we will be using the `MockWebServiceServer` and `MockWebServiceClient` classes provided by Spring-WS as these allow us to freely define the XML messages that are sent/received to/from our client and server implementations.
 
+`OrderHistoryClientTest` contains a number of unit tests for the client. The first `testGetOrderHistory()` test case verifies the correct working of the client code.
 
+The second `testGetOrderHistoryOnlyNeededElements()` test case simulates the scenario in which the service has evolved. The orders that are being returned now contain an <var>'orderName'</var> element in addition to the <var>'orderId'</var> element. As we are only extracting the elements that we need, our client code should not break.
 
-
-
+Finally, the `testGetOrderHistoryMinimumAssumptions()` test case illustrates that even when the order history is moved into a <var>'newWrapper'</var> element, the client code continues to work as it searches for the orders as opposed to using an absolute path.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -514,6 +516,11 @@ public class OrderHistoryClientTest {
 }
 ```
 
+For test the server part, the `TicketAgentEndpointTest` will be used. Again the first `testGetOrderHistory()` test case verifies the correct working of the service endpoint.
+
+The second `testGetOrderHistoryOnlyNeededElements()` test case illustrates the scenario in which a client is sending additional information which is no longer supported by the service. If the server is able to extract the information needed to execute the request (in this case the <var>'userId'</var> element), it simply ignores the <var>'userName'</var> element that is no longer supported.
+
+A third `testGetOrderHistoryMinimumAssumptions()` test case simulates the scenario where the service definition has been updated. The <var>'userId'</var> element is no longer wrapped in an <var>'oldWrapper'</var> element. The older clients don't need to change as the endpoint is able to handle the requests of both old and new service version because there is no assumption on the absolute location of the <var>'userId'</var> element in the received XML.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -602,12 +609,13 @@ public class TicketAgentEndpointTest {
 }
 ```
 
+In order to run the example, open up a command prompt and execute following Maven command:
 
 ``` plaintext
 mvn test
 ```
 
-
+This should result in a successful test run as shown below.
 
 ``` plaintext
   .   ____          _            __ _ _
