@@ -18,9 +18,9 @@ published: true
 The [tolerant reader pattern](https://martinfowler.com/bliki/TolerantReader.html){:target="_blank"} was coined by Martin Fowler as a way to reduce the coupling between the consumer and provider of a SOAP web service. The pattern tries to minimize the impact on existing consumers in case the service contract changes.
 
 Fowler highlights three main points when working with XML:
-* **Only take the elements you need**
-* **Make minimum assumptions about the structure**
-* **Wrap the data payload behind a convenient object**
+* _Only take the elements you need_
+* _Make minimum assumptions about the structure_
+* _Wrap the data payload behind a convenient object_
 
 The following example will apply the tolerant reader design pattern to both consumer and provider of a SOAP web service implemented using Spring-WS, Spring Boot, and Maven.
 
@@ -34,7 +34,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-When describing the tolerant reader design pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an Order History service WSDL file. The service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full history of that user.
+When describing the tolerant reader design pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an Order History service WSDL file. The service has a single <var>'getOrderHistory'</var> operation that takes as input a user id and returns the full history of that user.
 
 ``` xml
 <?xml version="1.0"?>
@@ -125,11 +125,11 @@ When describing the tolerant reader design pattern, Fowler uses the example of a
 </wsdl:definitions>
 ```
 
-The main setup of the project is based on a previous [Spring WS step by step example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html). As such we won't go into details the basic configuration of Spring-WS in combination with Spring Boot and Maven.
+The main setup of the project is based on a previous [Spring WS step by step example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html). As such we won't go into detail about the basic configuration of Spring-WS in combination with Spring Boot and Maven.
 
 # Wrap the Data Payload Behind a Convenient Object
 
-We will first create two simple objects that will wrap the received order history. This will reduce coupling with the rest of the application code and make it shield it from future changes to the order history service.
+We will first create two simple objects that will wrap the received order history. This will reduce coupling with the rest of the application code and shield it from future changes to the order history service.
 
 First object is a simple `Order` [POJO](https://en.wikipedia.org/wiki/Plain_old_Java_object){:target="_blank"} that contains an order id.
 
@@ -182,13 +182,13 @@ public class OrderHistory {
 
 # Make Minimum Assumptions About the Structure
 
-As we are working with XML we can use [XPath](https://en.wikipedia.org/wiki/XPath){:target="_blank"}'s recursive descent operator in order to search for a specified element. This way we can extract the orders from the response message without specifying the full path. This way our client will not break in case the service provider changes the location of the orders in the XML. We will also illustrate this with a unit test case further below.
+As we are working with XML, we can use [XPath](https://en.wikipedia.org/wiki/XPath){:target="_blank"}'s recursive descent operator (//) in order to search for a specific element. This way we can extract the orders from the response message without specifying the full path. As a result, our client will not break in case the service provider changes the location of the orders in the XML. We will illustrate this with a unit test case further below.
 
-Not only will we apply this principle to extract the orders but also the needed attributes from an order (in this example the order id) are obtained using XPath. Both queries are defined in the <var>application.yml</var> as shown below.
+This principle is applied when extracting the orders as well as the needed attributes from an order (in this example the order id). Both queries are defined in the <var>application.yml</var> as shown below.
 
-In order to select the needed element we use the <var>'local-name()'</var> function which ignores the namespace and returns the query results as if the XML did not have any namespace. This way of working increases the tolerance in case the namespace of the response would change (for example if it contains a version number).
+In order to select the needed element(s) we use the <var>'local-name()'</var> function which ignores the namespace and returns the query results as if the XML did not have any namespace. This way of working increases the tolerance in case the namespace of the response would change (for example if it contains a version number).
 
-> Note the use of the "." (dot) in the second expression as we want to search for the orderId in the [current document](https://www.w3schools.com/xml/xpath_syntax.asp){:target="_blank"}.
+> Note the use of the "." (dot) in the second expression as we want to search for the <var>'orderId'</var> in the [current document](https://www.w3schools.com/xml/xpath_syntax.asp){:target="_blank"}.
 
 ``` yaml
 client:
