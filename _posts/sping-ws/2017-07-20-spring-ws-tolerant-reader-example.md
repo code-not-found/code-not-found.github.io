@@ -15,14 +15,14 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-The [tolerant reader pattern](https://martinfowler.com/bliki/TolerantReader.html){:target="_blank"} was coined by Martin Fowler as a way to reduce the coupling between the consumer and provider of a SOAP web service. The pattern tries to minimize the impact on existing consumers in case the service contract changes.
+The [tolerant reader pattern](https://martinfowler.com/bliki/TolerantReader.html){:target="_blank"} was coined by Martin Fowler as a way to reduce the coupling between the consumer and provider of a web service. The pattern tries to minimize the impact on existing consumers in case the service contract changes.
 
 Fowler highlights three main points when working with XML:
 * _Only take the elements you need_
 * _Make minimum assumptions about the structure_
 * _Wrap the data payload behind a convenient object_
 
-The following example will apply the tolerant reader design pattern to both consumer and provider of a SOAP web service implemented using Spring-WS, Spring Boot, and Maven.
+The following example will apply the tolerant reader design pattern to both the consumer and provider of a SOAP web service implemented using Spring-WS, Spring Boot, and Maven.
 
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
@@ -34,7 +34,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-When describing the tolerant reader design pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an Order History service WSDL file. The service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full history of that user.
+When describing the tolerant reader design pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an <var>orderhistory.wsdl</var> service WSDL file. This SOAP service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full history of that user.
 
 ``` xml
 <?xml version="1.0"?>
@@ -125,11 +125,11 @@ When describing the tolerant reader design pattern, Fowler uses the example of a
 </wsdl:definitions>
 ```
 
-The main setup of the project is based on a previous [Spring WS step by step example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html). As such we won't go into detail about the basic configuration of Spring-WS in combination with Spring Boot and Maven.
+The main setup of this project is based on a previous [Spring WS step by step example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html). As such we won't go into detail about the basic configuration of Spring-WS in combination with Spring Boot and Maven.
 
 # Wrap the Data Payload Behind a Convenient Object
 
-We will first create two simple objects that will wrap the received order history. This will reduce coupling with the rest of the application code and shield it from future changes to the order history service.
+Let's create two simple objects that will wrap the received order history. This will reduce coupling with the rest of the application code and shield it from future changes to the order history service.
 
 First object is a simple `Order` [POJO](https://en.wikipedia.org/wiki/Plain_old_Java_object){:target="_blank"} that contains an order id.
 
