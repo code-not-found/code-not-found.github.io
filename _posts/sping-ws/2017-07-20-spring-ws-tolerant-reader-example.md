@@ -34,7 +34,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-When describing the tolerant reader design pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an Order History service WSDL file. The service has a single <var>'getOrderHistory'</var> operation that takes as input a user id and returns the full history of that user.
+When describing the tolerant reader design pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an Order History service WSDL file. The service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full history of that user.
 
 ``` xml
 <?xml version="1.0"?>
@@ -182,7 +182,7 @@ public class OrderHistory {
 
 # Make Minimum Assumptions About the Structure
 
-As we are working with XML, we can use [XPath](https://en.wikipedia.org/wiki/XPath){:target="_blank"}'s recursive descent operator (//) in order to search for a specific element. This way we can extract the orders from the response message without specifying the full path. As a result, our client will not break in case the service provider changes the location of the orders in the XML. We will illustrate this with a unit test case further below.
+As we are working with XML, we can use [XPath](https://en.wikipedia.org/wiki/XPath){:target="_blank"}'s recursive descent operator (<var>//</var>) in order to search for a specific element. This way we can extract the orders from the response message without specifying the full path. As a result, our client will not break in case the service provider changes the location of the orders in the XML. We will illustrate this with a unit test case further below.
 
 This principle is applied when extracting the orders as well as the needed attributes from an order (in this example the order id). Both queries are defined in the <var>application.yml</var> as shown below.
 
@@ -201,11 +201,11 @@ server:
   port: 9090
 ```
 
-We will apply the above-defined XPath queries using `XPathExpression` from Spring-WS. This is an abstraction over a [compiled XPath expression](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#xpath-expression){:target="_blank"}.
+The above-defined XPath queries are applied using `XPathExpression` from Spring-WS. This is an abstraction over a [compiled XPath expression](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#xpath-expression){:target="_blank"}.
 
 The expressions are first loaded via the `@Value` annotation and are then used to create the <var>'orderIdXPath'</var> and <var>'orderIdXPath'</var> `XPathExpression` beans.
 
-```
+``` java
 package com.codenotfound.ws.client;
 
 import org.springframework.beans.factory.annotation.Value;
