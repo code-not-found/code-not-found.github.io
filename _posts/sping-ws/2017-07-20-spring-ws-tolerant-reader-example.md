@@ -15,12 +15,12 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-The [tolerant reader pattern](https://martinfowler.com/bliki/TolerantReader.html){:target="_blank"} was coined by Martin Fowler as a way to reduce the coupling between the consumer and provider of a SOAP web service. The pattern tries to reduce the impact on existing consumers in case the service contract changes.
+The [tolerant reader pattern](https://martinfowler.com/bliki/TolerantReader.html){:target="_blank"} was coined by Martin Fowler as a way to reduce the coupling between the consumer and provider of a SOAP web service. The pattern tries to minimize the impact on existing consumers in case the service contract changes.
 
 Fowler highlights three main points when working with XML:
-* Only take the elements you need
-* Make minimum assumptions about the structure
-* Wrap the data payload behind a convenient object
+* **Only take the elements you need**
+* **Make minimum assumptions about the structure**
+* **Wrap the data payload behind a convenient object**
 
 The following example will apply the tolerant reader design pattern to both consumer and provider of a SOAP web service implemented using Spring-WS, Spring Boot, and Maven.
 
