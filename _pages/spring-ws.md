@@ -31,6 +31,9 @@ modified: 2017-07-15
 
 * [Spring WS - Log Client Server HTTP Headers Example]({{ site.url }}/2017/04/spring-ws-log-client-server-http-headers.html)
 
+## Patterns
+* [Spring WS - SOAP Tolerant Reader Example]({{ site.url }}/2017/07/spring-ws-soap-tolerant-reader-example.html)
+
 ## References
 
 * [Spring Web Services](http://projects.spring.io/spring-ws/){:target="_blank"}
