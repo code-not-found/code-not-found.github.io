@@ -34,7 +34,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-When describing the tolerant reader design pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an <var>orderhistory.wsdl</var> service WSDL file. This SOAP service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full history of that user.
+When describing the tolerant pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an <var>orderhistory.wsdl</var> service WSDL file. This SOAP service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full history of that user.
 
 ``` xml
 <?xml version="1.0"?>
@@ -131,7 +131,7 @@ The main setup of this project is based on a previous [Spring WS step by step ex
 
 Let's create two simple objects that will wrap the received order history. This will reduce coupling with the rest of the application code and shield it from future changes to the order history service.
 
-First object is a simple `Order` [POJO](https://en.wikipedia.org/wiki/Plain_old_Java_object){:target="_blank"} that contains an order id.
+First object is a simple `Order` [POJO](https://en.wikipedia.org/wiki/Plain_old_Java_object){:target="_blank"} that contains an order ID.
 
 ``` java
 package com.codenotfound.ws.model;
@@ -186,7 +186,7 @@ As we are working with XML, we can use [XPath](https://en.wikipedia.org/wiki/XPa
 
 This principle is applied when extracting the orders as well as the needed attributes from an order (in this example the order id). Both queries are defined in the <var>application.yml</var> as shown below.
 
-In order to select the needed element(s) we use the <var>'local-name()'</var> function which ignores the namespace and returns the query results as if the XML did not have any namespace. This way of working increases the tolerance in case the namespace of the response would change (for example if it contains a version number).
+To select the needed element(s) we use the <var>'local-name()'</var> function which ignores the namespace and returns the query results as if the XML did not have any namespace. This way of working increases the tolerance in case the namespace of the response would change (for example if it contains a version number).
 
 > Note the use of the "." (dot) in the second expression as we want to search for the <var>'orderId'</var> in the [current document](https://www.w3schools.com/xml/xpath_syntax.asp){:target="_blank"}.
 
@@ -203,7 +203,7 @@ server:
 
 The above-defined XPath queries are applied using `XPathExpression` from Spring-WS. This is an abstraction over a [compiled XPath expression](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#xpath-expression){:target="_blank"}.
 
-The expressions are first loaded via the `@Value` annotation and are then used to create the <var>'orderIdXPath'</var> and <var>'orderIdXPath'</var> `XPathExpression` beans.
+The expressions are first loaded via the `@Value` annotation and then used to create the <var>'orderIdXPath'</var> and <var>'orderIdXPath'</var> `XPathExpression` beans.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -260,9 +260,9 @@ public class ClientConfig {
 
 # Only Take the Elements You Need
 
-Now that we have created our XPath expressions we will use them in the client code. First, we create the request message that contains the user ID for which the order history needs to be retrieved. Note that for the creation we can use the JAXB generated objects as the tolerant reader pattern only applies to messages that are read (received).
+Now that we have created our XPath expressions we will use them in the client. First, we create the request message that contains the user ID for which the order history needs to be retrieved. Note that for the creation we can use the JAXB generated objects as the tolerant reader pattern only applies to messages that are read (received).
 
-As we want to apply the `XPathExpression`s we need to use the `sendSourceAndReceiveToResult()` method on the `WebServiceTemplate` which will provide us with a `Result`. We get the `Source` from our JAXB `GetOrderHistoryRequest` object by marshaling it using the `MarshallingUtils` provided by Spring-WS.
+As we want to apply the `XPathExpression`s we need to use the `sendSourceAndReceiveToResult()` method of the `WebServiceTemplate` which will provide us with a `Result`. We get the `Source` from our JAXB `GetOrderHistoryRequest` object by marshaling it using the `MarshallingUtils` provided by Spring-WS.
 
 Once we have received the request we only fetch the orders and ignore everything else. For each order, we use a `NodeMapper` to perform the actual work of mapping each node to a corresponding `Order` object. Again we only take the <var>'orderId'</var> element from each node and we ignore the rest.
 
@@ -344,7 +344,9 @@ For the implementation of the `Endpoint`, we will also apply the above principle
 
 By annotating a parameter of the handling method with `@XPathParam` we can bind it to the [evaluation of an XPath expression](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#server-xpath-param){:target="_blank"}. In other words we only need to specify the elements we need as parameters of the handling method annotated with `@XPathParam`. This way we only get what we need with a minimal assumption on the received structure.
 
-In the `OrderHistoryEndpoint` we define the XPath expression to extract the user ID and then define it as a parameter of the `getOrderHistory()` handling method. In this tutorial we simply log the received <var>'userId'</var> and then in a real-life example typically a database lookup would be performed to retrieve the user's orders. In the below code we simply generate a fix response that contains three orders.
+In the `OrderHistoryEndpoint` we define the XPath expression to extract the user ID and then define it as a parameter of the `getOrderHistory()` handling method.
+
+In this tutorial we simply log the received <var>'userId'</var>. In a real-life example typically a database lookup would be performed to retrieve the user's orders. In the below code we simply generate a fix response that contains three orders.
 
 ``` java
 package com.codenotfound.ws.endpoint;
