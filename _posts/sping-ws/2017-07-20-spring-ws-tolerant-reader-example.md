@@ -402,7 +402,7 @@ public class OrderHistoryEndpoint {
 
 # Testing the Tolerant Reader Setup
 
-In order to test whether our example complies with the tolerant reader principles, we will be using the `MockWebServiceServer` and `MockWebServiceClient` classes provided by Spring-WS as these allow us to freely define the XML messages that are sent/received to/from our client and server implementations.
+In order to test whether our example complies with the tolerant reader principles, we will be using the `MockWebServiceServer` and `MockWebServiceClient` classes provided by Spring-WS. These allow us to freely define the XML messages that are sent/received to/from our client and server implementations.
 
 `OrderHistoryClientTest` contains a number of unit tests for the client. The first `testGetOrderHistory()` test case verifies the correct working of the client code.
 
@@ -502,11 +502,11 @@ public class OrderHistoryClientTest {
 
     Source responsePayload = new StringSource(
         "<ns1:getOrderHistoryResponse xmlns:ns1=\"http://codenotfound.com/types/orderhistory\">"
-            + "<ns1:anotherElement>" + "<ns1:orderHistory>" + "<ns1:orderList>"
+            + "<ns1:newWrapper>" + "<ns1:orderHistory>" + "<ns1:orderList>"
             + "<ns1:order><ns1:orderId>order7</ns1:orderId></ns1:order>"
             + "<ns1:order><ns1:orderId>order8</ns1:orderId></ns1:order>"
             + "<ns1:order><ns1:orderId>order9</ns1:orderId></ns1:order>" + "</ns1:orderList>"
-            + "</ns1:orderHistory>" + "</ns1:anotherElement>" + "</ns1:getOrderHistoryResponse>");
+            + "</ns1:orderHistory>" + "</ns1:newWrapper>" + "</ns1:getOrderHistoryResponse>");
 
     mockWebServiceServer.expect(payload(requestPayload)).andRespond(withPayload(responsePayload));
 
@@ -518,11 +518,11 @@ public class OrderHistoryClientTest {
 }
 ```
 
-For test the server part, the `TicketAgentEndpointTest` will be used. Again the first `testGetOrderHistory()` test case verifies the correct working of the service endpoint.
+For testing the server part, the `TicketAgentEndpointTest` is used. Again the first `testGetOrderHistory()` test case verifies the correct working of the service endpoint.
 
-The second `testGetOrderHistoryOnlyNeededElements()` test case illustrates the scenario in which a client is sending additional information which is no longer supported by the service. If the server is able to extract the information needed to execute the request (in this case the <var>'userId'</var> element), it simply ignores the <var>'userName'</var> element that is no longer supported.
+The second `testGetOrderHistoryOnlyNeededElements()` test case illustrates the scenario in which a client is sending additional information which is no longer supported by the service. If the endpoint is able to extract the information needed to execute the request (in this case the <var>'userId'</var> element), it simply ignores the <var>'userName'</var> element that is no longer supported.
 
-A third `testGetOrderHistoryMinimumAssumptions()` test case simulates the scenario where the service definition has been updated. The <var>'userId'</var> element is no longer wrapped in an <var>'oldWrapper'</var> element. The older clients don't need to change as the endpoint is able to handle the requests of both old and new service version because there is no assumption on the absolute location of the <var>'userId'</var> element in the received XML.
+A third `testGetOrderHistoryMinimumAssumptions()` test case simulates the scenario where the service definition has been updated so that the <var>'userId'</var> element is no longer wrapped in an <var>'oldWrapper'</var> element. The clients which still use the  <var>'oldWrapper'</var> element don't need to change as the endpoint is able to handle the requests of both the old and new service version because there is no assumption on the absolute location of the <var>'userId'</var> element in the received XML.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -595,7 +595,7 @@ public class TicketAgentEndpointTest {
   public void testGetOrderHistoryMinimumAssumptions() {
     Source requestPayload = new StringSource(
         "<ns1:getOrderHistoryRequest xmlns:ns1=\"http://codenotfound.com/types/orderhistory\">"
-            + "<ns1:anotherElement>" + "<ns1:userId>pqr123</ns1:userId>" + "</ns1:anotherElement>"
+            + "<ns1:oldWrapper>" + "<ns1:userId>pqr123</ns1:userId>" + "</ns1:oldWrapper>"
             + "</ns1:getOrderHistoryRequest>");
 
     Source responsePayload = new StringSource(
