@@ -8,6 +8,8 @@ main:
     url: https://www.codenotfound.com/spring-ws/
   - title: "Spring-JMS"
     url: https://www.codenotfound.com/spring-jms/
+  - title: "CXF JAX-WS"
+    url: https://www.codenotfound.com/cxf-jax-ws/
   - title: "JMS"
     url: https://www.codenotfound.com/jms/
   - title: "Terms and Privacy Policy"
