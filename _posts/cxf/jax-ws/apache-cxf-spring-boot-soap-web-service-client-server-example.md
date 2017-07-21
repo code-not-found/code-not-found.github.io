@@ -1,6 +1,6 @@
 ---
 title: Apache CXF - Spring Boot SOAP Web Service Client Server Example
-permalink: /2016/10/cxf-spring-boot-soap-web-service-client-server-example.html
+permalink: /2016/10/apache-cxf-spring-boot-soap-web-service-client-server-example.html
 excerpt: A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Apache CXF and Spring Boot.
 date: 2016-10-16
 modified: 2016-10-16
@@ -14,7 +14,7 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
 [Apache CXF](http://cxf.apache.org/){:target="_blank"} is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS. In this tutorial, we will take a look at how we can integrate CXF with Spring Boot in order to build and run a Hello World SOAP service. Throughout the example, we will be creating a contract first client and endpoint using a WSDL, CXF, Spring Boot and Maven.
