@@ -31,7 +31,7 @@ Tools used:
 
 This tutorial is actually a newer version of a previous [example in which we used Jetty to host a Hello World CXF web service]({{ site.url }}//2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html). This time we will be using the embedded Tomcat server that ships with Spring Boot as a runtime for the service.
 
-The below code is organized in such a way that you can choose to only run the [client]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
+The below code is organized in such a way that you can choose to only run the [client]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-client-consumer) (consumer) or [endpoint]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 # General Project Setup
 
