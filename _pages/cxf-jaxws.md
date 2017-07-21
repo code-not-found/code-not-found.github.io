@@ -14,8 +14,7 @@ modified: 2017-07-21
 
 ## Quick Start
 
-* [CXF - SOAP Web Service Consumer & Provider WSDL Example]({{ site.url }}/2016/10/cxf-soap-web-service-consumer-provider-wsdl-example.html)
-* [JAX-WS - CXF Contract First Hello World Webservice Tutorial]({{ site.url }}/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html)
+* [Apache CXF - Spring Boot SOAP Web Service Client Server Example]({{ site.url }}/2016/10/cxf-spring-boot-soap-web-service-client-server-example.html)
 
 ## Concepts
 
