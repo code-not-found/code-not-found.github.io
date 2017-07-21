@@ -1,6 +1,6 @@
 ---
 title: "Apache CXF - JAX-WS"
-permalink: /spring-ws/
+permalink: /cxf-jaxws/
 excerpt: "Step-by-step tutorials on Apache CXF and JAX-WS"
 date: 2017-07-21
 modified: 2017-07-21
