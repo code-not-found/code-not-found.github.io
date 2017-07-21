@@ -14,7 +14,7 @@ modified: 2017-07-21
 
 ## Quick Start
 
-* [Apache CXF - Spring Boot SOAP Web Service Client Server Example]({{ site.url }}/2016/10/cxf-spring-boot-soap-web-service-client-server-example.html)
+* [Apache CXF - Spring Boot SOAP Web Service Client Server Example]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html)
 
 ## Concepts
 
