@@ -19,7 +19,7 @@ published: true
 
 [Apache CXF](http://cxf.apache.org/){:target="_blank"} is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS. In this tutorial, we will take a look at how we can integrate CXF with Spring Boot in order to build and run a Hello World SOAP service. Throughout the example, we will be creating a contract first client and endpoint using a WSDL, CXF, Spring Boot and Maven.
 
-If you want to learn more about Apache CXF JAX-WS - head on over to the [Apache CXF - JAX-WS tutorials page]({{ site.url }}/cxf-jaxws/).
+If you want to learn more about Apache CXF - JAX-WS - head on over to the [Apache CXF - JAX-WS tutorials page]({{ site.url }}/cxf-jaxws/).
 {: .notice--primary}
 
 # General Project Setup
@@ -31,7 +31,7 @@ Tools used:
 
 This tutorial is actually a newer version of a previous [example in which we used Jetty to host a Hello World CXF web service]({{ site.url }}//2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html). This time we will be using the embedded Tomcat server that ships with Spring Boot as a runtime for the service.
 
-The below code is organized in such a way that you can choose to only run the [client]({{ site.url }}/cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/2016/10/cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
+The below code is organized in such a way that you can choose to only run the [client]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 # General Project Setup
 
@@ -109,7 +109,7 @@ For this example, we will start from an existing WSDL file (contract-first) whic
 </wsdl:definitions>
 ```
 
-[Maven](https://maven.apache.org/){:target="_blank"} is used to build and run the example. The Hello World service endpoint will be hosted on an embedded Apache Tomcat server that ships directly with [Spring Boot](https://projects.spring.io/spring-boot/). To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) are used which are a set of convenient dependency descriptors that you can include in your application.
+[Maven](https://maven.apache.org/){:target="_blank"} is used to build and run the example. The Hello World service endpoint will be hosted on an embedded Apache Tomcat server that ships directly with [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"}. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application.
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
@@ -378,7 +378,7 @@ public class HelloWorldClient {
 
 To wrap up the tutorial, we will create a basic test case that will use our Hello World client to send a request to the CXF endpoint that is being exposed on Spring Boot's embedded Tomcat.
 
-The new `@RunWith` and `@SpringBootTest` testing annotations, [that are available as of Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications), are used to tell `JUnit` to run using Spring's testing support and bootstrap with Spring Boot's support.
+The new `@RunWith` and `@SpringBootTest` testing annotations, [that are available as of Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications){:target="_blank"}, are used to tell `JUnit` to run using Spring's testing support and bootstrap with Spring Boot's support.
 
 By default, the embedded HTTP server will be started on a random port. As we have defined the URL which the client needs to call with a specific port number, we need to set the `DEFINED_PORT` web environment. This will cause Spring to use the <var>'server.port'</var> property from the <var>application.properties</var> file instead of a random one.
 
