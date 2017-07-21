@@ -17,7 +17,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
-[Apache CXF](http://cxf.apache.org/){:target="_blank"} is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS. In this tutorial, we will take a look at how we can integrate CXF with Spring Boot in order to build and run a Hello World SOAP service. Throughout the example, we will be creating a contract first client and endpoint using a WSDL, CXF, Spring Boot and Maven.
+[Apache CXF](http://cxf.apache.org/){:target="_blank"} is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS. In this tutorial, we will take a look at how we can integrate CXF with Spring Boot in order to build and run a Hello World SOAP service. Throughout the example, we will be creating a contract first client and endpoint using a WSDL, Apache CXF, Spring Boot and Maven.
 
 If you want to learn more about Apache CXF - JAX-WS - head on over to the [Apache CXF - JAX-WS tutorials page]({{ site.url }}/cxf-jaxws/).
 {: .notice--primary}
@@ -29,11 +29,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-This tutorial is actually a newer version of a previous [example in which we used Jetty to host a Hello World CXF web service]({{ site.url }}//2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html). This time we will be using the embedded Tomcat server that ships with Spring Boot as a runtime for the service.
-
-The below code is organized in such a way that you can choose to only run the [client]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-client-consumer) (consumer) or [endpoint]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
-
-# General Project Setup
+The below code is organized in such a way that you can choose to only run the [client]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-client-consumer) (consumer) or [endpoint]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-endpoint-provider) (provider) part. In the example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 For this example, we will start from an existing WSDL file (contract-first) which is shown below. The content represents a SOAP service in which a person is sent as input and a greeting is received as a response.
 
