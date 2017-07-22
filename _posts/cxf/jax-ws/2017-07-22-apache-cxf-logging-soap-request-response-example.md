@@ -17,7 +17,7 @@ published: true
 
 [Since Apache CXF 3.1](http://cxf.apache.org/docs/message-logging.html){:target="_blank"}, the message logging code was moved into a separate module and gathered a number of new features.
 
-In this tutorial we will demonstrate how to configure CXF to log the SOAP request, response and fault XML using a logging `Interceptor`. The example uses the [Logback logging framework](https://logback.qos.ch/) in addition to Apache CXF, Spring Boot, and Maven.
+In this tutorial, we will demonstrate how to configure CXF to log the SOAP request, response and fault XML using a logging `Interceptor` and `Feature`. The example uses the [Logback logging framework](https://logback.qos.ch/){:target="_blank"} in addition to Apache CXF, Spring Boot, and Maven.
 
 If you want to learn more about Apache CXF for JAX-WS - head on over to the [Apache CXF - JAX-WS tutorials page]({{ site.url }}/cxf-jaxws/).
 {: .notice--primary}
@@ -31,7 +31,7 @@ Tools used:
 
 The setup of the project is based on a previous [CXF web service example]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-As the sample ticketing WSDL does not contain a SOAP fault we will add one in the context of this tutorial.
+As the sample TicketAgent WSDL does not contain a SOAP fault we will add one in the context of this tutorial.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -197,11 +197,11 @@ As the sample ticketing WSDL does not contain a SOAP fault we will add one in th
 
 [Interceptors](https://cxf.apache.org/docs/interceptors.html){:target="_blank"} are the fundamental processing unit inside CXF. For more information checkout following post on the basic [CXF interceptor architecture]({{ site.url }}/2015/01/cxf-feature-vs-interceptor.html).
 
-CXF ships with a `LoggingInInterceptor` that allows logging of the **received** SOAP XML messages. In addition, for logging **sent** SOAP XML messages, a `LoggingOutInterceptor` is provided. These interceptors can be added to one of the CXF interceptor providers (`Client`, `Endpoint`, `Service`, `Bus` or `Binding`) that implement the `InterceptorProvider` interface.
+CXF ships with a `LoggingInInterceptor` that allows logging of the **received** (IN) messages. In addition, for logging **sent** (OUT) messages, a `LoggingOutInterceptor` is provided. These interceptors can be added to one of the CXF interceptor providers (`Client`, `Endpoint`, `Service`, `Bus` or `Binding`) that implement the `InterceptorProvider` interface.
 
-In order to demonstrate this we will add both `LoggingInInterceptor` and `LoggingOutInterceptor` to the TicketAgent client as illustrated below.
+In order to demonstrate this, we will add both `LoggingInInterceptor` and `LoggingOutInterceptor` to the TicketAgent client as illustrated below.
 
-> Note that for SOAP faults, there will be separate error handling chains. In the case of a client this is an inbound error handling chain to which we also need to add an `LoggingInInterceptor`.
+> Note that for SOAP faults, there are separate error handling chains. In the case of a client, this is an inbound error handling chain to which we also need to add a `LoggingInInterceptor`.
 
 ``` java
 package com.codenotfound.client;
@@ -255,7 +255,7 @@ A [Feature](https://cxf.apache.org/docs/features.html){:target="_blank"} in CXF 
 
 CXF includes a `LoggingFeature` which encapsulates the creation of the different logging interceptors and then subsequently adds them to all the different interceptor chains.
 
-Let's add a `LoggingFeature` to the CXF `Bus` that hosts our TicketAgent `Endpoint`. First we create a new instance of the feature and enable formatting of the XML message by using `setPrettyLogging()` method. We then add the feature by using `setFeatures()` on the bus.
+Let's add a `LoggingFeature` to the CXF `Bus` that hosts our TicketAgent `Endpoint`. First, we create a new instance of the feature and enable formatting of the XML message by using the `setPrettyLogging()` method. We then add the feature by using `setFeatures()` on the bus.
 
 ``` java
 package com.codenotfound.endpoint;
@@ -303,7 +303,7 @@ public class EndpointConfig {
 }
 ```
 
-> There is also an `@Features` annotation that can be used on either the service endpoint interface (SEI) or the SEI implementation class. If applied to the TicketAgent example we would need to annotate the `TicketAgentImpl` class as shown below.
+> There is also an `@Features` annotation that can be used on either the service endpoint interface (SEI) or the SEI implementation class. In this example we have already added the `LoggingFeature` to the CXF bus but if we wanted to use the annotation instead it would need to be applied to the `TicketAgentImpl` class as shown below.
 
 ``` java
 package com.codenotfound.endpoint;
@@ -341,11 +341,11 @@ public class TicketAgentImpl implements TicketAgent {
 
 # CXF Logging Configuration
 
-Now that we have setup logging on both client and server we need to set the logging level of the <var>'org.apache.cxf.services'</var> logger to <var>'INFO'</var> in order to have the XML SOAP messages appear.
+Now that we have setup logging on both client and server we need to set the logging level of the <var>'org.apache.cxf.services'</var> `Logger` to <var>'INFO'</var> in order to have the XML SOAP messages appear.
 
 The `cxf-spring-boot-starter-jaxws` Spring Boot starter automatically includes the Logback, Log4J and SLF4J dependencies. As such we just have to place a <var>logback.xml</var> configuration file on the classpath in order to activate Logback.
 
-You can use the logger name to fine tune which services you want to log. The logger name is <var>org.apache.cxf.services.<service name>.<type></var>. Where the service name is the name of the generate interface class (in this example this is equals to <kbd>"TicketAgent"</kbd>). The type can be one of the following depending on whether the message is sent (OUT) or received (IN):
+You can use the logger name to fine tune which services you want to log. The logger name is <var>org.apache.cxf.services.&lt;service name&gt;.&lt;type&gt;</var>. Where the service name is the name of the generated interface class (in this example <kbd>"TicketAgent"</kbd>). The type can be one of the following depending on whether the message is sent (OUT) or received (IN):
 
 * REQ_IN
 * RESP_IN
@@ -354,7 +354,7 @@ You can use the logger name to fine tune which services you want to log. The log
 * RESP_OUT
 * FAULT_OUT
 
-In this example we will avoid logging all messages that are received (by either client or endpoint) by setting them to WARN.
+In this sample, we will avoid logging all messages that are received (by either client or endpoint) by setting them to <var>'WARN'</var>.
 
 ``` xml
 <configuration>
@@ -433,7 +433,7 @@ public class SpringCxfApplicationTests {
 }
 ```
 
-Run the above test, by executing following Maven command in the projects root folder:
+Run the above tests, by executing following Maven command in the projects root folder:
 
 ``` plaintext
 mvn test
@@ -540,6 +540,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes our example in which we programmatically added a CXF loggingininterceptor, loggingoutinterceptor and loggingfeature in order to log the sent/received SOAP messages.
+This concludes our example in which we programmatically added a CXF `LoggingInInterceptor`, `LoggingOutInterceptor` and `LoggingFeature` in order to log the sent/received SOAP messages.
 
 Feel free to drop a comment in case of a question or if you just like the post.
