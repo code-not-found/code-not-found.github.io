@@ -18,7 +18,8 @@ CXF uses Java SE Logging for both client- and server-side logging of SOAP reques
 
 The following tutorial shows how to configure CXF logging interceptors using Logback for the [contract first Hello World web service example]({{ site.url }}/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) from a previous post.
 
-> An updated version of this blog post has been created that details a [CXF logging example]({{ site.url }}/apache-cxf-logging-soap-request-response-fault-messages-example.html) which uses the new log features that were added since version 3.1.
+> An updated version of this blog post has been created that contains a [CXF logging example]({{ site.url }}/apache-cxf-logging-soap-request-response-fault-messages-example.html) which uses the new log features that were added since version 3.1.
+{: .notice--primary}
 
 Tools used:
 * CXF 3.1
