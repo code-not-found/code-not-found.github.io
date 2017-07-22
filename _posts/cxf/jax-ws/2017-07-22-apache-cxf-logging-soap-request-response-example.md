@@ -345,7 +345,7 @@ Now that we have setup logging on both client and server we need to set the logg
 
 The `cxf-spring-boot-starter-jaxws` Spring Boot starter automatically includes the Logback, Log4J and SLF4J dependencies. As such we just have to place a <var>logback.xml</var> configuration file on the classpath in order to activate Logback.
 
-You can use the logger name to fine tune which services you want to log. The logger name is <var>org.apache.cxf.services.&lt;service name&gt;.&lt;type&gt;</var>. Where the service name is the name of the generated interface class (in this example <kbd>"TicketAgent"</kbd>). The type can be one of the following depending on whether the message is sent (OUT) or received (IN):
+You can use the logger name to fine tune which services you want to log. The logger name is <var>'org.apache.cxf.services.&lt;service name&gt;.&lt;type&gt;'</var>. Where the service name is the name of the generated interface class (in this example <kbd>"TicketAgent"</kbd>). The type can be one of the following depending on whether the message is sent (OUT) or received (IN):
 
 * REQ_IN
 * RESP_IN

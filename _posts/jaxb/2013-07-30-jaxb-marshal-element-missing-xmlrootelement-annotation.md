@@ -9,6 +9,7 @@ last_modified_at: 2017-03-28
 redirect_from:
   - /2013/07/jaxb-marshal-unmarshal-with-missing.html
   - /2013/07/jaxb-marshal-unmarshal-with-missing-xmlrootelement.html
+  - /2013/07/jaxb-marshal-unmarshal-with-missing.htm
 ---
 
 <figure>
