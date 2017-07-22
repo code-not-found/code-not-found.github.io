@@ -22,7 +22,7 @@ modified: 2017-07-21
 
 ## Logging
 
-* [JAX-WS - CXF Log Request/Response SOAP Messages Logback]({{ site.url }}/2014/09/jaxws-cxf-log-request-response-soap-messages-logback.html)
+* [Apache CXF - Logging SOAP Request Response Fault Messages Example]({{ site.url }}/apache-cxf-logging-soap-request-response-fault-messages-example.html)
 * [JAX-WS - CXF logging request and response SOAP messages using Log4j]({{ site.url }}/2015/01/jaxws-cxf-logging-request-response-soap-messages-log4j.html)
 * [JAX-WS - CXF logging request and response SOAP messages using Log4j2]({{ site.url }}/2015/01/jaxws-cxf-logging-request-response-soap-messages-log4j2.html)
 

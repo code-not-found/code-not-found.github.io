@@ -17,9 +17,11 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
-[Apache CXF](http://cxf.apache.org/){:target="_blank"} is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS. In this tutorial, we will take a look at how we can integrate CXF with Spring Boot in order to build and run a Hello World SOAP service. Throughout the example, we will be creating a contract first client and endpoint using a WSDL, Apache CXF, Spring Boot and Maven.
+[Apache CXF](http://cxf.apache.org/){:target="_blank"} is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS.
 
-If you want to learn more about Apache CXF - JAX-WS - head on over to the [Apache CXF - JAX-WS tutorials page]({{ site.url }}/cxf-jaxws/).
+In this tutorial, we will take a look at how we can integrate CXF with Spring Boot in order to build and run a Hello World SOAP service. Throughout the example, we will be creating a contract first client and endpoint using Apache CXF, Spring Boot, and Maven.
+
+If you want to learn more about Apache CXF for JAX-WS - head on over to the [Apache CXF - JAX-WS tutorials page]({{ site.url }}/cxf-jaxws/).
 {: .notice--primary}
 
 # General Project Setup
@@ -36,7 +38,6 @@ For this example, we will start from an existing WSDL file (contract-first) whic
 ``` xml
 <?xml version="1.0"?>
 <wsdl:definitions name="HelloWorld"
-
   targetNamespace="http://codenotfound.com/services/helloworld"
   xmlns:tns="http://codenotfound.com/services/helloworld" xmlns:types="http://codenotfound.com/types/helloworld"
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
@@ -406,13 +407,13 @@ public class SpringCxfApplicationTests {
 }
 ```
 
-In order to run the above test, open a command prompt in the projects root folder and execute following Maven command: 
+In order to run the above test, open a command prompt in the projects root folder and execute following Maven command:
 
 ``` plaintext
 mvn test
 ```
 
-Maven will download the needed dependencies, compile the code and run the unit test case during which Tomcat is started and a service call is made. If all went well the build is reported as a success: 
+Maven will download the needed dependencies, compile the code and run the unit test case during which Tomcat is started and a service call is made. If all went well the build is reported as a success:
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -442,7 +443,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
-If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven command: 
+If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven command:
 
 ``` plaintext
 mvn spring-boot:run
