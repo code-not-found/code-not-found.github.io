@@ -17,7 +17,7 @@ published: true
 
 According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528){:target="_blank"} can be used to indicate the intent of a request. There are no restrictions on the format and a client MUST use this header field when sending a SOAP HTTP request.
 
-The below example illustrates how a client can set the SOAPAction header and how a server endpoint can leverage the `@SoapAction` annotation to receive the request using Spring-WS, Spring Boot, and Maven. 
+The below example illustrates how a client can set the SOAPAction header and how a server endpoint can leverage the `@SoapAction` annotation to receive the request using Spring-WS, Spring Boot, and Maven.
 
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
