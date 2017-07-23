@@ -20,6 +20,10 @@ modified: 2017-07-21
 
 * [CXF - Feature vs Interceptor]({{ site.url }}/2015/01/cxf-feature-vs-interceptor.html)
 
+## Headers
+
+* [ Apache CXF - SOAP Header Example]({{ site.url }}/apache-cxf-soap-header-example.html)
+
 ## Logging
 
 * [Apache CXF - Logging SOAP Request Response Fault Messages Example]({{ site.url }}/apache-cxf-logging-soap-request-response-fault-messages-example.html)
