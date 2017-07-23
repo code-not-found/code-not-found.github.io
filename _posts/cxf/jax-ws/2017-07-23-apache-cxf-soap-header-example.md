@@ -31,7 +31,9 @@ Tools used:
 
 The configuration of this project is based on a previous [CXF example project ]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-There are two different ways to define the use of SOAP header fields in a Web service, namely [implicit and explicit headers](https://www.ibm.com/developerworks/library/ws-tip-headers/index.html){:target="_blank"}. A header definition is called explicit if it is part of the service <var>'&lt;portType&gt;'</var>. If the message part that is transferred in the header does not show up anywhere in the <var>'&lt;portType&gt;'</var> element, then it is an implicit header.
+There are two different ways to define the use of SOAP header fields in a Web service, namely [implicit and explicit headers](https://www.ibm.com/developerworks/library/ws-tip-headers/index.html){:target="_blank"}.
+
+A header definition is called explicit if it is part of the service <var>'&lt;portType&gt;'</var>. If the message part that is transferred in the header does not show up anywhere in the <var>'&lt;portType&gt;'</var> element, then it is an implicit header.
 
 In the context of this code sample, we will tackle implicit SOAP headers. The reason for this is that with explicit headers there is no specific configuration needed in order to have CXF process the headers and make them available as part of the generated service interface. For those interested, there is an [explicit SOAP header CXF project](https://github.com/code-not-found/cxf-jaxws/tree/master/cxf-jaxws-soap-header-explicit) available on the CXF JAX-WS GitHub repository.
 
@@ -112,7 +114,7 @@ As the sample ticketing WSDL does not contain a SOAP header we will add an <var>
 
 Typically in the case of implicit headers, extra code must be written (or generated) to deal with the header information that is not part of the portType. When using the [wsdl2java](http://cxf.apache.org/docs/wsdl-to-java.html){:target="_blank"} goal of the `cxf-codegen-plugin` plugin, there is an <var>'-exsh'</var> option that enables or disables processing of implicit SOAP headers. The default value is false.
 
-When using Maven, add the <var>&lt;extendedSoapHeaders&gt;<var> element with a value equals to <var>'true'</var> in order to have CXF process the implicit header.
+When using Maven, add the <var>&lt;extendedSoapHeaders&gt;</var> element with a value equals to <var>'true'</var> in order to have CXF process the implicit header.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -247,7 +249,7 @@ public class TicketAgentClient {
 
 Accessing the SOAP header is again straight forward as the interface method already contains the `TListFlightsHeader` as a parameter. In case the `getClientId()` method returns a specific value an extra flight is returned in the response.
 
-> Note that we have added the `@Features` annotation in order to log the received request message. This allows us to visualize the added SOAP header. 
+> Note that we have used the `@Features` annotation in order to log the received request message. This allows us to visualize the added SOAP header. 
 
 ``` java
 package com.codenotfound.endpoint;
