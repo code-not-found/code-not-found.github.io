@@ -114,7 +114,7 @@ As the sample ticketing WSDL does not contain a SOAP header we will add an <var>
 
 Typically in the case of implicit headers, extra code must be written (or generated) to deal with the header information that is not part of the portType. When using the [wsdl2java](http://cxf.apache.org/docs/wsdl-to-java.html){:target="_blank"} goal of the `cxf-codegen-plugin` plugin, there is an <var>'-exsh'</var> option that enables or disables processing of implicit SOAP headers. The default value is false.
 
-When using Maven, add the <var>&lt;extendedSoapHeaders&gt;</var> element with a value equals to <var>'true'</var> in order to have CXF process the implicit header.
+In the Maven POM file, add the <var>&lt;extendedSoapHeaders&gt;</var> element with a value equals to <var>'true'</var> in order to have CXF process the implicit header.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>

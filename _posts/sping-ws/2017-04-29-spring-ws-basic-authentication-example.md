@@ -27,18 +27,19 @@ The credentials are provided as an HTTP header field called <var>'Authorization'
     codenotofound:p455w0rd
     ```
 
-2. The resulting string is encoded into an [octet sequence](https://tools.ietf.org/html/rfc7617#section-2){:target="_blank"} and then [Base64 encoded](https://tools.ietf.org/html/rfc4648#section-4){:target="_blank"}. You can use an [online Base64 decoder](https://www.base64decode.org/){:target="_blank"} to check below value.
+2. The resulting string is encoded into an [octet sequence](https://tools.ietf.org/html/rfc7617#section-2){:target="_blank"} and then [Base64 encoded](https://tools.ietf.org/html/rfc4648#section-4){:target="_blank"}. You can use an [online Base64 decoder](https://www.base64decode.org/){:target="_blank"} to decode below value.
 
     ``` plaintext
     Y29kZW5vdGZvdW5kOnA0NTV3MHJk
     ```
+
 3. The authorization method and a space (<kbd>"Basic "</kbd>) are then put before the encoded string.
 
     ``` plaintext
     Basic Y29kZW5vdGZvdW5kOnA0NTV3MHJk
     ```
 
-Instead of writing custom code to create and check the HTTP authorization header we will configure Spring WS to do the work for us. The below example illustrates how a client and server can be configured to apply basic access authentication using Spring-WS, Spring Boot, and Maven. 
+Instead of writing custom code to create and check the HTTP authorization header we will configure Spring WS and Spring Boot to do the work for us. The below example illustrates how a client and server can be configured to apply basic access authentication using Spring-WS, Spring Boot, and Maven.
 
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
@@ -51,9 +52,9 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the project is based on a previous [Spring WS tutorial]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
+The setup of the sample is based on a previous [Spring WS tutorial]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-There are two additional dependencies that we need to add to the Maven POM file in order for our example to work.
+There are two additional dependencies that we need to add to the Maven POM file in order for this example to work.
 
 The first one is `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters){:target="_blank"} dependency which will be used for the server setup. The second one is the Apache `httpclient` dependency that we need for the client setup part.
 
@@ -210,17 +211,25 @@ public class ClientConfig {
 
 # Setup Server Basic Authentication
 
-The Spring Boot security starter that we added to our Maven setup has a dependency on Spring Security. If Spring Security is on the classpath then [web applications will be secured by default with HTTP basic authentication](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security){:target="_blank"} on all HTTP endpoints. In other words our, `TicketAgentEndpoint` is now secured with basic auth.
+The Spring Boot security starter that was added to our Maven setup has a dependency on Spring Security. If Spring Security is on the classpath then [web applications will automatically be secured with HTTP basic authentication](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security){:target="_blank"} on all HTTP endpoints. In other words our, `TicketAgentEndpoint` is now secured with basic auth.
 
-The default user that will be configured has as name <var>'user'</var>. The password is randomly generated at startup.
+The default user that will be configured has as name <var>'user'</var>. The password is randomly generated at startup (it is displayed in the startup logs).
 
-Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} in your application properties file. In this example we set the <var>'user'</var> to <kbd>"codenotfound"</kbd> and the <var>'password'</var> to <kbd>"p455w0rd"</kbd> using the YAML variant as shown below. 
+Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} in the application properties file. In this example we set the <var>'user'</var> to <kbd>"codenotfound"</kbd> and the <var>'password'</var> to <kbd>"p455w0rd"</kbd> in <var>application.yml</var> using the YAML variant as shown below.
 
-``` yml
+``` yaml
+client:
+  user:
+    name: codenotfound
+    password: p455w0rd
+
 security:
   user:
     name: codenotfound
     password: p455w0rd
+
+server:
+  port: 9090
 ```
 
 # Testing the Basic Authentication Configuration
@@ -260,7 +269,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
-Now change the password in the <var>application.yml</var> file to a different value and rerun the test case. This time the test case will fail as a <var>401 Unauthorized</var> is returned by our service.
+Now change the password in the <var>application.yml</var> file to a different value and rerun the test case. This time the test case will fail as a <var>401 Unauthorized</var> is returned by our server.
 
 ``` plaintext
   .   ____          _            __ _ _
