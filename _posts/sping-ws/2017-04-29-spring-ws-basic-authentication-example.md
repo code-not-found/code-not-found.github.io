@@ -218,18 +218,10 @@ The default user that will be configured has as name <var>'user'</var>. The pass
 Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} in the application properties file. In this example we set the <var>'user'</var> to <kbd>"codenotfound"</kbd> and the <var>'password'</var> to <kbd>"p455w0rd"</kbd> in <var>application.yml</var> using the YAML variant as shown below.
 
 ``` yaml
-client:
-  user:
-    name: codenotfound
-    password: p455w0rd
-
 security:
   user:
     name: codenotfound
     password: p455w0rd
-
-server:
-  port: 9090
 ```
 
 # Testing the Basic Authentication Configuration

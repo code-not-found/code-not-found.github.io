@@ -24,6 +24,10 @@ modified: 2017-07-21
 
 * [ Apache CXF - SOAP Header Example]({{ site.url }}/apache-cxf-soap-header-example.html)
 
+## Security
+
+* [Apache CXF - Basic Authentication Example]({{ site.url }}/apache-cxf-basic-authentication-example.html)
+
 ## Logging
 
 * [Apache CXF - Logging SOAP Request Response Fault Messages Example]({{ site.url }}/apache-cxf-logging-soap-request-response-fault-messages-example.html)
