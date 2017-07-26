@@ -261,7 +261,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
-Now change the password in the <var>application.yml</var> file to a different value and rerun the test case. This time the test case will fail as a <var>401 Unauthorized</var> is returned by our server.
+Now change the password in the <var>application.yml</var> file to a different value and rerun the test case. This time the test case will fail as a <var>'401 Unauthorized'</var> is returned by our server.
 
 ``` plaintext
   .   ____          _            __ _ _
