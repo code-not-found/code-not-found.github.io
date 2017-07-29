@@ -328,7 +328,7 @@ public class ReceiverConfig {
 
 An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) for more detailed information on this topic. As the embedded broker is started on a random port, we override <var>'bootstrap-servers'</var> property with this value via `setProperty()`.
 
-Using @Before we wait until all the partitions are assigned to our Receiver by looping over the available ConcurrentMessageListenerContainer (if we don’t do this the message might already be sent before the listeners are assigned to the topic).
+Using @Before we wait until all the partitions are assigned to our Receiver by looping over the available ConcurrentMessageListenerContainer (if we don't do this the message might already be sent before the listeners are assigned to the topic).
 
 > Below test case can also be executed after you [install kafka and zookeeper]({{ site.url }}/2016/09/apache-kafka-download-installation.html) on your local system. You just need to comment out the lines annotated with `@ClassRule` and `@BeforeClass`.
 
