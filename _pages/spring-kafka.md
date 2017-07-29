@@ -14,7 +14,7 @@ The [Spring for Apache Kafka project](https://projects.spring.io/spring-kafka/){
 
 ## Quick Start
 
-* [Spring Kafka - Consumer &amp; Producer Example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html)
+* [Spring Kafka - Consumer Producer Example]({{ site.url }}/spring-kafka-consumer-producer-example.html)
 * [Spring Kafka - Spring Boot Example]({{ site.url }}/2017/04/spring-kafka-boot-example.html)
 
 ## Concepts
