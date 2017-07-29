@@ -137,7 +137,7 @@ For sending messages we will be using the `KafkaTemplate` which wraps a `Produce
 
 In the `Sender` class, the `KafkaTemplate` is auto-wired as the creation will be done further below in a separate `SenderConfig` class.
 
-For this example we will use the `send()` method that takes as input a topic name and the `String` payload that needs to be sent. By default, the template is configured with a `LoggingProducerListener` which logs errors and does nothing when the send is successful.
+For this example we will use the `send()` method that takes as input a topic name and the `String` payload that needs to be sent.
 
 > Note that a Kafka broker by default auto-creates a topic when it receives a request for an unknown topic.
 
@@ -165,7 +165,9 @@ public class Sender {
 
 The creation of the `KafkaTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
-In order to be able to use the Spring Kafka template, we need to configure a `ProducerFactory` and provide it in the template's constructor. The producer factory needs to be set with a number of mandatory properties amongst which the <var>'BOOTSTRAP_SERVERS_CONFIG'</var> property that specifies a list of host:port pairs used for establishing the initial connections to the Kafka cluster. Note that the value configurable as it is fetched from the <var>application.yml</var> configuration file.
+In order to be able to use the Spring Kafka template, we need to configure a `ProducerFactory` and provide it in the template's constructor.
+
+The producer factory needs to be set with a number of mandatory properties amongst which the <var>'BOOTSTRAP_SERVERS_CONFIG'</var> property that specifies a list of host:port pairs used for establishing the initial connections to the Kafka cluster. Note that this value is configurable as it is fetched from the <var>application.yml</var> configuration file.
 
 A message in Kafka is a key-value pair with a small amount of associated metadata. As Kafka stores and transports `Byte` arrays, we need to specify the format from which the key and value will be serialized. In this example we are sending a `String` as payload, as such we specify the `StringSerializer` class which will take care of the needed transformation.
 
@@ -224,7 +226,9 @@ public class SenderConfig {
 
 Like with any messaging-based application, you need to create a receiver that will handle the published messages. The `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In the below example we named the method `receive()`, but you can name it anything you like.
 
-The `@KafkaListener` annotation creates a message listener container behind the scenes for each annotated method, using a `ConcurrentMessageListenerContainer`. By default, a bean with name `kafkaListenerContainerFactory` is expected that we will setup in the next section. Using the `topics` element, we specify the topics for this listener. Note that the topic name is injected from the <var>application.yml</var> properties file located in <var>src/main/resources</var>.
+The `@KafkaListener` annotation creates a message listener container behind the scenes for each annotated method, using a `ConcurrentMessageListenerContainer`. By default, a bean with name `kafkaListenerContainerFactory` is expected that we will setup in the next section.
+
+Using the `topics` element, we specify the topics for this listener. The name of the topic is injected from the <var>application.yml</var> properties file located in <var>src/main/resources</var>.
 
 For more information on the other available elements on the `KafkaListener`, you can consult the [API documentation](http://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html){:target="_blank"}.
 
@@ -261,7 +265,7 @@ The creation and configuration of the different Spring Beans needed for the `Rec
 
 The `kafkaListenerContainerFactory()` is used by the `@KafkaListener` annotation from the `Receiver`. In order to create it, a `ConsumerFactory` and accompanying configuration `Map` is needed.
 
-In this example, a number of mandatory properties are set amongst which the initial connection and deserializer parameters. We also specify a <var>GROUP_ID_CONFIG</var> which allows to [identify the group this consumer belongs to](https://stackoverflow.com/a/41377616/4201470){:target="_blank"}. Messages will effectively be load balanced over the consumer instances that have the same group id.
+In this example, a number of mandatory properties are set amongst which the initial connection and deserializer parameters. We also specify a <var>'GROUP_ID_CONFIG'</var> which allows to [identify the group this consumer belongs to](https://stackoverflow.com/a/41377616/4201470){:target="_blank"}. Messages will effectively be load balanced over consumer instances that have the same group id.
 
 For a complete list of the other configuration parameters, you can consult the [Kafka ConsumerConfig API](https://kafka.apache.org/0102/javadoc/index.html?org/apache/kafka/clients/consumer/ConsumerConfig.html){:target="_blank"}.
 
@@ -326,9 +330,9 @@ public class ReceiverConfig {
 
  A basic `SpringKafkaApplicationTest` is provided in order to verify that we are able to send and receive a message to and from Apache Kafka. It contains a `testReceiver()` unit test case that uses the `Sender` bean to send a message to the <var>'helloworld.t'</var> topic on the Kafka bus. We then check the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
-An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) for more detailed information on this topic. As the embedded broker is started on a random port, we override <var>'bootstrap-servers'</var> property with this value via `setProperty()`.
+An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) for more detailed information on this topic. As the embedded broker is started on a random port, we override <var>'bootstrap-servers'</var> property via `setProperty()`.
 
-Using @Before we wait until all the partitions are assigned to our Receiver by looping over the available ConcurrentMessageListenerContainer (if we don't do this the message might already be sent before the listeners are assigned to the topic).
+Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message might already be sent before the listeners are assigned to the topic).
 
 > Below test case can also be executed after you [install kafka and zookeeper]({{ site.url }}/2016/09/apache-kafka-download-installation.html) on your local system. You just need to comment out the lines annotated with `@ClassRule` and `@BeforeClass`.
 
