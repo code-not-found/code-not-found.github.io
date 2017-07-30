@@ -46,8 +46,8 @@ We start by adding the `spring-kafka-test` dependency to the Maven POM file in a
   <version>0.0.1-SNAPSHOT</version>
 
   <name>spring-kafka-test</name>
-  <description>Spring-Kafka - Test Example</description>
-  <url>https://www.codenotfound.com/spring-kafka-test-example.html</url>
+  <description>Spring Kafka - Embedded Unit Test Example</description>
+  <url>https://www.codenotfound.com/spring-kafka-embedded-unit-test-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -106,11 +106,11 @@ The message consumer and producer classes from the Hello World example are uncha
 
 The `KafkaEmbedded` constructor takes as parameters: the number of Kafka servers to start, whether a controlled shutdown is needed and the topics that need to be created on the server.
 
-> Always pass the topics as a parameter to the embedded Kafka server. This assures that the topic is not auto-created and present when the `MessageListener` connects.
+> Always pass the topics as a parameter to the embedded Kafka server. This assures that the topics are not auto-created and present when the `MessageListener` connects.
 
 As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the <var>'kafka.bootstrap-servers'</var> property before the tests are started.
 
-> In order to have the correct broker address set on the `Sender` and `Receiver` beans during each test case we need to use the `@DirtiesContext` on all test classes. The reason for this is that each test case contains it own embedded Kafka broker that will each time be created on a new random port. By rebuilding the application context the beans will always be set with the current broker address.
+> In order to have the correct broker address set on the `Sender` and `Receiver` beans during each test case we need to use the `@DirtiesContext` on all test classes. The reason for this is that each test case contains its own embedded Kafka broker that will each time be created on a new random port. By [rebuilding the application context](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/integration-testing.html#__dirtiescontext){:target="_blank"}, the beans will always be set with the current broker address.
 
 The below snippet shows how the embedded Kafa is defined for each test class.
 
