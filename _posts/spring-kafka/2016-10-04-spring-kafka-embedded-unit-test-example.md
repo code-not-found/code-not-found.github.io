@@ -98,9 +98,9 @@ We start by adding the `spring-kafka-test` dependency to the Maven POM file in a
 </project>
 ```
 
-The message consumer and producer classes from the Hello World example are unchanged so we won't go into detail explaining them. You can check out the [Spring Kafka tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) for more details.
+The message consumer and producer classes from the Hello World example are unchanged so we won't go into detail explaining them. You can check out the [Spring Kafka tutorial]({{ site.url }}/spring-kafka-consumer-producer-example.html) for more details.
 
-# Unit Testing with an Embedded Kafka Broker
+# Unit Testing with an Embedded Kafka
 
 `spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/){:target="_blank"} and [Kafka](https://kafka.apache.org/){:target="_blank"} server instance on a random port before all the test cases are run, and stops the instances once the test cases are finished.
 
@@ -110,9 +110,9 @@ The `KafkaEmbedded` constructor takes as parameters: the number of Kafka servers
 
 As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the <var>'kafka.bootstrap-servers'</var> property before the tests are started.
 
-> In order to have the correct broker address set on the `Sender` and `Receiver` beans during each test case we need to use the `@DirtiesContext` on all test classes. The reason for this is that each test case contains its own embedded Kafka broker that will each time be created on a new random port. By [rebuilding the application context](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/integration-testing.html#__dirtiescontext){:target="_blank"}, the beans will always be set with the current broker address.
+> In order to have the correct broker address set on the `Sender` and `Receiver` beans during each test case we need to use the `@DirtiesContext` on all test classes. The reason for this is that each test case contains its own embedded Kafka broker that will each be created on a new random port. By [rebuilding the application context](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/integration-testing.html#__dirtiescontext){:target="_blank"}, the beans will always be set with the current broker address.
 
-The below snippet shows how the embedded Kafa is defined for each test class.
+The below snippet shows how the embedded Kafa is defined in each test class.
 
 ``` java
   @ClassRule
@@ -126,11 +126,13 @@ The below snippet shows how the embedded Kafa is defined for each test class.
 
 # Testing the Producer
 
-In the `SpringKafkaSenderTest` test case we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify the correct sending by setting up a _test-listener_ on the topic. All of the setup will be done before the test case runs using the `@Before` annotation.
+In the `SpringKafkaSenderTest` test case we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify whether the sending works by setting up a _test-listener_ on the topic. All of the setup will be done before the test case runs using the `@Before` annotation.
 
-For creating the needed consumer properties a static `consumerProps()` method provided by `KafkaUtils` is used. We then create a `DefaultKafkaConsumerFactory` and `ContainerProperties` which contains runtime properties (in this case the topic name) for the listener container. Both are then used to set up the `KafkaMessageListenerContainer`.
+For creating the needed consumer properties a static `consumerProps()` method provided by `KafkaUtils` is used. We then create a `DefaultKafkaConsumerFactory` and `ContainerProperties` which contains runtime properties (in this case the topic name) for the listener container. Both are then passed to the `KafkaMessageListenerContainer` constructor.
 
-Received messages need to be stored somewhere. In this example, a thread safe `BlockingQueue` is used. We create a new `MessageListener` and in the `onMessage()` method we add the received message to the `BlockingQueue`. The listener is started by starting the container.
+Received messages need to be stored somewhere. In this example, a thread safe `BlockingQueue` is used. We create a new `MessageListener` and in the `onMessage()` method we add the received message to the `BlockingQueue`.
+
+> The listener is started by starting the container.
 
 In order to avoid that we send a message before the container has required the number of assigned partitions, we use the `waitForAssignment()` method on the `ContainerTestUtils` helper class.
 
@@ -138,7 +140,7 @@ The actual unit test itself consists out of sending a greeting and asserting tha
 
 The Spring Kafka Test JAR ships with a number of [Hamcrest Matchers](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#_hamcrest_matchers){:target="_blank"} that allow checking if the key, value or partition of a received message matches with an expected value. In the below unit test we use a `Matcher` to check the value of the received message.
 
-The JAR also includes some [AssertJ conditions](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#_assertj_conditions){:target="_blank"} that allow asserting if a received message contains a specific key, value or partition that matches with an expected value. We illustrate the usage of such a condition by asserting that the key of the received message is `null`.
+The JAR also includes some [AssertJ conditions](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#_assertj_conditions){:target="_blank"} that allow asserting if a received message contains a specific key, value or partition. We illustrate the usage of such a condition by asserting that the key of the received message is `null`.
 
 > For both the Hamcrest matchers and AssertJ conditions, make sure the static imports have been specified.
 
@@ -261,13 +263,13 @@ public class SpringKafkaSenderTest {
 
 # Testing the Consumer
 
-The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> properties file. In order to check the correct working, we will use a _test-template_ to send a message to this topic. All of the setup will be done before the test case runs using the `@Before` annotation.
+The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> properties file. In order to check the correct working, we use a _test-template_ to send a message to this topic. All of the setup will be done before the test case runs using the `@Before` annotation.
 
 The producer properties are created using the static `senderProps()` method provided by `KafkaUtils`. These properties are then used to create a `DefaultKafkaProducerFactory` which is in turn used to create a `KafkaTemplate`. Finally we set the default topic that the template uses to <var>'receiver.t'</var>.
 
 We need to ensure that the `Receiver` is initialized before sending the test message. For this we use the `waitForAssignment()` method of `ContainerTestUtils`. The link to the message listener container is acquired by auto-wiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually.
 
-> Note that if you do not manually create the topics using the `KafkaEmbedded` constructor you need to manually set the partitions per topic to 1 in the `waitForAssignment()` method instead of getting the partitions from the embedded Kafka server. The reason for this is that [it looks like 1 is used as a default for the number of partitions in case topics are created implicitly](http://stackoverflow.com/a/38660145/4201470){:target="_blank"}. 
+> Note that if you do not create the topics using the `KafkaEmbedded` constructor you need to manually set the partitions per topic to 1 in the `waitForAssignment()` method instead of getting the partitions from the embedded Kafka server. The reason for this is that [it looks like 1 is used as a default for the number of partitions](http://stackoverflow.com/a/38660145/4201470){:target="_blank"} in case topics are created implicitly. 
 
 In the test, we send a greeting and check that the message was received by asserting that the latch of the `Receiver` was lowered to zero.
 
@@ -380,14 +382,14 @@ Maven will download the needed dependencies, compile the code and run the unit t
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.4.RELEASE)
 
-12:44:09.055 [main] INFO  c.c.k.c.SpringKafkaReceiverTest - Starting SpringKafkaReceiverTest on cnf-pc with PID 4568 (started by CodeNotFound in c:\codenotfound\code\spring-kafka\spring-kafka-test)
-12:44:09.055 [main] DEBUG c.c.k.c.SpringKafkaReceiverTest - Running with Spring Boot v1.5.4.RELEASE, Spring v4.3.9.RELEASE
-12:44:09.056 [main] INFO  c.c.k.c.SpringKafkaReceiverTest - No active profile set, falling back to default profiles: default
-12:44:09.720 [main] INFO  c.c.k.c.SpringKafkaReceiverTest - Started SpringKafkaReceiverTest in 0.93 seconds (JVM running for 5.004)
-12:44:11.176 [main] DEBUG c.c.k.c.SpringKafkaReceiverTest - test-sender sent message='Hello Spring Kafka Receiver!'
-12:44:11.202 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  c.c.kafka.consumer.Receiver - received payload='Hello Spring Kafka Receiver!'
-12:44:13.478 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.217 sec - in com.codenotfound.kafka.consumer.SpringKafkaReceiverTest
+20:48:03.077 [main] INFO  c.c.k.c.SpringKafkaReceiverTest - Starting SpringKafkaReceiverTest on cnf-pc with PID 6036 (started by CodeNotFound in c:\codenotfound\code\spring-kafka\spring-kafka-test-embedded)
+20:48:03.077 [main] DEBUG c.c.k.c.SpringKafkaReceiverTest - Running with Spring Boot v1.5.4.RELEASE, Spring v4.3.9.RELEASE
+20:48:03.079 [main] INFO  c.c.k.c.SpringKafkaReceiverTest - No active profile set, falling back to default profiles: default
+20:48:03.758 [main] INFO  c.c.k.c.SpringKafkaReceiverTest - Started SpringKafkaReceiverTest in 0.971 seconds (JVM running for 5.136)
+20:48:05.205 [main] DEBUG c.c.k.c.SpringKafkaReceiverTest - test-sender sent message='Hello Spring Kafka Receiver!'
+20:48:05.231 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  c.c.kafka.consumer.Receiver - received payload='Hello Spring Kafka Receiver!'
+20:48:06.213 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.979 sec - in com.codenotfound.kafka.consumer.SpringKafkaReceiverTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -397,15 +399,15 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.217 sec - in c
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.4.RELEASE)
 
-12:44:14.809 [main] INFO  c.c.k.producer.SpringKafkaSenderTest - Starting SpringKafkaSenderTest on cnf-pc with PID 4568 (started by CodeNotFound in c:\codenotfound\code\spring-kafka\spring-kafka-test)
-12:44:14.810 [main] DEBUG c.c.k.producer.SpringKafkaSenderTest - Running with Spring Boot v1.5.4.RELEASE, Spring v4.3.9.RELEASE
-12:44:14.810 [main] INFO  c.c.k.producer.SpringKafkaSenderTest - No active profile set, falling back to default profiles: default
-12:44:15.003 [main] INFO  c.c.k.producer.SpringKafkaSenderTest - Started SpringKafkaSenderTest in 0.249 seconds (JVM running for 10.287)
-12:44:15.026 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN  o.apache.kafka.clients.NetworkClient - Error while fetching metadata with correlation id 2 : {receiver.t=LEADER_NOT_AVAILABLE}
-12:44:16.213 [main] INFO  c.codenotfound.kafka.producer.Sender - sending payload='Hello Spring Kafka Sender!' to topic='sender.t'
-12:44:16.229 [-L-1] DEBUG c.c.k.producer.SpringKafkaSenderTest - test-listener received message='ConsumerRecord(topic = sender.t, partition = 1, offset = 0, CreateTime = 1501411456221, checksum = 3207139864, serialized key size = -1, serialized value size = 26, key = null, value = Hello Spring Kafka Sender!)'
-12:44:18.568 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.047 sec - in com.codenotfound.kafka.producer.SpringKafkaSenderTest
+20:48:07.526 [main] INFO  c.c.k.producer.SpringKafkaSenderTest - Starting SpringKafkaSenderTest on cnf-pc with PID 6036 (started by CodeNotFound in c:\codenotfound\code\spring-kafka\spring-kafka-test-embedded)
+20:48:07.526 [main] DEBUG c.c.k.producer.SpringKafkaSenderTest - Running with Spring Boot v1.5.4.RELEASE, Spring v4.3.9.RELEASE
+20:48:07.526 [main] INFO  c.c.k.producer.SpringKafkaSenderTest - No active profile set, falling back to default profiles: default
+20:48:07.721 [main] INFO  c.c.k.producer.SpringKafkaSenderTest - Started SpringKafkaSenderTest in 0.252 seconds (JVM running for 9.1)
+20:48:07.743 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] WARN  o.apache.kafka.clients.NetworkClient - Error while fetching metadata with correlation id 2 : {receiver.t=LEADER_NOT_AVAILABLE}
+20:48:08.933 [main] INFO  c.codenotfound.kafka.producer.Sender - sending payload='Hello Spring Kafka Sender!' to topic='sender.t'
+20:48:08.948 [-L-1] DEBUG c.c.k.producer.SpringKafkaSenderTest - test-listener received message='ConsumerRecord(topic = sender.t, partition = 1, offset = 0, CreateTime = 1501440488941, checksum = 2655582397, serialized key size = -1, serialized value size = 26, key = null, value = Hello Spring Kafka Sender!)'
+20:48:12.425 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.241 sec - in com.codenotfound.kafka.producer.SpringKafkaSenderTest
 
 Results :
 
@@ -414,9 +416,9 @@ Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 16.321 s
-[INFO] Finished at: 2017-07-30T12:44:19+02:00
-[INFO] Final Memory: 16M/226M
+[INFO] Total time: 17.895 s
+[INFO] Finished at: 2017-07-30T20:48:14+02:00
+[INFO] Final Memory: 27M/218M
 [INFO] ------------------------------------------------------------------------
 ```
 
