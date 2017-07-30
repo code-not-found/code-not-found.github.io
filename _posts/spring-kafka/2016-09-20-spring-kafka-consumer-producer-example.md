@@ -343,7 +343,7 @@ public class ReceiverConfig {
  
  We then check the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
-An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/spring-kafka-test-example.html) for more detailed information on this topic. As the embedded broker is started on a random port, we override <var>'bootstrap-servers'</var> property via `setProperty()`.
+An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/spring-kafka-embedded-unit-test-example.html) for more detailed information on this topic. As the embedded server is started on a random port, we override <var>'bootstrap-servers'</var> property via `setProperty()`.
 
 Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message might already be sent before the listeners are assigned to the topic).
 

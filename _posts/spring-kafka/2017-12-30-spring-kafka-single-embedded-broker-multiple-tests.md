@@ -1,6 +1,6 @@
 ---
-title: "Spring Kafka - Embedded Server Unit Test"
-permalink: /spring-kafka-embedded-server-unit-test.html
+title: "Spring Kafka - Single Embedded Broker for Multiple Tests"
+permalink: /spring-kafka-single-embedded-broker-multiple-tests.html
 excerpt: "A detailed step-by-step tutorial on how to test your application using an embedded Apache Kafka server together with Spring Kafka and Spring Boot."
 date: 2016-10-04
 modified: 2016-10-04
@@ -8,9 +8,6 @@ header:
   teaser: "assets/images/teaser/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit]
-redirect_from:
-  - /2016/09/spring-kafka-embedded-kafka-test-example.html
-  - /2016/10/spring-kafka-embedded-server-unit-test.html
 published: false
 ---
 

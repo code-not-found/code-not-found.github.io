@@ -1,16 +1,17 @@
 ---
-title: "Spring Kafka - Test Example"
-permalink: /spring-kafka-test-example.html
-excerpt: "A detailed step-by-step tutorial on how to test your Spring Kafka application together with Spring Boot and Maven."
+title: "Spring Kafka - Embedded Unit Test Example"
+permalink: /spring-kafka-embedded-unit-test-example.html
+excerpt: "A detailed step-by-step tutorial on how to unit test your Spring Kafka application using an embedded server."
 date: 2016-10-04
 modified: 2016-10-04
 header:
   teaser: "assets/images/teaser/spring-kafka-teaser.png"
 categories: [Spring Kafka]
-tags: [Apache Kafka, Embedded, Example, Maven, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit]
+tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit]
 redirect_from:
   - /2016/09/spring-kafka-embedded-kafka-test-example.html
   - /2016/10/spring-kafka-embedded-server-unit-test.html
+  - /spring-kafka-test-example.html
 published: true
 ---
 
@@ -18,9 +19,9 @@ published: true
     <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-The [Spring Kafka project](https://projects.spring.io/spring-kafka/){:target="_blank"} comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#testing){:target="_blank"}. to assist you with your application testing. These include: an embedded Kafka server, some static methods to setup consumers/producers and utility methods to fetch results
+The [Spring Kafka project](https://projects.spring.io/spring-kafka/){:target="_blank"} comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#testing){:target="_blank"} to assist you with your application unit testing. These include: an embedded Kafka server, some static methods to setup consumers/producers and utility methods to fetch results.
 
-Let's demonstrate how above can be used with a code sample. We will start from the [Spring Kafka Maven project]({{ site.url }}/spring-kafka-consumer-producer-example.html) from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot, and Maven.
+Let's demonstrate how these test utilities can be used with a code sample. We will start from the [Spring Kafka Maven project]({{ site.url }}/spring-kafka-consumer-producer-example.html) from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot, and Maven.
 
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
@@ -99,11 +100,11 @@ We start by adding the `spring-kafka-test` dependency to the Maven POM file in a
 
 The message consumer and producer classes from the Hello World example are unchanged so we won't go into detail explaining them. You can check out the [Spring Kafka tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) for more details.
 
-# Unit Testing with an Embedded Kafka Server
+# Unit Testing with an Embedded Kafka Broker
 
 `spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/){:target="_blank"} and [Kafka](https://kafka.apache.org/){:target="_blank"} server instance on a random port before all the test cases are run, and stops the instances once the test cases are finished.
 
-The `KafkaEmbedded` constructor takes as parameters: the number of Kafka brokers to start, whether a controlled shutdown is needed and the topics that need to be created on the broker.
+The `KafkaEmbedded` constructor takes as parameters: the number of Kafka servers to start, whether a controlled shutdown is needed and the topics that need to be created on the server.
 
 > Always pass the topics as a parameter to the embedded Kafka server. This assures that the topic is not auto-created and present when the `MessageListener` connects.
 
@@ -141,7 +142,7 @@ The JAR also includes some [AssertJ conditions](http://docs.spring.io/spring-kaf
 
 > For both the Hamcrest matchers and AssertJ conditions, make sure the static imports have been specified.
 
-> Note the `@DirtiesContext` annotation that ensures the correct Kafka broker is set as explained above.
+> Note the `@DirtiesContext` annotation that ensures the correct Kafka broker address is set as explained above.
 
 ``` java
 package com.codenotfound.kafka.producer;
