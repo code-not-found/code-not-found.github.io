@@ -33,7 +33,7 @@ The [Spring for Apache Kafka project](https://projects.spring.io/spring-kafka/){
 
 ## Testing
 
-* [Spring Kafka - Test Example]({{ site.url }}/spring-kafka-test-example.html)
+* [Spring Kafka - Embedded Unit Test Example]({{ site.url }}/spring-kafka-embedded-unit-test-example.html)
 
 ## Setup
 

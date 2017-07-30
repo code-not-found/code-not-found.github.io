@@ -21,7 +21,7 @@ published: true
 
 The [Spring Kafka project](https://projects.spring.io/spring-kafka/){:target="_blank"} comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#testing){:target="_blank"} to assist you with your application unit testing. These include: an embedded Kafka server, some static methods to setup consumers/producers and utility methods to fetch results.
 
-Let's demonstrate how these test utilities can be used with a code sample. We will start from the [Spring Kafka Maven project]({{ site.url }}/spring-kafka-consumer-producer-example.html) from a previous post in which we created a consumer and producer using Spring Kafka, Spring Boot, and Maven.
+Let's demonstrate how these test utilities can be used with a code sample. We will start from a previous [Spring Kafka Maven project]({{ site.url }}/spring-kafka-consumer-producer-example.html) in which we created a consumer and producer using Spring Kafka, Spring Boot, and Maven.
 
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
