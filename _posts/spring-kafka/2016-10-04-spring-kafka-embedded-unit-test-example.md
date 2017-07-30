@@ -19,7 +19,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-The [Spring Kafka project](https://projects.spring.io/spring-kafka/){:target="_blank"} comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#testing){:target="_blank"} to assist you with your application unit testing. These include: an embedded Kafka server, some static methods to setup consumers/producers and utility methods to fetch results.
+The [Spring Kafka project](https://projects.spring.io/spring-kafka/){:target="_blank"} comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#testing){:target="_blank"} to assist you with your application unit testing. These include an embedded Kafka server, some static methods to setup consumers/producers and utility methods to fetch results.
 
 Let's demonstrate how these test utilities can be used with a code sample. We will start from a previous [Spring Kafka Maven project]({{ site.url }}/spring-kafka-consumer-producer-example.html) in which we created a consumer and producer using Spring Kafka, Spring Boot, and Maven.
 
@@ -426,10 +426,10 @@ Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-test).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-kafka/tree/master/spring-kafka-test-embedded).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes our example in which we test sending and receiving from Spring Kafka by starting an embedded Kafka server.
+This concludes our example in which we unit test sending and receiving from Spring Kafka by starting an embedded Kafka server.
 
 Feel free to drop a line in case of any questions or if you found this post helpful.
