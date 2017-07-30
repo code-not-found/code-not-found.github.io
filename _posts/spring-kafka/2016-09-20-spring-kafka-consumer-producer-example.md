@@ -131,9 +131,18 @@ public class SpringKafkaApplication {
 
 > This example will send/receive a simple `String`. If you would like to send more complex objects you could for example use an [Avro Kafka serializer]({{ site.url }}/2017/03/spring-kafka-apache-avro-example.html) or the [Kafka Jsonserializer]({{ site.url }}/2017/03/spring-kafka-json-serializer-example.html) that ships with Spring Kafka.
 
+We also create an <var>application.yml</var> [YAML](http://yaml.org/) properties file under <var>src/main/resources</var>. Properties from this file will be [injected by Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config){:target="_blank"} into our configuration beans using the `@Value` annotation.
+
+``` yaml
+kafka:
+  bootstrap-servers: localhost:9092
+  topic:
+    helloworld: helloworld.t
+```
+
 # Create a Spring Kafka Message Producer
 
-For sending messages we will be using the `KafkaTemplate` which wraps a `Producer` and provides [convenience methods](http://docs.spring.io/spring-kafka/docs/current/reference/htmlsingle/#_kafkatemplate){:target="_blank"} to send data to Kafka topics. The template provides asynchronous send methods which return a `Future`.
+For sending messages we will be using the `KafkaTemplate` which wraps a `Producer` and provides [convenience methods](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#_kafkatemplate){:target="_blank"} to send data to Kafka topics. The template provides asynchronous send methods which return a `Future`.
 
 In the `Sender` class, the `KafkaTemplate` is auto-wired as the creation will be done further below in a separate `SenderConfig` class.
 
@@ -228,7 +237,7 @@ Like with any messaging-based application, you need to create a receiver that wi
 
 The `@KafkaListener` annotation creates a message listener container behind the scenes for each annotated method, using a `ConcurrentMessageListenerContainer`. By default, a bean with name `kafkaListenerContainerFactory` is expected that we will setup in the next section.
 
-Using the `topics` element, we specify the topics for this listener. The name of the topic is injected from the <var>application.yml</var> properties file located in <var>src/main/resources</var>.
+Using the `topics` element, we specify the topics for this listener. The name of the topic is injected from the <var>application.yml</var> properties file.
 
 For more information on the other available elements on the `KafkaListener`, you can consult the [API documentation](http://docs.spring.io/spring-kafka/api/org/springframework/kafka/annotation/KafkaListener.html){:target="_blank"}.
 
@@ -330,11 +339,11 @@ public class ReceiverConfig {
 
  A basic `SpringKafkaApplicationTest` is provided in order to verify that we are able to send and receive a message to and from Apache Kafka. It contains a `testReceiver()` unit test case that uses the `Sender` bean to send a message to the <var>'helloworld.t'</var> topic on the Kafka bus. We then check the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
-An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) for more detailed information on this topic. As the embedded broker is started on a random port, we override <var>'bootstrap-servers'</var> property via `setProperty()`.
+An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/2016/10/spring-kafka-test-example.html) for more detailed information on this topic. As the embedded broker is started on a random port, we override <var>'bootstrap-servers'</var> property via `setProperty()`.
 
 Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message might already be sent before the listeners are assigned to the topic).
 
-> Below test case can also be executed after you [install kafka and zookeeper]({{ site.url }}/2016/09/apache-kafka-download-installation.html) on your local system. You just need to comment out the lines annotated with `@ClassRule` and `@BeforeClass`.
+> Below test case can also be executed after you [install Kafka and Zookeeper]({{ site.url }}/2016/09/apache-kafka-download-installation.html) on your local system. You just need to comment out the lines annotated with `@ClassRule` and `@BeforeClass`.
 
 ``` java
 package com.codenotfound.kafka;

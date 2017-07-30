@@ -1,20 +1,21 @@
 ---
 title: "Spring Kafka - Embedded Server Unit Test"
-permalink: /2016/10/spring-kafka-embedded-server-unit-test.html
+permalink: /spring-kafka-embedded-server-unit-test.html
 excerpt: "A detailed step-by-step tutorial on how to test your application using an embedded Apache Kafka server together with Spring Kafka and Spring Boot."
 date: 2016-10-04
 modified: 2016-10-04
 header:
-  teaser: "assets/images/spring-kafka-teaser.jpg"
+  teaser: "assets/images/teaser/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit]
 redirect_from:
   - /2016/09/spring-kafka-embedded-kafka-test-example.html
-published: true
+  - /2016/10/spring-kafka-embedded-server-unit-test.html
+published: false
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 The [Spring Kafka project](https://projects.spring.io/spring-kafka/){:target="_blank"} comes with a `spring-kafka-test` JAR that contains a number of [useful utilities](http://docs.spring.io/spring-kafka/docs/1.2.2.RELEASE/reference/html/_reference.html#testing){:target="_blank"}. to assist you with your application testing. These include: an embedded Kafka server, some static methods to setup consumers/producers and utility methods to fetch results
