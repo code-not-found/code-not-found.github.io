@@ -10,6 +10,7 @@ categories: [Apache CXF - JAX-WS]
 tags: [Apache CXF, Client, Consumer, Contract First, CXF, Endpoint, Example, Hello World, Maven, Provider, SOAP, Spring Boot, Tutorial, WSDL]
 redirect_from:
   - /2016/10/cxf-soap-web-service-consumer-provider-wsdl-example.html
+  - /2016/10/cxf-spring-boot-soap-web-service-client-server-example.html
 published: true
 ---
 
