@@ -104,9 +104,9 @@ The message consumer and producer classes from the Hello World example are uncha
 
 `spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/){:target="_blank"} and [Kafka](https://kafka.apache.org/){:target="_blank"} server instance on a random port before all the test cases are run, and stops the instances once the test cases are finished.
 
-The below snippet shows how the embedded Kafa is defined in each test class.
-
 The `KafkaEmbedded` constructor takes as parameters: the number of Kafka servers to start, whether a controlled shutdown is needed and the topics that need to be created on the server.
+
+The below snippet shows how the embedded Kafa is defined in each test class.
 
 ``` java
   @ClassRule
