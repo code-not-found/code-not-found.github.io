@@ -108,7 +108,7 @@ The `KafkaEmbedded` constructor takes as parameters: the number of Kafka servers
 
 > Always pass the topics as a parameter to the embedded Kafka server. This assures that the topics are not auto-created and present when the `MessageListener` connects.
 
-As the embedded server is started on a random port, we need to change the property value that is used by the `SenderConfig` and `ReceiverConfig` classes. This is done by calling the `getBrokersAsString()` method and setting the value to the <var>'kafka.bootstrap-servers'</var> property before the tests are started.
+As the embedded broker is started on a random port, we can't use a fix value in the <var>application.yml</var> properties file. Luckily the `@ClassRule` sets a `spring.embedded.kafka.brokers` system property to the address of the embedded broker(s). We will assign the value of this property to the `kafka.bootstrap-servers` property that is used by the `SenderConfig` and `ReceiverConfig` classes. Since this is only needed during unit testing, we create a dedicated <var>application.yml</var> under <var>src/test/resources</var>.
 
 > In order to have the correct broker address set on the `Sender` and `Receiver` beans during each test case we need to use the `@DirtiesContext` on all test classes. The reason for this is that each test case contains its own embedded Kafka broker that will each be created on a new random port. By [rebuilding the application context](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/integration-testing.html#__dirtiescontext){:target="_blank"}, the beans will always be set with the current broker address.
 
@@ -117,11 +117,15 @@ The below snippet shows how the embedded Kafa is defined in each test class.
 ``` java
   @ClassRule
   public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, "topic");
+```
 
-  @BeforeClass
-  public static void setUpBeforeClass() {
-    System.setProperty("kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
-  }
+The <var>application.yml</var> located in the <var>src/test/resources</var> directory contains following:
+
+``` yaml
+kafka:
+  bootstrap-servers: ${spring.embedded.kafka.brokers}
+  topic:
+    receiver: receiver.t
 ```
 
 # Testing the Producer
