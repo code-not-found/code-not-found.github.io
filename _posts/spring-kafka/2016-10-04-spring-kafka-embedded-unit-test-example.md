@@ -104,22 +104,20 @@ The message consumer and producer classes from the Hello World example are uncha
 
 `spring-kafka-test` includes an embedded Kafka server that can be created via a JUnit `@ClassRule` annotation. The rule will start a [ZooKeeper](https://zookeeper.apache.org/){:target="_blank"} and [Kafka](https://kafka.apache.org/){:target="_blank"} server instance on a random port before all the test cases are run, and stops the instances once the test cases are finished.
 
-The `KafkaEmbedded` constructor takes as parameters: the number of Kafka servers to start, whether a controlled shutdown is needed and the topics that need to be created on the server.
-
-> Always pass the topics as a parameter to the embedded Kafka server. This assures that the topics are not auto-created and present when the `MessageListener` connects.
-
-As the embedded broker is started on a random port, we can't use a fix value in the <var>application.yml</var> properties file. Luckily the `@ClassRule` sets a `spring.embedded.kafka.brokers` system property to the address of the embedded broker(s). We will assign the value of this property to the `kafka.bootstrap-servers` property that is used by the `SenderConfig` and `ReceiverConfig` classes. Since this is only needed during unit testing, we create a dedicated <var>application.yml</var> under <var>src/test/resources</var>.
-
-> In order to have the correct broker address set on the `Sender` and `Receiver` beans during each test case we need to use the `@DirtiesContext` on all test classes. The reason for this is that each test case contains its own embedded Kafka broker that will each be created on a new random port. By [rebuilding the application context](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/integration-testing.html#__dirtiescontext){:target="_blank"}, the beans will always be set with the current broker address.
-
 The below snippet shows how the embedded Kafa is defined in each test class.
+
+The `KafkaEmbedded` constructor takes as parameters: the number of Kafka servers to start, whether a controlled shutdown is needed and the topics that need to be created on the server.
 
 ``` java
   @ClassRule
   public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, "topic");
 ```
 
-The <var>application.yml</var> located in the <var>src/test/resources</var> directory contains following:
+> Always pass the topics as a parameter to the embedded Kafka server. This assures that the topics are not auto-created and present when the `MessageListener` connects.
+
+As the embedded broker is started on a random port, we can't use the fix value in the <var>src/main/resources/application.yml</var> properties file. Luckily the `@ClassRule` sets a `spring.embedded.kafka.brokers` system property to the address of the embedded broker(s). We will assign the value of this property to the `kafka.bootstrap-servers` property that is used by the `SenderConfig` and `ReceiverConfig` classes. Since this is only needed during unit testing, we create a dedicated _test_ <var>application.yml</var> properties file under <var>src/test/resources</var>.
+
+In other words, the <var>application.yml</var> located in the <var>src/test/resources</var> directory contains following:
 
 ``` yaml
 kafka:
@@ -127,6 +125,8 @@ kafka:
   topic:
     receiver: receiver.t
 ```
+
+> In order to have the correct broker address set on the `Sender` and `Receiver` beans during each test case we need to use the `@DirtiesContext` on all test classes. The reason for this is that each test case contains its own embedded Kafka broker that will each be created on a new random port. By [rebuilding the application context](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/integration-testing.html#__dirtiescontext){:target="_blank"}, the beans will always be set with the current broker address.
 
 # Testing the Producer
 
