@@ -1,21 +1,22 @@
 ---
 title: "Spring Kafka - Apache Avro Example"
-permalink: /2017/03/spring-kafka-apache-avro-example.html
+permalink: /spring-kafka-apache-avro-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an Apache Avro Serializer &amp; Deserializer using Spring Kafka and Spring Boot."
 date: 2017-03-16
 modified: 2017-03-16
 header:
-  teaser: "assets/images/spring-kafka-teaser.jpg"
+  teaser: "assets/images/teaser/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache Avro, Avro, Deserializer, Example, Maven, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial]
 redirect_from:
   - /2017/03/spring-kafka-avro-serializer-deserializer.html
   - /2017/03/spring-kafka-avro-example.html
+  - /2017/03/spring-kafka-apache-avro-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 [Apache Avro](https://avro.apache.org/docs/current/){:target="_blank"} is a data serialization system. It uses JSON for defining data types/protocols and serializes data in a compact binary format. In the following tutorial, we will configure, build and run an example in which we will send/receive an Avro message to/from Apache Kafka using Apache Avro, Spring Kafka, Spring Boot and Maven.
@@ -61,7 +62,7 @@ We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spri
 
   <name>spring-kafka-avro</name>
   <description>Spring Kafka - Apache Avro Example</description>
-  <url>https://www.codenotfound.com/2017/03/spring-kafka-apache-avro-example.html</url>
+  <url>https://www.codenotfound.com/spring-kafka-apache-avro-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -73,7 +74,7 @@ We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spri
     <java.version>1.8</java.version>
 
     <spring-kafka.version>1.2.2.RELEASE</spring-kafka.version>
-    <avro.version>1.8.1</avro.version>
+    <avro.version>1.8.2</avro.version>
   </properties>
 
   <dependencies>
@@ -294,7 +295,7 @@ public class Sender {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
 
-  @Value("${topic.avro}")
+  @Value("${kafka.topic.avro}")
   private String avroTopic;
 
   @Autowired
@@ -462,7 +463,7 @@ public class Receiver {
     return latch;
   }
 
-  @KafkaListener(topics = "${topic.avro}")
+  @KafkaListener(topics = "${kafka.topic.avro}")
   public void receive(User user) {
     LOGGER.info("received user='{}'", user.toString());
     latch.countDown();
@@ -472,7 +473,7 @@ public class Receiver {
 
 # Test Sending and Receiving Avro Messages on Kafka
 
-The `SpringKafkaApplicationTest` test case demonstrates the above sample code. [An embedded Kafka and ZooKeeper server are automatically started]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) using a JUnit ClassRule. Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+The `SpringKafkaApplicationTest` test case demonstrates the above sample code. [An embedded Kafka and ZooKeeper server are automatically started]({{ site.url }}/spring-kafka-embedded-unit-test-example.html) using a JUnit `ClassRule`. Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
 In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>'avro.t'</var> topic. Finally, the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
@@ -484,7 +485,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -516,11 +516,6 @@ public class SpringKafkaApplicationTest {
 
   @ClassRule
   public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, "avro.t");
-
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {
-    System.setProperty("kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
-  }
 
   @Before
   public void setUp() throws Exception {
