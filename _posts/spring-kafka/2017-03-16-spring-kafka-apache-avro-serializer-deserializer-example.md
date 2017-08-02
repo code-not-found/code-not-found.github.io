@@ -1,6 +1,6 @@
 ---
-title: "Spring Kafka - Apache Avro Example"
-permalink: /spring-kafka-apache-avro-example.html
+title: "Spring Kafka - Apache Avro Serializer Deserializer Example"
+permalink: /spring-kafka-apache-avro-serializer-deserializer-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an Apache Avro Serializer &amp; Deserializer using Spring Kafka and Spring Boot."
 date: 2017-03-16
 modified: 2017-03-16
@@ -12,6 +12,7 @@ redirect_from:
   - /2017/03/spring-kafka-avro-serializer-deserializer.html
   - /2017/03/spring-kafka-avro-example.html
   - /2017/03/spring-kafka-apache-avro-example.html
+  - /spring-kafka-apache-avro-example.html
 published: true
 ---
 
@@ -61,8 +62,8 @@ We start from a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spri
   <version>0.0.1-SNAPSHOT</version>
 
   <name>spring-kafka-avro</name>
-  <description>Spring Kafka - Apache Avro Example</description>
-  <url>https://www.codenotfound.com/spring-kafka-apache-avro-example.html</url>
+  <description>Spring Kafka - Apache Avro Serializer Deserializer Example</description>
+  <url>https://www.codenotfound.com/spring-kafka-apache-avro-serializer-deserializer-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>

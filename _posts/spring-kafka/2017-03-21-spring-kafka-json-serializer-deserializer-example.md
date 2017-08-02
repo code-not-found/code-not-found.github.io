@@ -1,7 +1,7 @@
 ---
-title: "Spring Kafka - JSON Serializer Example"
-permalink: /spring-kafka-json-serializer-example.html
-excerpt: "A detailed step-by-step tutorial on how to send/receive JSON messages using Spring Kafka and Spring Boot."
+title: "Spring Kafka - JSON Serializer Deserializer Example"
+permalink: /spring-kafka-json-serializer-deserializer-example.html
+excerpt: "A detailed step-by-step tutorial on how to configure a JSON Serializer &amp; Deserializer using Spring Kafka and Spring Boot."
 date: 2017-03-21
 modified: 2017-03-21
 header:
@@ -11,6 +11,7 @@ tags: [Apache Kafka, Example, Maven, JSON, Deserializer, Serializer, Spring, Spr
 redirect_from:
   - /2017/03/spring-kafka-json-example.html
   - /2017/03/spring-kafka-json-serializer-example.html
+  - /spring-kafka-json-serializer-example.html
 published: true
 ---
 
@@ -47,8 +48,8 @@ We base the below example on a previous [Spring Kafka example]({{ site.url }}/sp
   <version>0.0.1-SNAPSHOT</version>
 
   <name>spring-kafka-json</name>
-  <description>Spring Kafka - JSON Serializer Example</description>
-  <url>https://www.codenotfound.com/spring-kafka-json-serializer-example.html</url>
+  <description>Spring Kafka - JSON Serializer Deserializer Example</description>
+  <url>https://www.codenotfound.com/spring-kafka-json-serializer-deserializer-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>

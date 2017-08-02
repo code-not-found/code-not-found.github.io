@@ -31,7 +31,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-We base this example on a previous [Spring Kafka Avro serializer/deserializer example]({{ site.url }}//2017/03/spring-kafka-apache-avro-example.html) in which we used the Avro API's to serialize and deserialize objects. For this code sample, we will be using the Bijection APIs which are a bit easier to use as we will see further down below.
+We base this example on a previous [Spring Kafka Avro serializer/deserializer example]({{ site.url }}/spring-kafka-apache-avro-serializer-deserializer-example.html) in which we used the Avro API's to serialize and deserialize objects. For this code sample, we will be using the Bijection APIs which are a bit easier to use as we will see further down below.
 
 Starting point is again the <var>user.avsc</var> schema from the [Avro getting started guide](https://avro.apache.org/docs/current/gettingstartedjava.html#Defining+a+schema){:target="_blank"}. It describes the fields and their types of a `User` type.
 
