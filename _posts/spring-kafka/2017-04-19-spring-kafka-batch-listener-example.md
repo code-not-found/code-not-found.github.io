@@ -1,21 +1,25 @@
 ---
 title: "Spring Kafka - Batch Listener Example"
-permalink: /2017/04/spring-kafka-batch-listener-example.html
-excerpt: "A detailed step-by-step tutorial on how to implement a Spring Kafka Batch Listener using Spring Boot."
+permalink: /spring-kafka-batch-listener-example.html
+excerpt: "A detailed step-by-step tutorial on how to implement a batch listener using Spring Kafka and Spring Boot."
 date: 2017-04-19
 modified: 2017-04-19
 header:
-  teaser: "assets/images/spring-kafka-teaser.jpg"
+  teaser: "assets/images/teaser/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Batch, Example, Listener, Maven, Spring, Spring Boot, Spring Kafka, Tutorial]
+redirect_from:
+  - /2017/04/spring-kafka-batch-listener-example.html
 published: true
 ---
  
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-[Starting with version 1.1 of Spring Kafka](http://docs.spring.io/spring-kafka/docs/1.1.0.RELEASE/reference/html/whats-new-part.html#_batch_listeners){:target="_blank"}, `@KafkaListener` methods can be configured to receive a batch of consumer records received from the consumer poll. The following example shows how to setup a batch listener using Spring Kafka, Spring Boot, and Maven.
+[Starting with version 1.1](http://docs.spring.io/spring-kafka/docs/1.1.0.RELEASE/reference/html/whats-new-part.html#_batch_listeners){:target="_blank"} of Spring Kafka, `@KafkaListener` methods can be configured to receive a batch of consumer records from the consumer poll operation.
+
+The following example shows how to setup a batch listener using Spring Kafka, Spring Boot, and Maven.
 
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
@@ -27,13 +31,13 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The general project and Sender configuration are identical to a previous [Spring Boot Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html). As such we won't go into detail on how these are setup.
+The general project and `Sender` configuration are identical to a previous [Spring Boot Kafka example]({{ site.url }}/spring-kafka-consumer-producer-example.html). As such we won't go into detail on how these are setup.
 
-# Configuring a Batch Listener
+# Configuring a Batch Listener and Batch Size
 
 Enabling batch receiving of messages can be achieved by setting the `batchListener` property. This is done by calling the `setBatchListener()` method on the listener container factory (`ConcurrentKafkaListenerContainerFactory` in this example) with a value `true` as shown below.
 
-By default, the number of records received in each batch is dynamically calculated. By setting the <var>'MAX_POLL_RECORDS_CONFIG'</var> property on the `ConsumerConfig` we can set an upper limit. For this example, we define a maximum of 10 messages to be returned per poll.
+By default, the number of records received in each batch is dynamically calculated. By setting the <var>'MAX_POLL_RECORDS_CONFIG'</var> property on the `ConsumerConfig` we can set an upper limit for the batch size. For this example, we define a maximum of 10 messages to be returned per poll.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -61,7 +65,6 @@ public class ReceiverConfig {
   @Bean
   public Map<String, Object> consumerConfigs() {
     Map<String, Object> props = new HashMap<>();
-
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -125,7 +128,7 @@ public class Receiver {
     return latch;
   }
 
-  @KafkaListener(id = "batch-listener", topics = "${topic.batch}")
+  @KafkaListener(id = "batch-listener", topics = "${kafka.topic.batch}")
   public void receive(List<String> data,
       @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
       @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
@@ -145,9 +148,11 @@ public class Receiver {
 
 # Testing the Batch Listener
 
-The `SpringKafkaApplicationTest` test case starts an [embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) using a JUnit `ClassRule`. Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+The `SpringKafkaApplicationTest` test case starts an [embedded Kafka and ZooKeeper server]({{ site.url }}/spring-kafka-embedded-server-unit-test.html) using a JUnit `ClassRule`.
 
-The `testReceiver()` method uses a for loop to send out as many messages as were configured on the `CountDownLatch` in the `Receiver`. The result is that our listener starts receiving batches of messages from the Kafka broker partitions (2 partitions are created by default on the embedded broker).
+Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+
+The `testReceiver()` method uses a `for` loop to send out as many messages as were configured on the `CountDownLatch` in the `Receiver`. The result is that our listener starts receiving batches of messages from the Kafka broker partitions (2 partitions are created by default on the embedded broker).
 
 ``` java
 package com.codenotfound.kafka;
@@ -157,7 +162,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -189,11 +193,6 @@ public class SpringKafkaApplicationTest {
 
   @ClassRule
   public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, BATCH_TOPIC);
-
-  @BeforeClass
-  public static void setUpBeforeClass() {
-    System.setProperty("kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
-  }
 
   @Before
   public void setUp() throws Exception {

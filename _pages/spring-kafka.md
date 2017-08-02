@@ -19,7 +19,7 @@ The [Spring for Apache Kafka project](https://projects.spring.io/spring-kafka/){
 
 ## Concepts
 
-* [Spring Kafka - Batch Listener Example]({{ site.url }}/2017/04/spring-kafka-batch-listener-example.html)
+* [Spring Kafka - Batch Listener Example]({{ site.url }}/spring-kafka-batch-listener-example.html)
 
 ## Serializer/Deserializer
 
