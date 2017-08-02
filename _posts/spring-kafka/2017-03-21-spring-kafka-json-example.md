@@ -1,23 +1,24 @@
 ---
 title: "Spring Kafka - JSON Serializer Example"
-permalink: /2017/03/spring-kafka-json-serializer-example.html
+permalink: /spring-kafka-json-serializer-example.html
 excerpt: "A detailed step-by-step tutorial on how to send/receive JSON messages using Spring Kafka and Spring Boot."
 date: 2017-03-21
 modified: 2017-03-21
 header:
-  teaser: "assets/images/spring-kafka-teaser.jpg"
+  teaser: "assets/images/teaser/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Example, Maven, JSON, Deserializer, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial]
 redirect_from:
   - /2017/03/spring-kafka-json-example.html
+  - /2017/03/spring-kafka-json-serializer-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-[JSON](http://www.json.org/) (JavaScript Object Notation){:target="_blank"} is a lightweight data-interchange format that uses human-readable text to transmit data objects. It is built on two structures: a collection of name/value pairs and an ordered list of values.
+[JSON](http://www.json.org/){:target="_blank"} (JavaScript Object Notation) is a lightweight data-interchange format that uses human-readable text to transmit data objects. It is built on two structures: a collection of name/value pairs and an ordered list of values.
 
 The following tutorial illustrates how to send/receive a Java object as a JSON `byte[]` array to/from Apache Kafka using Spring Kafka, Spring Boot and Maven.
 
@@ -33,7 +34,7 @@ Tools used:
 
 [Apache Kafka](https://kafka.apache.org/){:target="_blank"} stores and transports `Byte` arrays in its topics. It ships with a number of [built in (de)serializers](https://kafka.apache.org/0100/javadoc/org/apache/kafka/common/serialization/Serializer.html){:target="_blank"} but a JSON one is not included. Luckily, the [Spring Kafka framework](https://projects.spring.io/spring-kafka/){:target="_blank"} includes a support package that contains a [JSON (de)serializer](https://github.com/spring-projects/spring-kafka/tree/master/spring-kafka/src/main/java/org/springframework/kafka/support/serializer){:target="_blank"} that uses a [Jackson](https://github.com/FasterXML/jackson){:target="_blank"} `ObjectMapper` under the covers.
 
-We base the below example on a previous [Spring Kafka example]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html). The only thing that needs to be added to the Maven POM file for working with JSON is the `spring-boot-starter-web` dependency which will indirectly include the needed `jackson-*` JAR dependencies.
+We base the below example on a previous [Spring Kafka example]({{ site.url }}/spring-kafka-consumer-producer-example.html). The only thing that needs to be added to the Maven POM file for working with JSON is the `spring-boot-starter-web` dependency which will indirectly include the needed `jackson-*` JAR dependencies.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -46,8 +47,8 @@ We base the below example on a previous [Spring Kafka example]({{ site.url }}/20
   <version>0.0.1-SNAPSHOT</version>
 
   <name>spring-kafka-json</name>
-  <description>Spring Kafka - JSON Example</description>
-  <url>https://www.codenotfound.com/2017/03/spring-kafka-json-example</url>
+  <description>Spring Kafka - JSON Serializer Example</description>
+  <url>https://www.codenotfound.com/spring-kafka-json-serializer-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -190,7 +191,6 @@ public class SenderConfig {
   @Bean
   public Map<String, Object> producerConfigs() {
     Map<String, Object> props = new HashMap<>();
-
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
@@ -232,7 +232,7 @@ public class Sender {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Sender.class);
 
-  @Value("${topic.json}")
+  @Value("${kafka.topic.json}")
   private String jsonTopic;
 
   @Autowired
@@ -333,7 +333,7 @@ public class Receiver {
     return latch;
   }
 
-  @KafkaListener(topics = "${topic.json}")
+  @KafkaListener(topics = "${kakfa.topic.json}")
   public void receive(Car car) {
     LOGGER.info("received car='{}'", car.toString());
     latch.countDown();
@@ -343,7 +343,9 @@ public class Receiver {
 
 # Test Sending and Receiving JSON Messages on Kafka
 
-The Maven project contains a `SpringKafkaApplicationTest` test case to demonstrate the above sample code. A JUnit ClassRule [starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html). Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+The Maven project contains a `SpringKafkaApplicationTest` test case to demonstrate the above sample code. A JUnit ClassRule [starts an embedded Kafka and ZooKeeper server]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
+
+Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
 In the `testReceiver()` test case we create a `Car` object and send  it to the <var>'json.t'</var> topic. Finally the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
@@ -355,7 +357,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -387,11 +388,6 @@ public class SpringKafkaApplicationTest {
   @ClassRule
   public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, "json.t");
 
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {
-    System.setProperty("kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
-  }
-
   @Before
   public void setUp() throws Exception {
     // wait until the partitions are assigned
@@ -413,7 +409,7 @@ public class SpringKafkaApplicationTest {
 }
 ```
 
-In order to run the above example open a command prompt and execute following Maven command: 
+In order to run the above example open a command prompt and execute following Maven command:
 
 ``` plaintext
 mvn test
@@ -430,28 +426,13 @@ Maven will download the needed dependencies, compile the code and run the unit t
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.4.RELEASE)
 
-22:11:39.942 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 2760 (started by CodeNotFound in c:\codenotfound\spring-kafka\spring-kafka-json)
-22:11:39.943 [main] DEBUG c.c.kafka.SpringKafkaApplicationTest - Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
-22:11:39.943 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
-22:11:39.978 [main] INFO  o.s.w.c.s.GenericWebApplicationContext - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4cc61eb1: startup date [Sun Apr 16 22:11:39 CEST 2017]; root of context hierarchy
-22:11:40.854 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$26b361b1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-22:11:41.462 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter - Looking for @ControllerAdvice: org.springframework.web.context.support.GenericWebApplicationContext@4cc61eb1: startup date [Sun Apr 16 22:11:39 CEST 2017]; root of context hierarchy
-22:11:41.525 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
-22:11:41.526 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
-22:11:41.559 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-22:11:41.559 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-22:11:41.596 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-22:11:41.773 [main] INFO  o.s.c.s.DefaultLifecycleProcessor - Starting beans in phase 0
-22:11:41.819 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 2.149 seconds (JVM running for 6.241)
-22:11:43.196 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - partitions revoked:[]
-22:11:43.268 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - partitions assigned:[json.t-1, json.t-0]
-22:11:43.320 [main] INFO  c.codenotfound.kafka.producer.Sender - sending car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
-22:11:43.428 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-L-1] INFO  c.c.kafka.consumer.Receiver - received car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
-22:11:46.209 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.965 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
-22:11:47.222 [Thread-8] INFO  o.s.w.c.s.GenericWebApplicationContext - Closing org.springframework.web.context.support.GenericWebApplicationContext@4cc61eb1: startup date [Sun Apr 16 22:11:39 CEST 201
-7]; root of context hierarchy
-22:11:47.227 [Thread-8] INFO  o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 0
+16:38:11.745 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 6116 (started by CodeNotFound in c:\codenotfound\code\spring-kafka\spring-kafka-json)
+16:38:11.745 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
+16:38:13.633 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 2.184 seconds (JVM running for 6.418)
+16:38:15.021 [main] INFO  c.codenotfound.kafka.producer.Sender - sending car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
+16:38:15.115 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  c.c.kafka.consumer.Receiver - received car='Car [make=Passat, manufacturer=Volkswagen, id=ABC-123]'
+16:38:18.391 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.622 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
 
 Results :
 
@@ -460,9 +441,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 43.242 s
-[INFO] Finished at: 2017-04-16T22:12:17+02:00
-[INFO] Final Memory: 17M/226M
+[INFO] Total time: 14.714 s
+[INFO] Finished at: 2017-08-02T16:38:19+02:00
+[INFO] Final Memory: 29M/214M
 [INFO] ------------------------------------------------------------------------
 ```
 
