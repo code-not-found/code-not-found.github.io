@@ -1,23 +1,25 @@
 ---
 title: "Spring Kafka - Spring Boot Example"
-permalink: /2017/04/spring-kafka-boot-example.html
+permalink: /spring-kafka-boot-example.html
 excerpt: "A detailed step-by-step tutorial on how to setup Spring Kafka using Spring Boot autoconfiguration."
 date: 2017-04-13
 modified: 2017-04-13
 header:
-  teaser: "assets/images/spring-kafka-teaser.jpg"
+  teaser: "assets/images/teaser/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Autoconfig, Autoconfiguration, Apache Kafka, Example, Maven, Spring, Spring Boot, Spring Kafka, Tutorial]
+redirect_from:
+  - /2017/04/spring-kafka-boot-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html){:target="_blank"} attempts to automatically configure your Spring application based on the JAR dependencies that have been added. In other words, if the <var>spring-kafka-1.2.0.RELEASE.jar</var> is on the classpath and you have not manually configured any `Consumer` or `Provider` beans, then Spring Boot will auto-configure them using default values.
+[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html){:target="_blank"} attempts to automatically configure your Spring application based on the JAR dependencies that have been added. In other words, if the <var>spring-kafka-1.2.2.RELEASE.jar</var> is on the classpath and you have not manually configured any `Consumer` or `Provider` beans, then Spring Boot will auto-configure them using default values.
 
-In order to demonstrate this behavior we will start from a previous [Spring Kafka tutorial]({{ site.url }}/2016/09/spring-kafka-consumer-producer-example.html) in which we send/receive messages to/from an Apache Kafka topic using Spring Kafka. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration.
+In order to demonstrate this behavior we will start from a previous [Spring Kafka tutorial]({{ site.url }}/spring-kafka-consumer-producer-example.html) in which we send/receive messages to/from an Apache Kafka topic using Spring Kafka. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration.
 
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
@@ -43,7 +45,7 @@ The project is built using [Maven](https://maven.apache.org/){:target="_blank"}.
 
   <name>spring-kafka-boot</name>
   <description>Spring Kafka - Spring Boot Example</description>
-  <url>https://www.codenotfound.com/2017/04/spring-kafka-boot-example.html</url>
+  <url>https://www.codenotfound.com/spring-kafka-boot-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -136,16 +138,18 @@ public class Sender {
   @Autowired
   private KafkaTemplate<String, String> kafkaTemplate;
 
-  public void send(String topic, String data) {
-    LOGGER.info("sending data='{}' to topic='{}'", data, topic);
-    kafkaTemplate.send(topic, data);
+  public void send(String topic, String payload) {
+    LOGGER.info("sending payload='{}' to topic='{}'", payload, topic);
+    kafkaTemplate.send(topic, payload);
   }
 }
 ```
 
 # Autoconfigure the Spring Kafka Message Consumer
 
-Similar to the `Sender`, the setup and creation of the `ConcurrentKafkaListenerContainerFactory` and `KafkaMessageListenerContainer` beans is automatically done by Spring Boot. The `@KafkaListener` annotation creates a message listener container for the annotated `receive()` method. The topic name is specified using the `${topic.boot}` placeholder for which the value will be automatically fetched from the <var>application.yml</var> properties file.
+Similar to the `Sender`, the setup and creation of the `ConcurrentKafkaListenerContainerFactory` and `KafkaMessageListenerContainer` beans is automatically done by Spring Boot.
+
+The `@KafkaListener` annotation creates a message listener container for the annotated `receive()` method. The topic name is specified using the `${kafka.topic.boot}` placeholder for which the value will be automatically fetched from the <var>application.yml</var> properties file.
 
 ``` java
 package com.codenotfound.kafka.consumer;
@@ -169,17 +173,18 @@ public class Receiver {
     return latch;
   }
 
-  @KafkaListener(topics = "${topic.boot}")
+  @KafkaListener(topics = "${kafka.topic.boot}")
   public void receive(ConsumerRecord<?, ?> consumerRecord) {
-    LOGGER.info("received data='{}'", consumerRecord.toString());
+    LOGGER.info("received payload='{}'", consumerRecord.toString());
     latch.countDown();
   }
 }
 ```
 
 For the `Receiver`, Spring Boot takes care of most of the configuration. There are however two properties that need to be explicitly set in the <var>application.yml</var> properties file:
-1. The <var>'kafka.consumer.group-id'</var> property needs to be specified as we are [using group management to assign topic partitions to consumers](http://docs.confluent.io/current/clients/consumer.html#concepts){:target="_blank"}. In this example we will assign it the value <var>'boot'</var>.
-2. The <var>'kafka.consumer.auto-offset-reset'</var> property needs to be set to <var>'earliest'</var> which ensures the new consumer group will get the message sent in case the container started after the send was completed.
+
+1. The `kafka.consumer.auto-offset-reset` property needs to be set to <var>'earliest'</var> which ensures the new consumer group will get the message sent in case the container started after the send was completed.
+2. The `kafka.consumer.group-id` property needs to be specified as we are [using group management to assign topic partitions to consumers](http://docs.confluent.io/current/clients/consumer.html#concepts){:target="_blank"}. In this example we will assign it the value <var>'boot'</var>.
 
 ``` yml
 spring:
@@ -188,17 +193,20 @@ spring:
       auto-offset-reset: earliest
       group-id: boot
 
-topic:
-  boot: boot.t
+kafka:
+  topic:
+    boot: boot.t
 ```
 
-> Scroll down to <var># APACHE KAFKA</var> [in the following link in order to get a complete overview of all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} that can be set for auto configuration using the Spring Boot application properties file.
+> Scroll down to <var># APACHE KAFKA</var> in the following link in order to get a complete [overview of all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} that can be set for auto configuration using the Spring Boot application properties file.
 
 # Testing the Sender and Receiver
 
 In order to verify that our code works, a basic `SpringKafkaApplicationTest` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>'boot.t'</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received.
 
-The test case runs using [the embedded Kafka broker which is started via a JUnit @ClassRule]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html).
+The test case runs using [the embedded Kafka broker which is started via a JUnit @ClassRule]({{ site.url }}/spring-kafka-embedded-server-unit-test.html).
+
+> Note that we have added a dedicated <var>application.yml</var> properties file under <var>src/test/resources</var> in order to override the default broker address with the address of the embedded broker using the `spring.kafka.bootstrap-servers` property.
 
 ``` java
 package com.codenotfound.kafka;
@@ -207,7 +215,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.concurrent.TimeUnit;
 
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -234,11 +241,6 @@ public class SpringKafkaApplicationTest {
   @ClassRule
   public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, BOOT_TOPIC);
 
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {
-    System.setProperty("spring.kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
-  }
-
   @Test
   public void testReceive() throws Exception {
     sender.send(BOOT_TOPIC, "Hello Boot!");
@@ -249,7 +251,7 @@ public class SpringKafkaApplicationTest {
 }
 ```
 
-Fire up the above test case by opening a command prompt and execute following Maven command: 
+Fire up the above test case by opening a command prompt and execute following Maven command:
 
 ``` plaintext
 mvn test

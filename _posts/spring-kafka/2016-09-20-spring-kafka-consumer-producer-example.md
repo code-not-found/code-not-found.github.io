@@ -127,7 +127,7 @@ public class SpringKafkaApplication {
 }
 ```
 
-> The below sections will detail how to create a sender and receiver together with their respective configurations. It is also possible to have [Spring Boot autoconfigure Spring Kafka]({{ site.url }}/2017/04/spring-kafka-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
+> The below sections will detail how to create a sender and receiver together with their respective configurations. It is also possible to have [Spring Boot autoconfigure Spring Kafka]({{ site.url }}/spring-kafka-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
 > This example will send/receive a simple `String`. If you would like to send more complex objects you could for example use an [Avro Kafka serializer]({{ site.url }}/spring-kafka-apache-avro-example.html) or the [Kafka Jsonserializer]({{ site.url }}/2017/03/spring-kafka-json-serializer-example.html) that ships with Spring Kafka.
 
