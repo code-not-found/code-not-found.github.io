@@ -1,23 +1,26 @@
 ---
 title: "Spring Kafka - Avro Bijection Example"
-permalink: /2017/04/spring-kafka-avro-bijection-example.html
+permalink: /spring-kafka-avro-bijection-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an Avro Serializer &amp; Deserializer using Twitter Bijection, Spring Kafka, and Spring Boot."
 date: 2017-04-18
 modified: 2017-04-18
 header:
-  teaser: "assets/images/spring-kafka-teaser.jpg"
+  teaser: "assets/images/teaser/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache Avro, Avro, Bijection, Deserializer, Example, Maven, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial, Twitter Bijection]
 redirect_from:
   - /2017/03/spring-kafka-avro-bijection-example.html
+  - /2017/04/spring-kafka-avro-bijection-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-[Twitter Bijection](https://github.com/twitter/bijection){:target="_blank"} is an invertible function library that converts back and forth between two types. It supports a number of types including Apache Avro. In the following tutorial, we will configure, build and run an example in which we will send/receive an Avro message to/from Apache Kafka using Bijection, Apache Avro, Spring Kafka, Spring Boot and Maven.
+[Twitter Bijection](https://github.com/twitter/bijection){:target="_blank"} is an invertible function library that converts back and forth between two types. It supports a number of types including [Apache Avro](https://avro.apache.org/){:target="_blank"}.
+
+In the following tutorial, we will configure, build and run an example in which we will send/receive an Avro message to/from Apache Kafka using Bijection, Apache Avro, Spring Kafka, Spring Boot and Maven.
 
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
@@ -63,7 +66,7 @@ We setup our project using [Maven](https://maven.apache.org/){:target="_blank"}.
 
   <name>spring-kafka-avro-bijection</name>
   <description>Spring Kafka - Avro Bijection Example</description>
-  <url>https://www.codenotfound.com/2017/03/spring-kafka-avro-bijection-example.html</url>
+  <url>https://www.codenotfound.com/spring-kafka-avro-bijection-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -75,7 +78,7 @@ We setup our project using [Maven](https://maven.apache.org/){:target="_blank"}.
     <java.version>1.8</java.version>
 
     <spring-kafka.version>1.2.2.RELEASE</spring-kafka.version>
-    <avro.version>1.8.1</avro.version>
+    <avro.version>1.8.2</avro.version>
     <bijection.version>0.9.5</bijection.version>
   </properties>
 
@@ -160,7 +163,7 @@ mvn generate-sources
 
 Serializing an Avro message to a `byte[]` array using Bijection can be achieved in just two lines of code as shown below.
 
-We first create an `Injection` which is an object that can make the conversion in one way or the other. This is done by calling the static `toBinary()` method on the `GenericAvroCodecs` class. This returns an `Injection` capable of serializing and deserializing a generic Avro record using `org.apache.avro.io.BinaryEncoder`. As input parameter, we need to supply the Avro schema which we get from the passed object.
+We first create an `Injection` which is an object that can make the conversion in one way or the other. This is done by calling the static `toBinary()` method on the `GenericAvroCodecs` class. The result is an `Injection` capable of serializing and deserializing a generic Avro record using `org.apache.avro.io.BinaryEncoder`. As an input parameter, we need to supply the Avro schema which we get from the passed object.
 
 The 'apply()' method is then used to create the `Byte` array which is returned.
 
@@ -278,9 +281,11 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
 
 # Test Sending and Receiving Avro Messages on Kafka
 
-The `SpringKafkaApplicationTest` test case demonstrates the above sample code. [An embedded Kafka and ZooKeeper server are automatically started]({{ site.url }}/2016/10/spring-kafka-embedded-server-unit-test.html) using a JUnit ClassRule. Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+The `SpringKafkaApplicationTest` test case demonstrates the above sample code. [An embedded Kafka and ZooKeeper server are automatically started]({{ site.url }}/spring-kafka-embedded-server-unit-test.html) using a JUnit `ClassRule`.
 
-In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to <var>'avro-bijection.t'</var> topic. Finally, the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
+Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
+
+In the `testReceiver()` test case an Avro `User` object is created using the `Builder` methods. This user is then sent to the <var>'avro-bijection.t'</var> topic. Finally, the `CountDownLatch` from the `Receiver` is used to verify that a message was successfully received.
 
 ``` java
 package com.codenotfound.kafka;
@@ -290,7 +295,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -322,11 +326,6 @@ public class SpringKafkaApplicationTest {
 
   @ClassRule
   public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, "avro-bijection.t");
-
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {
-    System.setProperty("kafka.bootstrap-servers", embeddedKafka.getBrokersAsString());
-  }
 
   @Before
   public void setUp() throws Exception {
@@ -369,25 +368,16 @@ Maven will do the necessary and the outcome should be a successful build as show
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.4.RELEASE)
 
-22:04:35.984 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 4424 (started by CodeNotFound in c:\codenotfound\spring-kafka\spring-kafka-avro-bijection)
-22:04:35.984 [main] DEBUG c.c.kafka.SpringKafkaApplicationTest - Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
-22:04:35.984 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
-22:04:36.002 [main] INFO  o.s.c.a.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@bd2f5a9: startup date [Tue Apr 18 22:04:36 CEST 2017]; root of context hierarchy
-22:04:36.368 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$be4aa608] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-22:04:36.611 [main] INFO  o.s.c.s.DefaultLifecycleProcessor - Starting beans in phase 0
-22:04:36.659 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.995 seconds (JVM running for 5.352)
-22:04:37.889 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - partitions revoked:[]
-22:04:37.964 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  o.s.k.l.KafkaMessageListenerContainer - partitions assigned:[avro-bijection.t-0, avro-bijection.t-1]
-22:04:37.993 [main] INFO  c.codenotfound.kafka.producer.Sender - sending user='{"name": "John Doe", "favorite_number": null, "favorite_color": "blue"}'
-22:04:38.011 [main] DEBUG c.c.kafka.serializer.AvroSerializer - data to serialize='{"name": "John Doe", "favorite_number": null, "favorite_color": "blue"}'
-22:04:38.011 [main] DEBUG c.c.kafka.serializer.AvroSerializer - serialized data='104A6F686E20446F65020008626C7565'
-22:04:38.032 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] DEBUG c.c.k.serializer.AvroDeserializer - data to deserialize='104A6F686E20446F65020008626C7565'
-22:04:38.032 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] DEBUG c.c.k.serializer.AvroDeserializer - data='{"name": "John Doe", "favorite_number": null, "favorite_color": "blue"}'
-22:04:38.039 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-L-1] INFO  c.c.kafka.consumer.Receiver - received user='{"name": "John Doe", "favorite_number": null, "favorite_color": "blue"}'
-22:04:40.300 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.197 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
-22:04:41.326 [Thread-8] INFO  o.s.c.a.AnnotationConfigApplicationContext - Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@bd2f5a9: startup date [Tue Apr 18 22:04:36CEST 2017]; root of context hierarchy
-22:04:41.330 [Thread-8] INFO  o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 0
+20:53:53.927 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 3880 (started by CodeNotFound in c:\codenotfound\code\spring-kafka\spring-kafka-avro-bijection)
+20:53:53.929 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
+20:53:54.614 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.987 seconds (JVM running for 5.282)
+20:53:55.947 [main] INFO  c.codenotfound.kafka.producer.Sender - sending user='{"name": "John Doe", "favorite_number": null, "favorite_color": "blue"}'
+20:53:55.964 [main] INFO  c.c.kafka.serializer.AvroSerializer - data to serialize='{"name": "John Doe", "favorite_number": null, "favorite_color": "blue"}'
+20:53:55.964 [main] INFO  c.c.kafka.serializer.AvroSerializer - serialized data='104A6F686E20446F65020008626C7565'
+20:53:55.986 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  c.c.k.serializer.AvroDeserializer - data to deserialize='104A6F686E20446F65020008626C7565'
+20:53:55.987 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  c.c.k.serializer.AvroDeserializer - data='{"name": "John Doe", "favorite_number": null, "favorite_color": "blue"}'
+20:53:55.992 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  c.c.kafka.consumer.Receiver - received user='{"name": "John Doe", "favorite_number": null, "favorite_color": "blue"}'
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.069 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
 
 Results :
 
@@ -396,9 +386,9 @@ Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 42.206 s
-[INFO] Finished at: 2017-04-18T22:05:11+02:00
-[INFO] Final Memory: 18M/212M
+[INFO] Total time: 10.920 s
+[INFO] Finished at: 2017-08-02T20:53:58+02:00
+[INFO] Final Memory: 19M/211M
 [INFO] ------------------------------------------------------------------------
 ```
 

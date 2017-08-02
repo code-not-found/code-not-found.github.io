@@ -260,11 +260,6 @@ mvn test
 Maven will then download the dependencies, compile the code and run the unit test case during which following logs should be generated:
 
 ``` plaintext
--------------------------------------------------------
- T E S T S
--------------------------------------------------------
-Running com.codenotfound.kafka.SpringKafkaApplicationTest
-
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -273,23 +268,30 @@ Running com.codenotfound.kafka.SpringKafkaApplicationTest
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.4.RELEASE)
 
-23:11:15.145 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 4812 (started by CodeNotFound in c:\codenotfound\spring-kafka\spring-kafka-boot)
-23:11:15.146 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
-23:11:15.816 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 0.966 seconds (JVM running for 5.41)
-23:11:15.843 [main] INFO  c.codenotfound.kafka.producer.Sender - sending data='Hello Boot!' to topic='boot.t'
-23:11:17.299 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-kafka-listener-1] INFO  c.c.kafka.consumer.Receiver - received data='ConsumerRecord(topic = boot.t, partition = 0, offset = 0, CreateTime = 1492117875956, checksum = 2922779506, serialized key size = -1, serialized value size = 11, key = null, value = Hello Boot!)'
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.336 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
+20:58:18.284 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Starting SpringKafkaApplicationTest on cnf-pc with PID 6032 (started by CodeNotFound in c:\codenotfound\code\spring-kafka\spring-kafka-avr
+o)
+20:58:18.284 [main] DEBUG c.c.kafka.SpringKafkaApplicationTest - Running with Spring Boot v1.5.4.RELEASE, Spring v4.3.9.RELEASE
+20:58:18.285 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - No active profile set, falling back to default profiles: default
+20:58:19.011 [main] INFO  c.c.kafka.SpringKafkaApplicationTest - Started SpringKafkaApplicationTest in 1.07 seconds (JVM running for 5.484)
+20:58:20.348 [main] INFO  c.codenotfound.kafka.producer.Sender - sending user='{"name": "John Doe", "favorite_number": null, "favorite_color": "green"}'
+20:58:20.364 [main] DEBUG c.c.kafka.serializer.AvroSerializer - data='{"name": "John Doe", "favorite_number": null, "favorite_color": "green"}'
+20:58:20.364 [main] DEBUG c.c.kafka.serializer.AvroSerializer - serialized data='104A6F686E20446F6502000A677265656E'
+20:58:20.383 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] DEBUG c.c.k.serializer.AvroDeserializer - data='104A6F686E20446F6502000A677265656E'
+20:58:20.384 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] DEBUG c.c.k.serializer.AvroDeserializer - deserialized data='{"name": "John Doe", "favorite_number": null, "favorite_color": "green"}'
+20:58:20.390 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  c.c.kafka.consumer.Receiver - received user='{"name": "John Doe", "favorite_number": null, "favorite_color": "green"}'
+20:58:21.599 [main] ERROR o.a.zookeeper.server.ZooKeeperServer - ZKShutdownHandler is not registered, so ZooKeeper server won't take any action on ERROR or SHUTDOWN server state changes
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.248 sec - in com.codenotfound.kafka.SpringKafkaApplicationTest
 
 Results :
 
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 42.525 s
-[INFO] Finished at: 2017-04-13T23:11:51+02:00
-[INFO] Final Memory: 16M/220M
+[INFO] Total time: 11.217 s
+[INFO] Finished at: 2017-08-02T20:58:22+02:00
+[INFO] Final Memory: 19M/211M
 [INFO] ------------------------------------------------------------------------
 ```
 
