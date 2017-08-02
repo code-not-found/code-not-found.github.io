@@ -204,7 +204,7 @@ kafka:
 
 In order to verify that our code works, a basic `SpringKafkaApplicationTest` test case is used. It contains a `testReceiver()` unit test case that uses the `Sender` to send a message to the <var>'boot.t'</var> topic on the Kafka bus. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received.
 
-The test case runs using [the embedded Kafka broker which is started via a JUnit @ClassRule]({{ site.url }}/spring-kafka-embedded-server-unit-test.html).
+The test case runs using [the embedded Kafka broker which is started via a JUnit @ClassRule]({{ site.url }}/spring-kafka-embedded-unit-test-example.html).
 
 > Note that we have added a dedicated <var>application.yml</var> properties file under <var>src/test/resources</var> in order to override the default broker address with the address of the embedded broker using the `spring.kafka.bootstrap-servers` property.
 

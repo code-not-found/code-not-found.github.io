@@ -281,7 +281,7 @@ public class AvroDeserializer<T extends SpecificRecordBase> implements Deseriali
 
 # Test Sending and Receiving Avro Messages on Kafka
 
-The `SpringKafkaApplicationTest` test case demonstrates the above sample code. [An embedded Kafka and ZooKeeper server are automatically started]({{ site.url }}/spring-kafka-embedded-server-unit-test.html) using a JUnit `ClassRule`.
+The `SpringKafkaApplicationTest` test case demonstrates the above sample code. [An embedded Kafka and ZooKeeper server are automatically started]({{ site.url }}/spring-kafka-embedded-unit-test-example.html) using a JUnit `ClassRule`.
 
 Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message will already be sent before the listeners are assigned to the topic).
 
