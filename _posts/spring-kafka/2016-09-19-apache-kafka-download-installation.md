@@ -14,7 +14,7 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-kafka-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/apache-kafka-logo.png" alt="apache kafka logo" class="logo">
 </figure>
 
 [Apache Kafka](http://kafka.apache.org/){:target="_blank"} is an open-source message broker project developed by the Apache Software Foundation written in Scala. The project aims to provide a high-throughput, low-latency platform capable of handling hundreds of megabytes of reads and writes per second from thousands of clients.
