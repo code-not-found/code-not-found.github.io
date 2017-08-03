@@ -15,8 +15,8 @@
    width="600"
    height="200"
    viewBox="0 0 600 200"
-   sodipodi:docname="integration-example-setup.svg"
-   inkscape:export-filename="C:\code\st\code-not-found\assets\images\spring-kafka\integration-example-setup.png"
+   sodipodi:docname="spring-kafka-spring-integration-example.svg"
+   inkscape:export-filename="C:\blogs\codenotfound\code\code-not-found\assets\images\spring-kafka\spring-kafka-spring-integration-example.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <metadata
@@ -196,7 +196,7 @@
      id="namedview4"
      showgrid="true"
      inkscape:zoom="2.3875647"
-     inkscape:cx="295.68376"
+     inkscape:cx="300.96833"
      inkscape:cy="89.223292"
      inkscape:window-x="1272"
      inkscape:window-y="-8"
