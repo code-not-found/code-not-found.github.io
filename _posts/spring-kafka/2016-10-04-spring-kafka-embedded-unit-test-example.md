@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to unit test your Spring Kafka
 date: 2016-10-04
 modified: 2016-10-04
 header:
-  teaser: "assets/images/teaser/spring-kafka-teaser.png"
+  teaser: "assets/images/header/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Embedded, Example, Maven, Server, Spring Boot, Spring Kafka, Test, Testing, Tutorial, Unit]
 redirect_from:

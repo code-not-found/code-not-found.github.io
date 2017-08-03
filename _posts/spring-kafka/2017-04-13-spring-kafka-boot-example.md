@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to setup Spring Kafka using Sp
 date: 2017-04-13
 modified: 2017-04-13
 header:
-  teaser: "assets/images/teaser/spring-kafka-teaser.png"
+  teaser: "assets/images/header/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Autoconfig, Autoconfiguration, Apache Kafka, Example, Maven, Spring, Spring Boot, Spring Kafka, Tutorial]
 redirect_from:

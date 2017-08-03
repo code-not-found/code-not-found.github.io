@@ -5,7 +5,7 @@ excerpt: "A step-by-step tutorial on how to download, install and run Apache Kaf
 date: 2016-09-19
 modified: 2016-09-19
 header:
-  teaser: "assets/images/teaser/apache-kafka-teaser.png"
+  teaser: "assets/images/header/apache-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache ZooKeeper, Download, Installation, Kafka, Windows, ZooKeeper]
 redirect_from:

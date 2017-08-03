@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to configure a JSON Serializer
 date: 2017-03-21
 modified: 2017-03-21
 header:
-  teaser: "assets/images/teaser/spring-kafka-teaser.png"
+  teaser: "assets/images/header/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Example, Maven, JSON, Deserializer, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial]
 redirect_from:

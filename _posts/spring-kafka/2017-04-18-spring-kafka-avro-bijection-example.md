@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to implement an Avro Serialize
 date: 2017-04-18
 modified: 2017-04-18
 header:
-  teaser: "assets/images/teaser/spring-kafka-teaser.png"
+  teaser: "assets/images/header/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache Avro, Avro, Bijection, Deserializer, Example, Maven, Serializer, Spring, Spring Boot, Spring Kafka, Tutorial, Twitter Bijection]
 redirect_from:

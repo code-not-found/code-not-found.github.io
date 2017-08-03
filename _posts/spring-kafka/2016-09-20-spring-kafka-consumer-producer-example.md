@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to implement an Apache Kafka C
 date: 2016-09-20
 modified: 2016-09-20
 header:
-  teaser: "assets/images/teaser/spring-kafka-teaser.png"
+  teaser: "assets/images/header/spring-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring Kafka, Tutorial]
 redirect_from:
@@ -349,7 +349,7 @@ As the embedded server is started on a random port, we provide a dedicated <var>
 
 Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message might already be sent before the listeners are assigned to the topic).
 
-> Below test case can also be executed after you [install Kafka and Zookeeper]({{ site.url }}/2016/09/apache-kafka-download-installation.html) on your local system. Just comment out the `@ClassRule` and change the <var>'bootstrap-servers'</var> property of the application properties file located in <var>src/test/resources</var> to the address of the local broker.
+> Below test case can also be executed after you [install Kafka and Zookeeper]({{ site.url }}/apache-kafka-download-installation.html) on your local system. Just comment out the `@ClassRule` and change the <var>'bootstrap-servers'</var> property of the application properties file located in <var>src/test/resources</var> to the address of the local broker.
 
 ``` java
 package com.codenotfound.kafka;
