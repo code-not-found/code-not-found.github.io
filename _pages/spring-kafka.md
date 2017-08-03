@@ -37,7 +37,7 @@ The [Spring for Apache Kafka project](https://projects.spring.io/spring-kafka/){
 
 ## Setup
 
-* [Apache Kafka - Download &amp; Installation]({{ site.url }}/2016/09/apache-kafka-download-installation.html)
+* [Apache Kafka - Download &amp; Installation]({{ site.url }}/apache-kafka-download-installation.html)
 
 ## References
 
