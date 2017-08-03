@@ -1,13 +1,13 @@
 ---
-title: "Spring Kafka - Consume Multiple Topics Example"
-permalink: /spring-kafka-consume-multiple-topics-example.html
-excerpt: "A detailed step-by-step tutorial on how to receive messages from a Kafka topic using a Spring Kafka Listener and Spring Boot."
+title: "Spring Kafka - Listener Example"
+permalink: /spring-kafka-listener-example.html
+excerpt: "A detailed step-by-step tutorial on how to consume different message types from multiple topics using Spring Kafka and Spring Boot."
 date: 2017-08-06
 modified: 2017-08-06
 header:
   teaser: "assets/images/header/spring-kafka-teaser.png"
 categories: [Spring Kafka]
-tags: [Apache Kafka, Consume, Example, Maven, Multiple, Spring, Spring Boot, Spring Kafka, Topics, Tutorial]
+tags: [Apache Kafka, Example, Listener, Maven, Spring, Spring Boot, Spring Kafka, Tutorial]
 published: false
 ---
  
