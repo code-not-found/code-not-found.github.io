@@ -52,7 +52,7 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
 
   <name>spring-kafka-integration-helloworld</name>
   <description>Spring Kafka - Integration Example</description>
-  <url>https://www.codenotfound.com/2017/05/spring-kafka-integration-example.html</url>
+  <url>https://www.codenotfound.com/spring-kafka-spring-integration-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>

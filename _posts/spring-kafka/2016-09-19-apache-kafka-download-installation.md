@@ -5,7 +5,7 @@ excerpt: "A step-by-step tutorial on how to download, install and run Apache Kaf
 date: 2016-09-19
 modified: 2016-09-19
 header:
-  teaser: "assets/images/teaser/spring-kafka-teaser.png"
+  teaser: "assets/images/teaser/apache-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache ZooKeeper, Download, Installation, Kafka, Windows, ZooKeeper]
 redirect_from:
@@ -21,7 +21,7 @@ published: true
 
 Following tutorial shows how to download and install Apache Kafka on Windows and perform a start/stop of the installed instance.
 
-If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
+If you want to learn more about how to connect to Apache Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka/).
 {: .notice--primary}
 
 It is important to note that Kafka will not work without [Apache ZooKeeper](https://zookeeper.apache.org/){:target="_blank"}, which is essentially a distributed hierarchical key-value store. Like Kafka, ZooKeeper is a software project of the Apache Software Foundation. Kafka uses ZooKeeper for [electing a controller, cluster membership, topic configuration, quotas and ACLs](https://www.quora.com/What-is-the-actual-role-of-ZooKeeper-in-Kafka){:target="_blank"}.
