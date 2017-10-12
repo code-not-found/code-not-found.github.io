@@ -129,7 +129,7 @@ public class SpringKafkaApplication {
 
 > The below sections will detail how to create a sender and receiver together with their respective configurations. It is also possible to have [Spring Boot autoconfigure Spring Kafka]({{ site.url }}/spring-kafka-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
-> This example will send/receive a simple `String`. If you would like to send more complex objects you could for example use an [Avro Kafka serializer]({{ site.url }}/spring-kafka-apache-avro-serializer-deserializer-example.html) or the [Kafka Jsonserializer]({{ site.url }}/spring-kafka-json-serializer-deserializer-example.html) that ships with Spring Kafka.
+> This example will send/receive a simple `String`. If you would like to send more complex objects you could, for example, use an [Avro Kafka serializer]({{ site.url }}/spring-kafka-apache-avro-serializer-deserializer-example.html) or the [Kafka Jsonserializer]({{ site.url }}/spring-kafka-json-serializer-deserializer-example.html) that ships with Spring Kafka.
 
 We also create an <var>application.yml</var> [YAML](http://yaml.org/){:target="_blank"} properties file under <var>src/main/resources</var>. Properties from this file will be [injected by Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config){:target="_blank"} into our configuration beans using the `@Value` annotation.
 
@@ -235,7 +235,7 @@ public class SenderConfig {
 
 Like with any messaging-based application, you need to create a receiver that will handle the published messages. The `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In the below example we named the method `receive()`, but you can name it anything you like.
 
-The `@KafkaListener` annotation creates a message listener container behind the scenes for each annotated method, using a `ConcurrentMessageListenerContainer`. By default, a bean with name `kafkaListenerContainerFactory` is expected that we will setup in the next section.
+The `@KafkaListener` annotation creates a `ConcurrentMessageListenerContainer` message listener container behind the scenes for each annotated method. In order to do so, a factory bean with name `kafkaListenerContainerFactory` is expected that we will configure in the next section.
 
 Using the `topics` element, we specify the topics for this listener. The name of the topic is injected from the <var>application.yml</var> properties file.
 
@@ -272,9 +272,9 @@ public class Receiver {
 
 The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class.
 
-> Note that we need to add the `@EnableKafka` annotation to enable support for the `@KafkaListener` annotation that was used on the `Receiver`.
+> Note the `@EnableKafka` annotation which enables the detection of the `@KafkaListener` annotation that was used on the previous `Receiver` class.
 
-The `kafkaListenerContainerFactory()` is used by the `@KafkaListener` annotation from the `Receiver`. In order to create it, a `ConsumerFactory` and accompanying configuration `Map` is needed.
+The `kafkaListenerContainerFactory()` is used by the `@KafkaListener` annotation from the `Receiver` in order to configure a `MessageListenerContainer`. In order to create it, a `ConsumerFactory` and accompanying configuration `Map` is needed.
 
 In this example, a number of mandatory properties are set amongst which the initial connection and deserializer parameters. We also specify a <var>'GROUP_ID_CONFIG'</var> which allows to [identify the group](https://stackoverflow.com/a/41377616/4201470){:target="_blank"} this consumer belongs to. Messages will effectively be load balanced over consumer instances that have the same group id.
 
@@ -322,7 +322,7 @@ public class ReceiverConfig {
   }
 
   @Bean
-  public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
+  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
     ConcurrentKafkaListenerContainerFactory<String, String> factory =
         new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
@@ -345,7 +345,7 @@ public class ReceiverConfig {
 
 An embedded Kafka broker is automatically started by using a `@ClassRule`. Check out following [Spring Kafka test example]({{ site.url }}/spring-kafka-embedded-unit-test-example.html) for more detailed information on this topic.
 
-As the embedded server is started on a random port, we provide a dedicated <var>apppication.yml</var> properties file for testing in <var>src/test/resources</var> which uses the `spring.embedded.kafka.brokers` system property that the `@ClassRule` sets to the address of the broker(s).
+As the embedded server is started on a random port, we provide a dedicated <var>src/test/resources/apppication.yml</var> properties file for testing which uses the `spring.embedded.kafka.brokers` system property that the `@ClassRule` sets to the address of the broker(s).
 
 Using `@Before` we wait until all the partitions are assigned to our `Receiver` by looping over the available `ConcurrentMessageListenerContainer` (if we don't do this the message might already be sent before the listeners are assigned to the topic).
 
@@ -377,27 +377,27 @@ import com.codenotfound.kafka.producer.Sender;
 @SpringBootTest
 public class SpringKafkaApplicationTest {
 
-  private static String HELLOWORLD_TOPIC = "helloworld.t";
+  protected final static String HELLOWORLD_TOPIC = "helloworld.t";
 
   @Autowired
-  private Sender sender;
+  private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
 
   @Autowired
   private Receiver receiver;
 
   @Autowired
-  private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
+  private Sender sender;
 
   @ClassRule
-  public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, HELLOWORLD_TOPIC);
+  public static KafkaEmbedded kafkaEmbedded = new KafkaEmbedded(1, true, HELLOWORLD_TOPIC);
 
   @Before
-  public void setUp() throws Exception {
-    // wait until the partitions are assigned
+  public void runBeforeTestMethod() throws Exception {
+    // wait until all the partitions are assigned
     for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
         .getListenerContainers()) {
       ContainerTestUtils.waitForAssignment(messageListenerContainer,
-          embeddedKafka.getPartitionsPerTopic());
+          kafkaEmbedded.getPartitionsPerTopic());
     }
   }
 

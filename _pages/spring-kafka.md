@@ -42,7 +42,7 @@ The [Spring for Apache Kafka project](https://projects.spring.io/spring-kafka/){
 ## References
 
 * [Spring for Apache Kafka - Projects](https://projects.spring.io/spring-kafka/){:target="_blank"}
-* [Spring for Apache Kafka - Reference Documentation](http://docs.spring.io/spring-kafka/docs/current/reference/htmlsingle/){:target="_blank"}
+* [Spring for Apache Kafka - Reference Documentation](https://docs.spring.io/spring-kafka/docs/current/reference/html/){:target="_blank"}
 * [GitHub - spring-projects/spring-kafka](https://github.com/spring-projects/spring-kafka){:target="_blank"}
 * [Stack Overflow - Spring-Kafka Questions](http://stackoverflow.com/questions/tagged/spring-kafka){:target="_blank"}
 
