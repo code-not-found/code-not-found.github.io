@@ -11,7 +11,7 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logo/java-logo.jpg" alt="java logo">
+    <img src="{{ site.url }}/assets/images/logo/java-logo.png" alt="java logo">
 </figure>
 
 [Java](https://www.java.com/en/) is a computer programming language that is concurrent, class-based and object-oriented. It was originally developed by James Gosling at Sun Microsystems. Java applications are typically compiled to bytecode (class file) that can run on any Java virtual machine (JVM) regardless of computer architecture.
@@ -25,9 +25,9 @@ Check following post if you are looking to download and install [JDK 1.6]({{ sit
 
 Java can be downloaded from the [Oracle Java download page](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"}. There are a number of different download packages available, for this tutorial we will be installing Java Standard Edition (SE) on Windows. In order to be able to compile Java code we need the Java Development Kit (JDK) package that comes with a Java compiler. The JDK package also comes with a Java runtime environment (JRE) that is needed to run compiled Java code.
 
-For this tutorial we will use an older Java version. Scroll all the way down to the bottom of the Oracle Java download page and click on the [Download](http://www.oracle.com/technetwork/java/javase/archive-139210.html) under the <var>Java Archive</var> section. Look for the <var>Java SE 7</var> link and after clicking on it select <var>Java SE Development Kit 7u80</var>.
+For this tutorial we will use an older Java version. Scroll all the way down to the bottom of the Oracle Java download page and click on the <var>Download</var> button in the <var>Java Archive</var> section. Then look for the <var>Java SE 7</var> link and after clicking it select the correct operating system under <var>Java SE Development Kit 7u80</var>.
 
-> You can find here the direct link to [download the jdk 1.7.0_80 installer for Windows 32 or 64 bit](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html){:target="_blank"}.
+> Here is the direct link to [download the jdk 1.7.0_80 installer for Windows 32 or 64 bit](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html){:target="_blank"}.
 
 Accept the License Agreement and pick the correct download for your operating system. In this example we will use the Windows 64 bit version.
 
