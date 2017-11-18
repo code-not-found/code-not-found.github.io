@@ -11,7 +11,7 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/java-logo.jpg" alt="java logo">
+    <img src="{{ site.url }}/assets/images/logo/java-logo.jpg" alt="java logo">
 </figure>
 
 [Java](https://www.java.com/en/) is a computer programming language that is concurrent, class-based and object-oriented. It was originally developed by James Gosling at Sun Microsystems. Java applications are typically compiled to bytecode (class file) that can run on any Java virtual machine (JVM) regardless of computer architecture.
@@ -104,7 +104,7 @@ java -version
 The result should be as shown below.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/java/java-7-version.png" alt="java 7 version">
+    <img src="{{ site.url }}/assets/images/posts/java/java-7-version.png" alt="java 7 version">
 </figure>
 
 ---
