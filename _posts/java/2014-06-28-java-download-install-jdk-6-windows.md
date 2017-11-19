@@ -4,6 +4,8 @@ permalink: /java-download-install-jdk-6-windows.html
 excerpt: A detailed tutorial on how to download and install jdk1.6.0_45 on Windows.
 date: 2014-06-28
 modified: 2017-11-18
+header:
+  teaser: "assets/images/header/java-teaser.png"
 categories: [Java]
 tags: [Download, Install, Java, JDK, jdk1.6.0_45, Tutorial, Windows]
 redirect_from:
@@ -17,7 +19,7 @@ redirect_from:
     <img src="{{ site.url }}/assets/images/logo/java-logo.png" alt="java logo" class="logo">
 </figure>
 
-[Java](https://www.java.com/en/) is a computer programming language that is concurrent, class-based and object-oriented. It was originally developed by James Gosling at Sun Microsystems. Java applications are compiled to bytecode (class file) that can run on any Java virtual machine (JVM) regardless of computer architecture.
+[Java](https://www.java.com/en/){:target="_blank"} is a computer programming language that is concurrent, class-based and object-oriented. It was originally developed by James Gosling at Sun Microsystems. Java applications are compiled to bytecode (class file) that can run on any Java virtual machine (JVM) regardless of computer architecture.
 
 Java is currently owned by the Oracle Corporation which acquired Sun Microsystems in 2010. Following tutorial will show you how to setup and configure Java 1.7 on Windows so you can develop and run Java code.
 
