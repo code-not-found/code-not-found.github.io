@@ -18,7 +18,7 @@ published: true
 
 Java is currently owned by the Oracle Corporation which acquired Sun Microsystems in 2010. Following tutorial will show you how to setup and configure Java 1.7 on Windows so you can develop and run Java code.
 
-Check following post if you are looking to download and install [JDK 1.6]({{ site.url }}/java-download-install-jdk-6-windows.html).
+Check following post if you are looking to download and install [JDK 1.5]({{ site.url }}/java-download-install-jdk-5-windows.html) or [JDK 1.6]({{ site.url }}/java-download-install-jdk-6-windows.html).
 {: .notice--primary}
 
 # JDK Download & Install

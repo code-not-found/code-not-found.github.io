@@ -41,13 +41,13 @@ Sign in using your Oracle account (or create a new one) and the download should 
     <img src="{{ site.url }}/assets/images/posts/java/java-5-license-agreement.png" alt="java 5 license agreement">
 </figure>
 
-Click on the <var>I accept the terms in the license agreement</var> radio button and the click on <var>Next</var>. On the following screen optionally change the installation location by clicking on the <var>Change...</var> button. In this example the install location was changed to <var>'C:\Java\jdk1.5.0_22'</var>. From now on we will refer to this directory as: <var>[java_install_dir]</var>.
+Click on the <var>I accept the terms in the license agreement</var> radio button and then click on <var>Next</var>. On the following screen optionally change the installation location by clicking on the <var>Change...</var> button. In this example the install location was changed to <var>'C:\Java\jdk1.5.0_22'</var>. From now on we will refer to this directory as: <var>[java_install_dir]</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-5-jdk-location.png" alt="java 5 jdk location">
 </figure>
 
-Next, the installer will present the installation of some optional features. We will skip this part of the installer as the JDK installed in the previous step comes with everything to run and developed code. Just press <var>Cancel</var> and confirm by clicking <var>Yes</var> in the popup window.
+Next, the installer will present the installation of some optional features. We will skip this part of the installer as the JDK installed in the previous step comes with everything to run and develope code. Just press <var>Cancel</var> and confirm by clicking <var>Yes</var> in the popup window.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-5-optional-features.png" alt="java 5 optional features">
