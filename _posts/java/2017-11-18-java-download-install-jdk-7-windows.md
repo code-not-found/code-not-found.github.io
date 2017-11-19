@@ -23,19 +23,19 @@ Check following post if you are looking to download and install [JDK 1.6]({{ sit
 
 # JDK Download & Install
 
-Java can be downloaded from the [Oracle Java download page](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"}. There are a number of different download packages available, for this tutorial we will be installing Java Standard Edition (SE) on Windows. In order to be able to compile Java code we need the Java Development Kit (JDK) package that comes with a Java compiler. The JDK package also comes with a Java runtime environment (JRE) that is needed to run compiled Java code.
+Java can be obtained from the Oracle Java download page. There are a number of [different Java packages available](https://docs.oracle.com/javaee/6/firstcup/doc/gkhoy.html){:target="_blank"}, for this tutorial we will be installing Java Standard Edition (SE) on Windows. In order to be able to compile Java code, we need the Java Development Kit (JDK) package that comes with a Java compiler. The JDK package also comes with a Java runtime environment (JRE) that is needed to run compiled Java code.
 
-For this tutorial we will use an older Java version. Scroll all the way down to the bottom of the Oracle Java download page and click on the <var>Download</var> button in the <var>Java Archive</var> section. Then look for the <var>Java SE 7</var> link and after clicking on it select the correct operating system under <var>Java SE Development Kit 7u80</var>.
+As we are installing an older Java version, you need to scroll all the way down to the bottom of the [Oracle Java download page](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"} and click on the <var>Download</var> button in the <var>Java Archive</var> section. Then look for the <var>Java SE 7</var> link and after clicking on it, select the correct operating system under <var>Java SE Development Kit 7u80</var>.
 
 > Here is the direct link to [download the jdk 1.7.0_80 installer for Windows 32 or 64 bit](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html){:target="_blank"}.
 
-Accept the License Agreement and pick the correct download for your operating system. In this example we will use the Windows 64 bit version.
+Accept the License Agreement and pick the correct download for your operating system. In this example, we will use the Windows 64 bit version.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-7-download-jdk.png" alt="java 7 download jdk">
 </figure>
 
-Sign in using your Oracle account (or create a new one) and the download should start. Once the download is complete, locate the <var>jdk-7u80-windows-x64.exe</var> file and double click to run the installer.
+Sign in using your Oracle account (or create a new one) and the download should start. Once the download is complete, locate the <var>jdk-7u80-windows-x64.exe</var> file and double-click to run the installer.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-7-installer-start.png" alt="java 7 installer start">
@@ -47,7 +47,7 @@ Click <var>Next</var> and on the following screen optionally change the installa
     <img src="{{ site.url }}/assets/images/posts/java/java-7-jdk-location.png" alt="java 7 jdk location">
 </figure>
 
-Next the installer will present the installation location of the public JRE. You can choose to skip this part of the installer as the JDK installed in the previous step comes with a private JRE. Just press <var>Cancel</var> and confirm by clicking <var>Yes</var> in the popup window.
+Next, the installer will present the installation location of the [public JRE](https://docs.oracle.com/javase/8/docs/technotes/guides/install/windows_jdk_install.html#CHDJCCEG){:target="_blank"}. We will skip this part of the installer as the JDK installed in the previous step comes with a private JRE that can run developed code. Just press <var>Cancel</var> and confirm by clicking <var>Yes</var> in the popup window.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-7-public-jre-location.png" alt="java 7 public jre location">
@@ -61,7 +61,7 @@ Click <var>Next</var> and then <var>Close</var> to finish installing Java.
 
 # JDK Configuration
 
-In order for Java applications to be able to run we need to setup a <var>'JAVA_HOME'</var> environment variable that will point to the Java installation directory. In addition if we want to run Java commands from a command prompt we need to setup the <var>'PATH'</var> environment variable to contain the Java bin directory.
+In order for Java applications to be able to run we need to setup a <var>'JAVA_HOME'</var> environment variable that will point to the Java installation directory. In addition, if we want to run Java commands from a command prompt we need to setup the <var>'PATH'</var> environment variable to contain the Java bin directory.
 
 When using Windows the above parameters can be configured on the Environment Variables panel. Click on the <var>Windows Start</var> button and enter "<kbd>env</kbd>" without quotes as shown below.
 
