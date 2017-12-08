@@ -2,8 +2,8 @@
 title: "Spring WS - Timeout Example"
 permalink: /spring-ws-timeout-example.html
 excerpt: "A detailed step-by-step tutorial on how to set a client timeout using Spring-WS and Spring Boot."
-date: 2017-12-08
-modified: 2017-12-08
+date: 2017-12-07
+modified: 2017-12-07
 header:
   teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
