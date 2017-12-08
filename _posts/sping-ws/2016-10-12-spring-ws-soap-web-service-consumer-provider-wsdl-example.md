@@ -232,7 +232,7 @@ The servlet mapping URI pattern on the `ServletRegistrationBean` is set to "<kbd
 
 The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified Hello World WSDL file. The URL location at which this WSDL is available is determined by it's `Bean` name in combination with the URI mapping of the `MessageDispatcherServlet`. For the example below this is: [host]="<kbd>http://localhost:9090</kbd>"+[servlet mapping uri]="<kbd>/codenotfound/ws/</kbd>"+[WsdlDefinition bean name]="<kbd>helloworld</kbd>"+[WSDL postfix]="<kbd>.wsdl</kbd>" or [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl){:target="_blank"}.
 
-> Note that we changed the default Spring Boot server HTTP port value from <var>'8080'</var> to <var>'9090'</var> by explicitly setting it in the <var>application.yml</var> properties file shown below. Scroll down to <var># EMBEDDED SERVER CONFIGURATION</var> in the following link in order to get a complete [overview of all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} that can be set for auto configuration using the Spring Boot application properties file.
+> Note that we changed the default Spring Boot server HTTP port value from <var>'8080'</var> to <var>'9090'</var> by explicitly setting it in the <var>application.yml</var> properties file shown below.
 
 ``` yaml
 server:
@@ -339,9 +339,9 @@ client:
   default-uri: http://localhost:9090/codenotfound/ws/helloworld
 ```
 
-> The below class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+> Note that the <var>'helloworld'</var> at the end of the <var>default-uri</var> can actually be omitted as we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet.
 
-> Note that the <var>'helloworld'</var> at the end can actually be omitted as we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet.
+> The below class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
 ``` java
 package com.codenotfound.ws.client;
