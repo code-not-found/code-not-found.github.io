@@ -3,7 +3,7 @@ title: "Spring Web Services"
 permalink: /spring-ws/
 excerpt: "Step-by-step tutorials on Spring-WS"
 date: 2017-04-18
-modified: 2017-07-15
+modified: 2017-12-08
 ---
 
 <figure>
