@@ -27,6 +27,10 @@ modified: 2017-07-15
 * [Spring WS - HTTPS Client Server Example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html)
 * [Spring WS - Mutual Authentication Example]({{ site.url }}/2017/07/spring-ws-mutual-authentication-example.html)
 
+## Client
+
+* [Spring WS - Timeout Example]({{ site.url }}/spring-ws-timeout-example.html)
+
 ## Logging
 
 * [Spring WS - Log Client Server HTTP Headers Example]({{ site.url }}/2017/04/spring-ws-log-client-server-http-headers.html)
