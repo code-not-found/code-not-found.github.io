@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/spring-ws-teaser.jpg"
 categories: [Spring-WS]
 tags: [Authentication, Client, Example, HTTP, Maven, Proxy, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: true
+published: false
 ---
 
 <figure>
