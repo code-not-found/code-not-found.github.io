@@ -232,7 +232,14 @@ The servlet mapping URI pattern on the `ServletRegistrationBean` is set to "<kbd
 
 The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified Hello World WSDL file. The URL location at which this WSDL is available is determined by it's `Bean` name in combination with the URI mapping of the `MessageDispatcherServlet`. For the example below this is: [host]="<kbd>http://localhost:9090</kbd>"+[servlet mapping uri]="<kbd>/codenotfound/ws/</kbd>"+[WsdlDefinition bean name]="<kbd>helloworld</kbd>"+[WSDL postfix]="<kbd>.wsdl</kbd>" or [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl){:target="_blank"}.
 
-To enable the support for `@Endpoint` annotation that we will use in the next section we need to annotate our configuration class with `@EnableWs`.
+> Note that we changed the default Spring Boot server HTTP port value from <var>'8080'</var> to <var>'9090'</var> by explicitly setting it in the <var>application.yml</var> properties file shown below. Scroll down to <var># EMBEDDED SERVER CONFIGURATION</var> in the following link in order to get a complete [overview of all the Spring Kafka properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} that can be set for auto configuration using the Spring Boot application properties file.
+
+``` yaml
+server:
+  port: 9090
+```
+
+> To enable the support for `@Endpoint` annotation that we will use in the next section we need to annotate our configuration class with `@EnableWs`.
 
 ``` java
 package com.codenotfound.ws.endpoint;
@@ -491,7 +498,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
-If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven command:
+If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven command. As mentioned earlier the service WSDL is exposed on the following endpoint [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl).
 
 ``` plaintext
 mvn spring-boot:run
