@@ -17,7 +17,7 @@ published: true
 
 When implementing a web service client, it is a good practice to take into account the scenario where the web service call takes a long time to complete. In this case, a timeout at client side could be used in order to avoid that the client remains blocked for a significant period of time.
 
-The following step by step tutorial illustrates an example in which we will configure a Spring-WS timeout at client side. In addition, we will show how to handle a timeout exception. The example will use Spring Boot and Maven in order to configure, build and run.
+The following step by step tutorial illustrates an example in which we will configure a Spring-WS timeout at client side. In addition, we will show how to handle the timeout exception. The example will use Spring Boot and Maven in order to configure, build and run.
 
 If you want to learn more about Spring WS - head on over to the [Spring-WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
@@ -116,7 +116,7 @@ There are basically two different ways to setup a client timeout using Spring-WS
 
 # Setting the Template Timeout
 
-As mentioned above, in this example we will use the `WebServiceMessageSender` implementation that uses the [Apache HttpComponents HttpClient](https://hc.apache.org/httpcomponents-client-ga/). There are two setters that allow controlling how long the client will wait. The `setConnectionTimeout()` specifies how long the client will wait before a connection to the server is successfully established. The `setReadTimeout()` configures how long the client will wait for a response once the request has been sent.
+As mentioned above, in this example we will use the `WebServiceMessageSender` implementation that uses the [Apache HttpComponents HttpClient](https://hc.apache.org/httpcomponents-client-ga/){:target="_blank"}. There are two setters that allow controlling how long the client will wait. The `setConnectionTimeout()` specifies how long the client will wait before a connection to the server is successfully established. The `setReadTimeout()` configures how long the client will wait for a response once the request has been sent.
 
 In the below example we have created a `webServiceMessageSender` bean on which we have set both timeouts with the same `timeout` value that is loaded from the <var>application.yml</var> properties file. In order to use the `webServiceMessageSender` bean in our client we need to set it onto the `webServiceTemplate` using the `setMessageSender()` method.
 
@@ -172,7 +172,7 @@ public class ClientConfig {
 
 The `WebServiceTemplate` will now throw an exception in case a timeout occurs. As such we need to handle this in our `TicketAgentClient` implementation.
 
-We add a try/catch block around the `marshalSendAndReceive()` in order to catch the timeout exception. If the exception occurs we log it and create an empty flight list to be returned. 
+We add a try/catch block around the `marshalSendAndReceive()` method in order to catch the timeout exception. If the exception occurs we log it and create an empty flight list to be returned. 
 
 ``` java
 package com.codenotfound.ws.client;
@@ -311,7 +311,7 @@ The result should be a successful build during which the timeout exception error
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.9.RELEASE)
 
-15:44:29.142 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 712 (started by CodeNotFound in c:\code\st\spring-ws\spring-ws-timeout-httpclient)
+15:44:29.142 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 712 (started by CodeNotFound in c:\code\spring-ws\spring-ws-timeout-httpclient)
 15:44:29.145 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
 15:44:31.824 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 2.988 seconds (JVM running for 3.637)
 15:44:33.951 [main] ERROR c.c.ws.client.TicketAgentClient - I/O error: Read timed out; nested exception is java.net.SocketTimeoutException: Read timed out

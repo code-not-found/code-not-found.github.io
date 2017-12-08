@@ -3,7 +3,7 @@ title: "Spring Web Services"
 permalink: /spring-ws/
 excerpt: "Step-by-step tutorials on Spring-WS"
 date: 2017-04-18
-modified: 2017-12-08
+modified: 2017-04-18
 ---
 
 <figure>
@@ -14,7 +14,7 @@ modified: 2017-12-08
 
 ## Quick Start
 
-* [Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html)
+* [Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html)
 
 ## Headers
 

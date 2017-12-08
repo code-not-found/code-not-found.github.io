@@ -1,27 +1,28 @@
 ---
 title: "Spring WS - SOAP Web Service Consumer Provider WSDL Example"
-permalink: /2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html
+permalink: /spring-ws-soap-web-service-consumer-provider-wsdl-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Spring-WS and Spring Boot."
 date: 2016-10-12
 modified: 2017-04-18
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Client, Consumer, Endpoint, Example, Hello World, Maven, Provider, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, WSDL]
 redirect_from:
   - /2016/10/consume-provide-web-service-wsdl.html
+  - /2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 [Spring Web Services](http://projects.spring.io/spring-ws/){:target="_blank"} (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads.
 
 The following step by step tutorial illustrates a basic example in which we will configure, build and run a Hello World contract first client and endpoint using a WSDL, Spring-WS, Spring Boot and Maven.
 
-The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
+The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 If you want to learn more about Spring WS - head on over to the [Spring-WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
@@ -108,7 +109,7 @@ As Spring Web Services is **contract first only**, we need to start from a contr
 
 We will be building and running our example using [Apache Maven](https://maven.apache.org/){:target="_blank"}. Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
 
-In order to expose the Hello World service endpoint, we will use the [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} project that comes with an embedded Apache Tomcat server. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application.
+In order to expose the Hello World service endpoint, we will use the [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} project that comes with an embedded Apache Tomcat server. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application.
 
 The `spring-boot-starter-web-services` dependency includes the needed dependencies for using Spring Web Services. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
@@ -129,18 +130,17 @@ In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin 
 
   <name>spring-ws-helloworld</name>
   <description>Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example</description>
-  <url>https://www.codenotfound.com/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html</url>
+  <url>https://www.codenotfound.com/spring-ws-soap-web-service-consumer-provider-wsdl-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.4.RELEASE</version>
+    <version>1.5.9.RELEASE</version>
   </parent>
 
   <properties>
     <java.version>1.8</java.version>
-
-    <maven-jaxb2-plugin.version>0.13.2</maven-jaxb2-plugin.version>
+    <maven-jaxb2-plugin.version>0.13.3</maven-jaxb2-plugin.version>
   </properties>
 
   <dependencies>
@@ -187,7 +187,7 @@ In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin 
 </project>
 ```
 
-In order to directly use the <var>'person'</var> and <var>'greeting'</var> elements (defined in the <var>'types'</var> section of the Hello World WSDL) in our Java code, we will use [JAXB](http://www.oracle.com/technetwork/articles/javase/index-140168.html){:target="_blank"} to generate the corresponding Java classes. The above POM file configures the [maven-jaxb2-plugin](https://java.net/projects/maven-jaxb2-plugin/pages/Home){:target="_blank"} that will handle the generation.
+In order to directly use the <var>'person'</var> and <var>'greeting'</var> elements (defined in the <var>'types'</var> section of the Hello World WSDL) in our Java code, we will use [JAXB](http://www.oracle.com/technetwork/articles/javase/index-140168.html){:target="_blank"} to generate the corresponding Java classes. The above POM file configures the [maven-jaxb2-plugin](https://github.com/highsource/maven-jaxb2-plugin){:target="_blank"} that will handle the generation.
 
 The plugin will look into the defined <var>'&lt;schemaDirectory&gt;'</var> in order to find any WSDL files for which it needs to generate the Java classes. In order to trigger the generation via Maven, executed following command:
 
@@ -198,7 +198,7 @@ mvn generate-sources
 This results in a number of generated classes amongst which the `Person` and `Greeting` that we will use when implementing the client and provider of the Hello World service.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/hello-world-jaxb-generated-java-classes.png" alt="helloworld jaxb generated java classes">
+    <img src="{{ site.url }}/assets/images/posts/spring-ws/hello-world-jaxb-generated-java-classes.png" alt="helloworld jaxb generated java classes">
 </figure>
 
 We start by creating an `SpringWsApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap the application, starting Spring. For more information on Spring Boot, we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
@@ -220,13 +220,13 @@ public class SpringWsApplication {
 
 # Creating the Endpoint (Provider)
 
-The server-side of Spring-WS is designed around a central class called `MessageDispatcher` that dispatches incoming XML messages to endpoints. For more detailed information check out the [Spring Web Services reference documentation on the MessageDispatcher](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e780){:target="_blank"}.
+The server-side of Spring-WS is designed around a central class called `MessageDispatcher` that dispatches incoming XML messages to endpoints. For more detailed information check out the [Spring Web Services reference documentation on the MessageDispatcher](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#_the_code_messagedispatcher_code){:target="_blank"}.
 
 Spring Web Services supports multiple transport protocols. The most common is the HTTP transport, for which a custom `MessageDispatcherServlet` servlet is supplied. This is a standard `Servlet` which extends from the standard Spring Web `DispatcherServlet` ([=central dispatcher for HTTP request handlers/controllers](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html){:target="_blank"}), and wraps a `MessageDispatcher`.
 
 > In other words: the `MessageDispatcherServlet` combines the attributes of the `MessageDispatcher` and `DispatcherServlet` and as a result allows the handling of XML messages over HTTP.
 
-In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>'messageDispatcherServlet'</var>, it does [not replace Spring Boot's default `DispatcherServlet` bean](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet){:target="_blank"}.
+In the below `WebServiceConfig` configuration class we use a `ServletRegistrationBean` to register the `MessageDispatcherServlet`. Note that it is important to inject and set the ApplicationContext to the `MessageDispatcherServlet`, otherwise it will not automatically detect other Spring Web Services related beans (such as the lower `Wsdl11Definition`). By naming this bean <var>'messageDispatcherServlet'</var>, it does [not replace Spring Boot's default DispatcherServlet bean](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-switch-off-the-spring-mvc-dispatcherservlet){:target="_blank"}.
 
 The servlet mapping URI pattern on the `ServletRegistrationBean` is set to "<kbd>/codenotfound/ws/*</kbd>". The web container will use this path to map incoming HTTP requests to the servlet.
 
@@ -301,9 +301,7 @@ public class HelloWorldEndpoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldEndpoint.class);
 
-  private static final String NAMESPACE_URI = "http://codenotfound.com/types/helloworld";
-
-  @PayloadRoot(namespace = NAMESPACE_URI, localPart = "person")
+  @PayloadRoot(namespace = "http://codenotfound.com/types/helloworld", localPart = "person")
   @ResponsePayload
   public Greeting sayHello(@RequestPayload Person request) {
     LOGGER.info("Endpoint received person[firstName={},lastName={}]", request.getFirstName(),
@@ -327,13 +325,21 @@ The `WebServiceTemplate` is the core class for client-side Web service access in
 
 As we will use JAXB to marshal our `Person` to a request XML and in turn unmarshal the response XML to our `Greeting` we need an instance of Spring's `Jaxb2Marshaller`. This class requires a context path to operate, which you can set using the <var>'contextPath'</var> property. The context path is a list of colon (:) separated Java package names that contain schema derived classes. In our example this is the package name of the generated Person and `Greeting` classes which is: <var>'com.codenotfound.types.helloworld'</var>.
 
-The below `ClientConfig` configuration class specifies the `WebServiceTemplate` bean that uses the above `Jaxb2Marshaller` for marshaling and unmarshalling. We also set the default service URI (note that the <var>'helloworld'</var> at the end can actually be omitted as we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet).
+The below `ClientConfig` configuration class specifies the `WebServiceTemplate` bean that uses the above `Jaxb2Marshaller` for marshaling and unmarshalling. We also set the default service URI using a `defaultUri` property loaded from the <var>application.yml</var> properties file shown below.
 
-Note that the class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+``` yaml
+client:
+  default-uri: http://localhost:9090/codenotfound/ws/helloworld
+```
+
+> The below class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+
+> Note that the <var>'helloworld'</var> at the end can actually be omitted as we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet.
 
 ``` java
 package com.codenotfound.ws.client;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -341,6 +347,9 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 
 @Configuration
 public class ClientConfig {
+
+  @Value("${client.default-uri}")
+  private String defaultUri;
 
   @Bean
   Jaxb2Marshaller jaxb2Marshaller() {
@@ -355,14 +364,14 @@ public class ClientConfig {
     WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
     webServiceTemplate.setMarshaller(jaxb2Marshaller());
     webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
-    webServiceTemplate.setDefaultUri("http://localhost:9090/codenotfound/ws/helloworld");
+    webServiceTemplate.setDefaultUri(defaultUri);
 
     return webServiceTemplate;
   }
 }
 ```
 
-The client code is specified in the `HelloWorldClient` class. The sayHello method creates a Person object based on the <var>'firstname'</var> and <var>'lastname'</var> input parameters.
+The client code is specified in the `HelloWorldClient` class. The `sayHello()` method creates a Person object based on the <var>'firstname'</var> and <var>'lastname'</var> input parameters.
 
 The auto-wired `WebServiceTemplate` is used to marshal and send a person XML request towards the Hello World service. The result is unmarshalled to a `Greeting` object which is logged.
 
@@ -458,16 +467,16 @@ The result should be a successful build during which the embedded Tomcat is star
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-21:19:56.119 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 732 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-helloworld)
-21:19:56.122 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
-21:19:58.545 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 2.733 seconds (JVM running for 3.407)
-21:19:58.578 [main] INFO  c.c.ws.client.HelloWorldClient - Client sending person[firstName=John,lastName=Doe]
-21:19:58.893 [http-nio-9090-exec-1] INFO  c.c.ws.endpoint.HelloWorldEndpoint - Endpoint received person[firstName=John,lastName=Doe]
-21:19:58.893 [http-nio-9090-exec-1] INFO  c.c.ws.endpoint.HelloWorldEndpoint - Endpoint sending greeting='Hello John Doe!'
-21:19:58.908 [main] INFO  c.c.ws.client.HelloWorldClient - Client received greeting='Hello John Doe!'
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.22 sec - in com.codenotfound.ws.SpringWsApplicationTests
+21:37:53.519 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 3276 (started by CodeNotFound in c:\code\spring-ws\spring-ws-helloworld)
+21:37:53.522 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
+21:37:55.819 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 2.587 seconds (JVM running for 3.29)
+21:37:55.849 [main] INFO  c.c.ws.client.HelloWorldClient - Client sending person[firstName=John,lastName=Doe]
+21:37:56.077 [http-nio-9090-exec-1] INFO  c.c.ws.endpoint.HelloWorldEndpoint - Endpoint received person[firstName=John,lastName=Doe]
+21:37:56.077 [http-nio-9090-exec-1] INFO  c.c.ws.endpoint.HelloWorldEndpoint - Endpoint sending greeting='Hello John Doe!'
+21:37:56.092 [main] INFO  c.c.ws.client.HelloWorldClient - Client received greeting='Hello John Doe!'
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.954 sec - in com.codenotfound.ws.SpringWsApplicationTests
 
 Results :
 
@@ -476,9 +485,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 6.566 s
-[INFO] Finished at: 2017-04-18T21:19:59+02:00
-[INFO] Final Memory: 27M/274M
+[INFO] Total time: 6.603 s
+[INFO] Finished at: 2017-12-08T21:37:56+01:00
+[INFO] Final Memory: 29M/282M
 [INFO] ------------------------------------------------------------------------
 ```
 
