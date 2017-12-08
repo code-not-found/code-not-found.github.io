@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Client, Consumer, Example, Timeout, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
-published: false
+published: true
 ---
 
 <figure>
