@@ -129,7 +129,7 @@ In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin 
   <packaging>jar</packaging>
 
   <name>spring-ws-helloworld</name>
-  <description>Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example</description>
+  <description>Spring WS - SOAP Web Service Consumer Provider WSDL Example</description>
   <url>https://www.codenotfound.com/spring-ws-soap-web-service-consumer-provider-wsdl-example.html</url>
 
   <parent>

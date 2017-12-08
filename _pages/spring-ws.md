@@ -14,7 +14,7 @@ modified: 2017-04-18
 
 ## Quick Start
 
-* [Spring WS - SOAP Web Service Consumer &amp; Provider WSDL Example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html)
+* [Spring WS - SOAP Web Service Consumer Provider WSDL Example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html)
 
 ## Headers
 
