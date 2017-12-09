@@ -198,7 +198,7 @@ mvn generate-sources
 This results in a number of generated classes amongst which the `Person` and `Greeting` that we will use when implementing the client and provider of the Hello World service.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/spring-ws/hello-world-jaxb-generated-java-classes.png" alt="helloworld jaxb generated java classes">
+    <img src="{{ site.url }}/assets/images/posts/spring-ws/hello-world-jaxb-generated-java-classes.png" alt="hello world jaxb generated java classes">
 </figure>
 
 We also create a `SpringWsApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap the application, starting Spring. For more information on Spring Boot, we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
@@ -341,7 +341,7 @@ client:
   default-uri: http://localhost:9090/codenotfound/ws/helloworld
 ```
 
-> Note that the <var>'helloworld'</var> at the end of the <var>default-uri</var> can actually be omitted as we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet.
+> Note that the <var>'helloworld'</var> at the end of the <var>default-uri</var> can actually be omitted as previously we had specified "<kbd>/codenotfound/ws/*</kbd>" as URI of our endpoint servlet.
 
 > The below class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
@@ -431,7 +431,7 @@ We will create a basic unit test case in which the above client is used to send 
 
 The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced with Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications){:target="_blank"}, are used to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
 
-By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the <var>'server.port'</var> property defined in the <var>application.properties</var> file.
+By setting the `DEFINED_PORT` web environment variable, a real HTTP server is started on the the <var>'server.port'</var> property defined in the <var>application.yml</var> properties file.
 
 ``` java
 package com.codenotfound.ws;
@@ -500,11 +500,17 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
-If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven command. As mentioned earlier the service WSDL is exposed on the following endpoint [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl).
+If you just want to start Spring Boot so that the endpoint is up and running, execute following Maven command.
 
 ``` plaintext
 mvn spring-boot:run
 ```
+
+As mentioned earlier the service WSDL is exposed on the following endpoint: [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl). This can be verified by opening it in a browser.
+
+<figure>
+    <img src="{{ site.url }}/assets/images/posts/spring-ws/hello-world-wsdl.png" alt="hello world wsdl">
+</figure>
 
 ---
 
@@ -516,4 +522,4 @@ If you would like to run the above code sample you can get the full source code 
 
 This Spring WS example turned out a bit longer than expected but hopefully, it helped to explain the core client and endpoint concepts.
 
-If you found this sample useful or have a question you would like to ask, drop a line below!
+If you found this sample useful or have a question you would like to ask, please drop a line below!
