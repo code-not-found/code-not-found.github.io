@@ -506,7 +506,7 @@ If you just want to start Spring Boot so that the endpoint is up and running, ex
 mvn spring-boot:run
 ```
 
-As mentioned earlier the service WSDL is exposed on the following endpoint: [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl). This can be verified by opening it in a browser.
+As mentioned earlier, the service WSDL is exposed on the following endpoint: [http://localhost:9090/codenotfound/ws/helloworld.wsdl](http://localhost:9090/codenotfound/ws/helloworld.wsdl). This can be verified by opening it in a browser as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/spring-ws/hello-world-wsdl.png" alt="hello world wsdl">
