@@ -24,7 +24,7 @@ modified: 2017-04-18
 ## Security
 
 * [Spring WS - Basic Authentication Example]({{ site.url }}/spring-ws-basic-authentication-example.html)
-* [Spring WS - HTTPS Client Server Example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html)
+* [Spring WS - HTTPS Client Server Example]({{ site.url }}/spring-ws-https-client-server-example.html)
 * [Spring WS - Mutual Authentication Example]({{ site.url }}/2017/07/spring-ws-mutual-authentication-example.html)
 
 ## Client
@@ -36,7 +36,7 @@ modified: 2017-04-18
 * [Spring WS - Log Client Server HTTP Headers Example]({{ site.url }}/spring-ws-log-client-server-http-headers.html)
 
 ## Patterns
-* [Spring WS - SOAP Tolerant Reader Example]({{ site.url }}/2017/07/spring-ws-soap-tolerant-reader-example.html)
+* [Spring WS - SOAP Tolerant Reader Example]({{ site.url }}/spring-ws-soap-tolerant-reader-example.html)
 
 ## References
 

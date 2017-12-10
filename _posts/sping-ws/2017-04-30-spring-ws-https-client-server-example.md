@@ -1,18 +1,20 @@
 ---
 title: "Spring WS - HTTPS Client-Server Example"
-permalink: /2017/04/spring-ws-https-client-server-example.html
+permalink: /spring-ws-https-client-server-example.html
 excerpt: "A detailed step-by-step tutorial on how to setup HTTPS on client and server side using Spring-WS and Spring Boot."
 date: 2017-04-30
 modified: 2017-04-30
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Client, Example, HTTPS, Maven, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, SSL, TLS, Tutorial]
+redirect_from:
+  - /2017/04/spring-ws-https-client-server-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 [HTTPS](https://en.wikipedia.org/wiki/HTTPS){:target="_blank"} is a protocol for secure communication over a computer network. It consists of communication over Hypertext Transfer Protocol (HTTP) within a connection encrypted by [Transport Layer Security](https://en.wikipedia.org/wiki/Transport_Layer_Security){:target="_blank"} (TLS), or its predecessor, Secure Sockets Layer (SSL).
@@ -32,11 +34,13 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) but the basic <var>helloworld.wsdl</var> has been replaced by a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
+The setup of the project is based on a previous [Spring WS example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) but the basic <var>helloworld.wsdl</var> has been replaced by a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-Security related features of Spring-WS are not part of the `spring-boot-starter-web-services` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters){:target="_blank"}. As such we have to add two extra dependencies to the Maven POM file in order for the example to work.
+There are two implementations of the `WebServiceMessageSender` interface for sending messages via HTTPS. The default implementation is the `HttpsUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the [Apache HttpComponents HttpClient](https://hc.apache.org/httpcomponents-client-ga){:target="_blank"}.
 
-First, the `spring-ws-security` dependency which contains a `FactoryBean` for setting up the client's `TrustStore`. Second, the `spring-ws-support` dependency which contains a `MessageSender` that adds support for (self-signed) HTTPS certificates.
+We will use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub, however, we have also added a [HTTPS example that uses the HttpsUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-https) in case a dependency on the `HttpClient` is not desired.
+
+In order to use the `HttpComponentsMessageSender` implementation, we need to add the Apache `httpclient` dependency to the Maven POM file.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -45,24 +49,24 @@ First, the `spring-ws-security` dependency which contains a `FactoryBean` for se
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.codenotfound</groupId>
-  <artifactId>spring-ws-https</artifactId>
+  <artifactId>spring-ws-https-httpclient</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>spring-ws-https</name>
+  <name>spring-ws-https-httpclient</name>
   <description>Spring WS - HTTPS Client Server Example</description>
-  <url>https://www.codenotfound.com/2017/04/spring-ws-https-client-server-example.html</url>
+  <url>https://www.codenotfound.com/spring-ws-https-client-server-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.4.RELEASE</version>
+    <version>1.5.9.RELEASE</version>
   </parent>
 
   <properties>
     <java.version>1.8</java.version>
-
-    <maven-jaxb2-plugin.version>0.13.2</maven-jaxb2-plugin.version>
+    <httpclient.version>4.5.4</httpclient.version>
+    <maven-jaxb2-plugin.version>0.13.3</maven-jaxb2-plugin.version>
   </properties>
 
   <dependencies>
@@ -76,14 +80,11 @@ First, the `spring-ws-security` dependency which contains a `FactoryBean` for se
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <!-- spring-ws -->
+    <!-- httpclient -->
     <dependency>
-      <groupId>org.springframework.ws</groupId>
-      <artifactId>spring-ws-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.ws</groupId>
-      <artifactId>spring-ws-support</artifactId>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${httpclient.version}</version>
     </dependency>
   </dependencies>
 
@@ -133,7 +134,7 @@ keytool -genkeypair -alias server-keypair -keyalg RSA -keysize 2048 -validity 36
 If you would like to visualize the content of the keystore you can use a tool like [Portecle](http://portecle.sourceforge.net/){:target="_blank"}. Using the <var>File</var> menu, navigate to the <var>server-keystore.jks</var> JKS file and when prompted enter the keystore password (in the above command we used <kbd>"server-keystore-p455w0rd"</kbd>) and the result should be should be similar to what is shown below.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/server-keystore.png" alt="server keystore">
+    <img src="{{ site.url }}/assets/images/posts/spring-ws/server-keystore.png" alt="server keystore">
 </figure>
 
 For the client, we need to create a truststore (also a JKS file) which contains certificates from other parties that you expect to communicate with, or from [Certificate Authorities](https://en.wikipedia.org/wiki/Certificate_authority){:target="_blank"} (CA) that you trust to identify other parties. In this example, we will add the server's public certificate to the client's truststore. As a result, our client will "trust" and thus allow an HTTPS connection to the server.
@@ -147,7 +148,7 @@ keytool -exportcert -alias server-keypair -file server-public-key.cer -keystore 
 If you want you can use the <var>Examine Certificate</var> menu in Portecle to visualize the certificate.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/server-public-key.png" alt="server public key">
+    <img src="{{ site.url }}/assets/images/posts/spring-ws/server-public-key.png" alt="server public key">
 </figure>
 
 Now we create a <var>client-truststore.jks</var> that contains the exported certificate by executing following keytool command.
@@ -159,18 +160,18 @@ keytool -importcert -keystore client-truststore.jks -alias server-public-key -fi
 Similar to the keystore we can open the truststore using Portecle to inspect its contents.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/client-truststore.png" alt="client truststore">
+    <img src="{{ site.url }}/assets/images/posts/spring-ws/client-truststore.png" alt="client truststore">
 </figure>
 
 Finally, we move the three artifacts we have just generated: <var>client-truststore.jks</var>, <var>server-keystore.jks</var> and <var>server-public-key.cer</var> to the <var>src/main/resources</var> folder so that they are available on the classpath for both client and server setup.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/https-jks-files.png" alt="https jks files">
+    <img src="{{ site.url }}/assets/images/posts/spring-ws/https-jks-files.png" alt="https jks files">
 </figure>
 
 # Setup HTTPS on the Client
 
-As the server will expose the ticket agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate` used by the client. The `@Value` annotation is used to inject the <var>'client.default-uri'</var> value from the application properties YAML file.
+As the server will expose the Ticket Agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate` used by the client. The `@Value` annotation is used to inject the <var>'client.default-uri'</var> value from the application properties YAML file.
 
 There are two other values that are configured in our <var>application.yml</var> configuration file. These are are the location of the truststore JKS file and its password as shown below.
 
@@ -182,13 +183,13 @@ client:
     trust-store-password: client-truststore-p455w0rd
 ```
 
-In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connect using the HTTPS protocol. This is done by creating and setting a `HttpsUrlConnectionMessageSender` which is an extension of the default `HttpUrlConnectionMessageSender` with support for HTTPS.
+In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connect using the HTTPS protocol. This is done by creating and setting a `HttpComponentsMessageSender` on which we then configure the HttpClient which provides full [support for HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS) protocols](https://hc.apache.org/httpcomponents-client-4.5.x/tutorial/html/connmgmt.html#d5e449).
 
-> Note that the `HttpsUrlConnectionMessageSender` is part of the `spring-ws-support` package.
+`HttpClient` makes use of `SSLConnectionSocketFactory` to create SSL connections. `SSLConnectionSocketFactory` allows for a high degree of customization. It can take an instance of `SSLContext` as a parameter and use it to create custom configured TLS/SSL connections.
 
 During the TLS handshaking procedure, the client needs to decide whether it trusts the public key certificate that the server provides. This is done based on whether or not this certificate (or one of its issuing CA's) is present in (one of) the client's truststores. We specify a `TrustManagersFactoryBean` to handle the configured truststores.
 
-To easily [load one or more truststores using Spring configuration](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e2263){:target="_blank"}, we can use the `KeyStoreFactoryBean` that ships with the `spring-ws-security` dependency that was added to the project's <var>pom.xml</var>. The bean has a resource location property and password, which both need to be set.
+In order to trust the server certificate, create an `sslContext()` bean on which we set the truststore file and its corresponding password. This context is then passed to the `sslConnectionSocketFactory()` bean which is in turn set on the `httpClient()`.
 
 If we were to test the client with above settings we would run into the following exception
 
@@ -198,24 +199,33 @@ javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No
 
 The reason for this is that when the HTTPS client connects to a server, it's not enough for a certificate to be trusted, it also has to match the server you want to talk to. In other words, the client verifies that the hostname in the certificate matches the hostname of the server. For more detailed information check [this answer on Stack Overflow](http://stackoverflow.com/a/3093650/4201470){:target="_blank"}.
 
-In order to fix this problem, we could regenerate the server keypair so it contains <var>'localhost'</var>. You can find the needed keytool command in the [Spring WS mutual authentication tutorial]({{ site.url }}/2017/07/spring-ws-mutual-authentication-example.html). 
+In order to fix this problem, we could regenerate the server keypair so it contains <var>'localhost'</var>. You can find the needed keytool command in the [Spring WS mutual authentication tutorial]({{ site.url }}/spring-ws-mutual-authentication-example.html). 
 
-Another option, which we will use in this example, is to override the `HostnameVerifier` so that it returns `true` in the case a hostname equals to <var>'localhost'</var> is used. Note that this is not something you would want to do in production!
+Another option, which we will use in this example, is to turn hostname verification off. Apache ships a `NoopHostnameVerifier` that can be used for this. Simply pass an instance to the `SSLConnectionSocketFactory` constructor. Note that this is not something you would want to do in production!
+
+There is one last problem we need to take care of. The `HttpComponentsMessageSender` has two constructors, with and without `HttpClient`, and the one with `HttpClient` omits adding a `SoapRemoveHeaderInterceptor`. The `HttpClient` throws an exception if <var>Content-Length</var> or <var>Transfer-Encoding</var> headers have been set. 
+
+So in order to make sure those headers are not present we add the `SoapRemoveHeaderInterceptor` by using the `addInterceptorFirst()` method on the `HttpClientBuilder`.
+ 
 
 ``` java
 package com.codenotfound.ws.client;
 
-import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
-import org.springframework.ws.soap.security.support.KeyStoreFactoryBean;
-import org.springframework.ws.soap.security.support.TrustManagersFactoryBean;
-import org.springframework.ws.transport.http.HttpsUrlConnectionMessageSender;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender.RemoveSoapHeadersInterceptor;
 
 @Configuration
 public class ClientConfig {
@@ -243,54 +253,40 @@ public class ClientConfig {
     webServiceTemplate.setMarshaller(jaxb2Marshaller());
     webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
     webServiceTemplate.setDefaultUri(defaultUri);
-    // set a httpsUrlConnectionMessageSender to handle the HTTPS session
-    webServiceTemplate.setMessageSender(httpsUrlConnectionMessageSender());
+    webServiceTemplate.setMessageSender(httpComponentsMessageSender());
 
     return webServiceTemplate;
   }
 
   @Bean
-  public HttpsUrlConnectionMessageSender httpsUrlConnectionMessageSender() throws Exception {
-    HttpsUrlConnectionMessageSender httpsUrlConnectionMessageSender =
-        new HttpsUrlConnectionMessageSender();
-    httpsUrlConnectionMessageSender.setTrustManagers(trustManagersFactoryBean().getObject());
-    // allows the client to skip host name verification as otherwise following error is thrown:
-    // java.security.cert.CertificateException: No name matching localhost found
-    httpsUrlConnectionMessageSender.setHostnameVerifier(new HostnameVerifier() {
-      @Override
-      public boolean verify(String hostname, javax.net.ssl.SSLSession sslSession) {
-        if ("localhost".equals(hostname)) {
-          return true;
-        }
-        return false;
-      }
-    });
+  public HttpComponentsMessageSender httpComponentsMessageSender() throws Exception {
+    HttpComponentsMessageSender httpComponentsMessageSender = new HttpComponentsMessageSender();
+    httpComponentsMessageSender.setHttpClient(httpClient());
 
-    return httpsUrlConnectionMessageSender;
+    return httpComponentsMessageSender;
   }
 
-  @Bean
-  public KeyStoreFactoryBean trustStore() {
-    KeyStoreFactoryBean keyStoreFactoryBean = new KeyStoreFactoryBean();
-    keyStoreFactoryBean.setLocation(trustStore);
-    keyStoreFactoryBean.setPassword(trustStorePassword);
-
-    return keyStoreFactoryBean;
+  public HttpClient httpClient() throws Exception {
+    return HttpClientBuilder.create().setSSLSocketFactory(sslConnectionSocketFactory())
+        .addInterceptorFirst(new RemoveSoapHeadersInterceptor()).build();
   }
 
-  @Bean
-  public TrustManagersFactoryBean trustManagersFactoryBean() {
-    TrustManagersFactoryBean trustManagersFactoryBean = new TrustManagersFactoryBean();
-    trustManagersFactoryBean.setKeyStore(trustStore().getObject());
+  public SSLConnectionSocketFactory sslConnectionSocketFactory() throws Exception {
+    // NoopHostnameVerifier essentially turns hostname verification off as otherwise following error
+    // is thrown: java.security.cert.CertificateException: No name matching localhost found
+    return new SSLConnectionSocketFactory(sslContext(), NoopHostnameVerifier.INSTANCE);
+  }
 
-    return trustManagersFactoryBean;
+  public SSLContext sslContext() throws Exception {
+    return SSLContextBuilder.create()
+        .loadTrustMaterial(trustStore.getFile(), trustStorePassword.toCharArray()).build();
   }
 }
 ```
 
 # Setup HTTPS on the Server
 
-As our web service runs on Spring Boot, we just need to configure the [underlying web server with the correct parameters](http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-configure-ssl){:target="_blank"}. This is done via the [Spring Boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"}.
+As our web service runs on Spring Boot, we just need to configure the [underlying web server with the correct parameters](http://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-servlet-containers.html#howto-configure-ssl){:target="_blank"}. This is done via the [Spring Boot web properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} (look for the <var># EMBEDDED SERVER CONFIGURATION</var> heading).
 
 In this example, we use the YAML format to specify the different parameters in the application properties file as shown below. The server HTTP port is set to <var>'9443'</var> in order to indicate the usage of HTTPS. The server's keystore (that was generated at the beginning of this tutorial) and the corresponding password are also configured in addition to the alias of the key pair to be used and the corresponding password.
 
@@ -310,16 +306,12 @@ In order to quickly test if the setup was successful, start Spring Boot by runni
 mvn spring-boot:run
 ```
 
-Open below URL in your browser and the ticket agent service WSDL definition will now be served over HTTPS.
-
-``` plaintext
-https://localhost:9443/codenotfound/ws/ticketagent.wsdl
-```
+Open below URL in your browser and the ticket agent service WSDL definition will now be served over HTTPS: [https://localhost:9443/codenotfound/ws/ticketagent.wsdl](https://localhost:9443/codenotfound/ws/ticketagent.wsdl)
 
 > Notice that your browser will probably flag the connection as being not secure (go ahead and accept an exception). The reason for this is that we are using self-signed certificates which are by default untrusted by your browser.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/https-ticketagent-wsdl.png" alt="https ticketagent wsdl">
+    <img src="{{ site.url }}/assets/images/posts/spring-ws/https-ticketagent-wsdl.png" alt="https ticketagent wsdl">
 </figure>
 
 # Testing Spring WS over HTTPS
@@ -339,7 +331,7 @@ This will result in a successful test run as shown below.
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
 08:42:52.929 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 5352 (started by CodeNotFound in c:\code\spring-ws\spring-ws-https)
 08:42:52.932 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
@@ -367,6 +359,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Although setting up HTTPS using Spring WS is not extensively covered in the reference documentation, it can be done quite easily using configuration and some support classes.
+Although setting up HTTPS using Spring WS is not extensively covered in the reference documentation, it can be done quite easily using configuration and some builder classes.
 
 If you found this tutorial helpful or if you run into some problems let me know in the comments section below.

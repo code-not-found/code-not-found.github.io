@@ -14,7 +14,7 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 The [tolerant reader pattern](https://martinfowler.com/bliki/TolerantReader.html){:target="_blank"} was coined by Martin Fowler as a way to reduce the coupling between the consumer and provider of a web service. The pattern tries to minimize the impact on existing consumers in case the service contract changes.
@@ -36,7 +36,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-When describing the tolerant pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an <var>orderhistory.wsdl</var> service WSDL file. This SOAP service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full order history of that user.
+When describing the tolerant pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating a <var>orderhistory.wsdl</var> service WSDL file. This SOAP service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full order history of that user.
 
 ``` xml
 <?xml version="1.0"?>
