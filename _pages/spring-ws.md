@@ -7,7 +7,7 @@ modified: 2017-04-18
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 [Spring Web Services](http://projects.spring.io/spring-ws/){:target="_blank"} (Spring-WS) is a product of the Spring community focused on creating document-driven Web services. Spring-WS facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads.
@@ -29,11 +29,8 @@ modified: 2017-04-18
 
 ## Client
 
-* [Spring WS - Timeout Example]({{ site.url }}/spring-ws-timeout-example.html)
-
-## Logging
-
 * [Spring WS - Log Client Server HTTP Headers Example]({{ site.url }}/2017/04/spring-ws-log-client-server-http-headers.html)
+* [Spring WS - Timeout Example]({{ site.url }}/spring-ws-timeout-example.html)
 
 ## Patterns
 * [Spring WS - SOAP Tolerant Reader Example]({{ site.url }}/2017/07/spring-ws-soap-tolerant-reader-example.html)
@@ -41,7 +38,7 @@ modified: 2017-04-18
 ## References
 
 * [Spring Web Services](http://projects.spring.io/spring-ws/){:target="_blank"}
-* [Spring Web Services Reference Documentation](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/){:target="_blank"}
+* [Spring Web Services Reference Documentation](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/){:target="_blank"}
 * [GitHub - spring-projects/spring-ws](https://github.com/spring-projects/spring-ws){:target="_blank"}
 * [Stack Overflow - Spring-WS Questions](http://stackoverflow.com/questions/tagged/spring-ws){:target="_blank"}
 

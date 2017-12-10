@@ -1,23 +1,24 @@
 ---
 title: "Spring WS - Log Client Server HTTP Headers Example"
-permalink: /2017/04/spring-ws-log-client-server-http-headers.html
+permalink: /spring-ws-log-client-server-http-headers.html
 excerpt: "A detailed step-by-step tutorial on how to log the client and server HTTP headers using Spring-WS and Spring Boot."
 date: 2017-04-23
 modified: 2017-04-23
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Client, Endpoint, Example, Headers, HTTP, Log, Logging, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
 redirect_from:
   - /2017/04/log-client-server-http-headers.html
+  - /2017/04/spring-ws-log-client-server-http-headers.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-[Spring Web Services](http://projects.spring.io/spring-ws/){:target="_blank"}, contrary to a framework like for example [Apache CXF](http://cxf.apache.org/){:target="_blank"}, does not provide out-of-the box logging of HTTP headers. Reason for this is that Spring-WS tries to be transport-agnostic and as such only ships with [logging at SOAP message level](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#logging){:target="_blank"}.
+[Spring Web Services](http://projects.spring.io/spring-ws/){:target="_blank"}, contrary to a framework like for example [Apache CXF](http://cxf.apache.org/){:target="_blank"}, does not provide out-of-the box logging of HTTP headers. Reason for this is that Spring-WS tries to be transport-agnostic and as such only ships with [logging at SOAP message level](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#logging){:target="_blank"}.
 
 It is however still possible to log the client and server HTTP headers by creating a custom `Interceptor` which offers the possibility to add common pre- and postprocessing behavior without the need of modifying the core payload handling code.
 
@@ -35,9 +36,9 @@ Tools used:
 
 The setup of the project is based on a previous [Spring Web Services example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-In this example we will get access to the HTTP headers by using the `writeTo()` method of the `WebServiceMessage` interface. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream){:target="_blank"}).
+In this example we will get access to the HTTP headers by using the `writeTo()` method of the `WebServiceMessage` interface. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream)){:target="_blank"}.
 
-So first thing to do is to extend the abstract `TransportOutputStream` class as there is no public implementation available that we could use. We implement the `addHeader()` method which writes a header that is being added to the `ByteArrayOutputStream`. In addition we also complete the `createOutputStream()` method with logic to create or reuse the class's `byteArrayOutputStream` variable.
+So first thing to do is to extend the abstract `TransportOutputStream` class as there is no public implementation available that we can use. We implement the `addHeader()` method which writes a header that is being added to the `ByteArrayOutputStream`. In addition we also complete the `createOutputStream()` method with logic to create or reuse the class's `byteArrayOutputStream` variable.
 
 ``` java
 package com.codenotfound.ws.interceptor;
@@ -159,6 +160,7 @@ In order to enable the `LogHttpHeaderClientInterceptor` we define it on the `Web
 ``` java
 package com.codenotfound.ws.client;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -169,6 +171,9 @@ import com.codenotfound.ws.interceptor.LogHttpHeaderClientInterceptor;
 
 @Configuration
 public class ClientConfig {
+
+  @Value("${client.default-uri}")
+  private String defaultUri;
 
   @Bean
   Jaxb2Marshaller jaxb2Marshaller() {
@@ -183,7 +188,7 @@ public class ClientConfig {
     WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
     webServiceTemplate.setMarshaller(jaxb2Marshaller());
     webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
-    webServiceTemplate.setDefaultUri("http://localhost:9090/codenotfound/ws/ticketagent");
+    webServiceTemplate.setDefaultUri(defaultUri);
 
     // register the LogHttpHeaderClientInterceptor
     ClientInterceptor[] interceptors =
@@ -303,12 +308,12 @@ The result is that both request and response messages are logged twice (once for
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-20:32:54.674 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 4924 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-log-http-headers)
-20:32:54.677 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
-20:32:57.076 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 2.719 seconds (JVM running for 3.38)
-20:32:57.178 [main] INFO  c.c.ws.interceptor.HttpLoggingUtils -
+07:18:16.117 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 2176 (started by CodeNotFound in c:\code\spring-ws\spring-ws-log-http-headers)
+07:18:16.120 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
+07:18:18.729 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 2.93 seconds (JVM running for 3.634)
+07:18:18.962 [main] INFO  c.c.ws.interceptor.HttpLoggingUtils -
 ----------------------------
 Client Request Message
 ----------------------------
@@ -316,10 +321,9 @@ Accept: text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
 SOAPAction: ""
 Content-Type: text/xml; charset=utf-8
 Content-Length: 219
-<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns3:listFlightsRequest xmlns:ns3="http://example.org/TicketAgent.xsd"/></SOAP-ENV:Body><
-/SOAP-ENV:Envelope>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns3:listFlightsRequest xmlns:ns3="http://example.org/TicketAgent.xsd"/></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
-20:32:57.333 [http-nio-9090-exec-1] INFO  c.c.ws.interceptor.HttpLoggingUtils -
+07:18:19.051 [http-nio-9090-exec-1] INFO  c.c.ws.interceptor.HttpLoggingUtils -
 ----------------------------
 Server Request Message
 ----------------------------
@@ -334,14 +338,13 @@ soapaction: ""
 content-type: text/xml; charset=utf-8
 cache-control: no-cache
 pragma: no-cache
-user-agent: Java/1.8.0_112
+user-agent: Java/1.8.0_152
 host: localhost:9090
 connection: keep-alive
 content-length: 219
-<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns3:listFlightsRequest xmlns:ns3="http://example.org/TicketAgent.xsd"/></SOAP-ENV:Body><
-/SOAP-ENV:Envelope>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns3:listFlightsRequest xmlns:ns3="http://example.org/TicketAgent.xsd"/></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
-20:32:57.351 [http-nio-9090-exec-1] INFO  c.c.ws.interceptor.HttpLoggingUtils -
+07:18:19.072 [http-nio-9090-exec-1] INFO  c.c.ws.interceptor.HttpLoggingUtils -
 ----------------------------
 Server Response Message
 ----------------------------
@@ -349,10 +352,9 @@ Accept: text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2
 SOAPAction: ""
 Content-Type: text/xml; charset=utf-8
 Content-Length: 277
-<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns3:listFlightsResponse xmlns:ns3="http://example.org/TicketAgent.xsd"><flightNumber>101
-</flightNumber></ns3:listFlightsResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns3:listFlightsResponse xmlns:ns3="http://example.org/TicketAgent.xsd"><flightNumber>101</flightNumber></ns3:listFlightsResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
-20:32:57.363 [main] INFO  c.c.ws.interceptor.HttpLoggingUtils -
+07:18:19.086 [main] INFO  c.c.ws.interceptor.HttpLoggingUtils -
 ----------------------------
 Client Response Message
 ----------------------------
@@ -365,12 +367,11 @@ Accept: *; q=.2
 Accept: */*; q=.2
 Content-Length: 277
 Date: Sun
-Date: 23 Apr 2017 18:32:57 GMT
+Date: 10 Dec 2017 06:18:19 GMT
 Content-Type: text/xml; charset=utf-8
-<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns3:listFlightsResponse xmlns:ns3="http://example.org/TicketAgent.xsd"><flightNumber>101
-</flightNumber></ns3:listFlightsResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns3:listFlightsResponse xmlns:ns3="http://example.org/TicketAgent.xsd"><flightNumber>101</flightNumber></ns3:listFlightsResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.128 sec - in com.codenotfound.ws.SpringWsApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.397 sec - in com.codenotfound.ws.SpringWsApplicationTests
 
 Results :
 
@@ -379,9 +380,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 7.047 s
-[INFO] Finished at: 2017-04-23T20:32:57+02:00
-[INFO] Final Memory: 28M/299M
+[INFO] Total time: 7.520 s
+[INFO] Finished at: 2017-12-10T07:18:19+01:00
+[INFO] Final Memory: 30M/276M
 [INFO] ------------------------------------------------------------------------
 ```
 
