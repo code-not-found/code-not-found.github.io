@@ -41,7 +41,7 @@ We will again use the `HttpComponentsMessageSender` implementation in below exam
 
 Subsequently execute the following three commands in order to generate the <var>server-keystore.jks</var> and <var>client-truststore.jks</var> needed to configure the server and client.
 
-> Note that we are specifying a DNS subject alternative name entry (<kbd>"-ext san=dns:localhost"</kbd>) matching the <var>'localhost'</var> hostname on the first keytool command. This way we do not need to override the `HostnameVerifier` like we did in the [HTTPS client example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html).
+> Note that we are specifying a DNS subject alternative name entry (<kbd>"-ext san=dns:localhost"</kbd>) matching the <var>'localhost'</var> hostname on the first keytool command. This way we do not need to override the `HostnameVerifier` like we did in the [HTTPS client example]({{ site.url }}/spring-ws-https-client-server-example.html).
 
 ``` plaintext
 keytool -genkeypair -alias server-keypair -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=server,O=codenotfound.com" -keypass server-key-p455w0rd -keystore server-keystore.jks -storepass server-keystore-p455w0rd -ext san=dns:localhost
@@ -92,7 +92,9 @@ client:
     trust-store-password: client-truststore-p455w0rd
 ```
 
-As the client needs to authenticate itself, a keystore needs to be configured that contains the private/public key pair of the client that was generated in the previous section. Similar to the trustore setup, we use a `loadKeyMaterial()` method to load the keystore when building the `SSLContext`. The JKS file and password in addition to the password of the private key are specified.
+As the client needs to authenticate itself, a keystore needs to be configured that contains the private/public key pair of the client that was generated in the previous section.
+
+Similar to the trustore setup, we use a `loadKeyMaterial()` method to load the keystore when building the `SSLContext`. The JKS file and password in addition to the password of the private key are specified.
 
 ``` java
 package com.codenotfound.ws.client;
