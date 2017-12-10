@@ -189,7 +189,7 @@ In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connec
 
 During the TLS handshaking procedure, the client needs to decide whether it trusts the public key certificate that the server provides. This is done based on whether or not this certificate (or one of its issuing CA's) is present in (one of) the client's truststores. We specify a `TrustManagersFactoryBean` to handle the configured truststores.
 
-In order to trust the server certificate, create an `sslContext()` bean on which we set the truststore file and its corresponding password. This context is then passed to the `sslConnectionSocketFactory()` bean which is in turn set on the `httpClient()`.
+In order to trust the server certificate, create an `sslContext()` bean on which we load the truststore using the JKS file and its corresponding password. This context is then passed to the `sslConnectionSocketFactory()` bean which is in turn set on the `httpClient()`.
 
 If we were to test the client with above settings we would run into the following exception
 

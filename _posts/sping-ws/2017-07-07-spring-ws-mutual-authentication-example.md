@@ -1,20 +1,21 @@
 ---
 title: "Spring WS - Mutual Authentication Example"
-permalink: /2017/07/spring-ws-mutual-authentication-example.html
+permalink: /spring-ws-mutual-authentication-example.html
 excerpt: "A detailed step-by-step tutorial on how setup mutual certificate authentication using Spring-WS and Spring Boot."
 date: 2017-07-07
 modified: 2017-07-07
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Certificate, Client, Example, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, Two-Way Authentication]
 redirect_from:
   - /2017/04/spring-ws-mutual-authentication-example.html
+  - /2017/07/spring-ws-mutual-authentication-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 [Mutual authentication or two-way authentication](https://en.wikipedia.org/wiki/Mutual_authentication){:target="_blank"} refers to **two parties authenticating each other** at the same time. In other words, the client must prove its identity to the server, and the server must prove its identity to the client before any traffic is sent over the client-to-server connection.
@@ -28,11 +29,13 @@ If you want to learn more about Spring WS - head on over to the [Spring WS tutor
 
 Tools used:
 * Spring-WS 2.4
-* Spring Security 4.2
+* HttpClient 4.5
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the project is based on a previous [Spring WS HTTPS example]({{ site.url }}/2017/04/spring-ws-https-client-server-example.html) in which we configured the server authentication part. We will extend this setup so that the client also authenticates itself towards the server.
+The setup of the project is based on a previous [Spring WS HTTPS example]({{ site.url }}/spring-ws-https-client-server-example.html) in which we configured the server authentication part. We will extend this setup so that the client also authenticates itself towards the server.
+
+We will again use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub, however, we have also added a [mutual authentication example that uses the HttpsUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-mutual-authentication){:target="_blank"} in case a dependency on the `HttpClient` is not desired.
 
 [Keytool](http://docs.oracle.com/javase/6/docs/technotes/tools/windows/keytool.html){:target="_blank"} is used to generate the different [Java KeyStores](https://en.wikipedia.org/wiki/Keystore){:target="_blank"} (JKS) which contain the key pairs and public certificates for both client and server.
 
@@ -89,23 +92,26 @@ client:
     trust-store-password: client-truststore-p455w0rd
 ```
 
-As the client needs to authenticate itself, a keystore needs to be configured that contains the private/public key pair of the client that was generated in the previous section. Similar to the trustore setup, we use a `KeyManagersFactoryBean` to manage the configured keystores. We load the keystore by creating a `KeyStoreFactoryBean` on which we specify the keystore location and password.
-
-> Note that on the `keyManagersFactoryBean` we need to set the password of the key pair to be used.
+As the client needs to authenticate itself, a keystore needs to be configured that contains the private/public key pair of the client that was generated in the previous section. Similar to the trustore setup, we use a `loadKeyMaterial()` method to load the keystore when building the `SSLContext`. The JKS file and password in addition to the password of the private key are specified.
 
 ``` java
 package com.codenotfound.ws.client;
 
+import javax.net.ssl.SSLContext;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
-import org.springframework.ws.soap.security.support.KeyManagersFactoryBean;
-import org.springframework.ws.soap.security.support.KeyStoreFactoryBean;
-import org.springframework.ws.soap.security.support.TrustManagersFactoryBean;
-import org.springframework.ws.transport.http.HttpsUrlConnectionMessageSender;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender;
+import org.springframework.ws.transport.http.HttpComponentsMessageSender.RemoveSoapHeadersInterceptor;
 
 @Configuration
 public class ClientConfig {
@@ -142,58 +148,35 @@ public class ClientConfig {
     webServiceTemplate.setMarshaller(jaxb2Marshaller());
     webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
     webServiceTemplate.setDefaultUri(defaultUri);
-    // set a httpsUrlConnectionMessageSender to handle the HTTPS session
-    webServiceTemplate.setMessageSender(httpsUrlConnectionMessageSender());
+    webServiceTemplate.setMessageSender(httpComponentsMessageSender());
 
     return webServiceTemplate;
   }
 
   @Bean
-  public HttpsUrlConnectionMessageSender httpsUrlConnectionMessageSender() throws Exception {
-    HttpsUrlConnectionMessageSender httpsUrlConnectionMessageSender =
-        new HttpsUrlConnectionMessageSender();
-    // set the trust store(s)
-    httpsUrlConnectionMessageSender.setTrustManagers(trustManagersFactoryBean().getObject());
-    // set the key store(s)
-    httpsUrlConnectionMessageSender.setKeyManagers(keyManagersFactoryBean().getObject());
+  public HttpComponentsMessageSender httpComponentsMessageSender() throws Exception {
+    HttpComponentsMessageSender httpComponentsMessageSender = new HttpComponentsMessageSender();
+    httpComponentsMessageSender.setHttpClient(httpClient());
 
-    return httpsUrlConnectionMessageSender;
+    return httpComponentsMessageSender;
   }
 
-  @Bean
-  public KeyStoreFactoryBean trustStore() {
-    KeyStoreFactoryBean keyStoreFactoryBean = new KeyStoreFactoryBean();
-    keyStoreFactoryBean.setLocation(trustStore);
-    keyStoreFactoryBean.setPassword(trustStorePassword);
-
-    return keyStoreFactoryBean;
+  public HttpClient httpClient() throws Exception {
+    return HttpClientBuilder.create().setSSLSocketFactory(sslConnectionSocketFactory())
+        .addInterceptorFirst(new RemoveSoapHeadersInterceptor()).build();
   }
 
-  @Bean
-  public TrustManagersFactoryBean trustManagersFactoryBean() {
-    TrustManagersFactoryBean trustManagersFactoryBean = new TrustManagersFactoryBean();
-    trustManagersFactoryBean.setKeyStore(trustStore().getObject());
-
-    return trustManagersFactoryBean;
+  public SSLConnectionSocketFactory sslConnectionSocketFactory() throws Exception {
+    // NoopHostnameVerifier essentially turns hostname verification off as otherwise following error
+    // is thrown: java.security.cert.CertificateException: No name matching localhost found
+    return new SSLConnectionSocketFactory(sslContext(), NoopHostnameVerifier.INSTANCE);
   }
 
-  @Bean
-  public KeyStoreFactoryBean keyStore() {
-    KeyStoreFactoryBean keyStoreFactoryBean = new KeyStoreFactoryBean();
-    keyStoreFactoryBean.setLocation(keyStore);
-    keyStoreFactoryBean.setPassword(keyStorePassword);
-
-    return keyStoreFactoryBean;
-  }
-
-  @Bean
-  public KeyManagersFactoryBean keyManagersFactoryBean() {
-    KeyManagersFactoryBean keyManagersFactoryBean = new KeyManagersFactoryBean();
-    keyManagersFactoryBean.setKeyStore(keyStore().getObject());
-    // set the password of the key pair to be used
-    keyManagersFactoryBean.setPassword(keyPassword);
-
-    return keyManagersFactoryBean;
+  public SSLContext sslContext() throws Exception {
+    return SSLContextBuilder.create()
+        .loadKeyMaterial(keyStore.getFile(), keyStorePassword.toCharArray(),
+            keyPassword.toCharArray())
+        .loadTrustMaterial(trustStore.getFile(), trustStorePassword.toCharArray()).build();
   }
 }
 ```
@@ -234,9 +217,9 @@ This triggers a test run which validates that mutual authentication between clie
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-07:46:17.288 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 1164 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-mutual-authentication)
+07:46:17.288 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 1164 (started by CodeNotFound in c:\code\spring-ws\spring-ws-mutual-authentication)
 07:46:17.291 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
 07:46:20.176 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.18 seconds (JVM running for 3.827)
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.59 sec - in com.codenotfound.ws.SpringWsApplicationTests
@@ -258,7 +241,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-mutual-authentication).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-mutual-authentication-httpclient){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 

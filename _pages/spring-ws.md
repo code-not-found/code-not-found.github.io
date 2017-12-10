@@ -25,7 +25,7 @@ modified: 2017-04-18
 
 * [Spring WS - Basic Authentication Example]({{ site.url }}/spring-ws-basic-authentication-example.html)
 * [Spring WS - HTTPS Client Server Example]({{ site.url }}/spring-ws-https-client-server-example.html)
-* [Spring WS - Mutual Authentication Example]({{ site.url }}/2017/07/spring-ws-mutual-authentication-example.html)
+* [Spring WS - Mutual Authentication Example]({{ site.url }}/spring-ws-mutual-authentication-example.html)
 
 ## Client
 
