@@ -50,6 +50,7 @@ If you want to learn more about Spring WS - head on over to the [Spring WS tutor
 Tools used:
 * Spring-WS 2.4
 * Spring Security 4.2
+* HttpClient 4.5
 * Spring Boot 1.5
 * Maven 3.5
 
