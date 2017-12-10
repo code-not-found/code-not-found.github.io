@@ -38,7 +38,7 @@ The setup of the project is based on a previous [Spring WS example]({{ site.url 
 
 There are two implementations of the `WebServiceMessageSender` interface for sending messages via HTTPS. The default implementation is the `HttpsUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the [Apache HttpComponents HttpClient](https://hc.apache.org/httpcomponents-client-ga){:target="_blank"}.
 
-We will use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub, however, we have also added a [HTTPS example that uses the HttpsUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-https) in case a dependency on the `HttpClient` is not desired.
+We will use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub, however, we have also added a [HTTPS example that uses the HttpsUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-https){:target="_blank"} in case a dependency on the `HttpClient` is not desired.
 
 In order to use the `HttpComponentsMessageSender` implementation, we need to add the Apache `httpclient` dependency to the Maven POM file.
 
@@ -183,7 +183,7 @@ client:
     trust-store-password: client-truststore-p455w0rd
 ```
 
-In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connect using the HTTPS protocol. This is done by creating and setting a `HttpComponentsMessageSender` on which we then configure the HttpClient which provides full [support for HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS) protocols](https://hc.apache.org/httpcomponents-client-4.5.x/tutorial/html/connmgmt.html#d5e449).
+In the `ClientConfig` class we need to enable the `WebServiceTemplate` to connect using the HTTPS protocol. This is done by creating and setting a `HttpComponentsMessageSender` on which we then configure the HttpClient which provides full [support for HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS) protocols](https://hc.apache.org/httpcomponents-client-4.5.x/tutorial/html/connmgmt.html#d5e449){:target="_blank"}.
 
 `HttpClient` makes use of `SSLConnectionSocketFactory` to create SSL connections. `SSLConnectionSocketFactory` allows for a high degree of customization. It can take an instance of `SSLContext` as a parameter and use it to create custom configured TLS/SSL connections.
 
@@ -349,6 +349,12 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] Finished at: 2017-05-01T08:42:56+02:00
 [INFO] Final Memory: 20M/227M
 [INFO] ------------------------------------------------------------------------
+```
+
+> If you would like more information when debugging SL/TLS connections add <kbd>"-Djavax.net.debug=ssl,handshake"</kbd> at the end of your Maven command as shown below.
+
+``` plaintext
+mvn test -Djavax.net.debug=ssl,handshake
 ```
 
 ---

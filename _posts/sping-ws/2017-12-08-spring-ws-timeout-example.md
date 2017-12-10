@@ -33,7 +33,7 @@ The setup of the example is based on a previous [Spring WS tutorial]({{ site.url
 
 There are basically two different ways to setup a client timeout using Spring-WS. The most straightforward one is to configure the `HttpComponentsMessageSender` implementation that uses the Apache `HttpClient`. Alternatively, you can use the `HttpUrlConnectionMessageSender` implementation that uses standard J2SE facilities.
 
- As the `HttpComponentsMessageSender` contains more advanced and easy-to-use functionality we will detail this setup in the below example. On GitHub we have also added [a timeout example that uses the HttpUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-timeout) for completeness.
+ As the `HttpComponentsMessageSender` contains more advanced and easy-to-use functionality we will detail this setup in the below example. On GitHub we have also added [a timeout example that uses the HttpUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-timeout){:target="_blank"} for completeness.
  
  As the `HttpComponentsMessageSender` has a dependency on the Apache `HttpClient`, we need to add the dependency to the Maven POM file.
 
