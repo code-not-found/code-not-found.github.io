@@ -72,7 +72,7 @@ keytool -importcert -keystore server-truststore.jks -alias client-public-key -fi
 Now (if needed) move the created JKS files into <var>src/main/resources</var>. The result should be as shown below:
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-ws/mutual-authentication-jks-files.png" alt="mutual authentication jks files">
+    <img src="{{ site.url }}/assets/images/posts/spring-ws/mutual-authentication-jks-files.png" alt="mutual authentication jks files">
 </figure>
 
 If you would like to visualize the content of the above-generated artifacts you can use a tool like [Portecle](http://portecle.sourceforge.net/){:target="_blank"} which is a Java based GUI for managing keystores.
