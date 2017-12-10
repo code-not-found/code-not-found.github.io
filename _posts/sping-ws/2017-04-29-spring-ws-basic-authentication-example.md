@@ -1,25 +1,26 @@
 ---
 title: "Spring WS - Basic Authentication Example"
-permalink: /2017/04/spring-ws-basic-authentication-example.html
+permalink: /spring-ws-basic-authentication-example.html
 excerpt: "A detailed step-by-step tutorial on how to configure basic authentication using Spring-WS and Spring Boot."
 date: 2017-04-24
 modified: 2017-04-29
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Basic Authentication, Client, Endpoint, Example, HTTP, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
 redirect_from:
   - /spring-ws-basic-authentication-example.html
+  - /2017/04/spring-ws-basic-authentication-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication){:target="_blank"} (BA) is a method for a HTTP client to provide a user name and password when making a request. There is no [confidentiality](https://en.wikipedia.org/wiki/Confidentiality){:target="_blank"} protection for the transmitted credentials. therefore it is strongly advised to use it in conjunction with HTTPS.
 
-The credentials are provided as an HTTP header field called <var>'Authorization'</var> which is constructed as follows:
+The credentials are provided as a HTTP header field called <var>'Authorization'</var> which is constructed as follows:
 
 1. The username and password are combined with a single colon.
 
@@ -52,11 +53,15 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the sample is based on a previous [Spring WS tutorial]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
+The setup of the sample is based on a previous [Spring WS tutorial]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-There are two additional dependencies that we need to add to the Maven POM file in order for this example to work.
+There are two implementations of the `WebServiceMessageSender` interface for sending messages via HTTP. The default implementation is the `HttpUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the [Apache HttpComponents HttpClient](https://hc.apache.org/httpcomponents-client-ga){:target="_blank"}.
 
-The first one is `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters){:target="_blank"} dependency which will be used for the server setup. The second one is the Apache `httpclient` dependency that we need for the client setup part.
+We will use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub however we have also added a [basic authentication example that uses the HttpUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-basic-authentication) in case a dependency on the `HttpClient` is not desired.
+
+In order to use the `HttpComponentsMessageSender` implementation, we need to add the Apache `httpclient` dependency to the Maven POM file.
+
+In addition we will need the `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} dependency for the server setup.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -76,14 +81,13 @@ The first one is `spring-boot-starter-security` [Spring Boot starter](https://gi
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.3.RELEASE</version>
+    <version>1.5.9.RELEASE</version>
   </parent>
 
   <properties>
     <java.version>1.8</java.version>
-
-    <httpclient.version>4.5.3</httpclient.version>
-    <maven-jaxb2-plugin.version>0.13.2</maven-jaxb2-plugin.version>
+    <httpclient.version>4.5.4</httpclient.version>
+    <maven-jaxb2-plugin.version>0.13.3</maven-jaxb2-plugin.version>
   </properties>
 
   <dependencies>
@@ -142,11 +146,17 @@ The first one is `spring-boot-starter-security` [Spring Boot starter](https://gi
 
 # Setup Client Basic Authentication
 
-There are [two implementations of the WebServiceMessageSender interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e1793){:target="_blank"} for sending messages via HTTP. The default implementation is the `HttpUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the Apache [HttpComponents Client](https://hc.apache.org/httpcomponents-client-ga/){:target="_blank"}.
-
 In this example, we use the Apache HTTP Client, as it comes with built-in support for setting the basic authentication header. We update the `ClientConfig` class with a bean that creates an `HttpComponentsMessageSender` on which we set a `UsernamePasswordCredentials` bean. This bean will automatically create the HTTP basic authentication header.
 
-The `@Value` annotation is used to inject the <var>name</var> and <var>password</var> values from the application properties YAML file which are set on the `UsernamePasswordCredentials` bean.
+The `@Value` annotation is used to inject the <var>name</var> and <var>password</var> values from the <var>application.yml</var> properties file shown below. These values are then set on the `UsernamePasswordCredentials` bean.
+
+``` yaml
+client:
+  default-uri: http://localhost:9090/codenotfound/ws/helloworld
+  user:
+    name: codenotfound
+    password: p455w0rd
+```
 
 We finish by setting the `HttpComponentsMessageSender` on our `WebServiceTemplate`.
 
@@ -161,16 +171,17 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 
-
-
 @Configuration
 public class ClientConfig {
 
+  @Value("${client.default-uri}")
+  private String defaultUri;
+
   @Value("${client.user.name}")
-  private String name;
+  private String userName;
 
   @Value("${client.user.password}")
-  private String password;
+  private String userPassword;
 
   @Bean
   Jaxb2Marshaller jaxb2Marshaller() {
@@ -185,7 +196,7 @@ public class ClientConfig {
     WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
     webServiceTemplate.setMarshaller(jaxb2Marshaller());
     webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
-    webServiceTemplate.setDefaultUri("http://localhost:9090/codenotfound/ws/ticketagent");
+    webServiceTemplate.setDefaultUri(defaultUri);
     // set the Apache HttpClient which provides support for basic authentication
     webServiceTemplate.setMessageSender(httpComponentsMessageSender());
 
@@ -204,7 +215,7 @@ public class ClientConfig {
   @Bean
   public UsernamePasswordCredentials usernamePasswordCredentials() {
     // pass the user name and password to be used
-    return new UsernamePasswordCredentials(name, password);
+    return new UsernamePasswordCredentials(userName, userPassword);
   }
 }
 ```
@@ -215,7 +226,7 @@ The Spring Boot security starter that was added to our Maven setup has a depende
 
 The default user that will be configured has as name <var>'user'</var>. The password is randomly generated at startup (it is displayed in the startup logs).
 
-Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} in the application properties file. In this example we set the <var>'user'</var> to <kbd>"codenotfound"</kbd> and the <var>'password'</var> to <kbd>"p455w0rd"</kbd> in <var>application.yml</var> using the YAML variant as shown below.
+Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} in the application properties file. In this example we set the <var>'user'</var> to <kbd>"codenotfound"</kbd> and the <var>'password'</var> to <kbd>"p455w0rd"</kbd> in <var>application.yml</var> properties using the YAML variant as shown below.
 
 ``` yaml
 security:
@@ -241,9 +252,9 @@ The test case will run successfully as basic authentication is correctly configu
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-21:06:58.016 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 2176 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-basic-authentication)
+21:06:58.016 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 2176 (started by CodeNotFound in c:\code\spring-ws\spring-ws-basic-authentication)
 21:06:58.018 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
 21:07:01.275 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.568 seconds (JVM running for 4.234)
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.039 sec - in com.codenotfound.ws.SpringWsApplicationTests
@@ -270,9 +281,9 @@ Now change the password in the <var>application.yml</var> file to a different va
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-21:52:41.786 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 5908 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-basic-authentication)
+21:52:41.786 [main] INFO  c.c.ws.SpringWsApplicationTests - Starting SpringWsApplicationTests on cnf-pc with PID 5908 (started by CodeNotFound in c:\code\spring-ws\spring-ws-basic-authentication)
 21:52:41.789 [main] INFO  c.c.ws.SpringWsApplicationTests - No active profile set, falling back to default profiles: default
 21:52:45.159 [main] INFO  c.c.ws.SpringWsApplicationTests - Started SpringWsApplicationTests in 3.666 seconds (JVM running for 4.281)
 Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.004 sec <<< FAILURE! - in com.codenotfound.ws.SpringWsApplicationTests
@@ -308,7 +319,7 @@ Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-basic-authentication).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-basic-authentication-httpclient).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
