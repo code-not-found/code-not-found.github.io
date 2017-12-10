@@ -57,7 +57,7 @@ The setup of the sample is based on a previous [Spring WS tutorial]({{ site.url 
 
 There are two implementations of the `WebServiceMessageSender` interface for sending messages via HTTP. The default implementation is the `HttpUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the [Apache HttpComponents HttpClient](https://hc.apache.org/httpcomponents-client-ga){:target="_blank"}.
 
-We will use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub however we have also added a [basic authentication example that uses the HttpUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-basic-authentication) in case a dependency on the `HttpClient` is not desired.
+We will use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub, however, we have also added a [basic authentication example that uses the HttpUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-basic-authentication) in case a dependency on the `HttpClient` is not desired.
 
 In order to use the `HttpComponentsMessageSender` implementation, we need to add the Apache `httpclient` dependency to the Maven POM file.
 
