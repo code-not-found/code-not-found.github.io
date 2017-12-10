@@ -1,23 +1,24 @@
 ---
 title: "Spring JMS - ActiveMQ Consumer Producer Example"
-permalink: /2017/05/spring-jms-activemq-consumer-producer-example.html
+permalink: /spring-jms-activemq-consumer-producer-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an ActiveMQ Consumer and Producer using Spring JMS and Spring Boot."
 date: 2017-05-04
 modified: 2017-05-06
 header:
-  teaser: "assets/images/spring-jms-teaser.jpg"
+  teaser: "assets/images/header/spring-jms-teaser.png"
 categories: [Spring JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
 redirect_from:
   - /2017/05/spring-jms-activemq-example.html
+  - /2017/05/spring-jms-activemq-consumer-producer-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-Spring provides a [JMS integration framework](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/jms.html) that simplifies the use of the JMS API much like Spring's integration does for the JDBC API. The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html).
+Spring provides a [JMS integration framework](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/htmlsingle/#jms){:target="_blank"} that simplifies the use of the JMS API much like Spring's integration does for the JDBC API. The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html){:target="_blank"}.
 
 The below tutorial illustrates how to build and run a Hello World example in which we will send/receive messages to/from Apache ActiveMQ using Spring JMS, Spring Boot and Maven.
 
@@ -32,11 +33,17 @@ Tools used:
   * Spring Boot 1.5
   * Maven 3.5
 
-We start by defining a Maven POM file which contains the dependencies for the needed [Spring projects](https://spring.io/projects). The POM inherits from the `spring-boot-starter-parent` project and declares dependencies to `spring-boot-starter-activemq` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters).
+We will be building and running our example using [Apache Maven](https://maven.apache.org/){:target="_blank"}. Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
+
+In order to run the example we will use the [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} project that makes it easy to create stand-alone, production-grade Spring based Applications. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application.
+
+The `spring-boot-starter-activemq` dependency includes the needed dependencies needed for using Spring JMS in combination with ActiveMQ. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
+
+To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
 A dependency to `activemq-junit` is also added as we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker. The version of the dependency is specified in a property that needs to match with the ActiveMQ version supported by the `spring-boot-starter-activemq` starter. At the time of writing this was version <var>'5.14.5'</var>.
 
-The `spring-boot-maven-plugin` Maven plugin is added so that we can build a single, runnable "uber-jar", which is convenient to execute and transport our written code.
+In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the web service via a Maven command.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -50,17 +57,16 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
 
   <name>spring-jms-activemq-helloworld</name>
   <description>Spring JMS - ActiveMQ Consumer Producer Example</description>
-  <url>https://www.codenotfound.com/2017/05/spring-jms-activemq-consumer-producer-example.html</url>
+  <url>https://www.codenotfound.com/spring-jms-activemq-consumer-producer-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.3.RELEASE</version>
+    <version>1.5.9.RELEASE</version>
   </parent>
 
   <properties>
     <java.version>1.8</java.version>
-
     <activemq.version>5.14.5</activemq.version>
   </properties>
 
@@ -96,9 +102,11 @@ The `spring-boot-maven-plugin` Maven plugin is added so that we can build a sing
 </project>
 ```
 
-Spring Boot is used in order to make a Spring JMS example application that you can "just run". We start by creating an `SpringJmsApplication` which contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
+Spring Boot is used in order to make a Spring JMS example application that you can "just run".
 
-For more information on Spring Boot check out the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/).
+We start by creating an `SpringJmsApplication` which contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
+
+For more information on Spring Boot check out the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
 
 ``` java
 package com.codenotfound.jms;
@@ -115,7 +123,7 @@ public class SpringJmsApplication {
 }
 ```
 
-> The below sections will detail how to create a sender and receiver together with their respective configurations. Note that it is also possible to have Spring Boot autoconfigure Spring JMS using default values so that actual code that needs to be written is reduced to a bare minimum.
+> The below sections will detail how to create a sender and receiver together with their respective configurations. Note that it is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/spring-jms-activemq-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
 # Create a Spring JMS Message Producer
 
@@ -151,9 +159,14 @@ public class Sender {
 
 The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
-In order to be able to use the Spring JMS template we need to provide a reference to a `ConnectionFactory` which is used to [create connections with the JMS provider](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html). In addition it encapsulates various configuration parameters, many of which are vendor specific. In the case of ActiveMQ we use the `ActiveMQConnectionFactory`.
+In order to be able to use the Spring JMS template we need to provide a reference to a `ConnectionFactory` which is used to [create connections with the JMS provider](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html){:target="_blank"}. In addition it encapsulates various configuration parameters, many of which are vendor specific. In the case of ActiveMQ we use the `ActiveMQConnectionFactory`.
 
 On the `ActiveMQConnectionFactory` we set the broker URL which is fetched from the <var>application.yml</var> properties file using the `@Value` annotation.
+
+``` yaml
+activemq:
+  broker-url: vm://embedded-broker?create=false
+```
 
 The `JmsTemplate` was originally designed to be used in combination with a J2EE container where the container would provide the necessary pooling of the JMS resources. As we are running this example on Spring Boot, we will wrap `ActiveMQConnectionFactory` using Spring's `CachingConnectionFactory` in order to still have the benefit of caching of sessions, connections and producers as well as automatic connection recovery.
 
@@ -363,9 +376,9 @@ Maven will download the dependencies, compile the code and run the unit test cas
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.3.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-21:26:38.419 [main] INFO  c.c.jms.SpringJmsApplicationTest - Starting SpringJmsApplicationTest on cnf-pc with PID 5124 (started by CodeNotFound in c:\code\st\spring-jms\spring-jms-activemq-helloworld)
+21:26:38.419 [main] INFO  c.c.jms.SpringJmsApplicationTest - Starting SpringJmsApplicationTest on cnf-pc with PID 5124 (started by CodeNotFound in c:\code\spring-jms\spring-jms-activemq-helloworld)
 21:26:38.419 [main] INFO  c.c.jms.SpringJmsApplicationTest - No active profile set, falling back to default profiles: default
 21:26:39.187 [main] INFO  c.c.jms.SpringJmsApplicationTest - Started SpringJmsApplicationTest in 1.025 seconds (JVM running for 2.021)
 21:26:39.233 [main] INFO  com.codenotfound.jms.producer.Sender - sending message='Hello Spring JMS ActiveMQ!' to destination='helloworld.q'
@@ -389,7 +402,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-activemq-helloworld).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-activemq-helloworld){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 

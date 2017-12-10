@@ -115,7 +115,7 @@ The `spring-boot-starter-web-services` dependency includes the needed dependenci
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
-In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "über-jar". This will also allow us to start the web service via a Maven command.
+In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the web service via a Maven command.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
