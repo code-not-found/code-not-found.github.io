@@ -1,13 +1,15 @@
 ---
-title: Spring WS - SOAP Tolerant Reader Example
-permalink: /2017/07/spring-ws-soap-tolerant-reader-example.html
-excerpt: A detailed step-by-step tutorial on how to implement a soap tolerant reader using Spring-WS and Spring Boot.
+title: "Spring WS - SOAP Tolerant Reader Example"
+permalink: /spring-ws-soap-tolerant-reader-example.html
+excerpt: A detailed step-by-step tutorial on how to implement a SOAP tolerant reader using Spring-WS and Spring Boot.
 date: 2017-07-20
 modified: 2017-07-20
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Design Pattern, Example, SOAP, Spring, Spring Boot, Spring Web Services, Spring-WS, Tolerant Reader, Tutorial]
+redirect_from:
+  - /2017/07/spring-ws-soap-tolerant-reader-example.html
 published: true
 ---
 
@@ -34,7 +36,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-When describing the tolerant pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an <var>orderhistory.wsdl</var> service WSDL file. This SOAP service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full history of that user.
+When describing the tolerant pattern, Fowler uses the example of an order history service. As Spring-WS is contract first only, we need to start by creating an <var>orderhistory.wsdl</var> service WSDL file. This SOAP service has a single <var>'getOrderHistory'</var> operation that takes as input a user ID and returns the full order history of that user.
 
 ``` xml
 <?xml version="1.0"?>
@@ -125,7 +127,7 @@ When describing the tolerant pattern, Fowler uses the example of an order histor
 </wsdl:definitions>
 ```
 
-The main setup of this project is based on a previous [Spring WS step by step example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html). As such we won't go into detail about the basic configuration of Spring-WS in combination with Spring Boot and Maven.
+The main setup of this project is based on a previous [Spring WS step by step example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html). As such we won't go into detail about the basic configuration of Spring-WS in combination with Spring Boot and Maven.
 
 # Wrap the Data Payload Behind a Convenient Object
 
@@ -201,7 +203,7 @@ server:
   port: 9090
 ```
 
-The above-defined XPath queries are applied using `XPathExpression` from Spring-WS. This is an abstraction over a [compiled XPath expression](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#xpath-expression){:target="_blank"}.
+The above-defined XPath queries are applied using `XPathExpression` from Spring-WS. This is an abstraction over a [compiled XPath expression](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#xpath-expression){:target="_blank"}.
 
 The expressions are first loaded via the `@Value` annotation and then used to create the <var>'orderIdXPath'</var> and <var>'orderIdXPath'</var> `XPathExpression` beans.
 
@@ -262,7 +264,7 @@ public class ClientConfig {
 
 Now that we have created our XPath expressions we will use them in the client. First, we create the request message that contains the user ID for which the order history needs to be retrieved. Note that for the creation we can use the JAXB generated objects as the tolerant reader pattern only applies to messages that are read (received).
 
-As we want to apply the `XPathExpression`s we need to use the `sendSourceAndReceiveToResult()` method of the `WebServiceTemplate` which will provide us with a `Result`. We get the `Source` from our JAXB `GetOrderHistoryRequest` object by marshaling it using the `MarshallingUtils` provided by Spring-WS.
+As we want to apply the `XPathExpression` we need to use the `sendSourceAndReceiveToResult()` method of the `WebServiceTemplate` which will provide us with a `Result`. We get the `Source` from our JAXB `GetOrderHistoryRequest` object by marshaling it using the `MarshallingUtils` provided by Spring-WS.
 
 Once we have received the request we only fetch the orders and ignore everything else. For each order, we use a `NodeMapper` to perform the actual work of mapping each node to a corresponding `Order` object. Again we only take the <var>'orderId'</var> element from each node and we ignore the rest.
 
@@ -342,7 +344,7 @@ public class OrderHistoryClient {
 
 For the implementation of the `Endpoint`, we will also apply the above principles to the received messages.
 
-By annotating a parameter of the handling method with `@XPathParam` we can bind it to the [evaluation of an XPath expression](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#server-xpath-param){:target="_blank"}. In other words we only need to specify the elements we need as parameters of the handling method annotated with `@XPathParam`. This way we only get what we need with a minimal assumption on the received structure.
+By annotating a parameter of the handling method with `@XPathParam` we can bind it to the [evaluation of an XPath expression](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#server-xpath-param){:target="_blank"}. In other words we only need to specify the elements we need as parameters of the handling method annotated with `@XPathParam`. This way we only get what we need with a minimal assumption on the received structure.
 
 In the `OrderHistoryEndpoint` we define the XPath expression to extract the user ID and then define it as a parameter of the `getOrderHistory()` handling method.
 
@@ -626,9 +628,9 @@ This should result in a successful test run as shown below.
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-22:22:50.714 [main] INFO  c.c.ws.client.OrderHistoryClientTest - Starting OrderHistoryClientTest on cnf-pc with PID 3132 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-tolerant-reader)
+22:22:50.714 [main] INFO  c.c.ws.client.OrderHistoryClientTest - Starting OrderHistoryClientTest on cnf-pc with PID 3132 (started by CodeNotFound in c:\code\spring-ws\spring-ws-tolerant-reader)
 22:22:50.717 [main] INFO  c.c.ws.client.OrderHistoryClientTest - No active profile set, falling back to default profiles: default
 22:22:52.495 [main] INFO  c.c.ws.client.OrderHistoryClientTest - Started OrderHistoryClientTest in 2.033 seconds (JVM running for 2.716)
 22:22:52.611 [main] INFO  c.c.ws.client.OrderHistoryClient - found '3' orders for userId='abc123'

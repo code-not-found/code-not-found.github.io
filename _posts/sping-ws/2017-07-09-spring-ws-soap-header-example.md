@@ -17,7 +17,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
 </figure>
 
-The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497){:target="_blank"} is an optional sub-element of the SOAP envelope. It is used to pass application related information that is processed by SOAP nodes along the message flow.
+The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497){:target="_blank"} is an optional sub-element of the SOAP envelope. It is used to pass application-related information that is processed by SOAP nodes along the message flow.
 
 The below example details how a web service client can set a SOAP header on an outgoing request. It also illustrates how a server endpoint can then get the SOAP header from an incoming request. Both client and server are realized using Spring-WS, Spring Boot, and Maven.
 
