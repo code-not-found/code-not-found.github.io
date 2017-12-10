@@ -22,7 +22,7 @@ published: true
 
 It is however still possible to log the client and server HTTP headers by creating a custom `Interceptor` which offers the possibility to add common pre- and postprocessing behavior without the need of modifying the core payload handling code.
 
-The following example shows how to log the HTTP headers of messages that are being sent/received using Spring-WS, Spring Boot and Maven.
+The following example shows how to log the HTTP headers of messages that are being sent/received using Spring-WS, Spring Boot, and Maven.
 
 If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
 {: .notice--primary}
@@ -34,11 +34,11 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the project is based on a previous [Spring Web Services example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
+The setup of the project is based on a previous [Spring Web Services example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-In this example we will get access to the HTTP headers by using the `writeTo()` method of the `WebServiceMessage` interface. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream)){:target="_blank"}.
+In this example, we will get access to the HTTP headers by using the `writeTo()` method of the `WebServiceMessage` interface. This method writes the entire message to the given output stream and if the given stream is an instance of `TransportOutputStream`, [the corresponding headers will be written as well](http://docs.spring.io/spring-ws/site/apidocs/org/springframework/ws/WebServiceMessage.html#writeTo(java.io.OutputStream)){:target="_blank"}.
 
-So first thing to do is to extend the abstract `TransportOutputStream` class as there is no public implementation available that we can use. We implement the `addHeader()` method which writes a header that is being added to the `ByteArrayOutputStream`. In addition we also complete the `createOutputStream()` method with logic to create or reuse the class's `byteArrayOutputStream` variable.
+So the first thing to do is to extend the abstract `TransportOutputStream` class as there is no public implementation available that we can use. We implement the `addHeader()` method which writes a header that is being added to the `ByteArrayOutputStream`. In addition we also complete the `createOutputStream()` method with logic to create or reuse the class's `byteArrayOutputStream` variable.
 
 ``` java
 package com.codenotfound.ws.interceptor;
@@ -76,7 +76,7 @@ public class ByteArrayTransportOutputStream extends TransportOutputStream {
 }
 ```
 
-Next we create a small `HttpLoggingUtils` utility class that contains a single static `logMessage()` method that will be called from our custom client and endpoint interceptors.
+Next, we create a small `HttpLoggingUtils` utility class that contains a single static `logMessage()` method that will be called from our custom client and endpoint interceptors.
 
 The method takes as input a `WebServiceMessage` from which the content is written to above `ByteArrayTransportOutputStream` class. As we have extended `TransportOutputStream` the `writeTo()` method will output both the message and the HTTP headers. We then simply format the log message and pass it to our `LOGGER`.
 
@@ -299,7 +299,7 @@ Now that the interceptors are setup, let's use Maven to trigger the included uni
 mvn test
 ```
 
-The result is that both request and response messages are logged twice (once for the client and once for the server). And for all of them the HTTP headers are included as shown below.
+The result is that both request and response messages are logged twice (once for the client and once for the server). And for all of them, the HTTP headers are included as shown below.
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -396,4 +396,4 @@ If you would like to run the above code sample you can get the full source code 
 
 I created this post based on a [StackOverFlow question and answer](http://stackoverflow.com/q/28380277/4201470){:target="_blank"} on logging outgoing HTTP requests using Spring-WS.
 
-Hopefully it will help you out during the testing/debugging of your Spring-WS project.
+Hopefully, it will help you out during the testing/debugging of your Spring-WS project.

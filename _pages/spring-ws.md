@@ -18,7 +18,7 @@ modified: 2017-04-18
 
 ## Headers
 
-* [Spring WS - SOAPAction Header Example]({{ site.url }}/2017/04/spring-ws-soapaction-header-example.html)
+* [Spring WS - SOAPAction Header Example]({{ site.url }}/spring-ws-soapaction-header-example.html)
 * [Spring WS - SOAP Header Example]({{ site.url }}/2017/07/spring-ws-soap-header-example.html)
 
 ## Security
@@ -29,7 +29,7 @@ modified: 2017-04-18
 
 ## Client
 
-* [Spring WS - Log Client Server HTTP Headers Example]({{ site.url }}/2017/04/spring-ws-log-client-server-http-headers.html)
+* [Spring WS - Log Client Server HTTP Headers Example]({{ site.url }}/spring-ws-log-client-server-http-headers.html)
 * [Spring WS - Timeout Example]({{ site.url }}/spring-ws-timeout-example.html)
 
 ## Patterns

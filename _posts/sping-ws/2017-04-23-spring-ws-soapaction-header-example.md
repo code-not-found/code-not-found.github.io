@@ -1,18 +1,20 @@
 ---
 title: "Spring WS - SOAPAction Header Example"
-permalink: /2017/04/spring-ws-soapaction-header-example.html
+permalink: /spring-ws-soapaction-header-example.html
 excerpt: "A detailed step-by-step tutorial on how to set the SOAPAction header using Spring-WS and Spring Boot."
 date: 2017-04-24
 modified: 2017-04-24
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Client, Endpoint, Example, Header, Maven, SOAPAction, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
+redirect_from:
+  - /2017/04/spring-ws-soapaction-header-example.html
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383528){:target="_blank"} can be used to indicate the intent of a request. There are no restrictions on the format and a client MUST use this header field when sending a SOAP HTTP request.
@@ -29,7 +31,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the project is based on a previous [Spring WS example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
+The setup of the project is based on a previous [Spring WS example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
 As the WSDL is missing a SOAPAction definition, we will add it in the context of this tutorial.
 
@@ -98,13 +100,89 @@ As the WSDL is missing a SOAPAction definition, we will add it in the context of
 
 [Apache Maven](https://maven.apache.org/){:target="_blank"} is used to build the project. As we will include some Spring-WS unit test cases to verify the example, we also add the `spring-ws-test` dependency to the project POM file.
 
+``` xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.codenotfound</groupId>
+  <artifactId>spring-ws-soapaction-header</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>spring-ws-soapaction-header</name>
+  <description>Spring WS - SOAPAction Header Example</description>
+  <url>https://www.codenotfound.com/spring-ws-soapaction-header-example.html</url>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.9.RELEASE</version>
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <maven-jaxb2-plugin.version>0.13.3</maven-jaxb2-plugin.version>
+  </properties>
+
+  <dependencies>
+    <!-- spring-boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web-services</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- spring-ws -->
+    <dependency>
+      <groupId>org.springframework.ws</groupId>
+      <artifactId>spring-ws-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- spring-boot-maven-plugin -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <!-- maven-jaxb2-plugin -->
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>${maven-jaxb2-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+          <schemaIncludes>
+            <include>*.wsdl</include>
+          </schemaIncludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+
 # Client SoapActionCallback Setup
 
 Spring WS by default sends an empty SOAPAction header. In order to set the value, we need to configure it on the `WebServiceTemplate` by passing a `WebServiceMessageCallback` which gives access to the message after it has been created, but before it is sent.
 
 There is a dedicated `SoapActionCallback` class which already implements a `WebServiceMessageCallback` that sets the SOAPAction header. Just pass a new instance to the `WebServiceTemplate` in order to set it up.
 
-Alternatively [you can implement](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#d5e1912){:target="_blank"} your own `WebServiceMessageCallback` class and set the SOAPAction on the `SoapMessage` using the `setSoapAction()` method.
+Alternatively [you can implement](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#_code_webservicemessagecallback_code){:target="_blank"} your own `WebServiceMessageCallback` class and set the SOAPAction on the `SoapMessage` using the `setSoapAction()` method.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -147,7 +225,7 @@ public class TicketAgentClient {
 
 # Endpoint @SoapAction Annotation
 
-The [endpoint mapping](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#server-endpoint-mapping){:target="_blank"} is responsible for mapping incoming messages to appropriate endpoints. The `@SoapAction` annotation marks methods with a particular SOAP Action. Whenever a message comes in which has this SOAPAction header, the method will be invoked.
+The [endpoint mapping](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#server-endpoint-mapping){:target="_blank"} is responsible for mapping incoming messages to appropriate endpoints. The `@SoapAction` annotation marks methods with a particular SOAP Action. Whenever a message comes in which has this SOAPAction header, the method will be invoked.
 
 In this example instead of the `@PayloadRoot` mapping, we will use `@SoapAction` to trigger the `listFlights()` method of our `TicketAgentEndpoint` class. The annotation takes as `value` the SOAPAction string.
 
@@ -201,7 +279,7 @@ public class TicketAgentEndpoint {
 
 Now that we have setup the SOAPAction in both client and server let's write some unit test cases to test the correct working.
 
-For the client, we will use a `MockWebServiceServer` in combination with a custom `SoapActionMatcher` in order to verify that the SOAPAction header has been set. Based on following [Stack Overflow example](http://stackoverflow.com/a/31202927/4201470){:target="_blank"} we implement the [RequestMatcher interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#client-test-request-matcher){:target="_blank"} and assert that an expected SOAPAction is present.
+For the client, we will use a `MockWebServiceServer` in combination with a custom `SoapActionMatcher` in order to verify that the SOAPAction header has been set. Based on following [Stack Overflow example](http://stackoverflow.com/a/31202927/4201470){:target="_blank"} we implement the [RequestMatcher interface](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#client-test-request-matcher){:target="_blank"} and assert that an expected SOAPAction is present.
 
 ``` java
 package com.codenotfound.ws.client;
@@ -298,7 +376,7 @@ public class TicketAgentClientTest {
 }
 ```
 
-The endpoint setup is tested by first creating a custom `SoapActionCreator` which implements the [RequestCreator interface](http://docs.spring.io/spring-ws/docs/2.4.0.RELEASE/reference/htmlsingle/#server-test-request-creator){:target="_blank"}. This is done to provide a `WebServiceMessage` on which the SOAPAction has been set as this is not the case with the default request creators.
+The endpoint setup is tested by first creating a custom `SoapActionCreator` which implements the [RequestCreator interface](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#server-test-request-creator){:target="_blank"}. This is done to provide a `WebServiceMessage` on which the SOAPAction has been set as this is not the case with the default request creators.
 
 Simply create the message using the supplied XML `Source` and then set the SOAPAction using the `setSoapAction()` method.
 
@@ -406,15 +484,15 @@ The result should be a successful run as shown below. Note that a log statement 
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-11:19:34.091 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on cnf-pc with PID 4524 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-soapaction-header)
-11:19:34.093 [main] INFO  c.c.ws.client.TicketAgentClientTest - No active profile set, falling back to default profiles: default
-11:19:36.002 [main] INFO  c.c.ws.client.TicketAgentClientTest - Started TicketAgentClientTest in 2.166 seconds (JVM running for 2.858)
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.381 sec - in com.codenotfound.ws.client.TicketAgentClientTest
+08:27:58.375 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on cnf-pc with PID 4700 (started by CodeNotFound in c:\code\spring-ws\spring-ws-soapaction-header)
+08:27:58.378 [main] INFO  c.c.ws.client.TicketAgentClientTest - No active profile set, falling back to default profiles: default
+08:28:00.791 [main] INFO  c.c.ws.client.TicketAgentClientTest - Started TicketAgentClientTest in 2.883 seconds (JVM running for 3.712)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.139 sec - in com.codenotfound.ws.client.TicketAgentClientTest
 Running com.codenotfound.ws.endpoint.TicketAgentEndpointTest
-11:19:36.177 [main] INFO  c.c.ws.endpoint.TicketAgentEndpoint - SOAPAction header: "http://example.com/TicketAgent/listFlights"
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 sec - in com.codenotfound.ws.endpoint.TicketAgentEndpointTest
+08:28:00.974 [main] INFO  c.c.ws.endpoint.TicketAgentEndpoint - SOAPAction header: "http://example.com/TicketAgent/listFlights"
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 sec - in com.codenotfound.ws.endpoint.TicketAgentEndpointTest
 
 Results :
 
@@ -423,9 +501,9 @@ Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 4.883 s
-[INFO] Finished at: 2017-04-25T11:19:36+02:00
-[INFO] Final Memory: 17M/222M
+[INFO] Total time: 5.920 s
+[INFO] Finished at: 2017-12-10T08:28:01+01:00
+[INFO] Final Memory: 20M/220M
 [INFO] ------------------------------------------------------------------------
 ```
 
