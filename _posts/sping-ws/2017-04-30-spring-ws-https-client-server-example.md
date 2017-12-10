@@ -173,7 +173,7 @@ Finally, we move the three artifacts we have just generated: <var>client-trustst
 
 As the server will expose the Ticket Agent service on HTTPS we need to change the default URI (service address) that is set on the `WebServiceTemplate` used by the client. The `@Value` annotation is used to inject the <var>'client.default-uri'</var> value from the application properties YAML file.
 
-There are two other values that are configured in our <var>application.yml</var> configuration file. These are are the location of the truststore JKS file and its password as shown below.
+There are two other values that are configured in the <var>application.yml</var> properties file. These are are the location of the truststore JKS file and its password as shown below.
 
 ``` yaml
 client:
@@ -203,7 +203,7 @@ In order to fix this problem, we could regenerate the server keypair so it conta
 
 Another option, which we will use in this example, is to turn hostname verification off. Apache ships a `NoopHostnameVerifier` that can be used for this. Simply pass an instance to the `SSLConnectionSocketFactory` constructor. Note that this is not something you would want to do in production!
 
-There is one last problem we need to take care of. The `HttpComponentsMessageSender` has two constructors, with and without `HttpClient`, and the one with `HttpClient` omits adding a `SoapRemoveHeaderInterceptor`. The `HttpClient` throws an exception if <var>Content-Length</var> or <var>Transfer-Encoding</var> headers have been set. 
+There is one last problem we need to take care of. The `HttpComponentsMessageSender` has [two constructors](https://github.com/spring-projects/spring-ws/blob/master/spring-ws-core/src/main/java/org/springframework/ws/transport/http/HttpComponentsMessageSender.java){:target="_blank"}, with and without `HttpClient`, and the one with `HttpClient` omits adding a `SoapRemoveHeaderInterceptor`. The `HttpClient` throws an exception if <var>Content-Length</var> or <var>Transfer-Encoding</var> headers have been set. 
 
 So in order to make sure those headers are not present we add the `SoapRemoveHeaderInterceptor` by using the `addInterceptorFirst()` method on the `HttpClientBuilder`.
  
@@ -355,7 +355,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-https){:target="_blank"}.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-https-httpclient){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
