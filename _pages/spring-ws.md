@@ -29,7 +29,7 @@ modified: 2017-04-18
 
 ## Client
 
-* [Spring WS - Timeout Example]({{ site.url }}/spring-ws-timeout-example.html)
+* [Spring WS - Client Timeout Example]({{ site.url }}/spring-ws-client-timeout-example.html)
 
 ## Logging
 

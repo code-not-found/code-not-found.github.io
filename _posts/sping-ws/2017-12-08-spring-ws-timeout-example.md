@@ -1,6 +1,6 @@
 ---
-title: "Spring WS - Timeout Example"
-permalink: /spring-ws-timeout-example.html
+title: "Spring WS - Client Timeout Example"
+permalink: /spring-ws-client-timeout-example.html
 excerpt: "A detailed step-by-step tutorial on how to set a client timeout using Spring-WS and Spring Boot."
 date: 2017-12-08
 modified: 2017-12-08
@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Client, Example, Timeout, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
+redirect_from:
+  - /spring-ws-timeout-example.html
 published: true
 ---
 
@@ -26,16 +28,17 @@ If you want to learn more about Spring WS - head on over to the [Spring-WS tutor
 
 Tools used:
 * Spring-WS 2.4
+* HttpClient 4.5
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the example is based on a previous [Spring WS tutorial]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
+The setup of the example is based on a previous [Spring WS tutorial]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-There are basically two different ways to setup a client timeout using Spring-WS. The most straightforward one is to configure the `HttpComponentsMessageSender` implementation that uses the Apache `HttpClient`. Alternatively, you can use the `HttpUrlConnectionMessageSender` implementation that uses standard J2SE facilities.
+There are two implementations of the `WebServiceMessageSender` interface for sending messages via HTTP. The default implementation is the `HttpUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the [Apache HttpComponents HttpClient](https://hc.apache.org/httpcomponents-client-ga){:target="_blank"}.
 
- As the `HttpComponentsMessageSender` contains more advanced and easy-to-use functionality we will detail this setup in the below example. On GitHub we have also added [a timeout example that uses the HttpUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-timeout){:target="_blank"} for completeness.
- 
- As the `HttpComponentsMessageSender` has a dependency on the Apache `HttpClient`, we need to add the dependency to the Maven POM file.
+We will use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub, however, we have also added a [a timeout example that uses the HttpUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-timeout){:target="_blank"} in case a dependency on the `HttpClient` is not desired.
+
+As the `HttpComponentsMessageSender` has a dependency on the Apache `HttpClient`, we need to add the dependency to the Maven POM file.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -50,7 +53,7 @@ There are basically two different ways to setup a client timeout using Spring-WS
 
   <name>spring-ws-timeout-httpclient</name>
   <description>Spring WS - Timeout Example</description>
-  <url>https://www.codenotfound.com/spring-ws-timeout-example.html</url>
+  <url>https://www.codenotfound.com/spring-ws-client-timeout-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -118,7 +121,15 @@ There are basically two different ways to setup a client timeout using Spring-WS
 
 As mentioned above, in this example we will use the `WebServiceMessageSender` implementation that uses the [Apache HttpComponents HttpClient](https://hc.apache.org/httpcomponents-client-ga/){:target="_blank"}. There are two setters that allow controlling how long the client will wait. The `setConnectionTimeout()` specifies how long the client will wait before a connection to the server is successfully established. The `setReadTimeout()` configures how long the client will wait for a response once the request has been sent.
 
-In the below example we have created a `webServiceMessageSender` bean on which we have set both timeouts with the same `timeout` value that is loaded from the <var>application.yml</var> properties file. In order to use the `webServiceMessageSender` bean in our client we need to set it onto the `webServiceTemplate` using the `setMessageSender()` method.
+In the below example we have created a `webServiceMessageSender` bean on which we have set both timeouts with the same `timeout` value that is loaded from the <var>application.yml</var> properties file shown below.
+
+``` yaml
+client:
+  default-uri: http://localhost:9090/codenotfound/ws/helloworld
+  timeout: 2000
+```
+
+In order to use the `webServiceMessageSender` bean in our client we need to set it onto the `webServiceTemplate` using the `setMessageSender()` method.
 
 ``` java
 package com.codenotfound.ws.client;
