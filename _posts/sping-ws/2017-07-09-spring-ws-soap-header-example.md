@@ -1,13 +1,15 @@
 ---
 title: "Spring WS - SOAP Header Example"
-permalink: /2017/07/spring-ws-soap-header-example.html
+permalink: /spring-ws-soap-header-example.html
 excerpt: "A detailed step-by-step tutorial on how to set and get a SOAP header using Spring-WS and Spring Boot."
 date: 2017-07-09
 modified: 2017-07-09
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/header/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Client, Endpoint, Example, Header, Maven, SOAP, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
+redirect_from:
+  - /2017/07/spring-ws-soap-header-example.html
 published: true
 ---
 
@@ -29,7 +31,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The setup of the project is based on a previous [Spring SOAP web service example]({{ site.url }}/2016/10/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
+The setup of the project is based on a previous [Spring SOAP web service example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
 As the sample ticketing WSDL does not contain any SOAP header we will add an <var>'clientId'</var> element in the context of this tutorial.
 
@@ -116,9 +118,9 @@ The project is built using [Apache Maven](https://maven.apache.org/){:target="_b
 
 # Client Add SOAP Header
 
-In order to set the SOAP header on the outgoing request, we need to get hold of the [SoapMessage](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#soap-message){:target="_blank"} which has a SOAP-specific method `getSoapHeader()` for getting the SOAP Header.
+In order to set the SOAP header on the outgoing request, we need to get hold of the [SoapMessage](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#soap-message){:target="_blank"} which has a SOAP-specific method `getSoapHeader()` for getting the SOAP Header.
 
-The `SoapMessage` in turn can be obtained by casting the `WebServiceMessage` from the [WebServiceMessageCallback](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#d5e1912){:target="_blank"} interface that gives access to the message after it has been created, but before it is sent.
+The `SoapMessage` in turn can be obtained by casting the `WebServiceMessage` from the [WebServiceMessageCallback](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#_code_webservicemessagecallback_code){:target="_blank"} interface that gives access to the message after it has been created, but before it is sent.
 
 As a final step, create the SOAP header using the corresponding JAXB object and marshal it into the `SOAPHeader` as shown below.
 
@@ -200,7 +202,7 @@ public class TicketAgentClient {
 
 # Server Soap Header Annotation
 
-To access the SOAP header on the server side, we need to specify it as an additional parameter on the `Endpoint` handling method. [A handling method](http://docs.spring.io/spring-ws/docs/current/reference/htmlsingle/#d5e1137){:target="_blank"} typically has one or more parameters that refer to various parts of the incoming XML message. Most commonly, the handling method will have a single parameter that will map to the payload of the message, but it is also possible to map to other parts of the request message, such as for example a SOAP header.
+To access the SOAP header on the server side, we need to specify it as an additional parameter on the `Endpoint` handling method. [A handling method](https://docs.spring.io/spring-ws/docs/2.4.2.RELEASE/reference/#server-atEndpoint-methods){:target="_blank"} typically has one or more parameters that refer to various parts of the incoming XML message. Most commonly, the handling method will have a single parameter that will map to the payload of the message, but it is also possible to map to other parts of the request message, such as for example a SOAP header.
 
 In this example, the `listFlights()` handling method has two parameters. The first is the request payload which is mapped to the JAXB `TListFlights` object. The second parameter is a `SoapHeaderElement` which needs to be used in combination with the `@SoapHeader` annotation in order to extract the correct element from the received SOAP header.
 
@@ -418,9 +420,9 @@ The outcome should be a successful test run as shown below.
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-10:49:22.426 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on cnf-pc with PID 4268 (started by CodeNotFound in c:\codenotfound\spring-ws\spring-ws-soap-header)
+10:49:22.426 [main] INFO  c.c.ws.client.TicketAgentClientTest - Starting TicketAgentClientTest on cnf-pc with PID 4268 (started by CodeNotFound in c:\code\spring-ws\spring-ws-soap-header)
 10:49:22.429 [main] INFO  c.c.ws.client.TicketAgentClientTest - No active profile set, falling back to default profiles: default
 10:49:24.243 [main] INFO  c.c.ws.client.TicketAgentClientTest - Started TicketAgentClientTest in 2.071 seconds (JVM running for 2.716)
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.301 sec - in com.codenotfound.ws.client.TicketAgentClientTest

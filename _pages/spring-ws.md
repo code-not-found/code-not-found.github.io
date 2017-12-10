@@ -19,7 +19,7 @@ modified: 2017-04-18
 ## Headers
 
 * [Spring WS - SOAPAction Header Example]({{ site.url }}/spring-ws-soapaction-header-example.html)
-* [Spring WS - SOAP Header Example]({{ site.url }}/2017/07/spring-ws-soap-header-example.html)
+* [Spring WS - SOAP Header Example]({{ site.url }}/spring-ws-soap-header-example.html)
 
 ## Security
 
