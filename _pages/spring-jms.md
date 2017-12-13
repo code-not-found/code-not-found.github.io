@@ -3,7 +3,7 @@ title: "Spring JMS"
 permalink: /spring-jms/
 excerpt: "Step-by-step tutorials on Spring JMS"
 date: 2017-05-01
-modified: 2017-05-08
+modified: 2017-12-13
 ---
 
 <figure>

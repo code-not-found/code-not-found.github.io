@@ -3,7 +3,7 @@ title: "Spring JMS - ActiveMQ Consumer Producer Example"
 permalink: /spring-jms-activemq-consumer-producer-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an ActiveMQ Consumer and Producer using Spring JMS and Spring Boot."
 date: 2017-05-04
-modified: 2017-05-06
+modified: 2017-05-04
 header:
   teaser: "assets/images/header/spring-jms-teaser.png"
 categories: [Spring JMS]
@@ -41,7 +41,9 @@ The `spring-boot-starter-activemq` dependency includes the needed dependencies f
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
-A dependency to `activemq-junit` is also added as we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker. The version of the dependency is specified in a property that needs to match with the ActiveMQ version supported by the `spring-boot-starter-activemq` starter. At the time of writing this was version <var>'5.14.5'</var>.
+A dependency to `activemq-junit` is also added as we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker. The version of the dependency needs to match with the ActiveMQ version supported by the `spring-boot-starter-activemq` starter. For [Spring Boot 1.5.9 the ActiveMQ dependency was version '5.14.5'](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions).
+
+> You can find back the Spring Boot dependencies in Appendix F of the reference documentation.
 
 In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the example via a Maven command.
 
@@ -157,11 +159,16 @@ public class Sender {
 }
 ```
 
-The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. This class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
 In order to be able to use the Spring JMS template we need to provide a reference to a `ConnectionFactory` which is used to [create connections with the JMS provider](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html){:target="_blank"}. In addition it encapsulates various configuration parameters, many of which are vendor specific. In the case of ActiveMQ we use the `ActiveMQConnectionFactory`.
 
 On the `ActiveMQConnectionFactory` we set the broker URL which is fetched from the <var>application.yml</var> properties file using the `@Value` annotation.
+
+``` yaml
+activemq:
+  broker-url: vm://embedded-broker?create=false
+```
 
 The `JmsTemplate` was originally designed to be used in combination with a J2EE container where the container would provide the necessary pooling of the JMS resources. As we are running this example on Spring Boot, we will wrap `ActiveMQConnectionFactory` using Spring's `CachingConnectionFactory` in order to still have the benefit of caching of sessions, connections and producers as well as automatic connection recovery.
 
@@ -210,13 +217,12 @@ public class SenderConfig {
 
 Like with any messaging-based application, you need to create a receiver that will handle the messages that have been sent. The below `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In this example we named the method `receive()`, but you can name it anything you like.
 
-The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name `jmsListenerContainerFactory` is expected that we will setup in the next section.
+The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name <var>'jmsListenerContainerFactory'</var> is expected that we will setup in the next section.
 
 Using the `destination` element, we specify the destination for this listener. In the below example we load the destination <var>'helloworld.q'</var> from the <var>application.yml</var> properties file. This is done using the '${   }' placeholder which Spring will automatically resolve.
 
 ``` yaml
 activemq:
-  broker-url: vm://embedded-broker?create=false
   queue:
     helloworld: helloworld.q
 ```
@@ -254,7 +260,7 @@ The creation and configuration of the different Spring Beans needed for the `Rec
 
 The `jmsListenerContainerFactory()` is expected by the `@JmsListener` annotation from the `Receiver`. We set the concurrency between 3 and 10. This means that listener container will always hold on to the minimum number of consumers and will slowly scale up to the maximum number of consumers in case of increasing load.
 
-Contrary to the `JmsTemplate` [ideally don't use Spring's CachingConnectionFactory with a message listener container at all](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html). Reason for this is that it is generally preferable to let the listener container itself handle appropriate caching within its lifecycle.
+Contrary to the `JmsTemplate` [ideally don't use Spring's CachingConnectionFactory with a message listener container at all](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html){:target="_blank"}. Reason for this is that it is generally preferable to let the listener container itself handle appropriate caching within its lifecycle.
 
 As we are connecting to ActiveMQ, an `ActiveMQConnectionFactory` is created and passed in the constructor of the `CachingConnectionFactory`.
 
@@ -303,11 +309,11 @@ public class ReceiverConfig {
 
 In order to verify that we are able to send and receive a message to and from ActiveMQ, a basic `SpringJmsApplicationTest` test case is used. It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.q'</var> queue on the ActiveMQ message broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
-An embedded ActiveMQ broker is automatically started by using an [EmbeddedActiveMQBroker JUnit Rule](http://activemq.apache.org/how-to-unit-test-jms-code.html#HowToUnitTestJMSCode-UsingTheEmbeddedActiveMQBrokerJUnitRule(ActiveMQ5.13)).
+An embedded ActiveMQ broker is automatically started by using an [EmbeddedActiveMQBroker JUnit Rule](http://activemq.apache.org/how-to-unit-test-jms-code.html#HowToUnitTestJMSCode-UsingTheEmbeddedActiveMQBrokerJUnitRule(ActiveMQ5.13)){:target="_blank"}.
 
 > Note that as the embedded broker gets shutdown once the unit test cases are finished, we need to stop our `Sender` and `Receiver` before this happens in order to avoid connection errors. This is done by calling a `close()` on the `ApplicationContext` using the `@AfterClass` annotation.
 
-Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/2014/01/jms-apache-activemq-installation.html) on your local system. You need to comment out the lines annotated with `@ClassRule` and `@AfterClass` to avoid the embedded broker gets created. In addition you need to change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case you are the default URL value.
+Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/2014/01/jms-apache-activemq-installation.html) on your local system. You need to comment out the lines annotated with `@ClassRule` to avoid the embedded broker gets created. In addition you need to change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL value.
 
 ``` java
 package com.codenotfound.jms;
