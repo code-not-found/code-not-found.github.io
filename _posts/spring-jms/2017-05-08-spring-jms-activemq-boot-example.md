@@ -47,12 +47,12 @@ The example project is managed using [Maven](https://maven.apache.org/). Needed 
 
   <name>spring-jms-activemq-boot</name>
   <description>Spring JMS - Spring Boot ActiveMQ Example</description>
-  <url>https://www.codenotfound.com/2017/05/spring-jms-activemq-boot-example.html</url>
+  <url>https://www.codenotfound.com/spring-jms-activemq-boot-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.3.RELEASE</version>
+    <version>1.5.9.RELEASE</version>
   </parent>
 
   <properties>
@@ -135,7 +135,7 @@ public class Sender {
 
 # Autoconfigure the Spring Kafka Message Consumer
 
-Similar to the `Sender`, the setup and creation of the `ConnectionFactory` and `JmsListenerContainerFactory` bean is automatically done by Spring Boot. The `@JmsListener` annotation creates a message listener container for the annotated `receive()` method. The destination name is specified using the `${destination.boot}` placeholder for which the value will be automatically fetched from the <var>application.yml</var> properties file.
+Similar to the `Sender`, the setup and creation of the `ConnectionFactory` and `JmsListenerContainerFactory` bean is automatically done by Spring Boot. The `@JmsListener` annotation creates a message listener container for the annotated `receive()` method. The destination name is specified using the <var>'${destination.boot}'</var> placeholder for which the value will be automatically fetched from the <var>application.yml</var> properties file.
 
 ``` java
 package com.codenotfound.jms.consumer;
@@ -158,7 +158,7 @@ public class Receiver {
     return latch;
   }
 
-  @JmsListener(destination = "${destination.boot}")
+  @JmsListener(destination = "${queue.boot}")
   public void receive(String message) {
     LOGGER.info("received message='{}'", message);
     latch.countDown();
@@ -168,10 +168,14 @@ public class Receiver {
 
 Using application properties we can further fine tune the different settings of the `ConnectionFactory`, `JmsTemplate` and `JmsListenerContainerFactory` beans. Scroll down to <var># ACTIVEMQ</var> and <var># JMS</var> sections in the following link in order to get a [complete overview on all the available ActiveMQ and JMS properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) 
 
-In this example we use default values and only specify the destination in the included <var>application.yml</var> properties file.
+In this example we use default values and only specify the destination and broker URL in the included <var>application.yml</var> properties file.
 
-``` yml
-destiation:
+``` yaml
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616
+
+queue:
   boot: boot.q
 ```
 
@@ -179,7 +183,7 @@ destiation:
 
 In order to verify that our code works, a simple `SpringJmsApplicationTest` test case is used. It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'boot.q'</var> queue on the ActiveMQ broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received.
 
-Spring Boot auto-configuration will automatically start an embedded ActiveMQ broker instance, as such we don't need to include an `EmbeddedActiveMQBroker` JUnit Rule.
+We include a dedicated <var>application.yml</var> properties file for testing under <var>src/test/resources</var> that does not contain a broker URL. If Spring Boot does not find a broker URL, auto-configuration will automatically start an embedded ActiveMQ broker instance.
 
 ``` java
 package com.codenotfound.jms;
@@ -199,6 +203,7 @@ import com.codenotfound.jms.producer.Sender;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext
 public class SpringJmsApplicationTest {
 
   @Autowired
@@ -232,9 +237,9 @@ The test case will be triggered resulting in following log statements:
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.3.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-20:44:45.934 [main] INFO  c.c.jms.SpringJmsApplicationTest - Starting SpringJmsApplicationTest on cnf-pc with PID 3756 (started by CodeNotFound in c:\code\st\spring-jms\spring-jms-activemq-boot)
+20:44:45.934 [main] INFO  c.c.jms.SpringJmsApplicationTest - Starting SpringJmsApplicationTest on cnf-pc with PID 3756 (started by CodeNotFound in c:\code\spring-jms\spring-jms-activemq-boot)
 20:44:45.937 [main] INFO  c.c.jms.SpringJmsApplicationTest - No active profile set, falling back to default profiles: default
 20:44:47.073 [main] WARN  o.a.activemq.broker.BrokerService - Temporary Store limit is 51200 mb (current store usage is 0 mb). The data directory: c:\code\st\spring-jms\spring-jms-activemq-boot only has 14451 mb of usable space. - resetting to maximum available disk space: 14451 mb
 20:44:47.139 [main] INFO  c.c.jms.SpringJmsApplicationTest - Started SpringJmsApplicationTest in 1.461 seconds (JVM running for 2.271)
@@ -260,7 +265,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-activemq-boot).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-activemq-boot){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
