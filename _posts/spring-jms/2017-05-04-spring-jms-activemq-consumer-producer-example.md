@@ -167,7 +167,7 @@ On the `ActiveMQConnectionFactory` we set the broker URL which is fetched from t
 
 ``` yaml
 activemq:
-  broker-url: vm://embedded-broker?create=false
+  broker-url: tcp://localhost:61616
 ```
 
 The `JmsTemplate` was originally designed to be used in combination with a J2EE container where the container would provide the necessary pooling of the JMS resources. As we are running this example on Spring Boot, we will wrap `ActiveMQConnectionFactory` using Spring's `CachingConnectionFactory` in order to still have the benefit of caching of sessions, connections and producers as well as automatic connection recovery.
@@ -222,9 +222,8 @@ The `@JmsListener` annotation creates a message listener container behind the sc
 Using the `destination` element, we specify the destination for this listener. In the below example we load the destination <var>'helloworld.q'</var> from the <var>application.yml</var> properties file. This is done using the '${   }' placeholder which Spring will automatically resolve.
 
 ``` yaml
-activemq:
-  queue:
-    helloworld: helloworld.q
+queue:
+  helloworld: helloworld.q
 ```
 
 > For testing convenience, we added a `CountDownLatch`. This allows the POJO to signal that a message is received. This is something you are not likely to implement in a production application. 
@@ -309,7 +308,7 @@ public class ReceiverConfig {
 
 In order to verify that we are able to send and receive a message to and from ActiveMQ, a basic `SpringJmsApplicationTest` test case is used. It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.q'</var> queue on the ActiveMQ message broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
-An embedded ActiveMQ broker is automatically started by using an [EmbeddedActiveMQBroker JUnit Rule](http://activemq.apache.org/how-to-unit-test-jms-code.html#HowToUnitTestJMSCode-UsingTheEmbeddedActiveMQBrokerJUnitRule(ActiveMQ5.13)){:target="_blank"}.
+An embedded ActiveMQ broker is automatically started by using an [EmbeddedActiveMQBroker JUnit Rule](http://activemq.apache.org/how-to-unit-test-jms-code.html#HowToUnitTestJMSCode-UsingTheEmbeddedActiveMQBrokerJUnitRule(ActiveMQ5.13)){:target="_blank"}. We have added a dedicated <var>application.yml</var> properties file under <var>src/test/resources</var> that contains the VM URI to connect with the broker.
 
 > Note that as the embedded broker gets shutdown once the unit test cases are finished, we need to stop our `Sender` and `Receiver` before this happens in order to avoid connection errors. This is done by calling a `close()` on the `ApplicationContext` using the `@AfterClass` annotation.
 
