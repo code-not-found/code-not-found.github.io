@@ -18,7 +18,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html){:target="_blank"} will try to automatically configure your Spring application based on the JAR dependencies that are available. In other words if the `spring-jms` and `activemq-broker` dependencies are on the classpath and you have not manually configured any `ConnectionFactory`, `JmsTemplate` or `JmsListenerContainerFactory` beans, then Spring Boot will auto-configure them for you using default values.
+[Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html){:target="_blank"} will try to automatically configure your Spring application based on the JAR dependencies that are available. In other words, if the `spring-jms` and `activemq-broker` dependencies are on the classpath and you have not manually configured any `ConnectionFactory`, `JmsTemplate` or `JmsListenerContainerFactory` beans, then Spring Boot will auto-configure them for you using default values.
 
 To illustrate this behavior we will start from a previous [Spring JMS tutorial]({{ site.url }}/spring-jms-activemq-consumer-producer-example.html) in which we send/receive messages to/from an Apache ActiveMQ destination using Spring JMS. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration capabilities.
 
@@ -33,7 +33,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The example project is managed using [Maven](https://maven.apache.org/). Needed dependencies like [Spring Boot](https://projects.spring.io/spring-boot/) and [Spring JMS](http://projects.spring.io/spring-framework/) are included by declaring the `spring-boot-starter-activemq` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters) in the POM file as shown below.
+The example project is managed using [Maven](https://maven.apache.org/){:target="_blank"}. Needed dependencies like [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} and [Spring JMS](http://projects.spring.io/spring-framework/){:target="_blank"} are included by declaring the `spring-boot-starter-activemq` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} in the POM file as shown below.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -105,9 +105,9 @@ public class SpringJmsApplication {
 
 # Autoconfigure the Spring JMS Message Producer
 
-The setup and creation of the `JmsTemplate` and `ConnectionFactory` beans is automatically done by Spring Boot. We just need to autowire the `JmsTemplate` and use it in the `send()` method.
+The setup and creation of the `JmsTemplate` and `ConnectionFactory` beans are automatically done by Spring Boot. We just need to autowire the `JmsTemplate` and use it in the `send()` method.
 
-> By annotating the `Sender` class with `@Component`, Spring will instantiate this class as a bean that we will use in a below test case. In order for this to work we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringKafkaApplication` by using the `@SpringBootApplication` annotation.
+> By annotating the `Sender` class with `@Component`, Spring will instantiate this class as a bean that we will use in a below test case. In order for this to work, we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringKafkaApplication` by using the `@SpringBootApplication` annotation.
 
 ``` java
 package com.codenotfound.jms.producer;
@@ -168,7 +168,7 @@ public class Receiver {
 
 Using application properties we can further fine tune the different settings of the `ConnectionFactory`, `JmsTemplate` and `JmsListenerContainerFactory` beans. Scroll down to <var># ACTIVEMQ</var> and <var># JMS</var> sections in the following link in order to get a [complete overview on all the available ActiveMQ and JMS properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) 
 
-In this example we use default values and only specify the destination and broker URL in the included <var>application.yml</var> properties file.
+In this example, we use default values and only specify the destination and broker URL in the included <var>application.yml</var> properties file.
 
 ``` yaml
 spring:
@@ -269,6 +269,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this example we are able to autoconfigure JMS using Spring Boot and a couple of lines of code.
+In above example, we were able to autoconfigure JMS using Spring Boot and a couple of lines of code.
 
 Drop a comment in case you thought the example was helpful or if you found something was missing.

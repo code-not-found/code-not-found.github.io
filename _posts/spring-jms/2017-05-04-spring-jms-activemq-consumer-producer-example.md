@@ -20,7 +20,7 @@ published: true
 
 Spring provides a [JMS integration framework](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/html/jms.html){:target="_blank"} that simplifies the use of the JMS API much like Spring's integration does for the JDBC API. The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html){:target="_blank"}.
 
-The below tutorial illustrates how to build and run a Hello World example in which we will send/receive messages to/from Apache ActiveMQ using Spring JMS, Spring Boot and Maven.
+The below tutorial illustrates how to build and run a Hello World example in which we will send/receive messages to/from Apache ActiveMQ using Spring JMS, Spring Boot, and Maven.
 
 # General Project Setup
 
@@ -106,7 +106,7 @@ In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin 
 
 Spring Boot is used in order to make a Spring JMS example application that you can "just run".
 
-We start by creating an `SpringJmsApplication` which contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
+We start by creating a `SpringJmsApplication` which contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch the application. The `@SpringBootApplication` annotation is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration` and `@ComponentScan`.
 
 For more information on Spring Boot check out the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
 
@@ -129,13 +129,13 @@ public class SpringJmsApplication {
 
 # Create a Spring JMS Message Producer
 
-For sending messages we will be using the `JmsTemplate` which requires a reference to a `ConnectionFactory` and provides convenience methods which handles the creation and release of resources when sending or synchronously receiving messages.
+For sending messages we will be using the `JmsTemplate` which requires a reference to a `ConnectionFactory` and provides convenience methods which handle the creation and release of resources when sending or synchronously receiving messages.
 
 > Note that instances of the JmsTemplate class are thread-safe once configured.
 
 In the below `Sender` class, the `JmsTemplate` is autowired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class.
 
-In this example we will use the `convertAndSend()` method which sends the given object to the specified destination, converting the object to a JMS message. The [type of JMS message]({{ site.url }}/2014/01/jms-message-structure-overview.html#jms-message-body) depends on the type of the object being passed. In the case of a `String` a JMS `TextMessage` will be created.
+In this example we will use the `convertAndSend()` method which sends the given object to the specified destination, converting the object to a JMS message. The [type of JMS message]({{ site.url }}/2014/01/jms-message-structure-overview.html#jms-message-body) depends on the type of the object being passed. In the case of a `String`, a JMS `TextMessage` will be created.
 
 ``` java
 package com.codenotfound.jms.producer;
@@ -159,9 +159,9 @@ public class Sender {
 }
 ```
 
-The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. This class is annoted with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. This class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
-In order to be able to use the Spring JMS template we need to provide a reference to a `ConnectionFactory` which is used to [create connections with the JMS provider](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html){:target="_blank"}. In addition it encapsulates various configuration parameters, many of which are vendor specific. In the case of ActiveMQ we use the `ActiveMQConnectionFactory`.
+In order to be able to use the Spring JMS template, we need to provide a reference to a `ConnectionFactory` which is used to [create connections with the JMS provider](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html){:target="_blank"}. In addition, it encapsulates various configuration parameters, many of which are vendor specific. In the case of ActiveMQ, we use the `ActiveMQConnectionFactory`.
 
 On the `ActiveMQConnectionFactory` we set the broker URL which is fetched from the <var>application.yml</var> properties file using the `@Value` annotation.
 
@@ -170,7 +170,7 @@ activemq:
   broker-url: tcp://localhost:61616
 ```
 
-The `JmsTemplate` was originally designed to be used in combination with a J2EE container where the container would provide the necessary pooling of the JMS resources. As we are running this example on Spring Boot, we will wrap `ActiveMQConnectionFactory` using Spring's `CachingConnectionFactory` in order to still have the benefit of caching of sessions, connections and producers as well as automatic connection recovery.
+The `JmsTemplate` was originally designed to be used in combination with a J2EE container where the container would provide the necessary pooling of the JMS resources. As we are running this example on Spring Boot, we will wrap `ActiveMQConnectionFactory` using Spring's `CachingConnectionFactory` in order to still have the benefit of caching of sessions, connections, and producers as well as automatic connection recovery.
 
 ``` java
 package com.codenotfound.jms.producer;
