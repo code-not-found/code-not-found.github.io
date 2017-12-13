@@ -168,7 +168,7 @@ public class Receiver {
 }
 ```
 
-Using application properties we can further fine tune the different settings of the `ConnectionFactory`, `JmsTemplate` and `JmsListenerContainerFactory` beans. Scroll down to <var># ACTIVEMQ</var> and <var># JMS</var> sections in the following link in order to get a [complete overview on all the available ActiveMQ and JMS properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html) 
+Using application properties we can further fine tune the different settings of the `ConnectionFactory`, `JmsTemplate` and `JmsListenerContainerFactory` beans. Scroll down to <var># ACTIVEMQ</var> and <var># JMS</var> sections in the following link in order to get a [complete overview on all the available ActiveMQ and JMS properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"}.
 
 In this example, we use default values and only specify the destination and broker URL in the included <var>application.yml</var> properties file.
 
