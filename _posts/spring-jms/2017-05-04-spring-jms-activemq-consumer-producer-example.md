@@ -18,7 +18,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
-Spring provides a [JMS integration framework](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/htmlsingle/#jms){:target="_blank"} that simplifies the use of the JMS API much like Spring's integration does for the JDBC API. The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html){:target="_blank"}.
+Spring provides a [JMS integration framework](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/html/jms.html){:target="_blank"} that simplifies the use of the JMS API much like Spring's integration does for the JDBC API. The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html){:target="_blank"}.
 
 The below tutorial illustrates how to build and run a Hello World example in which we will send/receive messages to/from Apache ActiveMQ using Spring JMS, Spring Boot and Maven.
 
@@ -37,13 +37,13 @@ We will be building and running our example using [Apache Maven](https://maven.a
 
 In order to run the example we will use the [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} project that makes it easy to create stand-alone, production-grade Spring based Applications. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application.
 
-The `spring-boot-starter-activemq` dependency includes the needed dependencies needed for using Spring JMS in combination with ActiveMQ. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
+The `spring-boot-starter-activemq` dependency includes the needed dependencies for using Spring JMS in combination with ActiveMQ. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
 A dependency to `activemq-junit` is also added as we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker. The version of the dependency is specified in a property that needs to match with the ActiveMQ version supported by the `spring-boot-starter-activemq` starter. At the time of writing this was version <var>'5.14.5'</var>.
 
-In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the web service via a Maven command.
+In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the example via a Maven command.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -163,11 +163,6 @@ In order to be able to use the Spring JMS template we need to provide a referenc
 
 On the `ActiveMQConnectionFactory` we set the broker URL which is fetched from the <var>application.yml</var> properties file using the `@Value` annotation.
 
-``` yaml
-activemq:
-  broker-url: vm://embedded-broker?create=false
-```
-
 The `JmsTemplate` was originally designed to be used in combination with a J2EE container where the container would provide the necessary pooling of the JMS resources. As we are running this example on Spring Boot, we will wrap `ActiveMQConnectionFactory` using Spring's `CachingConnectionFactory` in order to still have the benefit of caching of sessions, connections and producers as well as automatic connection recovery.
 
 ``` java
@@ -215,7 +210,16 @@ public class SenderConfig {
 
 Like with any messaging-based application, you need to create a receiver that will handle the messages that have been sent. The below `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In this example we named the method `receive()`, but you can name it anything you like.
 
-The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name `jmsListenerContainerFactory` is expected that we will setup in the next section. Using the `destination` element, we specify the destination for this listener.
+The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name `jmsListenerContainerFactory` is expected that we will setup in the next section.
+
+Using the `destination` element, we specify the destination for this listener. In the below example we load the destination <var>'helloworld.q'</var> from the <var>application.yml</var> properties file. This is done using the '${…}' placeholder which Spring will automatically resolve.
+
+``` yaml
+activemq:
+  broker-url: vm://embedded-broker?create=false
+  queue:
+    helloworld: helloworld.q
+```
 
 > For testing convenience, we added a `CountDownLatch`. This allows the POJO to signal that a message is received. This is something you are not likely to implement in a production application. 
 
@@ -238,7 +242,7 @@ public class Receiver {
     return latch;
   }
 
-  @JmsListener(destination = "${queue.helloworld}")
+  @JmsListener(destination = "${activemq.queue.helloworld}")
   public void receive(String message) {
     LOGGER.info("received message='{}'", message);
     latch.countDown();
