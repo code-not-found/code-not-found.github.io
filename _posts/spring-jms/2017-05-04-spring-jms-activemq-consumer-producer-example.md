@@ -212,7 +212,7 @@ Like with any messaging-based application, you need to create a receiver that wi
 
 The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name `jmsListenerContainerFactory` is expected that we will setup in the next section.
 
-Using the `destination` element, we specify the destination for this listener. In the below example we load the destination <var>'helloworld.q'</var> from the <var>application.yml</var> properties file. This is done using the '${…}' placeholder which Spring will automatically resolve.
+Using the `destination` element, we specify the destination for this listener. In the below example we load the destination <var>'helloworld.q'</var> from the <var>application.yml</var> properties file. This is done using the '${   }' placeholder which Spring will automatically resolve.
 
 ``` yaml
 activemq:
