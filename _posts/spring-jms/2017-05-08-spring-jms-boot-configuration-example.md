@@ -1,16 +1,17 @@
 ---
-title: "Spring JMS - ActiveMQ Boot Example"
-permalink: /spring-jms-activemq-boot-example.html
+title: "Spring JMS - Boot Configuration Example"
+permalink: /spring-jms-boot-configuration-example.html
 excerpt: "A detailed step-by-step tutorial on how to autoconfigure ActiveMQ and Spring JMS using Spring Boot."
 date: 2017-05-08
-modified: 2017-05-08
+modified: 2017-12-14
 header:
   teaser: "assets/images/header/spring-jms-teaser.png"
 categories: [Spring JMS]
-tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
+tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Configuration, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
 redirect_from:
   - /2017/04/spring-jms-boot-example.html
   - /2017/05/spring-jms-activemq-boot-example.html
+  - /spring-jms-activemq-boot-example.html
 published: true
 ---
 
@@ -20,7 +21,7 @@ published: true
 
 [Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html){:target="_blank"} will try to automatically configure your Spring application based on the JAR dependencies that are available. In other words, if the `spring-jms` and `activemq-broker` dependencies are on the classpath and you have not manually configured any `ConnectionFactory`, `JmsTemplate` or `JmsListenerContainerFactory` beans, then Spring Boot will auto-configure them for you using default values.
 
-To illustrate this behavior we will start from a previous [Spring JMS tutorial]({{ site.url }}/spring-jms-activemq-consumer-producer-example.html) in which we send/receive messages to/from an Apache ActiveMQ destination using Spring JMS. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration capabilities.
+To illustrate this behavior we will start from a previous [Spring JMS tutorial]({{ site.url }}/spring-jms-activemq-consumer-producer-example.html) in which we send/receive messages to/from ActiveMQ using Spring JMS. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration capabilities.
 
 # General Project Setup
 
@@ -271,6 +272,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In above example, we were able to autoconfigure JMS using Spring Boot and a couple of lines of code.
+In above example, we were able to autoconfigure a JMS connection to ActiveMQ using Spring Boot and a couple of lines of code.
 
 Drop a comment in case you thought the example was helpful or if you found something was missing.

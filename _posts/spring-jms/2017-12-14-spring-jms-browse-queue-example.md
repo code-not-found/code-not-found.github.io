@@ -1,17 +1,14 @@
 ---
-title: "Spring JMS - ActiveMQ Consumer Producer Example"
-permalink: /spring-jms-activemq-consumer-producer-example.html
+title: "Spring JMS - Browse Queue Example"
+permalink: /spring-jms-browse-queue-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an ActiveMQ Consumer and Producer using Spring JMS and Spring Boot."
-date: 2017-05-04
-modified: 2017-05-04
+date: 2017-12-14
+modified: 2017-12-14
 header:
   teaser: "assets/images/header/spring-jms-teaser.png"
 categories: [Spring JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
-redirect_from:
-  - /2017/05/spring-jms-activemq-example.html
-  - /2017/05/spring-jms-activemq-consumer-producer-example.html
-published: true
+published: false
 ---
 
 <figure>
