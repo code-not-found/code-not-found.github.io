@@ -138,7 +138,7 @@ The `@JsonApiResource` annotation [defines a resource](http://katharsis-jsonapi.
 
 > According to JSON API standard, the name defined in type can be either plural or singular. However, the same value should be used consistently throughout an implementation.
 
-The `@JsonApiId` [defines a field which will be used as an identifier](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#jsonapiid{:target="_blank"}) of the Greeting resource. Each resource requires this annotation to be present on a field which is of primitive type or a type that implements the `Serializable` interface.
+The `@JsonApiId` [defines a field which will be used as an identifier](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#jsonapiid){:target="_blank"} of the Greeting resource. Each resource requires this annotation to be present on a field which is of primitive type or a type that implements the `Serializable` interface.
 
 ``` java
 package com.codenotfound.katharsis.domain.model;
@@ -443,7 +443,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/json-api/tree/master/json-api-katharsis-helloworld).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/json-api/tree/master/json-api-katharsis-helloworld){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
