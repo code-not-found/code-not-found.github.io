@@ -4,6 +4,8 @@ permalink: /json-api-spring-boot-katharsis-example.html
 excerpt: "A detailed step-by-step tutorial on how to provide and consume a RESTful Hello World JSON API using Katharsis and Spring Boot."
 date: 2017-04-21
 modified: 2017-12-16
+header:
+  teaser: "assets/images/header/katharsis-teaser.png"
 categories: [JSON API]
 tags: [Example, Hello World, JSON API, Katharsis, Maven, Spring, Spring Boot, Tutorial]
 redirect_from:
@@ -18,9 +20,9 @@ published: true
 
 [JSON API](http://jsonapi.org/){:target="_blank"} is a specification for building APIs using JSON. It details how clients should request resources to be fetched or modified, and how servers should respond to those requests. JSON API is designed to minimize both the number of requests and the amount of data transmitted between clients and servers.
 
-[Katharsis](http://katharsis.io){:target="_blank"} is a Java library that implements the JSON API specification. It is an additional layer that can be plugged on top of existing server side Java implementations in order to provide easy [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS){:target="_blank"} support. Katharsis defines resources which can be shared over a RESTful interface and a repository for handling them.
+[Katharsis](http://katharsis.io){:target="_blank"} is a Java library that implements the JSON API specification. It is an additional layer that can be plugged on top of existing server-side Java implementations in order to provide easy [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS){:target="_blank"} support. Katharsis defines resources which can be shared over a RESTful interface and a repository for handling them.
 
-The below tutorial details how to configure and build a RESTful Hello World API that complies to the JSON API specification. Frameworks used are Katharsis, OkHttp, and Spring Boot.
+The below tutorial details how to configure and build a RESTful Hello World API that complies with the JSON API specification. Frameworks used are Katharsis, OkHttp, and Spring Boot.
 
 Tools used:
 * Katharsis 3.0
@@ -30,7 +32,7 @@ Tools used:
 
 # General Project Setup
 
-The example will be built and run using [Apache Maven](https://maven.apache.org/){:target="_blank"}. In order to use the Katharsis framework we need to include the `katharsis-core` dependency. As Spring Boot will be used for running the server part we also need to include `katharsis-spring`. For implementing the client part the `katharsis-client` dependency is needed.
+The example will be built and run using [Apache Maven](https://maven.apache.org/){:target="_blank"}. In order to use the Katharsis framework, we need to include the `katharsis-core` dependency. As Spring Boot will be used for running the server part we also need to include `katharsis-spring`. For implementing the client part the `katharsis-client` dependency is needed.
 
 Katharsis aims to have as little dependencies as possible, as such a HTTP client library is not included by default. It needs to be [provided on the classpath where it will be automatically picked up](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#client){:target="_blank"} by the framework. Both [OkHttp](https://square.github.io/okhttp){:target="_blank"} and [Apache Http Client](https://hc.apache.org/httpcomponents-client-ga/index.html){:target="_blank"} are supported. For this example we will use the `okhttp` library.
 
@@ -188,7 +190,7 @@ The [ResourceRepositoryBase](https://github.com/katharsis-project/katharsis-fram
 
 > Note that when extending the `ResourceRepositoryBase` only `findAll()` needs to be implemented to have a working read-only repository.
 
-In this example we will store the greeting resources in a simple `HashMap` and add a "Hello World!" greeting as a resource via the constructor.
+In this example, we will store the greeting resources in a simple `HashMap` and add a "Hello World!" greeting as a resource via the constructor.
 
 Katharsis passes JSON API query parameters to repositories through a `QuerySpec` parameter. The implementation of the `findAll()` uses the `apply()` method which evaluates the querySpec against the provided list and returns the result.
 
@@ -228,7 +230,7 @@ public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Lon
 
 # Setting up the Server
 
-Katharsis comes with [out-of-the-box support for Spring Boot](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#spring-integration){:target="_blank"}. The entry point is a `KatharsisConfig` class which configures Katharsis using Spring properties. Additionally we have to make sure that each repository is annotated with `@Component` (as we did with the above `GreetingRepositoryImpl`).
+Katharsis comes with [out-of-the-box support for Spring Boot](http://katharsis-jsonapi.readthedocs.io/en/latest/user-docs.html#spring-integration){:target="_blank"}. The entry point is a `KatharsisConfig` class which configures Katharsis using Spring properties. Additionally, we have to make sure that each repository is annotated with `@Component` (as we did with the above `GreetingRepositoryImpl`).
 
 Spring's `@RestController` annotation is used to mark the `KatharsisController` class as a controller for handling HTTP requests. The `KatharsisConfigV3` import will setup and expose the resource endpoints based on auto-scanning for specific annotations in addition to some properties which we will see further below.
 
@@ -272,7 +274,7 @@ public class KatharsisController {
 
 In addition to the above auto-configuration, a number of items are configured using the <var>application.yml</var> properties file:
 
-* The <var>katharsis:resourcePackage</var> property specifies which package(s) should be searched to find models and repositories used by the core and exception mappers. Multiple packages can be passed by specifying a comma separated string of packages.
+* The <var>katharsis:resourcePackage</var> property specifies which package(s) should be searched to find models and repositories used by the core and exception mappers. Multiple packages can be passed by specifying a comma-separated string of packages.
 * The <var>katharsis:domainName</var> property specifies the domain name as well as protocol and optionally port number to be used when building links objects in responses. The value must not end with a backslash (/).
 * The <var>katharsis:pathPrefix</var> property defines the default prefix of the URL path used when building link objects in responses and when performing method matching.
 
@@ -371,7 +373,7 @@ http://localhost:9090/codenotfound/api/greetings/1
 
 > Notice that above flow is fully driven using hypermedia!
 
-To wrap up we will also add a simple `SpringKatharsisApplicationTest` unit test case in which we lookup the Hello World greeting resource using it's identifier.
+To wrap up we will also add a simple `SpringKatharsisApplicationTest` unit test case in which we lookup the Hello World greeting resource using its identifier.
 
 ``` java
 package com.codenotfound.katharsis;
@@ -407,7 +409,7 @@ Triggering the test case is done using following maven command.
 mvn test
 ```
 
-Output should be as shown below.
+The output should be as shown below.
 
 ``` plaintext
   .   ____          _            __ _ _
