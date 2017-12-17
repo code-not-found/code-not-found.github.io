@@ -1,7 +1,7 @@
 ---
-title: "JSON API - Spring Boot Crnk Example"
-permalink: /json-api-spring-boot-crnk-example.html
-excerpt: "A detailed step-by-step tutorial on how to provide and consume a RESTful Hello World JSON API using Crnk and Spring Boot."
+title: "JSON API - Crnk Spring Boot Example"
+permalink: /json-api-crnk-spring-boot-example.html
+excerpt: "A detailed step-by-step tutorial on how to provide and consume a RESTful Hello World API using JSON API, Crnk, and Spring Boot."
 date: 2017-12-16
 modified: 2017-12-16
 header:
@@ -35,7 +35,9 @@ The example will be built and run using [Apache Maven](https://maven.apache.org/
 
 Crnk aims to have as little dependencies as possible, as such a HTTP client library is not included by default. It needs to be [provided on the classpath where it will be automatically picked up](http://www.crnk.io/documentation/#_client){:target="_blank"} by the framework. Both [OkHttp](https://square.github.io/okhttp){:target="_blank"} and [Apache Http Client](https://hc.apache.org/httpcomponents-client-ga/index.html){:target="_blank"} are supported. For this example we will use the `okhttp` library.
 
-Running and testing of the example is based on the `spring-boot-starter` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"}. The `spring-boot-maven-plugin` is used to spin up an embedded Tomcat server that will host the RESTful Hello World API.
+Running and testing of the example is based on the `spring-boot-starter-web` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"}. The former is needed as we will be exposing the Hello World API using the `@RestController` annotation.
+
+The `spring-boot-maven-plugin` is used to spin up an embedded Tomcat server that will host the RESTful Hello World API.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -176,6 +178,11 @@ public class Greeting {
 
   public void setContent(String content) {
     this.content = content;
+  }
+
+  @Override
+  public String toString() {
+    return "greeting[id=" + id + ", content=" + content + "]";
   }
 }
 ```
@@ -418,11 +425,11 @@ The output should be as shown below.
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::        (v1.5.9.RELEASE)
 
-22:33:04.066 [main] INFO  c.c.crnk.SpringCrnkApplicationTest - Starting SpringCrnkApplicationTest on cnf-pc with PID 5320 (started by CodeNotFound in c:\code\json-api\json-api-crnk-helloworld)
-22:33:04.069 [main] INFO  c.c.crnk.SpringCrnkApplicationTest - No active profile set, falling back to default profiles: default
-22:33:06.695 [main] INFO  c.c.crnk.SpringCrnkApplicationTest - Started SpringCrnkApplicationTest in 2.936 seconds (JVM running for 3.669)
-22:33:07.037 [main] INFO  c.c.crnk.client.GreetingClient - found com.codenotfound.crnk.domain.model.Greeting@178270b2
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.408 sec - in com.codenotfound.crnk.SpringCrnkApplicationTest
+20:34:21.843 [main] INFO  c.c.crnk.SpringCrnkApplicationTest - Starting SpringCrnkApplicationTest on cnf-pc with PID 4220 (started by CodeNotFound in c:\code\json-api\json-api-crnk-helloworld)
+20:34:21.846 [main] INFO  c.c.crnk.SpringCrnkApplicationTest - No active profile set, falling back to default profiles: default
+20:34:24.289 [main] INFO  c.c.crnk.SpringCrnkApplicationTest - Started SpringCrnkApplicationTest in 2.738 seconds (JVM running for 3.354)
+20:34:24.623 [main] INFO  c.c.crnk.client.GreetingClient - found greeting[id=1, content=Hello World!]
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.164 sec - in com.codenotfound.crnk.SpringCrnkApplicationTest
 
 Results :
 
@@ -431,9 +438,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 6.027 s
-[INFO] Finished at: 2017-12-16T22:33:07+01:00
-[INFO] Final Memory: 19M/220M
+[INFO] Total time: 5.299 s
+[INFO] Finished at: 2017-12-17T20:34:24+01:00
+[INFO] Final Memory: 19M/227M
 [INFO] ------------------------------------------------------------------------
 ```
 
