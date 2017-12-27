@@ -3,11 +3,15 @@
    ========================================================================== */
 
 /* Colors */
+$green                       : #00b294 !default;
+$red                         : #ffa200 !default;
+$orange                      : #f6001d !default;
+
 $text-color: #000 !default;
 $muted-text-color: $text-color !default;
 $primary-color: #ff0000 !default;
 $border-color: mix(#fff, $text-color, 75%) !default;
-$footer-background-color: #000 !default;
+$footer-background-color: $green !default;
 $link-color: #0000ff !default;
 $masthead-link-color: $text-color !default;
 $masthead-link-color-hover: $text-color !default;
@@ -26,7 +30,7 @@ $navicon-link-color-hover: mix(#fff, $text-color, 80%) !default;
 }
 
 .page__footer {
-  color: #00b295 !important; // override
+  color: #fff !important; // override
 }
 
 .page__footer-follow .social-icons .fa {
