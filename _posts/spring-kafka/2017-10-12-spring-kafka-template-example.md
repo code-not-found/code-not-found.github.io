@@ -2,8 +2,8 @@
 title: "Spring Kafka - Template Example"
 permalink: /spring-kafka-template-example.html
 excerpt: "A detailed step-by-step tutorial on how to send messages to a Kafka topic using a Spring Kafka Template and Spring Boot."
-date: 2017-08-06
-modified: 2017-08-06
+date: 2017-10-12
+modified: 2017-10-12
 header:
   teaser: "assets/images/header/spring-kafka-teaser.png"
 categories: [Spring Kafka]

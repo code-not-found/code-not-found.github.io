@@ -270,7 +270,7 @@ public class Receiver {
 }
 ```
 
-The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class.
+The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class. Similar to the `SenderConfig` it is annotated with `@Configuration`.
 
 > Note the `@EnableKafka` annotation which enables the detection of the `@KafkaListener` annotation that was used on the previous `Receiver` class.
 
@@ -377,7 +377,7 @@ import com.codenotfound.kafka.producer.Sender;
 @SpringBootTest
 public class SpringKafkaApplicationTest {
 
-  protected final static String HELLOWORLD_TOPIC = "helloworld.t";
+  private final static String HELLOWORLD_TOPIC = "helloworld.t";
 
   @Autowired
   private KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;

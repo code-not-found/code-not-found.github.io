@@ -1,7 +1,7 @@
 ---
 title: "Spring Kafka - Listener Example"
 permalink: /spring-kafka-listener-example.html
-excerpt: "A detailed step-by-step tutorial on how to consume different message types from multiple topics using Spring Kafka and Spring Boot."
+excerpt: "A detailed step-by-step tutorial on how to configure a topic listener using Spring Kafka and Spring Boot."
 date: 2017-08-06
 modified: 2017-08-06
 header:
