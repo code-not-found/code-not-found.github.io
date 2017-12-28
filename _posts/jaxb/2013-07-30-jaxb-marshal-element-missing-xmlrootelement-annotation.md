@@ -22,7 +22,7 @@ published: true
 
 Information on the root XML element is required when **marshalling** to or **unmarshalling** from a Java object. JAXB provides this information via the `@XmlRootElement` annotation which contains the name and namespace of the root XML element.
 
-When trying to marshal a class which does not have a `@XMLRootElement` annotation defined, following error will be thrown: <var>"unable to marshal as an element because it is missing an @XmlRootElement annotation"</var>. Alternatively when trying to unmarshal, the Java runtime will report that an <var>"unsuspected element"</var> is found.
+When trying to marshal a class which does not have a `@XMLRootElement` annotation defined, following error will be thrown: <var>"unable to marshal as an element because it is missing an @XmlRootElement annotation"</var>. Alternatively, when trying to unmarshal, the Java runtime will report that an <var>"unsuspected element"</var> is found.
 
 For this example let's use following class representing a car with a basic structure. Note that a `XmlRootElement` is not defined!
 
@@ -74,7 +74,7 @@ public class Car {
 
 # Marshal when @XMLRootElement is missing
 
-Marshalling is the process of transforming the memory representation of an object to a data format suitable for storage or transmission. In the case of JAXB it means converting a Java object into XML. The below code snippet shows the creation of a new `Car` instance.
+Marshalling is the process of transforming the memory representation of an object to a data format suitable for storage or transmission. In the case of JAXB, it means converting a Java object into XML. The below code snippet shows the creation of a new `Car` instance.
 ``` java
   car = new Car();
   car.setMake("Passat");
@@ -109,7 +109,7 @@ unable to marshal type "com.codenotfound.jaxb.model.Car" as an
 element because it is missing an @XmlRootElement annotation
 ```
 
-In order to be able to marshal the car object we need to provide a root XML element. This is done as shown below by first creating a qualified name which contains the name and namespace of the root XML element. In a next step we create a new `JAXBElement` and pass the qualified name, class and object. Using the created `JAXBElement` we call the `marshal()` method.
+In order to be able to marshal the car object, we need to provide a root XML element. This is done as shown below by first creating a qualified name which contains the name and namespace of the root XML element. In a next step, we create a new `JAXBElement` and pass the qualified name, class and, object. Using the created `JAXBElement` we call the `marshal()` method.
 
 ``` java
 public static String marshal(Car car) throws JAXBException {
@@ -144,7 +144,7 @@ This time JAXB is able to successfully marshal the object and the result is the 
 
 # Unmarshal when @XMLRootElement is missing
 
-Unmarshalling in JAXB is the process of converting XML content into a Java object. Lets reuse the XML representation of a car that we generated in the previous section.
+Unmarshalling in JAXB is the process of converting XML content into a Java object. Let's reuse the XML representation of a car that we generated in the previous section.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -175,7 +175,7 @@ unexpected element (uri:"com.codenotfound.jaxb.model", local:"car").
 Expected elements are (none)
 ```
 
-In order to be able to unmarshal the object we need to define a root XML element. This is done as shown below by first manually creating the root `JAXBElement` of type `Car` by using the XML file and the class we are trying to unmarshal to. Then we create a `Car` object and assign the value of the previous created root `JAXBElement`.
+In order to be able to unmarshal the object, we need to define a root XML element. This is done as shown below by first manually creating the root `JAXBElement` of type `Car` by using the XML file and the class we are trying to unmarshal to. Then we create a `Car` object and assign the value of the previous created root `JAXBElement`.
 
 ``` java
 public static Car unmarshal(File file) throws JAXBException {
