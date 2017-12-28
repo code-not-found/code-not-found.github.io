@@ -1,13 +1,13 @@
 ---
 title: "RabbitMQ - Download and Install on Windows"
 permalink: /rabbitmq-download-install-windows.html
-excerpt: "A step-by-step tutorial on how to download, install, configure, and run RabbitMQ on Windows."
+excerpt: "A step-by-step tutorial on how to download, install, and run RabbitMQ on Windows."
 date: 2014-11-18
 last_modified_at: 2014-11-18
 header:
   teaser: "assets/images/teaser/rabbitmq-teaser.png"
 categories: [Spring AMQP]
-tags: [AMQP, Configuration, Download, Install, Installation, RabbitMQ, Tutorial, Windows]
+tags: [AMQP, Download, Install, Installation, RabbitMQ, Tutorial, Windows]
 redirect_from:
   - /2014/11/jms-install-rabbitmq-windows.html
   - /2014/11/jms-install-rabbitmq.html
@@ -36,7 +36,7 @@ The first thing to do is to download the OTP binaries. Go the the [Erlang downlo
 Double click to run the downloaded <var>'.exe'</var> file and click <var>Next</var> keeping the default settings on the first installer step.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/amqp/erlang-installer-choose-components.png" alt="erlang installer choose components">
+    <img src="{{ site.url }}/assets/images/posts/spring-amqp/erlang-installer-choose-components.png" alt="erlang installer choose components">
 </figure>
 
 Optionally change the default destination folder and click <var>Next</var> and then <var>Install</var>. In the example below the install location was changed to <var>'C:\tools\erl9.2'</var>. From now on we will refer to this directory as: <var>[erlang_install_dir]</var>.
@@ -109,7 +109,7 @@ rabbitmqctl stop
 
 # Setup RabbitMQ
 
-The <var>'rabbitmq-management'</var> plugin provides a browser-based UI for management and monitoring of the RabbitMQ server . In order to enable the UI, make sure RabbitMQ is running and open a new command prompt at <var>[rabbitmq_install_dir]/sbin</var> in which you enter following:
+The <var>'rabbitmq-management'</var> plugin provides a browser-based UI for management and monitoring of the RabbitMQ server . In order to enable the UI, **make sure RabbitMQ is running** and open a new command prompt at <var>[rabbitmq_install_dir]/sbin</var> in which you enter following:
 
 ``` plaintext
 rabbitmq-plugins enable rabbitmq_management
@@ -125,7 +125,7 @@ Open the RabbitMQ web console in a browser using: [http://localhost:15672](http:
     <img src="{{ site.url }}/assets/images/posts/spring-amqp/rabbitmq-management-console-login.png" alt="rabbitmq management console login">
 </figure>
 
-Enter following default credentials: Username="<kbd>guest</kbd>" and Password="<kbd>guest</kbd>" and click on <var>Login</var>. The overview page will be displayed that shows some basic information on the RabbitMQ server:
+Enter following default credentials: Username="<kbd>guest</kbd>" and Password="<kbd>guest</kbd>" and click on <var>Login</var>. An overview page will be displayed that contains some basic information on the RabbitMQ server.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/spring-amqp/rabbitmq-management-console.png" alt="rabbitmq management console">
