@@ -15,10 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   inkscape:export-filename="C:\blogs\codenotfound\code\code-not-found\assets\images\header\spring-jms-teaser.png"
+   inkscape:export-filename="C:\blogs\codenotfound\code\code-not-found\assets\images\splash\spring-jms-splash.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="spring-jms-teaser.svg">
+   sodipodi:docname="spring-jms-splash.svg">
   <defs
      id="defs4">
     <clipPath
@@ -79,13 +79,13 @@
   </defs>
   <sodipodi:namedview
      id="base"
-     pagecolor="#ffffff"
+     pagecolor="#e0e0e0"
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="192.08463"
+     inkscape:cx="178.28845"
      inkscape:cy="114.67738"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -173,13 +173,13 @@
          x="40.185654"
          y="931.48663" /></text>
     <circle
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#e0e0e0;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="path3372"
        cx="162.23428"
        cy="971.83606"
        r="5.4033704" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       style="fill:#e0e0e0;fill-opacity:1;stroke:none"
        d="m 202.88532,929.43713 c 9.63603,-0.59456 25.39978,-7.46357 31.07677,-18.29303 0.50631,2.02094 3.87517,14.96941 4.22674,24.2121 0.11805,5.40558 1.36371,16.33831 -4.8525,26.58372 -2.45734,4.51381 -7.11039,10.00973 -17.59433,12.47435 -9.50273,2.75079 -41.25859,-1.08912 -41.25859,-1.08912 2.44186,-0.85013 12.76394,-3.13214 14.53992,-3.60494 2.58137,-0.68722 13.05966,-3.04073 20.44011,-9.0841 5.08993,-4.16783 10.20063,-9.16715 11.7463,-11.60449 4.01077,-4.77426 5.87678,-10.43967 7.43763,-14.26682 -3.07002,5.95309 -14.33939,23.12863 -34.98157,27.92343 -6.85046,1.85099 -22.6891,4.60692 -24.05568,4.13007 -4.50502,-2.31119 -7.38839,-7.77276 -6.99384,-15.22033 -0.60613,-2.58741 3.28036,-12.49852 9.78499,-16.94787 8.01617,-5.11573 11.73608,-5.50367 30.48405,-5.21297 z"
        id="rect4174"
        inkscape:connector-curvature="0"

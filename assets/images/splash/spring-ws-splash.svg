@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   inkscape:export-filename="C:\blogs\codenotfound\code\code-not-found\assets\images\header\spring-ws-teaser.png"
+   inkscape:export-filename="C:\blogs\codenotfound\code\code-not-found\assets\images\splash\spring-ws-splash.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
    sodipodi:docname="spring-ws-splash.svg">
@@ -85,7 +85,7 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="89.67434"
+     inkscape:cx="180.92904"
      inkscape:cy="114.67738"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -135,7 +135,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -152,19 +152,19 @@
        rx="95.850426"
        ry="95.360008" />
     <circle
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path4161"
        cx="116.51544"
        cy="947.32227"
        r="11.837793" />
     <circle
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path4161-9"
        cx="283.00592"
        cy="947.32245"
        r="11.837793" />
     <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4178"
        width="15.500133"
        height="5.5800476"
@@ -172,7 +172,7 @@
        y="944.51465"
        ry="2.7900238" />
     <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4178-4"
        width="15.500133"
        height="5.5800476"
@@ -180,7 +180,7 @@
        y="944.43933"
        ry="2.7900238" />
     <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4178-6"
        width="15.500133"
        height="5.5800476"
@@ -188,7 +188,7 @@
        y="944.97522"
        ry="2.7900238" />
     <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:15.19999981;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4178-2"
        width="15.500133"
        height="5.5800476"
@@ -196,7 +196,7 @@
        y="944.97522"
        ry="2.7900238" />
     <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect8283"
        width="62.528744"
        height="93.425293"
@@ -290,7 +290,7 @@
          y="875.85626"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#6db33f;fill-opacity:1;">/</tspan></text>
     <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect8222"
        width="49.290417"
        height="16.416182"
@@ -310,7 +310,7 @@
          y="-875.81293"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';fill:#6db33f;fill-opacity:1;">/</tspan></text>
     <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:#e0e0e0;fill-opacity:1;stroke:none;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect8222-2"
        width="49.290417"
        height="13.795116"
