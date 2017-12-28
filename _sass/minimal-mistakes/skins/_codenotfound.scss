@@ -81,14 +81,14 @@ kbd {
   color: $orange;
 }
 div .highlighter-rouge {
-  margin-bottom: 30px !important;
+  margin-bottom: 40px !important;
   margin-top: -20px;
 }
-code span {
+code .highlighter-rouge {
   line-height: 0.4;
 }
 .page__content table {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 .page__content {
   .notice--primary {
