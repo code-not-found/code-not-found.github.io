@@ -80,6 +80,10 @@ p var, li var {
 kbd {
   color: $orange;
 }
+div .highlighter-rouge {
+  margin-bottom: 30px;
+  margin-top: -20px;
+}
 .page__content {
   .notice--primary {
     color: #fff;
