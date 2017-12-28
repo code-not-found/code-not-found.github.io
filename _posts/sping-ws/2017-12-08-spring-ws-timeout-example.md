@@ -36,7 +36,7 @@ The setup of the example is based on a previous [Spring WS tutorial]({{ site.url
 
 There are two implementations of the `WebServiceMessageSender` interface for sending messages via HTTP. The default implementation is the `HttpUrlConnectionMessageSender`, which uses the facilities provided by Java itself. The alternative is the `HttpComponentsMessageSender`, which uses the [Apache HttpComponents HttpClient](https://hc.apache.org/httpcomponents-client-ga){:target="_blank"}.
 
-We will use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub, however, we have also added a [a timeout example that uses the HttpUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-timeout){:target="_blank"} in case a dependency on the `HttpClient` is not desired.
+We will use the `HttpComponentsMessageSender` implementation in below example as it contains more advanced and easy-to-use functionality. On GitHub, however, we have also added a [timeout example that uses the HttpUrlConnectionMessageSender implementation](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-timeout){:target="_blank"} in case a dependency on the `HttpClient` is not desired.
 
 As the `HttpComponentsMessageSender` has a dependency on the Apache `HttpClient`, we need to add the dependency to the Maven POM file.
 
