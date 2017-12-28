@@ -3,28 +3,25 @@
    ========================================================================== */
 
 /* Colors */
-$green                       : #00b294 !default;
-$dark-green                  : #008473 !default;
-$darker-green                : #006c5a !default;
-$red                         : #ffa200 !default;
-$orange                      : #f6001d !default;
+$green : #00b294 !default;
+$dark-green : #006c5a !default;
+$red : #ffa200 !default;
+$orange : #f6001d !default;
 
-$primary-color               : $green !default;
-$footer-background-color     : $green !default;
+$primary-color : $green !default;
+$footer-background-color : $green !default;
 
-$text-color                  : #444 !default;
-$link-color                  : $dark-green !default;
-$link-color-hover            : $darker-green !default;
-$link-color-visited          : $dark-green !default;
+$text-color : #444 !default;
+$link-color : $dark-green !default;
+$link-color-hover : $dark-green !default;
+$link-color-visited : $dark-green !default;
 
-$masthead-link-color         : $text-color !default;
-$masthead-link-color-hover   : $text-color !default;
-$navicon-link-color-hover    : mix(#fff, $text-color, 80%) !default;
-
+$masthead-link-color: $text-color !default;
+$masthead-link-color-hover: $text-color !default;
+$navicon-link-color-hover: mix(#fff, $text-color, 80%) !default;
 
 $muted-text-color: $text-color !default;
 $border-color: mix(#fff, $text-color, 75%) !default;
-
 
 .page__content {
   .notice,
@@ -57,4 +54,15 @@ $border-color: mix(#fff, $text-color, 75%) !default;
 }
 ins.adsbygoogle {
   border-bottom: none !important;
+}
+
+/* Post */
+h1 {
+  margin-top: 60px;
+}
+kbd {
+  color: #ff6700;
+}
+figure img.logo {
+  margin-bottom: -20px;
 }
