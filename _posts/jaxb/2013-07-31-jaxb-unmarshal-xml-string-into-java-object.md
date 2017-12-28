@@ -20,9 +20,11 @@ published: true
     <img src="{{ site.url }}/assets/images/logo/jaxb-logo.png" alt="jaxb logo" class="logo">
 </figure>
 
-When trying to unmarshal XML to a Java object using JAXB you might want to pass the XML as a `String`. However the `unmarshal()` method of the `Unmarshaller` interface does not support passing an XML String. Following code sample illustrates how to solve this.
+When trying to unmarshal XML to a Java object using JAXB you might want to pass the XML as a `String`. However, the `unmarshal()` method of the `Unmarshaller` interface does not support passing an XML String. Following code sample illustrates how to solve this.
 
-Wrap the XML String in a `StringReader` object and pass this to the `unmarshal()` method as shown below. Note that an even [shorter one-liner notation](http://stackoverflow.com/a/9794300/4201470){:target="_blank"} is also possible.
+Wrap the XML String in a `StringReader` object and pass this to the `unmarshal()` method as shown below.
+
+> Note that an even [shorter one-liner notation](http://stackoverflow.com/a/9794300/4201470){:target="_blank"} is also possible.
 
 ``` java
 public static Car unmarshal(String xml) throws JAXBException {
