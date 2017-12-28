@@ -148,7 +148,7 @@ Save and publish the page and the result should look like:
 
 # SyntaxHighlighter Options
 
-In addition to the mandatory <var>'brush'</var> parameter, the <var>&lt;pre&gt;</var> tag has a number of optional parameters. For example it is possible to highlight one or more lines to focus the reader's attention by adding the <var>'highlight'</var> parameter as shown below. Checkout the [full list of additional parameters that can be configured](http://alexgorbatchev.com/SyntaxHighlighter/manual/configuration/).
+In addition to the mandatory <var>'brush'</var> parameter, the <var>&lt;pre&gt;</var> tag has a number of optional parameters. For example it is possible to highlight one or more lines to focus the reader's attention by adding the <var>'highlight'</var> parameter as shown below. Checkout the [full list of additional parameters that can be configured](http://alexgorbatchev.com/SyntaxHighlighter/manual/configuration/){:target="_blank"}.
 
 ``` xml
 <pre class="brush: java; highlight: [3,4,5]">
