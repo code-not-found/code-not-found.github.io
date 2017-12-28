@@ -45,6 +45,14 @@ ins.adsbygoogle {
   border-bottom: none !important;
 }
 
+/*splash*/
+.feature__item .btn {
+  background-color: $green !important;
+}
+.feature__item .btn:hover {
+  background-color: $dark-green !important;
+}
+
 /* Post */
 .page__content h1 {
   margin-top: 60px;
