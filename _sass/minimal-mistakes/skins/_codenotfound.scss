@@ -4,7 +4,7 @@
 
 /* Colors */
 $green : #00b294 !default;
-$dark-green : #006c5a !default;
+$dark-green : #008a73 !default;
 $red : #ffa200 !default;
 $orange : #f6001d !default;
 
@@ -71,7 +71,7 @@ p code {
   color: #D14;
 }
 kbd {
-  color: #ff6700;
+  color: $orange !default;
 }
 .notice--primary {
   color: #fff;
@@ -82,4 +82,15 @@ kbd {
   color: #fff;
   text-decoration: underline
 }
-
+.notice--info {
+  color: #fff;
+  background-color: #4caf50;
+  min-height: 80px;
+}
+.notice--info p {
+  font-size: 1.2em;
+}
+.notice--info a:link, .notice--info a:visited, .notice--info a:hover, .notice--info a:active {
+  color: #fff;
+  text-decoration: underline
+}
