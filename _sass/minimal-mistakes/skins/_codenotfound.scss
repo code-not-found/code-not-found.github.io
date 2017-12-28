@@ -59,6 +59,11 @@ p code {
   border-width: 1px;
   color: #D14;
 }
+p var, li var {
+  @extend code;
+  color: #494E52;
+  font-style: normal;
+}
 kbd {
   color: $orange;
 }
