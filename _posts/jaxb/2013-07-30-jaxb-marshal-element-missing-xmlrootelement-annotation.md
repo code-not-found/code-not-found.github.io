@@ -1,19 +1,23 @@
 ---
-title: JAXB - Marshal Element Missing @XmlRootElement Annotation
-permalink: /2013/07/jaxb-marshal-element-missing-xmlrootelement-annotation.html
-excerpt: How to handle element missing @XmlRootElement annotation errors when trying to marshal a Java object using JAXB.
-date: 2013-07-30 21:00
+title: "JAXB - Marshal Element Missing @XmlRootElement Annotation"
+permalink: /jaxb-marshal-element-missing-xmlrootelement-annotation.html
+excerpt: "How to handle element missing @XmlRootElement annotation errors when trying to marshal a Java object using JAXB."
+date: 2013-07-30
+last_modified_at: 2013-07-30
+header:
+  teaser: "assets/images/teaser/jaxb-teaser.png"
 categories: [JAXB]
-tags: [XmlRootElement, Java, JAXB, Marshal, Unmarshal, XML]
-last_modified_at: 2017-03-28
+tags: [Java, JAXB, Marshal, Unmarshal, XML, XmlRootElement]
 redirect_from:
   - /2013/07/jaxb-marshal-unmarshal-with-missing.html
   - /2013/07/jaxb-marshal-unmarshal-with-missing-xmlrootelement.html
   - /2013/07/jaxb-marshal-unmarshal-with-missing.htm
+  - /2013/07/jaxb-marshal-element-missing-xmlrootelement-annotation.html
+published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/jaxb-logo.png" alt="jaxb logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/jaxb-logo.png" alt="jaxb logo" class="logo">
 </figure>
 
 Information on the root XML element is required when **marshalling** to or **unmarshalling** from a Java object. JAXB provides this information via the `@XmlRootElement` annotation which contains the name and namespace of the root XML element.
@@ -150,7 +154,7 @@ Unmarshalling in JAXB is the process of converting XML content into a Java objec
 </ns2:car>
 ```
 
-In the method below we pass the above XML file and try to unmarshal it to an instance of the `Car` class. Note that it is also possible to [use JAXB to create an object from an XML String]({{ site.url }}/2013/07/jaxb-unmarshal-xml-string-into-java-object.html) instead of using a file.
+In the method below we pass the above XML file and try to unmarshal it to an instance of the `Car` class. Note that it is also possible to [use JAXB to create an object from an XML String]({{ site.url }}/jaxb-unmarshal-xml-string-into-java-object.html) instead of using a file.
 
 ``` java
 public static Car unmarshalError(File file) throws JAXBException {
@@ -197,7 +201,7 @@ Car [make=Golf, manufacturer=Volkswagen, id=DEF-456]
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxb/tree/master/jaxb-missing-rootelement).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxb/tree/master/jaxb-missing-rootelement){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
