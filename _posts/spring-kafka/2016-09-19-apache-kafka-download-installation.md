@@ -1,5 +1,5 @@
 ---
-title: "Apache Kafka - Download Installation"
+title: "Apache Kafka - Download and Install on Windows"
 permalink: /apache-kafka-download-installation.html
 excerpt: "A step-by-step tutorial on how to download, install and run Apache Kafka on Windows."
 date: 2016-09-19
