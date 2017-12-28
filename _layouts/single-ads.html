@@ -35,6 +35,8 @@ layout: default
 
       <section class="page__content" itemprop="text">
         {% include post-header/custom.html %}
+        
+        {% if page.share %}{% include social-share.html %}{% endif %}
       
         {% if page.toc %}
           <aside class="sidebar__right">
