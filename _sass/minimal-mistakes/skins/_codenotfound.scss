@@ -46,7 +46,7 @@ ins.adsbygoogle {
 }
 
 /* Post */
-h1 {
+.page__content h1 {
   margin-top: 60px;
 }
 figure img.logo {
@@ -65,7 +65,7 @@ kbd {
 .page__content {
   .notice--primary {
     color: #fff;
-    background-color: #4caf50;
+    background-color: $green;
     font-size: 1em !important;
   }
   .notice--primary a:link, .notice--primary a:visited, .notice--primary a:hover, .notice--primary a:active {
@@ -74,7 +74,7 @@ kbd {
   }
   .notice--info {
     color: #fff;
-    background-color: #4caf50;
+    background-color: $green;
     min-height: 80px;
   }
   .notice--info p {
