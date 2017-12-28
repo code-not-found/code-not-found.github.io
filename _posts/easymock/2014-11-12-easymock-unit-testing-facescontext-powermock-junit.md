@@ -1,116 +1,120 @@
 ---
-title: EasyMock - unit testing FacesContext using PowerMock, JUnit and Maven
-permalink: /2014/11/easymock-unit-testing-facescontext-powermock-junit.html
-excerpt: A code sample which shows how to unit test FacesContext using EasyMock, PowerMock, JUnit and Maven.
-date: 2014-11-12 21:00
+title: "EasyMock - Unit Testing FacesContext using PowerMock, JUnit and Maven"
+permalink: /easymock-unit-testing-facescontext-powermock-junit.html
+excerpt: "A code sample which shows how to unit test FacesContext using EasyMock, PowerMock, JUnit and Maven."
+date: 2014-11-12
+last_modified_at: 2014-11-12
+header:
+  teaser: "assets/images/teaser/easymock-teaser.png"
 categories: [EasyMock]
-tags: [Code Sample, EasyMock, FacesContext, JSF, JUnit, Maven, PowerMock, unit testing]
+tags: [Code Sample, EasyMock, FacesContext, JSF, JUnit, Maven, PowerMock, Unit Testing]
 redirect_from:
   - /2014/11/easymock-mocking-facescontext-using.html
+  - /2014/11/easymock-unit-testing-facescontext-powermock-junit.html
+published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/easymock-logo.png" alt="easymock logo">
+    <img src="{{ site.url }}/assets/images/logo/easymock-logo.png" alt="easymock logo" class="logo">
 </figure>
 
-JSF defines the `FacesContext` abstract base class for representing all of the contextual information associated with processing an incoming request, and creating the corresponding response. When writing unit test cases for a JSF application there might be a need to mock some of `FacesContext` static methods. The following post will illustrate how to do this using [PowerMock](https://code.google.com/p/powermock/), which is a framework that allows you to extend mock libraries like [EasyMock](http://easymock.org/) with extra capabilities. In this case the capability to mock the static methods of `FacesContext`.
+JSF defines the `FacesContext` abstract base class for representing all of the contextual information associated with processing an incoming request, and creating the corresponding response. When writing unit test cases for a JSF application there might be a need to mock some of `FacesContext` static methods.
+
+The following post will illustrate how to do this using [PowerMock](https://code.google.com/p/powermock/){:target="_blank"}, which is a framework that allows you to extend mock libraries like [EasyMock](http://easymock.org/){:target="_blank"} with extra capabilities. In this case the capability to mock the static methods of `FacesContext`.
 
 Tools used:
-* JUnit 4.11
-* EasyMock 3.2
-* PowerMock 1.5
-* Maven 3
+* JUnit 4.12
+* EasyMock 3.5
+* PowerMock 1.7
+* Maven 3.5
 
-The code sample is built and run using Maven. Specified below is the Maven POM file which contains the needed dependencies for JUnit, EasyMock and PowerMock. In addition the PowerMock support module for JUnit (<var>'powermock-module-junit4'</var>) and the PowerMock API for EasyMock (<var>'powermock-api-easymock'</var>) dependencies need to be added as specified here.
+The code sample is built and run using Maven. Specified below is the Maven POM file which contains the needed dependencies for JUnit, EasyMock and PowerMock.
+
+In addition, the PowerMock support module for JUnit `powermock-module-junit4` and the PowerMock API for EasyMock `powermock-api-easymock` dependencies need to be added as specified below.
 
 As the `FacesContext` class is used in this code sample, dependencies to the EL (Expression Language) API and JSF specification API are also included.
-
-Note that the version of JUnit is not the latest as there seems to be a bug where [PowerMock doesn't recognize the correct JUnit version when using JUnit 4.12](http://stackoverflow.com/a/26222732/4201470).
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.codenotfound</groupId>
-    <artifactId>easymock-powermock-facescontext</artifactId>
-    <version>1.0</version>
-    <packaging>jar</packaging>
+  <groupId>com.codenotfound</groupId>
+  <artifactId>easymock-powermock-facescontext</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
-    <name>EasyMock - Mocking FacesContext using PowerMock</name>
-    <url>https://codenotfound.com/2014/11/easymock-mocking-facescontext-using.html</url>
+  <name>EasyMock - Unit Testing FacesContext using PowerMock, JUnit and Maven</name>
+  <url>https://codenotfound.com/easymock-unit-testing-facescontext-powermock-junit.html</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.8</java.version>
+    <junit.version>4.12</junit.version>
+    <easymock.version>3.5.1</easymock.version>
+    <powermock.version>1.7.3</powermock.version>
+    <el.version>3.0.0</el.version>
+    <jsf.version>2.2.15</jsf.version>
+    <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+  </properties>
 
-        <junit.version>4.11</junit.version>
-        <easymock.version>3.2</easymock.version>
-        <powermock.version>1.5.6</powermock.version>
+  <dependencies>
+    <!-- JUnit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- EasyMock -->
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>${easymock.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- PowerMock -->
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-api-easymock</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- EL (Unified Expression Language) -->
+    <dependency>
+      <groupId>javax.el</groupId>
+      <artifactId>javax.el-api</artifactId>
+      <scope>test</scope>
+      <version>${el.version}</version>
+    </dependency>
+    <!-- JSF -->
+    <dependency>
+      <groupId>com.sun.faces</groupId>
+      <artifactId>jsf-api</artifactId>
+      <version>${jsf.version}</version>
+    </dependency>
+  </dependencies>
 
-        <el.version>2.2.1-b04</el.version>
-        <jsf.version>2.2.8-02</jsf.version>
-
-        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-    </properties>
-
-    <dependencies>
-        <!-- JUnit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- EasyMock -->
-        <dependency>
-            <groupId>org.easymock</groupId>
-            <artifactId>easymock</artifactId>
-            <version>${easymock.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- PowerMock -->
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <version>${powermock.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-easymock</artifactId>
-            <version>${powermock.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- EL (Unified Expression Language) -->
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
-            <version>${el.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- JSF -->
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>${jsf.version}</version>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
 ```
 
@@ -147,13 +151,13 @@ Next is the `SomeBeanTest` JUnit test class. The class is annotated using two an
 
 In the `setup()` method a number of objects are specified that are similar for the two test cases. The `mockStatic()` method is called in order to tell PowerMock to mock all static methods of the given `FacesContext` class. In addition the `FacesContext` and `ExternalContext` mock objects are created.
 
-Next are the two test cases which follow the basic EasyMock testing steps:
+There are two test cases specified which follow the basic EasyMock testing steps:
 
 | Step | Action                                                                               
 | ---- | -------------------------------------------------------------------------------------
 | 1    | Call `expect(mock.[method call]).andReturn([result])` for each expected call         
 | 2    | Call `mock.[method call], then EasyMock.expectLastCall()` for each expected void call
-| 3    | Call `replay(mock)` to switch from “record” mode to “playback” mode                  
+| 3    | Call `replay(mock)` to switch from "record" mode to "playback" mode                  
 | 4    | Call the test method                                                                 
 | 5    | Call `verify(mock)` to assure that all expected calls happened                       
 
@@ -274,7 +278,7 @@ mvn test
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/easymock).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/easymock/tree/master/easymock-powermock-facescontext){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
