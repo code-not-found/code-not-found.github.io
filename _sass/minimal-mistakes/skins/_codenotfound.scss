@@ -60,9 +60,26 @@ ins.adsbygoogle {
 h1 {
   margin-top: 60px;
 }
-kbd {
-  color: #ff6700;
-}
 figure img.logo {
   margin-bottom: -20px;
 }
+p code {
+  background-color: #F7F7F9;
+  border-color: #E1E1E8;
+  border-style: solid;
+  border-width: 1px;
+  color: #D14;
+}
+kbd {
+  color: #ff6700;
+}
+.notice--primary {
+  color: #fff;
+  background-color: #4caf50;
+  font-size: 1em !important;
+}
+.notice--primary a:link, .notice--primary a:visited, .notice--primary a:hover, .notice--primary a:active {
+  color: #fff;
+  text-decoration: underline
+}
+
