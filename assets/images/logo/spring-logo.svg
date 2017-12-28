@@ -17,7 +17,7 @@
    height="180"
    viewBox="0 0 600 180"
    sodipodi:docname="spring-logo.svg"
-   inkscape:export-filename="C:\blogs\codenotfound\code\code-not-found\assets\images\logo\spring-logo_export.png"
+   inkscape:export-filename="C:\blogs\codenotfound\code\code-not-found\assets\images\logo\spring-logo.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <metadata
@@ -48,7 +48,7 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="1.6882632"
-     inkscape:cx="246.84565"
+     inkscape:cx="291.87738"
      inkscape:cy="71.25"
      inkscape:window-x="1272"
      inkscape:window-y="-8"
@@ -60,6 +60,10 @@
        position="300.30862,238.11453"
        orientation="1,0"
        id="guide3344" />
+    <sodipodi:guide
+       position="-53.901548,90.033355"
+       orientation="0,1"
+       id="guide4134" />
   </sodipodi:namedview>
   <image
      y="22.091221"

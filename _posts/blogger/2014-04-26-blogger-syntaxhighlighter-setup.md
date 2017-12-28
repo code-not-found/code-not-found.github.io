@@ -1,7 +1,7 @@
 ---
 title: Blogger - SyntaxHighlighter HTML Configuration
 permalink: /blogger-syntaxhighlighter-html-configuration.html
-excerpt: A detailed step-by-step tutorial on how to setup code syntax highlighting on your Blogger blog.
+excerpt: "A detailed step-by-step tutorial on how to setup code syntax highlighting on your Blogger blog."
 date: 2014-04-26
 last_modified_at: 2014-04-26
 header:
