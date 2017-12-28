@@ -12,11 +12,11 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   width="1500"
-   height="500"
-   viewBox="0 0 1500 500"
-   sodipodi:docname="twitter.svg"
-   inkscape:export-filename="C:\code\st\code-not-found\assets\images\twitter.png"
+   width="120"
+   height="120"
+   viewBox="0 0 120 120"
+   sodipodi:docname="site-logo.svg"
+   inkscape:export-filename="C:\code\st\code-not-found\assets\images\site-logo.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <metadata
@@ -34,7 +34,7 @@
   <defs
      id="defs6" />
   <sodipodi:namedview
-     pagecolor="#087f23"
+     pagecolor="#4caf50"
      bordercolor="#666666"
      borderopacity="1"
      objecttolerance="10"
@@ -46,9 +46,9 @@
      inkscape:window-height="1018"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="0.95266667"
-     inkscape:cx="750"
-     inkscape:cy="250"
+     inkscape:zoom="7.075"
+     inkscape:cx="60"
+     inkscape:cy="60"
      inkscape:window-x="1272"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -56,16 +56,33 @@
      showguides="true"
      inkscape:guide-bbox="true">
     <sodipodi:guide
-       position="48.409894,250.17668"
+       position="537.43877,201.53954"
        orientation="0,1"
-       id="guide4159" />
+       id="guide4138" />
     <sodipodi:guide
-       position="43.816254,49.823322"
-       orientation="0,1"
-       id="guide4161" />
-    <sodipodi:guide
-       position="250.17668,229.68198"
+       position="801.6795,427.71169"
        orientation="1,0"
-       id="guide4163" />
+       id="guide4140" />
+    <sodipodi:guide
+       position="1200.2799,317.9846"
+       orientation="1,0"
+       id="guide4142" />
+    <sodipodi:guide
+       position="118.68439,300.06998"
+       orientation="0,1"
+       id="guide4162" />
+    <sodipodi:guide
+       position="-39.575972,59.929329"
+       orientation="0,1"
+       id="guide4164" />
+    <sodipodi:guide
+       position="59.929329,95.265018"
+       orientation="1,0"
+       id="guide4139" />
   </sodipodi:namedview>
+  <path
+     inkscape:connector-curvature="0"
+     d="M 48.240585,80.793662 27.511597,60.064707 48.240585,39.335762 l -6.308827,-6.30882 -27.037764,27.037765 27.037764,27.037765 6.308827,-6.30881 z m 23.432675,0 20.72896,-20.728955 -20.72896,-20.728945 6.308856,-6.30882 27.037744,27.037765 -27.037744,27.037765 -6.308856,-6.30881 z"
+     id="path6"
+     style="fill:#80e27e;fill-opacity:1" />
 </svg>
