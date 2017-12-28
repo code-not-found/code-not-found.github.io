@@ -18,7 +18,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logo/easymock-logo.png" alt="easymock logo" class="logo">
 </figure>
 
-JSF defines the `FacesContext` abstract base class for representing all of the contextual information associated with processing an incoming request, and creating the corresponding response. When writing unit test cases for a JSF application there might be a need to mock some of `FacesContext` static methods.
+JSF defines the `FacesContext` abstract base class for representing all of the contextual information associated with processing an incoming request and creating the corresponding response. When writing unit test cases for a JSF application there might be a need to mock some of `FacesContext` static methods.
 
 The following post will illustrate how to do this using [PowerMock](https://code.google.com/p/powermock/){:target="_blank"}, which is a framework that allows you to extend mock libraries like [EasyMock](http://easymock.org/){:target="_blank"} with extra capabilities. In this case the capability to mock the static methods of `FacesContext`.
 
@@ -28,7 +28,7 @@ Tools used:
 * PowerMock 1.7
 * Maven 3.5
 
-The code sample is built and run using Maven. Specified below is the Maven POM file which contains the needed dependencies for JUnit, EasyMock and PowerMock.
+The code sample is built and run using Maven. Specified below is the Maven POM file which contains the needed dependencies for JUnit, EasyMock, and PowerMock.
 
 In addition, the PowerMock support module for JUnit `powermock-module-junit4` and the PowerMock API for EasyMock `powermock-api-easymock` dependencies need to be added as specified below.
 
@@ -36,8 +36,7 @@ As the `FacesContext` class is used in this code sample, dependencies to the EL 
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.codenotfound</groupId>
@@ -133,21 +132,22 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class SomeBean {
 
-    public void addMessage(Severity severity, String summary, String detail) {
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(severity, summary, detail));
-    }
+  public void addMessage(Severity severity, String summary,
+      String detail) {
+    FacesContext.getCurrentInstance().addMessage(null,
+        new FacesMessage(severity, summary, detail));
+  }
 
-    public String logout() {
-        FacesContext.getCurrentInstance().getExternalContext()
-                .invalidateSession();
+  public String logout() {
+    FacesContext.getCurrentInstance().getExternalContext()
+        .invalidateSession();
 
-        return "logout?faces-redirect=true";
-    }
+    return "logout?faces-redirect=true";
+  }
 }
 ```
 
-Next is the `SomeBeanTest` JUnit test class. The class is annotated using two annotations. The first `@RunWith` annotation tells JUnit to run the test using `PowerMockRunner`. The second `@PrepareForTest` annotation tells PowerMock to prepare to mock the `FacesContext` class. If there are multiple classes to be prepared for mocking, they can be specified using a comma separated list.
+Next is the `SomeBeanTest` JUnit test class. The class is annotated using two annotations. The first `@RunWith` annotation tells JUnit to run the test using `PowerMockRunner`. The second `@PrepareForTest` annotation tells PowerMock to prepare to mock the `FacesContext` class. If there are multiple classes to be prepared for mocking, they can be specified using a comma-separated list.
 
 In the `setup()` method a number of objects are specified that are similar for the two test cases. The `mockStatic()` method is called in order to tell PowerMock to mock all static methods of the given `FacesContext` class. In addition the `FacesContext` and `ExternalContext` mock objects are created.
 
@@ -188,83 +188,84 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ FacesContext.class })
+@PrepareForTest({FacesContext.class})
 public class SomeBeanTest {
 
-    private SomeBean someBean;
+  private SomeBean someBean;
 
-    private FacesContext facesContext;
-    private ExternalContext externalContext;
+  private FacesContext facesContext;
+  private ExternalContext externalContext;
 
-    @Before
-    public void setUp() throws Exception {
-        someBean = new SomeBean();
+  @Before
+  public void setUp() throws Exception {
+    someBean = new SomeBean();
 
-        // mock all static methods of FacesContext using PowerMockito
-        PowerMock.mockStatic(FacesContext.class);
+    // mock all static methods of FacesContext using PowerMockito
+    PowerMock.mockStatic(FacesContext.class);
 
-        facesContext = createMock(FacesContext.class);
-        externalContext = createMock(ExternalContext.class);
-    }
+    facesContext = createMock(FacesContext.class);
+    externalContext = createMock(ExternalContext.class);
+  }
 
-    @Test
-    public void testAddMessage() {
-        // create Capture instances for the clientId and FacesMessage parameters
-        // that will be added to the FacesContext
-        Capture<String> clientIdCapture = new Capture<String>();
-        Capture<FacesMessage> facesMessageCapture = new Capture<FacesMessage>();
+  @Test
+  public void testAddMessage() {
+    // create Capture instances for the clientId and FacesMessage parameters
+    // that will be added to the FacesContext
+    Capture<String> clientIdCapture = new Capture<String>();
+    Capture<FacesMessage> facesMessageCapture =
+        new Capture<FacesMessage>();
 
-        expect(FacesContext.getCurrentInstance()).andReturn(facesContext)
-                .once();
-        // expect the call to the addMessage() method and capture the arguments
-        facesContext.addMessage(capture(clientIdCapture),
-                capture(facesMessageCapture));
-        expectLastCall().once();
+    expect(FacesContext.getCurrentInstance()).andReturn(facesContext)
+        .once();
+    // expect the call to the addMessage() method and capture the arguments
+    facesContext.addMessage(capture(clientIdCapture),
+        capture(facesMessageCapture));
+    expectLastCall().once();
 
-        // replay the class (not the instance)
-        PowerMock.replay(FacesContext.class);
-        replay(facesContext);
+    // replay the class (not the instance)
+    PowerMock.replay(FacesContext.class);
+    replay(facesContext);
 
-        someBean.addMessage(FacesMessage.SEVERITY_ERROR, "error",
-                "something went wrong");
+    someBean.addMessage(FacesMessage.SEVERITY_ERROR, "error",
+        "something went wrong");
 
-        // verify the class (not the instance)
-        PowerMock.verify(FacesContext.class);
-        verify(facesContext);
+    // verify the class (not the instance)
+    PowerMock.verify(FacesContext.class);
+    verify(facesContext);
 
-        // check the value of the clientId that was passed
-        assertNull(clientIdCapture.getValue());
+    // check the value of the clientId that was passed
+    assertNull(clientIdCapture.getValue());
 
-        // retrieve the captured FacesMessage
-        FacesMessage captured = facesMessageCapture.getValue();
-        // check if the captured FacesMessage contains the expected values
-        assertEquals(FacesMessage.SEVERITY_ERROR, captured.getSeverity());
-        assertEquals("error", captured.getSummary());
-        assertEquals("something went wrong", captured.getDetail());
-    }
+    // retrieve the captured FacesMessage
+    FacesMessage captured = facesMessageCapture.getValue();
+    // check if the captured FacesMessage contains the expected values
+    assertEquals(FacesMessage.SEVERITY_ERROR, captured.getSeverity());
+    assertEquals("error", captured.getSummary());
+    assertEquals("something went wrong", captured.getDetail());
+  }
 
-    @Test
-    public void testLogout() {
-        expect(FacesContext.getCurrentInstance()).andReturn(facesContext)
-                .once();
-        expect(facesContext.getExternalContext()).andReturn(externalContext)
-                .once();
-        // expect the call to the invalidateSession() method
-        externalContext.invalidateSession();
-        expectLastCall().once();
+  @Test
+  public void testLogout() {
+    expect(FacesContext.getCurrentInstance()).andReturn(facesContext)
+        .once();
+    expect(facesContext.getExternalContext())
+        .andReturn(externalContext).once();
+    // expect the call to the invalidateSession() method
+    externalContext.invalidateSession();
+    expectLastCall().once();
 
-        // replay the class (not the instance)
-        PowerMock.replay(FacesContext.class);
-        replay(facesContext);
-        replay(externalContext);
+    // replay the class (not the instance)
+    PowerMock.replay(FacesContext.class);
+    replay(facesContext);
+    replay(externalContext);
 
-        assertEquals("logout?faces-redirect=true", someBean.logout());
+    assertEquals("logout?faces-redirect=true", someBean.logout());
 
-        // verify the class (not the instance)
-        PowerMock.verify(FacesContext.class);
-        verify(facesContext);
-        verify(externalContext);
-    }
+    // verify the class (not the instance)
+    PowerMock.verify(FacesContext.class);
+    verify(facesContext);
+    verify(externalContext);
+  }
 }
 ```
 
