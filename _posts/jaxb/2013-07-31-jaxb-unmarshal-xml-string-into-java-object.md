@@ -20,23 +20,25 @@ published: true
     <img src="{{ site.url }}/assets/images/logo/jaxb-logo.png" alt="jaxb logo" class="logo">
 </figure>
 
-When trying to unmarshal XML to a Java object using JAXB you might want to pass the XML as a `String`. However, the `unmarshal()` method of the `Unmarshaller` interface does not support passing an XML String. Following code sample illustrates how to solve this.
+When trying to unmarshal XML to a Java object using JAXB you might want to pass the XML as a `String`. However, the `unmarshal()` method of the `Unmarshaller` interface does not support passing an XML String.
+
+Following code sample illustrates how to solve this.
 
 Wrap the XML String in a `StringReader` object and pass this to the `unmarshal()` method as shown below.
 
 > Note that an even [shorter one-liner notation](http://stackoverflow.com/a/9794300/4201470){:target="_blank"} is also possible.
 
 ``` java
-public static Car unmarshal(String xml) throws JAXBException {
-  JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
-  Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+  public static Car unmarshal(String xml) throws JAXBException {
+    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-  StringReader reader = new StringReader(xml);
-  Car car = (Car) jaxbUnmarshaller.unmarshal(reader);
+    StringReader reader = new StringReader(xml);
+    Car car = (Car) jaxbUnmarshaller.unmarshal(reader);
 
-  LOGGER.info(car.toString());
-  return car;
-}
+    LOGGER.info(car.toString());
+    return car;
+  }
 ```
 
 Next, pass below string representation of an XML to the above `unmarshal()` method.
@@ -63,4 +65,4 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the short example on how to unmarshal an XML `String`. If you found this post helpful or have any questions or remarks, please leave a comment.
+This concludes our short example on how to unmarshal an XML `String`. If you found this post helpful or have any questions or remarks, please leave a comment.
