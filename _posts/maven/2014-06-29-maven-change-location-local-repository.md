@@ -22,7 +22,7 @@ A repository in [Maven](https://maven.apache.org/){:target="_blank"} is used to 
 
 The **local repository** refers to a copy on your own machine that is a cache of the remote downloads and also contains the temporary build artifacts that have not yet been released.
 
-When installing Maven, the local repository is located under a default location. The following tutorial shows how you can change the location of this local repository on Windows. 
+When [installing Maven]({{ site.url }}/maven-download-install-apache-maven-3-2-windows.html), the local repository is located under a default location. The following tutorial shows how you can change the location of this local repository on Windows. 
 
 # Maven Local Repository
 
@@ -39,7 +39,7 @@ Navigate to <var>[maven_install_dir]/conf</var> and if not already present copy 
     <img src="{{ site.url }}/assets/images/posts/maven/maven-copy-settings-xml.png" alt="maven copy settings xml">
 </figure>
 
-Open the copied <var>settings.xml</var> file and add/update the <var>'&lt;localRepository&gt;'</var> element to point to the new location of the local repository (in this example the location is set to <var>C:\source4code\local-repo</var>).
+Open the copied <var>settings.xml</var> file and add/update the <var>'&lt;localRepository&gt;'</var> element to point to the new location of the local repository. In this example the location is set to <var>C:\source4code\local-repo</var>.
 
 ``` xml
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
