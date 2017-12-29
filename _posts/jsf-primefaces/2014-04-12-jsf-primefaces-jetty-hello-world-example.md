@@ -21,7 +21,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logo/primefaces-logo.png" alt="primefaces logo" class="logo">
 </figure>
 
-[PrimeFaces](http://primefaces.org/){:target="_blank"} is an open source component library for JavaServer Faces (JSF). It provides a collection of mostly visual components (widgets) that can be used by JSF programmers to build the UI for a web application. An overview of these widgets can be found at the [PrimeFaces showcase](http://www.primefaces.org/showcase/).
+[PrimeFaces](http://primefaces.org/){:target="_blank"} is an open source component library for JavaServer Faces (JSF). It provides a collection of mostly visual components (widgets) that can be used by JSF programmers to build the UI for a web application. An overview of these widgets can be found at the [PrimeFaces showcase](http://www.primefaces.org/showcase/){:target="_blank"}.
 
 In the following tutorial we will configure, build and run a Hello World PrimeFaces example using Jetty and Maven.
 
@@ -35,7 +35,7 @@ First let's look at the below Maven POM file which contains the needed dependenc
 
 As PrimeFaces is built on top of [JavaServer Faces](http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html){:target="_blank"} we also need to include the JSF dependencies. JSF is a component based Model-View-Controller (MVC) framework which is built on top of the [Servlet API](http://docs.oracle.com/javaee/6/tutorial/doc/bnafd.html){:target="_blank"} so we also need to include the Servlet dependency.
 
-In order to run our example we need a servlet container (the component of a web server that interacts with Java servlets). There are a number of servlet containers implementations available, in the below example we will use [Jetty](http://www.eclipse.org/jetty/) which is a non-commercial pure Java-based HTTP (Web) server and Java Servlet container from the Eclipse Foundation.
+In order to run our example we need a servlet container (the component of a web server that interacts with Java servlets). There are a number of servlet containers implementations available, in the below example we will use [Jetty](http://www.eclipse.org/jetty/){:target="_blank"} which is a non-commercial pure Java-based HTTP (Web) server and Java Servlet container from the Eclipse Foundation.
 
 There is a `jetty-maven-plugin` which allows launching a Jetty instance from command line using Maven. The plugin has been configured so that the HTTP listener port is set to "<kbd>9090</kbd>" and the context path is set to "<kbd>codenotfound</kbd>".
 
@@ -274,13 +274,13 @@ INFO: Running on PrimeFaces 6.1
 Open a web browser and enter following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/){:target="_blank"}. The result should be that below page is displayed:
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf/jsf-primefaces-hello-world-example.png" alt="jsf primefaces hello world example">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-hello-world-example.png" alt="jsf primefaces hello world example">
 </figure>
 
 Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf/jsf-primefaces-hello-world-example-greeting.png" alt="jsf primefaces hello world example greeting">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-hello-world-example-greeting.png" alt="jsf primefaces hello world example greeting">
 </figure>
 
 ---
