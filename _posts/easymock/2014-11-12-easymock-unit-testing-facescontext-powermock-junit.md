@@ -1,7 +1,7 @@
 ---
 title: "EasyMock - Unit Testing FacesContext using PowerMock, JUnit and Maven"
 permalink: /easymock-unit-testing-facescontext-powermock-junit.html
-excerpt: "A code sample which shows how to unit test FacesContext using EasyMock, PowerMock, JUnit and Maven."
+excerpt: "A code sample which shows how to unit test FacesContext using EasyMock, PowerMock, JUnit, and Maven."
 date: 2014-11-12
 last_modified_at: 2014-11-12
 header:
