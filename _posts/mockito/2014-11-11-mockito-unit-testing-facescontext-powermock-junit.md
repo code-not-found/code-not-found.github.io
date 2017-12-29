@@ -20,7 +20,7 @@ published: true
 
 JSF defines the `FacesContext` abstract base class for representing all of the contextual information associated with processing an incoming request and creating the corresponding response. When writing unit test cases for a JSF application there might be a need to mock some of the `FacesContext` static methods.
 
-The following post will illustrate how to do this using [PowerMock](https://code.google.com/p/powermock/){:target="_blank"}, a framework that allows you to extend mock libraries like [Mockito](https://code.google.com/p/mockito/){:target="_blank"} with extra capabilities. In this case the capability to mock the static methods of `FacesContext`.
+The following post will illustrate how to do this using [PowerMock](https://code.google.com/p/powermock/){:target="_blank"}, a framework that allows you to extend mock libraries like [Mockito](http://site.mockito.org/){:target="_blank"} with extra capabilities. In this case the capability to mock the static methods of `FacesContext`.
 
 Tools used:
 * JUnit 4.11
@@ -28,7 +28,7 @@ Tools used:
 * PowerMock 1.5
 * Maven 3.5
 
-The code sample is built and run using Maven. Specified below is the Maven POM file which contains the needed dependencies for JUnit, Mockito, and PowerMock. In addition the PowerMock support module for JUnit `powermock-module-junit4` and the PowerMock API for Mockito `powermock-api-mockito` dependencies need to be added as specified here.
+The code sample is built and run using Maven. Specified below is the Maven POM file which contains the needed dependencies for JUnit, Mockito, and PowerMock. In addition the PowerMock support module for JUnit `powermock-module-junit4` and the PowerMock API for Mockito `powermock-api-mockito` dependencies need to be added as specified below.
 
 As the `FacesContext` class is used in this code sample, dependencies to the EL (Expression Language) API and JSF specification API are also included.
 
@@ -149,7 +149,7 @@ public class SomeBean {
 
 The `SomeBeanTest` JUnit test class is used to test the above. The class is annotated using two annotations. The first `@RunWith` annotation tells JUnit to run the test using `PowerMockRunner`. The second `@PrepareForTest` annotation tells PowerMock to prepare to mock the `FacesContext` class. If there are multiple classes to be prepared for mocking, they can be specified using a comma-separated list.
 
-Mockito provides the `@Mock` annotation which is a [shorthand for mocks creation](http://static.javadoc.io/org.mockito/mockito-core/1.10.8/org/mockito/Mockito.html#9){:target="_blank"}. In the below test class it is used to create the `FacesContext` and `ExternalContext` mocks. Note that the previous `@RunWith(PowerMockRunner.class)` annotation will take care of [initializing fields annotated with Mockito annotations](http://stackoverflow.com/a/22673271/4201470){:target="_blank"}. 
+Mockito provides the `@Mock` annotation which is a [shorthand for mocks creation](http://static.javadoc.io/org.mockito/mockito-core/1.10.8/org/mockito/Mockito.html#mock_annotation){:target="_blank"}. In the below test class it is used to create the `FacesContext` and `ExternalContext` mocks. Note that the previous `@RunWith(PowerMockRunner.class)` annotation will take care of [initializing fields annotated with Mockito annotations](http://stackoverflow.com/a/22673271/4201470){:target="_blank"}. 
 
 In the `setup()` method a number of objects are specified that are similar for the two test cases. The `mockStatic()` method is called in order to tell PowerMock to mock all static methods of the given `FacesContext` class. We then use the `when()` method to specify what instance to return in case the `getCurrentInstance()` method is called on `FacesContext`. The same is done for the `getExternalContext()` method.
 
