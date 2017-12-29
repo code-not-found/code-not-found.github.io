@@ -1,9 +1,9 @@
 ---
-title: Java - Download & Install JDK 1.6 on Windows 
+title: "Java - Download & Install JDK 1.6 on Windows"
 permalink: /java-download-install-jdk-6-windows.html
-excerpt: A detailed tutorial on how to download and install jdk1.6.0_45 on Windows.
+excerpt: "A detailed step-by-step tutorial on how to download and install jdk1.6.0_45 on Windows."
 date: 2014-06-28
-modified: 2017-11-18
+last_modified_at: 2014-06-28
 header:
   teaser: "assets/images/header/java-teaser.png"
 categories: [Java]
@@ -13,6 +13,7 @@ redirect_from:
   - /2014/06/java-download-install-jdk
   - /2014/06/java-install-jdk.html
   - /2014/06/java-download-install-jdk-6-windows.html
+published: true
 ---
 
 <figure>

@@ -1,8 +1,9 @@
 ---
-title: Java - Download & Install JDK 1.7 on Windows 
+title: "Java - Download & Install JDK 1.7 on Windows"
 permalink: /java-download-install-jdk-7-windows.html
-excerpt: A detailed tutorial on how to download and install jdk 1.7.0_80 on Windows.
+excerpt: "A detailed step-by-step tutorial on how to download and install jdk 1.7.0_80 on Windows."
 date: 2017-11-18
+last_modified_at: 2017-11-18
 header:
   teaser: "assets/images/header/java-teaser.png"
 categories: [Java]
@@ -23,7 +24,9 @@ Check following post if you are looking to download and install [JDK 1.5]({{ sit
 
 # JDK Download & Install
 
-Java can be obtained from the Oracle Java download page. There are a number of [different Java packages available](https://docs.oracle.com/javaee/6/firstcup/doc/gkhoy.html){:target="_blank"}, for this tutorial we will be installing Java Standard Edition (SE) on Windows. In order to be able to compile Java code, we need the Java Development Kit (JDK) package that comes with a Java compiler. The JDK package also comes with a Java runtime environment (JRE) that is needed to run compiled Java code.
+Java can be obtained from the Oracle Java download page. There are a number of [different Java packages available](https://docs.oracle.com/javaee/6/firstcup/doc/gkhoy.html){:target="_blank"}, for this tutorial we will be installing Java Standard Edition (SE) on Windows.
+
+In order to be able to compile Java code, we need the Java Development Kit (JDK) package that comes with a Java compiler. The JDK package also comes with a Java runtime environment (JRE) that is needed to run compiled Java code.
 
 As we are installing an older Java version, you need to scroll all the way down to the bottom of the [Oracle Java download page](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"} and click on the <var>Download</var> button in the <var>Java Archive</var> section. Then look for the <var>Java SE 7</var> link and after clicking on it, select the correct operating system under <var>Java SE Development Kit 7u80</var>.
 
