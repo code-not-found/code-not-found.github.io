@@ -17,12 +17,12 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logo/maven-logo.png" alt="maven logo"class="logo">
+    <img src="{{ site.url }}/assets/images/logo/maven-logo.png" alt="maven logo" class="logo">
 </figure>
 
 [Maven](https://maven.apache.org/){:target="_blank"} is a build automation tool used primarily for Java projects. Maven addresses two aspects of building software:
-1. It describes how software is built.
-2. It describes its dependencies.
+1. It describes **how software is built**.
+2. It describes **its dependencies**.
 
 Maven uses conventions for the build procedure, and only exceptions need to be written down. Maven is built using a plugin-based architecture that allows it to make use of any application controllable through standard input.
 
@@ -88,7 +88,7 @@ The result should be as shown below. Click <var>OK</var> to close the Environmen
     <img src="{{ site.url }}/assets/images/posts/maven/environment-variables-maven-configuration.png" alt="environment variables maven configuration">
 </figure>
 
-In order to test the above configuration, open a command prompt by clicking on the <<var>>Windows Start</<var>> button and typing "<kbd>cmd</kbd>" followed by pressing <<var>>ENTER</<var>>. A new command prompt should open in which the following command can be entered to verify the installed Maven version:
+In order to test the above configuration, open a command prompt by clicking on the <var>Windows Start</var> button and typing "<kbd>cmd</kbd>" followed by pressing <var>ENTER</var>. A new command prompt should open in which the following command can be entered to verify the installed Maven version:
 
 ``` plaintext
 mvn -version
