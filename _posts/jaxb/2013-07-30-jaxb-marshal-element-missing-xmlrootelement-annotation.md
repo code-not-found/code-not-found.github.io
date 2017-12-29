@@ -22,7 +22,9 @@ published: true
 
 Information on the root XML element is required when **marshalling** to or **unmarshalling** from a Java object. JAXB provides this information via the `@XmlRootElement` annotation which contains the name and namespace of the root XML element.
 
-When trying to marshal a class which does not have a `@XMLRootElement` annotation defined, following error will be thrown: <var>"unable to marshal as an element because it is missing an @XmlRootElement annotation"</var>. Alternatively, when trying to unmarshal, the Java runtime will report that an <var>"unsuspected element"</var> is found.
+When trying to marshal a class which does not have a `@XMLRootElement` annotation defined, following error will be thrown: <var>"unable to marshal as an element because it is missing an @XmlRootElement annotation"</var>.
+
+Alternatively, when trying to unmarshal, the Java runtime will report that an <var>"unsuspected element"</var> is found.
 
 For this example let's use following class representing a car with a basic structure. Note that a `XmlRootElement` is not defined!
 
@@ -67,7 +69,8 @@ public class Car {
 
   @Override
   public String toString() {
-    return "Car [" + "make=" + make + ", manufacturer=" + manufacturer + ", id=" + id + "]";
+    return "Car [" + "make=" + make + ", manufacturer=" + manufacturer
+        + ", id=" + id + "]";
   }
 }
 ```
@@ -85,21 +88,22 @@ Marshalling is the process of transforming the memory representation of an objec
 The method below takes as input the above car object and tries to marshal it using JAXB.
 
 ``` java
-public static String marshalError(Car car) throws JAXBException {
-  StringWriter stringWriter = new StringWriter();
+  public static String marshalError(Car car) throws JAXBException {
+    StringWriter stringWriter = new StringWriter();
 
-  JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
-  Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-  // format the XML output
-  jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+    // format the XML output
+    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+        true);
 
-  jaxbMarshaller.marshal(car, stringWriter);
+    jaxbMarshaller.marshal(car, stringWriter);
 
-  String result = stringWriter.toString();
-  LOGGER.info(result);
-  return result;
-}
+    String result = stringWriter.toString();
+    LOGGER.info(result);
+    return result;
+  }
 ```
 
 When running the above method, the runtime returns an error as the `Car` class is missing the required `@XMLRootElement` annotation.
@@ -109,27 +113,30 @@ unable to marshal type "com.codenotfound.jaxb.model.Car" as an
 element because it is missing an @XmlRootElement annotation
 ```
 
-In order to be able to marshal the car object, we need to provide a root XML element. This is done as shown below by first creating a qualified name which contains the name and namespace of the root XML element. In a next step, we create a new `JAXBElement` and pass the qualified name, class and, object. Using the created `JAXBElement` we call the `marshal()` method.
+In order to be able to marshal the car object, we need to provide a root XML element.
+
+This is done as shown below by first creating a qualified name which contains the name and namespace of the root XML element. In a next step, we create a new `JAXBElement` and pass the qualified name, class and, object. Using the created `JAXBElement` we call the `marshal()` method.
 
 ``` java
-public static String marshal(Car car) throws JAXBException {
-  StringWriter stringWriter = new StringWriter();
+  public static String marshal(Car car) throws JAXBException {
+    StringWriter stringWriter = new StringWriter();
 
-  JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
-  Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-  // format the XML output
-  jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+    // format the XML output
+    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+        true);
 
-  QName qName = new QName("com.codenotfound.jaxb.model", "car");
-  JAXBElement<Car> root = new JAXBElement<>(qName, Car.class, car);
+    QName qName = new QName("com.codenotfound.jaxb.model", "car");
+    JAXBElement<Car> root = new JAXBElement<>(qName, Car.class, car);
 
-  jaxbMarshaller.marshal(root, stringWriter);
+    jaxbMarshaller.marshal(root, stringWriter);
 
-  String result = stringWriter.toString();
-  LOGGER.info(result);
-  return result;
-}
+    String result = stringWriter.toString();
+    LOGGER.info(result);
+    return result;
+  }
 ```
 
 This time JAXB is able to successfully marshal the object and the result is the following:
@@ -154,18 +161,20 @@ Unmarshalling in JAXB is the process of converting XML content into a Java objec
 </ns2:car>
 ```
 
-In the method below we pass the above XML file and try to unmarshal it to an instance of the `Car` class. Note that it is also possible to [use JAXB to create an object from an XML String]({{ site.url }}/jaxb-unmarshal-xml-string-into-java-object.html) instead of using a file.
+In the method below we pass the above XML file and try to unmarshal it to an instance of the `Car` class.
+
+> Note that it is also possible to [use JAXB to create an object from an XML String]({{ site.url }}/jaxb-unmarshal-xml-string-into-java-object.html) instead of using a file.
 
 ``` java
-public static Car unmarshalError(File file) throws JAXBException {
-  JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
-  Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+  public static Car unmarshalError(File file) throws JAXBException {
+    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-  Car car = (Car) jaxbUnmarshaller.unmarshal(file);
+    Car car = (Car) jaxbUnmarshaller.unmarshal(file);
 
-  LOGGER.info(car.toString());
-  return car;
-}
+    LOGGER.info(car.toString());
+    return car;
+  }
 ```
 
 When running the above code, the runtime returns an error as a root XML element is found (the XML has a root element) but the `Car` class does not define a `@XMLRootElement` and as such it is not expected.
@@ -175,20 +184,22 @@ unexpected element (uri:"com.codenotfound.jaxb.model", local:"car").
 Expected elements are (none)
 ```
 
-In order to be able to unmarshal the object, we need to define a root XML element. This is done as shown below by first manually creating the root `JAXBElement` of type `Car` by using the XML file and the class we are trying to unmarshal to. Then we create a `Car` object and assign the value of the previous created root `JAXBElement`.
+In order to be able to unmarshal the object, we need to define a root XML element.
+
+This is done as shown below by first manually creating the root `JAXBElement` of type `Car` by using the XML file and the class we are trying to unmarshal to. Then we create a `Car` object and assign the value of the previous created root `JAXBElement`.
 
 ``` java
-public static Car unmarshal(File file) throws JAXBException {
-  JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
-  Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+  public static Car unmarshal(File file) throws JAXBException {
+    JAXBContext jaxbContext = JAXBContext.newInstance(Car.class);
+    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-  JAXBElement<Car> root = jaxbUnmarshaller.unmarshal(new StreamSource(
-            file), Car.class);
-  Car car = root.getValue();
+    JAXBElement<Car> root =
+        jaxbUnmarshaller.unmarshal(new StreamSource(file), Car.class);
+    Car car = root.getValue();
 
-  LOGGER.info(car.toString());
-  return car;
-}
+    LOGGER.info(car.toString());
+    return car;
+  }
 ```
 
 This time JAXB is able to successfully unmarshal the object and the result is the following:
@@ -205,4 +216,4 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the marshal & unmarshal with missing `@XmlRootElement` annotation code samples. If you found this post helpful or have any questions or remarks, please leave a comment below.
+This concludes our code samples on how to marshal and unmarshal with missing `@XmlRootElement` annotation. If you found this post helpful or have any questions or remarks, please leave a comment below.
