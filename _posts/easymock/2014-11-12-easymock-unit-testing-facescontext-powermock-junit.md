@@ -209,15 +209,16 @@ public class SomeBeanTest {
 
   @Test
   public void testAddMessage() {
-    // create Capture instances for the clientId and FacesMessage parameters
-    // that will be added to the FacesContext
+    // create Capture instances for the clientId and FacesMessage
+    // parameters that will be added to the FacesContext
     Capture<String> clientIdCapture = new Capture<String>();
     Capture<FacesMessage> facesMessageCapture =
         new Capture<FacesMessage>();
 
     expect(FacesContext.getCurrentInstance()).andReturn(facesContext)
         .once();
-    // expect the call to the addMessage() method and capture the arguments
+    // expect the call to the addMessage() method and capture the
+    // arguments
     facesContext.addMessage(capture(clientIdCapture),
         capture(facesMessageCapture));
     expectLastCall().once();
