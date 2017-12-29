@@ -23,7 +23,7 @@ published: true
 
 [PrimeFaces](http://primefaces.org/){:target="_blank"} is an open source component library for JavaServer Faces (JSF). It provides a collection of mostly visual components (widgets) that can be used by JSF programmers to build the UI for a web application. An overview of these widgets can be found at the [PrimeFaces showcase](http://www.primefaces.org/showcase/){:target="_blank"}.
 
-In the following tutorial we will configure, build and run a Hello World PrimeFaces example using Jetty and Maven.
+In the following tutorial, we will configure, build and run a Hello World PrimeFaces example using Jetty and Maven.
 
 Tools used:
 * JSF 2.2
@@ -31,13 +31,13 @@ Tools used:
 * Jetty 9.4
 * Maven 3.5
 
-First let's look at the below Maven POM file which contains the needed dependencies for our project. At the bottom of the dependencies list we find the PrimeFaces library.
+First, let's look at the below Maven POM file which contains the needed dependencies for our project. At the bottom of the dependencies list, we find the PrimeFaces library.
 
 As PrimeFaces is built on top of [JavaServer Faces](http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html){:target="_blank"} we also need to include the JSF dependencies. JSF is a component based Model-View-Controller (MVC) framework which is built on top of the [Servlet API](http://docs.oracle.com/javaee/6/tutorial/doc/bnafd.html){:target="_blank"} so we also need to include the Servlet dependency.
 
-In order to run our example we need a servlet container (the component of a web server that interacts with Java servlets). There are a number of servlet containers implementations available, in the below example we will use [Jetty](http://www.eclipse.org/jetty/){:target="_blank"} which is a non-commercial pure Java-based HTTP (Web) server and Java Servlet container from the Eclipse Foundation.
+In order to run our example, we need a servlet container (the component of a web server that interacts with Java servlets). There are a number of servlet containers implementations available, in the below example we will use [Jetty](http://www.eclipse.org/jetty/){:target="_blank"} which is a non-commercial pure Java-based HTTP (Web) server and Java Servlet container from the Eclipse Foundation.
 
-There is a `jetty-maven-plugin` which allows launching a Jetty instance from command line using Maven. The plugin has been configured so that the HTTP listener port is set to "<kbd>9090</kbd>" and the context path is set to "<kbd>codenotfound</kbd>".
+There is a `jetty-maven-plugin` which allows launching a Jetty instance from a command line using Maven. The plugin has been configured so that the HTTP listener port is set to "<kbd>9090</kbd>" and the context path is set to "<kbd>codenotfound</kbd>".
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
