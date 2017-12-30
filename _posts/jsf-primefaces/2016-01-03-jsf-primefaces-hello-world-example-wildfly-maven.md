@@ -209,7 +209,7 @@ Open a web browser and enter following URL: [http://localhost:9090/codenotfound/
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-hello-world-example.png" alt="jsf primefaces hello world example">
 </figure>
 
-Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message. 
+Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-hello-world-example-greeting.png" alt="jsf primefaces hello world example greeting">
@@ -223,4 +223,4 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the PrimeFaces WildFly example. If you found this post helpful or have any questions or remarks, please leave a comment.
+This concludes the PrimeFaces on WildFly example. If you found this post helpful or have any questions or remarks, please leave a comment.
