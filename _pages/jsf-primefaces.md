@@ -16,6 +16,7 @@ last_modified_at: 2017-12-30
 
 * [JSF - PrimeFaces Hello World Example using Jetty and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-jetty-maven.html)
 * [JSF - PrimeFaces Hello World Example using WildFly and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-wildfly-maven.html)
+* [JSF - PrimeFaces Hello World Example using Apache Tomcat and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-apache-tomcat.html)
 
 ## References
 
