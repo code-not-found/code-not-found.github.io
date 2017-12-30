@@ -52,7 +52,7 @@ In order to run the Hello World PrimeFaces application, a servlet container is n
     <java.version>1.8</java.version>
 
     <servlet.version>3.1.0</servlet.version>
-    <jsf.version>2.2.12</jsf.version>
+    <jsf.version>2.2.15</jsf.version>
     <primefaces.version>6.1</primefaces.version>
 
     <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
