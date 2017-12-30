@@ -1,6 +1,6 @@
 ---
-title: "JSF - PrimeFaces Jetty Hello World Example"
-permalink: /jsf-primefaces-jetty-hello-world-example.html
+title: "JSF - PrimeFaces Hello World Example using Jetty and Maven"
+permalink: /jsf-primefaces-hello-world-example-jetty-maven.html
 excerpt: "A detailed step-by-step tutorial in which we build and run a Hello World PrimeFaces example using Jetty and Maven."
 date: 2014-04-12
 last_modified_at: 2014-04-12
@@ -14,6 +14,7 @@ redirect_from:
   - /2014/04/jsf-primefaces-hello-world-jetty-maven.html
   - /2015/12/jsf-primefaces-hello-world-using-jetty.html
   - /2014/04/jsf-primefaces-hello-world-example.html
+  - /jsf-primefaces-jetty-hello-world-example.html
 published: true
 ---
 
@@ -37,7 +38,7 @@ As PrimeFaces is built on top of [JavaServer Faces](http://www.oracle.com/techne
 
 In order to run our example, we need a servlet container (the component of a web server that interacts with Java servlets). There are a number of servlet containers implementations available, in the below example we will use [Jetty](http://www.eclipse.org/jetty/){:target="_blank"} which is a non-commercial pure Java-based HTTP (Web) server and Java Servlet container from the Eclipse Foundation.
 
-There is a `jetty-maven-plugin` which allows launching a Jetty instance from a command line using Maven. The plugin has been configured so that the HTTP listener port is set to "<kbd>9090</kbd>" and the context path is set to "<kbd>codenotfound</kbd>".
+There is a [jetty-maven-plugin](https://www.eclipse.org/jetty/documentation/9.4.x/jetty-maven-plugin.html){:target="_blank"} which allows launching a Jetty instance from a command line using Maven. The plugin has been configured so that the HTTP listener port is set to "<kbd>9090</kbd>" and the context path is set to "<kbd>codenotfound</kbd>".
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -105,6 +106,7 @@ There is a `jetty-maven-plugin` which allows launching a Jetty instance from a c
         </configuration>
       </plugin>
       <plugin>
+        <!-- jetty-maven-plugin -->
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
         <version>${jetty-maven-plugin.version}</version>
@@ -171,7 +173,7 @@ In order to use the PrimeFaces components, following namespace needs to be decla
   xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-  <title>PrimeFaces Jetty Hello World Example</title>
+  <title>PrimeFaces Hello World Example</title>
 </h:head>
 
 <h:body>
