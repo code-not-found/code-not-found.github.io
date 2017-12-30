@@ -3,7 +3,7 @@ title: "JSF - PrimeFaces Example using Spring Boot and Maven"
 permalink: /jsf-primefaces-example-spring-boot-maven.html
 excerpt: "A detailed step-by-step tutorial on how to implement a PrimeFaces Example with Spring Boot and Maven."
 date: 2017-12-30
-last_modified_at: 2014-04-12
+last_modified_at: 2017-12-30
 header:
   teaser: "assets/images/teaser/primefaces-teaser.png"
 categories: [PrimeFaces]
@@ -219,7 +219,7 @@ In order to run the above example open a command prompt and execute following Ma
 mvn spring-boot:run
 ```
 
-Maven will download the needed dependencies, compile the code and start a Apache Tomcat instance on which the PrimeFaces application will be deployed.
+Maven will download the needed dependencies, compile the code and start an Apache Tomcat instance on which the PrimeFaces application will be deployed.
 
 ``` plaintext
   .   ____          _            __ _ _
