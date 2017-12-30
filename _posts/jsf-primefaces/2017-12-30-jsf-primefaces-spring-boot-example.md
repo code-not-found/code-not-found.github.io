@@ -12,7 +12,7 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logo/primefaces-logo.png" alt="primefaces logo" class="logo">
+  <img src="{{ site.url }}/assets/images/logo/primefaces-logo.png" alt="primefaces logo" class="logo">
 </figure>
 
 [PrimeFaces](http://primefaces.org/){:target="_blank"} is an open source component library for [JavaServer Faces](http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html){:target="_blank"} (JSF). It provides a collection of mostly visual components (widgets) that can be used by JSF programmers to build the UI for a web application. An overview of these widgets can be found at the [PrimeFaces showcase](http://www.primefaces.org/showcase/){:target="_blank"}.
@@ -34,7 +34,7 @@ This [JoinFaces](https://github.com/joinfaces/joinfaces){:target="_blank"} proje
 
 To facilitate the management of the different Spring dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-2.x){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application. There are twelve JSF Spring Boot Starters available: six basic starters, one utility starter, one meta starter and five component starters.
 
-The `spring-boot-starter` dependency is the core starter, which includes auto-configuration support, logging and YAML. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries like [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
+The `spring-boot-starter` dependency is the core starter, which includes auto-configuration support, logging and YAML. 
 
 We use the `jsf-spring-boot-parent` project to obtain the right version for any of the dependencies in our build configuration. As a result, we do not need to specify a version for any of the dependencies in our build configuration as Spring Boot is managing this for us.
 
@@ -71,11 +71,6 @@ In the plugins section, we include the `spring-boot-maven-plugin` Maven plugin s
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
     </dependency>
     <!-- joinfaces -->
     <dependency>
@@ -210,7 +205,7 @@ server:
   port: 9090
 ```
 
-# Testing the PrimeFaces Hello World Example
+# Running the PrimeFaces Hello World Example
 
 
 In order to run the above example open a command prompt and execute following Maven command:
@@ -266,13 +261,13 @@ Maven will download the needed dependencies, compile the code and start an Apach
 Open a web browser and enter following URL: [http://localhost:9090/codenotfound/helloworld.xhtml](http://localhost:9090/codenotfound/helloworld.xhtml){:target="_blank"}. The below web page should now be displayed.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example.png" alt="primefaces spring boot hello world example">
+  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example.png" alt="primefaces spring boot hello world example">
 </figure>
 
 Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example-greeting.png" alt="primefaces spring boot hello world example greeting">
+  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example-greeting.png" alt="primefaces spring boot hello world example greeting">
 </figure>
 
 ---
