@@ -10,6 +10,8 @@ main:
     url: https://www.codenotfound.com/spring-jms/
   - title: "Apache CXF JAX-WS"
     url: https://www.codenotfound.com/cxf-jaxws/
+  - title: "JSF PrimeFaces"
+    url: https://www.codenotfound.com/jsf-primefaces/
   - title: "JMS"
     url: https://www.codenotfound.com/jms/
   - title: "Terms and Privacy Policy"
