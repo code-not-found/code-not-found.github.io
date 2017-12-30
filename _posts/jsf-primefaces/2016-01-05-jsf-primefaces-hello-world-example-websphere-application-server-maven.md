@@ -47,7 +47,7 @@ On the last step leave the <var>'Launch the First steps console'</var> selected 
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/websphere-application-server-development-server-profile.png" alt="websphere application server development server profile">
 </figure>
 
-Once <var>'Server launched'</var> is printed, open a web browser and enter following URL: [http://localhost:9060/ibm/console](http://localhost:9060/ibm/console). After entering the credentials that were defined during the profile setup (in this example User ID="<kbd>admin</kbd>" and Password="<kbd>admin</kbd>"), the WebSphere Application Server admin console should open as shown below.
+Once <var>'Server launched'</var> is printed, open a web browser and enter following URL: [http://localhost:9060/ibm/console](http://localhost:9060/ibm/console){:target="_blank"}. After entering the credentials that were defined during the profile setup (in this example User ID="<kbd>admin</kbd>" and Password="<kbd>admin</kbd>"), the WebSphere Application Server admin console should open as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/websphere-application-server-admin-console.png" alt="websphere application server admin console">
@@ -319,13 +319,13 @@ Open the WAS admin console and navigate to <var>'Applications > Application Type
 Open a web browser and enter the following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/). The below page should be displayed:
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/websphere-application-server-hello-world-example.png" alt="websphere application server hello world example">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-websphere-application-server-hello-world-example.png" alt="websphere application server hello world example">
 </figure>
 
 Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message. 
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/websphere-application-server-hello-world-example-greeting.png" alt="websphere application server hello world example greeting">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-websphere-application-server-hello-world-example-greeting.png" alt="websphere application server hello world example greeting">
 </figure>
 
 ---
