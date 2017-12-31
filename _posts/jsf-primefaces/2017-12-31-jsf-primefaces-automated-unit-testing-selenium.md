@@ -1,43 +1,50 @@
 ---
-title: "JSF - PrimeFaces Example using Spring Boot and Maven"
-permalink: /jsf-primefaces-example-spring-boot-maven.html
-excerpt: "A detailed step-by-step tutorial on how to implement a PrimeFaces Example with Spring Boot and Maven."
-date: 2017-12-30
-last_modified_at: 2017-12-30
+title: "JSF - Primefaces Automated Unit Testing using Selenium"
+permalink: /jsf-primefaces-automated-unit-testing-selenium.html
+excerpt: "A detailed step-by-step tutorial on how to implement an automated unit test for PrimeFaces using Selenium."
+date: 2017-12-31
+last_modified_at: 2017-12-31
 header:
   teaser: "assets/images/teaser/primefaces-teaser.png"
 categories: [PrimeFaces]
-tags: [Example, Hello World, JavaServer Faces, JSF, Maven, PrimeFaces, Spring Boot, Tutorial]
-published: true
+tags: [Automated Testing, Example, JUnit, Maven, PrimeFaces, Selenium, Spring Boot, Unit Testing, Tutorial]
+published: false
 ---
 
 <figure>
   <img src="{{ site.url }}/assets/images/logo/primefaces-logo.png" alt="primefaces logo" class="logo">
 </figure>
 
-[PrimeFaces](http://primefaces.org/){:target="_blank"} is an open source component library for [JavaServer Faces](http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html){:target="_blank"} (JSF). It provides a collection of mostly visual components (widgets) that can be used by JSF programmers to build the UI for a web application. An overview of these widgets can be found at the [PrimeFaces showcase](http://www.primefaces.org/showcase/){:target="_blank"}.
+[Selenium](http://www.seleniumhq.org/){:target="_blank"} is a software-testing framework for web applications. Tests can be run against most modern web browsers and can be controlled by many programming languages. Selenium is open-source software, released under the Apache 2.0 license.
 
-In the following tutorial, we will configure, build and run a Hello World example using PrimeFaces, Spring Boot, and Maven.
+The following example shows how to setup an automated unit test using Selenium, Spring Boot, and Maven.
 
 # General Project Setup
 
 Tools used:
 * JSF 2.2
 * PrimeFaces 6.1
+* Selenium 3.8
 * Spring Boot 1.5
 * Maven 3.5
 
+We will start from a previous [Spring Boot Primefaces Tutorial ]({{ site.url }}/jsf-primefaces-example-spring-boot-maven.html) in which we created a greeting dialog based on a first and last name input form.
+
+
+
+
+
+
+
 We will be building and running our example using [Apache Maven](https://maven.apache.org/){:target="_blank"}. Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
 
-The [JoinFaces](https://github.com/joinfaces/joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application. It auto-configures PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.
+This [JoinFaces](https://github.com/joinfaces/joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application. It autoconfigures PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.
 
-We use the `jsf-spring-boot-parent` dependency to obtain the right version for any of the JSF related dependencies in our build configuration. As a result, it is no longer mandatory to specify a version in our build configuration as [Spring Boot is managing this for us](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#using-boot-dependency-management){:target="_blank"}.
+To facilitate the management of the different Spring dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-2.x){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application. There are twelve JSF Spring Boot Starters available: six basic starters, one utility starter, one meta starter and five component starters.
 
-The `spring-boot-starter` dependency is the core starter, which includes auto-configuration support, logging, and YAML.
+The `spring-boot-starter` dependency is the core starter, which includes auto-configuration support, logging and YAML. 
 
-To facilitate the management of the different Spring JSF dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-2.x){:target="_blank"} can be used which are a set of convenient dependency descriptors that you can include in your application. There are twelve JSF Spring Boot Starters available: six basic starters, one utility starter, one meta starter and five component starters.
-
-In this example, we will use the `jsf-spring-boot-starter` to import the needed dependencies for PrimeFaces.
+We use the `jsf-spring-boot-parent` project to obtain the right version for any of the dependencies in our build configuration. As a result, we do not need to specify a version for any of the dependencies in our build configuration as Spring Boot is managing this for us.
 
 In the plugins section, we include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the example via a Maven command.
 
@@ -155,7 +162,7 @@ There is also a <var>&lt;p:dialog&gt;</var> component that shows a greeting mess
 
 In order to use the PrimeFaces components, the following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
 
-> Note that JSF artifiacts like <var>.xhtml</var> and <var>.jsf</var> files need to be placed at the <var>src/main/resources/META-INF/resources</var> folder.
+> JSF files need to be placed at the <var>src/main/resources/META-INF/resources</var> folder.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -196,9 +203,9 @@ In order to use the PrimeFaces components, the following namespace needs to be d
 </html>
 ```
 
-JoinFaces ships with a number of [JSF properties](https://github.com/joinfaces/joinfaces#jsf-properties-configuration-via-applicationproperties-or-applicationyml){:target="_blank"} that allow you to auto-configure your project.
+There are a lot of [JSF properties](https://github.com/joinfaces/joinfaces#jsf-properties-configuration-via-applicationproperties-or-applicationyml){:target="_blank"} available that allow you to configure your project.
 
-In this example we will change the default Spring Boot server HTTP port value from <var>'8080'</var> to <var>'9090'</var> by explicitly setting it in the <var>application.yml</var> properties file located under <var>src/main/resources</var>. We also set the context path to <var>'codenotfound'</var> as shown below.
+In this example we will change the default Spring Boot server HTTP port value from <var>'8080'</var> to <var>'9090'</var> by explicitly setting it in the <var>application.yml</var> properties file located under <var>src/main/resources</var> as shown below. We also set the context path to <var>'codenotfound'</var>.
 
 ``` yaml
 server:
@@ -206,7 +213,7 @@ server:
   port: 9090
 ```
 
-# Running the PrimeFaces Hello World Example
+# Testing the PrimeFaces Hello World Example
 
 
 In order to run the above example open a command prompt and execute following Maven command:
@@ -262,13 +269,13 @@ Maven will download the needed dependencies, compile the code and start an Apach
 Open a web browser and enter following URL: [http://localhost:9090/codenotfound/helloworld.xhtml](http://localhost:9090/codenotfound/helloworld.xhtml){:target="_blank"}. The below web page should now be displayed.
 
 <figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example.png" alt="primefaces spring boot hello world example">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example.png" alt="primefaces spring boot hello world example">
 </figure>
 
 Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message.
 
 <figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example-greeting.png" alt="primefaces spring boot hello world example greeting">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example-greeting.png" alt="primefaces spring boot hello world example greeting">
 </figure>
 
 ---
