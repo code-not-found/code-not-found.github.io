@@ -27,16 +27,17 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-
 We will be building and running our example using [Apache Maven](https://maven.apache.org/){:target="_blank"}. Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
 
-This [JoinFaces](https://github.com/joinfaces/joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application. It autoconfigures PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.
+The [JoinFaces](https://github.com/joinfaces/joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application. It auto-configures PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.
 
-To facilitate the management of the different Spring dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-2.x){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application. There are twelve JSF Spring Boot Starters available: six basic starters, one utility starter, one meta starter and five component starters.
+We use the `jsf-spring-boot-parent` dependency to obtain the right version for any of the JSF related dependencies in our build configuration. As a result, it is no longer mandatory to specify a version in our build configuration as [Spring Boot is managing this for us](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#using-boot-dependency-management){:target="_blank"}.
 
-The `spring-boot-starter` dependency is the core starter, which includes auto-configuration support, logging and YAML. 
+The `spring-boot-starter` dependency is the core starter, which includes auto-configuration support, logging and YAML.
 
-We use the `jsf-spring-boot-parent` project to obtain the right version for any of the dependencies in our build configuration. As a result, we do not need to specify a version for any of the dependencies in our build configuration as Spring Boot is managing this for us.
+To facilitate the management of the different Spring JSF dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-2.x){:target="_blank"} can be used which are a set of convenient dependency descriptors that you can include in your application. There are twelve JSF Spring Boot Starters available: six basic starters, one utility starter, one meta starter and five component starters.
+
+In this example we will use the `jsf-spring-boot-starter` to import the needed dependencies for PrimeFaces.
 
 In the plugins section, we include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the example via a Maven command.
 
@@ -154,7 +155,7 @@ There is also a <var>&lt;p:dialog&gt;</var> component that shows a greeting mess
 
 In order to use the PrimeFaces components, the following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
 
-> JSF files need to be placed at the <var>src/main/resources/META-INF/resources</var> folder.
+> Note that JSF artifiacts like <var>.xhtml</var> and <var>.jsf</var> files need to be placed at the <var>src/main/resources/META-INF/resources</var> folder.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -195,9 +196,9 @@ In order to use the PrimeFaces components, the following namespace needs to be d
 </html>
 ```
 
-There are a lot of [JSF properties](https://github.com/joinfaces/joinfaces#jsf-properties-configuration-via-applicationproperties-or-applicationyml){:target="_blank"} available that allow you to configure your project.
+JoinFaces ships with a number of [JSF properties](https://github.com/joinfaces/joinfaces#jsf-properties-configuration-via-applicationproperties-or-applicationyml){:target="_blank"} that allow you to auto-configure your project.
 
-In this example we will change the default Spring Boot server HTTP port value from <var>'8080'</var> to <var>'9090'</var> by explicitly setting it in the <var>application.yml</var> properties file located under <var>src/main/resources</var> as shown below. We also set the context path to <var>'codenotfound'</var>.
+In this example we will change the default Spring Boot server HTTP port value from <var>'8080'</var> to <var>'9090'</var> by explicitly setting it in the <var>application.yml</var> properties file located under <var>src/main/resources</var>. We also set the context path to <var>'codenotfound'</var> as shown below.
 
 ``` yaml
 server:
