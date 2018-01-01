@@ -32,11 +32,11 @@ We will start from a previous [Spring Boot Primefaces Tutorial ]({{ site.url }}/
 
 We add `spring-boot-starter-test` to the existing [Maven](https://maven.apache.org/){:target="_blank"} POM file. This will include the core dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
-In order to create local Selenium scripts, we need to make use of language-specific client drivers. As this example is based on Java we include the `selenium-java` dependency.
+In order to create local Selenium scripts, we need to make use of language-specific client drivers. As this example is based on Java we include the `selenium-java` client dependency.
 
 The key interface against which tests should be written in Java is the [WebDriver](http://www.seleniumhq.org/projects/webdriver/){:target="_blank"} which has a number of implementing classes.
 
-For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/htmlunit-driver){:target="_blank"} which is a WebDriver compatible driver for [HtmlUnit](http://htmlunit.sourceforge.net/){:target="_blank"} headless browser. As such we also add the `selenium-htmlunit-driver` dependency.
+For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/htmlunit-driver){:target="_blank"} which is a WebDriver compatible driver for the [HtmlUnit](http://htmlunit.sourceforge.net/){:target="_blank"} headless browser. As such we also add the `selenium-htmlunit-driver` dependency.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -122,7 +122,7 @@ Note that `@FindBy` is just an alternate way of finding elements. You could also
 
 > The JSF framework prefixes HTML elements inside a <var>&lt;form&gt;</var> with the [ID of the form](https://stackoverflow.com/a/8279214/4201470){:target="_blank"}. If no ID is present then one will be auto-generated.
 
-Next we represent our submit button as a `submit()` method that takes a first and last name as an input parameter. These parameters are set on the corresponding input fields and the submit button is executed. The method finishes by reloading the page elements so that the greeting output field is correctly set with the new value.
+Next we represent our submit button as a `submit()` method that takes a first and last name as an input parameter. These parameters are set on the corresponding input fields and the submit button is executed. The method finishes by reloading the page elements so that the greeting output field is set with the new value.
 
 The `getGreeting()` method allows to retrieve the greeting shown to the user. Note that we used `getAttribute("textContent")` as using `getText()` [returns an empty string](http://yizeng.me/2014/04/08/get-text-from-hidden-elements-using-selenium-webdriver/){:target="_blank"}.
 
@@ -216,7 +216,7 @@ public class HelloWorldTest extends WebDriverTest {
 }
 ```
 
-Based on following great example on [writing functional tests using Selenium](https://www.pluralsight.com/guides/software-engineering-best-practices/getting-started-with-page-object-pattern-for-your-selenium-tests){:target="_blank"} we have extended above test case with a `WebDriverTest` class.
+Based on following great example on [writing functional tests using Selenium](https://www.pluralsight.com/guides/software-engineering-best-practices/getting-started-with-page-object-pattern-for-your-selenium-tests){:target="_blank"} we have made above test case extend a `WebDriverTest` class.
 
 This class holds all the `WebDriver` lifecycle management code and assures correct setup and cleanup is done after each test case.
 
@@ -259,7 +259,7 @@ Let's go ahead and run the `HelloWorldTest` test case by opening a command promp
 mvn test
 ```
 
-The result should be a successful build.
+The result should be a successful build during which the test is executed.
 
 ``` plaintext
   .   ____          _            __ _ _
