@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/header/crnk-teaser.png"
 categories: [JSON API]
 tags: [Example, Hello World, JSON API, Crnk, Maven, Spring, Spring Boot, Tutorial]
+redirect_from:
+  - /json-api-spring-boot-crnk-example.html
 published: true
 ---
 

@@ -11,6 +11,7 @@ tags: [Example, Hello World, JSON API, Katharsis, Maven, Spring, Spring Boot, Tu
 redirect_from:
   - /2017/04/json-api-katharsis-spring-boot-example.html
   - /2017/04/json-api-spring-boot-katharsis-example.html
+  - /json-api-katharsis-spring-boot-example.html
 published: true
 ---
 

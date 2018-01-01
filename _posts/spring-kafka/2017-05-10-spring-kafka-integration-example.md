@@ -10,6 +10,7 @@ categories: [Spring Kafka]
 tags: [Apache Kafka, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring Integration, Spring Kafka, Tutorial]
 redirect_from:
   - /2017/05/spring-kafka-integration-example.html
+  - /spring-kafka-integration-example
 published: true
 ---
 

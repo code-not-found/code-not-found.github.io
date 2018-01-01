@@ -10,6 +10,7 @@ categories: [Spring-WS]
 tags: [Design Pattern, Example, SOAP, Spring, Spring Boot, Spring Web Services, Spring-WS, Tolerant Reader, Tutorial]
 redirect_from:
   - /2017/07/spring-ws-soap-tolerant-reader-example.html
+  - /spring-ws-tolerant-reader-example
 published: true
 ---
 
