@@ -7,7 +7,7 @@ last_modified_at: 2018-01-01
 header:
   teaser: "assets/images/teaser/primefaces-teaser.png"
 categories: [PrimeFaces]
-tags: [Automated Testing, Example, JUnit, Maven, PrimeFaces, Selenium, Spring Boot, Unit Testing, Tutorial]
+tags: [Automated Testing, Example, JUnit, Maven, PrimeFaces, Selenium, Spring Boot, Unit Testing]
 published: true
 ---
 
@@ -112,25 +112,29 @@ For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/html
 
 # Creating a PrimeFaces Test Page
 
-In order to test the PrimeFaces Hello World page we will use the [PageObject pattern](https://martinfowler.com/bliki/PageObject.html){:target="_blank"}. Within our web app's UI there are areas that our test will interact with (in this example input text fields and a button). A page object simply models these as objects within the test code.
+In order to test the PrimeFaces Hello World page we will use the [PageObject pattern](https://martinfowler.com/bliki/PageObject.html){:target="_blank"}. Within our web app's UI there are areas that our test will interact with (in this example input/output text fields and a button). A page object simply models these as objects within the test code.
 
-The basic rule of thumb for a page object is that it should allow a software client to do anything and see anything that a human can. It should also provide an interface that's easy to program to and hides the underlying widgetry in the window. So we will create a `HelloWorldPage` class that represents our submit button as a `submit()` method that takes a first and last name as an input parameter.
+The basic rule of thumb for a page object is that it should allow a software client to do anything and see anything that a human can. It should also provide an interface that's easy to program to and hides the underlying widgetry in the window. In this example the page object is the `HelloWorldPage` class shown below.
 
-In order to set the input field values we lookup the corresponding `WebElement`s using the `@FindBy` annotation. Matching is done using the <var>'id'</var> of the HTML elements which are specified in the <var>helloworld.xhtml</var> located under <var>src/main/resources/META-INF/resources</var>.
+In order to set/get the input/output field values we lookup the corresponding `WebElement`s using the `@FindBy` annotation. Matching is done using the <var>'id'</var> of the HTML elements which are specified in the <var>helloworld.xhtml</var> located under <var>src/main/resources/META-INF/resources</var>. The submit button is also retrieved using its corresponding ID.
 
 Note that `@FindBy` is just an alternate way of finding elements. You could also use the `findElement()` method on the `WebDriver`.
 
 > The JSF framework prefixes HTML elements inside a <var>&lt;form&gt;</var> with the [ID of the form](https://stackoverflow.com/a/8279214/4201470){:target="_blank"}. If no ID is present then one will be auto-generated.
 
-We also lookup the submit button and once the input fields are set we trigger it calling the `submit()` method as shown below.
+Next we represent our submit button as a `submit()` method that takes a first and last name as an input parameter. These parameters are set on the corresponding input fields and the submit button is executed. The method finishes by reloading the page elements so that the greeting output field is correctly set with the new value.
+
+The `getGreeting()` method allows to retrieve the greeting shown to the user. Note that we used `getAttribute("textContent")` as using `getText()` [returns an empty string](http://yizeng.me/2014/04/08/get-text-from-hidden-elements-using-selenium-webdriver/){:target="_blank"}.
 
 ``` java
 package com.codenotfound.primefaces.view;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
-public class HelloWorldPage {
+public class HelloWorldPage extends PageObject {
 
   @FindBy(id = "hello-world-form:first-name")
   private WebElement firstNameInput;
@@ -141,21 +145,49 @@ public class HelloWorldPage {
   @FindBy(id = "hello-world-form:submit")
   private WebElement submitButton;
 
+  @FindBy(id = "hello-world-form:greeting")
+  private WebElement greetingOutput;
+
+  public HelloWorldPage(WebDriver driver) {
+    super(driver);
+  }
+
   public void submit(String firstName, String lastName) {
     firstNameInput.sendKeys(firstName);
     lastNameInput.sendKeys(lastName);
     submitButton.submit();
+    PageFactory.initElements(driver, this);
+  }
+
+  public String getGreeting() {
+    return greetingOutput.getAttribute("textContent");
   }
 }
 ```
 
-The WebDriver's support library contains a [PageFactory](https://github.com/SeleniumHQ/selenium/wiki/PageFactory){:target="_blank"} factory class in order to support the PageObject pattern.
+Notice that the above `HelloWorldPage` page object extends a `PageObject` class. This is a small helper class that uses the [PageFactory](https://github.com/SeleniumHQ/selenium/wiki/PageFactory){:target="_blank"} factory class provided by the WebDriver's support library in order to help realize the PageObject pattern.
 
-In order to use the above defined `HelloWorldPage` and not have it throw a `NullPointerException`, we need to initialize it using the `PageFactory` as shown below.
+In the constructor the `PageFactory` is used to instantiate WebElements that we have annotated in the `HelloWorldPage` class.
 
-We then simply call the `submit()` method and assert that the correct greeting is generated.
+``` java
+package com.codenotfound.primefaces.view;
 
-> Note we used `getAttribute("textContent")` as using `getText()` [returns an empty string](http://yizeng.me/2014/04/08/get-text-from-hidden-elements-using-selenium-webdriver/){:target="_blank"}.
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
+
+public class PageObject {
+  protected WebDriver driver;
+
+  public PageObject(WebDriver driver) {
+    this.driver = driver;
+    PageFactory.initElements(driver, this);
+  }
+}
+```
+
+In our test case we navigate to the Hello World web page using the `get()` method of the `WebDriver`. We create a new instance of our `HelloWorldPage` page object and call the `submit()` method.
+
+Finally, an assert is used to verify that the correct greeting is generated.
 
 ``` java
 package com.codenotfound.primefaces.view;
@@ -164,34 +196,64 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
-public class HelloWorldTest {
+public class HelloWorldTest extends WebDriverTest {
 
   @Test
-  public void testSubmit() throws InterruptedException {
-    WebDriver driver = new HtmlUnitDriver();
+  public void testSubmit() {
     driver.get("http://localhost:9090/codenotfound/helloworld.xhtml");
 
-    HelloWorldPage page =
-        PageFactory.initElements(driver, HelloWorldPage.class);
+    HelloWorldPage page = new HelloWorldPage(driver);
     page.submit("Jane", "Doe");
 
-    assertThat(driver.findElement(By.id("hello-world-form:greeting"))
-        .getAttribute("textContent")).isEqualTo("Hello Jane Doe!");
+    assertThat(page.getGreeting()).isEqualTo("Hello Jane Doe!");
   }
 }
 ```
 
-Run the above test case by opening a command prompt in the projects root folder and executing following Maven command:
+Based on following great example on [writing functional tests using Selenium](https://www.pluralsight.com/guides/software-engineering-best-practices/getting-started-with-page-object-pattern-for-your-selenium-tests){:target="_blank"} we have extended above test case with a `WebDriverTest` class.
+
+This class holds all the `WebDriver` lifecycle management code and assures correct setup and cleanup is done after each test case.
+
+``` java
+package com.codenotfound.primefaces.view;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
+public class WebDriverTest {
+
+  protected static WebDriver driver;
+
+  @BeforeClass
+  public static void setUp() {
+    driver = new HtmlUnitDriver();
+    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+  }
+
+  @After
+  public void cleanUp() {
+    driver.manage().deleteAllCookies();
+  }
+
+  @AfterClass
+  public static void tearDown() {
+    driver.close();
+  }
+}
+```
+
+Let's go ahead and run the `HelloWorldTest` test case by opening a command prompt in the projects root folder and executing following Maven command:
 
 ``` plaintext
 mvn test
