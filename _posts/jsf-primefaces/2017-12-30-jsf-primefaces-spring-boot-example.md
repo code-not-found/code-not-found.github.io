@@ -22,8 +22,8 @@ In the following tutorial, we will configure, build and run a Hello World exampl
 # General Project Setup
 
 Tools used:
-* JSF 2.2
 * PrimeFaces 6.1
+* JoinFaces 2.4
 * Spring Boot 1.5
 * Maven 3.5
 
@@ -279,4 +279,4 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the PrimeFaces Hello World example using Spring Boot and Maven. If you found this post helpful or have any questions or remarks, please leave a comment below.
+JoinFaces makes it easy to setup a PrimeFaces example using Spring Boot and Maven. If you found this post helpful or have any questions or remarks, please leave a comment below.
