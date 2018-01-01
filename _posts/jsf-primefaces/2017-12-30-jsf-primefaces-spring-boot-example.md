@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/teaser/primefaces-teaser.png"
 categories: [PrimeFaces]
 tags: [Example, Hello World, JavaServer Faces, JSF, Maven, PrimeFaces, Spring Boot, Tutorial]
+redirect_from:
+  - /2017/04/jsf-primefaces-spring-boot-example.html
 published: true
 ---
 
