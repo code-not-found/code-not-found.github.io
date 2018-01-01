@@ -34,7 +34,7 @@ We add `spring-boot-starter-test` to the existing [Maven](https://maven.apache.o
 
 In order to create local Selenium scripts, we need to make use of language-specific client drivers. As this example is based on Java we include the `selenium-java` dependency.
 
-The key interface against which tests should be written in Java is the [WebDriver](http://www.seleniumhq.org/projects/webdriver/){:target="_blank"}. There are a number of implementing classes.
+The key interface against which tests should be written in Java is the [WebDriver](http://www.seleniumhq.org/projects/webdriver/){:target="_blank"} which has a number of implementing classes.
 
 For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/htmlunit-driver){:target="_blank"} which is a WebDriver compatible driver for [HtmlUnit](http://htmlunit.sourceforge.net/){:target="_blank"} headless browser. As such we also add the `selenium-htmlunit-driver` dependency.
 
@@ -112,7 +112,7 @@ For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/html
 
 # Creating a PrimeFaces Test Page
 
-In order to test the PrimeFaces Hello World page we will use the [PageObject pattern](https://martinfowler.com/bliki/PageObject.html){:target="_blank"}. Within our web app's UI there are areas that our test will interact with. A page object simply models these as objects within the test code.
+In order to test the PrimeFaces Hello World page we will use the [PageObject pattern](https://martinfowler.com/bliki/PageObject.html){:target="_blank"}. Within our web app's UI there are areas that our test will interact with (in this example input text fields and a button). A page object simply models these as objects within the test code.
 
 The basic rule of thumb for a page object is that it should allow a software client to do anything and see anything that a human can. It should also provide an interface that's easy to program to and hides the underlying widgetry in the window. So we will create a `HelloWorldPage` class that represents our submit button as a `submit()` method that takes a first and last name as an input parameter.
 
@@ -230,7 +230,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-primefaces-spring-boot){:target="_blank"}.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-primefaces-unit-testing-selenium){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
