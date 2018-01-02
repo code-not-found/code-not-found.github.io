@@ -31,7 +31,7 @@ Tools used:
 
 The code is built and run using [Maven](https://maven.apache.org/){:target="_blank"}. Specified below is the Maven POM file which contains the needed dependencies for PrimeFaces, JoinFaces, Selenium, and Spring Boot.
 
-Testing is based on a previous [JSF Page Object pattern example]({{ site.url }}/jsf-primefaces-automated-unit-testing-selenium.html){:target="_blank"} in which we detailed how to use a Selenium `WebDriver` to automate tests against a PRimeFaces web page.
+Testing is based on a previous [JSF Page Object pattern example]({{ site.url }}/jsf-primefaces-automated-unit-testing-selenium.html){:target="_blank"} in which we detailed how to use a Selenium `WebDriver` to automate tests against a [PrimeFaces](https://www.primefaces.org/){:target="_blank"} web page.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -384,7 +384,7 @@ The first panel is shown in case a user is not logged in and contains a confirma
 
 The <var>home.xhtml</var> page is located in a <var>/secured</var> folder, to which access will be protected by the `LoginFilter`. The page contains a basic welcome message returning the full name of the user using the `getName()` method.
 
-In addition, a <var>'Logout'</var> button is available which allows a user to invalidate the session. 
+In addition, a Logout button is available which allows a user to invalidate the session. 
 
 ``` html
 <?xml version="1.0" encoding="UTF-8"?>
@@ -557,8 +557,8 @@ Click the <var>Logout</var> button and a redirect to the logout page should happ
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-jetty-primefaces-login-servlet-filter).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-primefaces-login-servlet-filter).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the PrimeFaces login example using Spring Boot. If you found this post helpful or have any questions or remarks, please leave a comment.
+This concludes the JSF login page example using PrimeFaces and Spring Boot. If you found this post helpful or have any questions or remarks, please leave a comment below.
