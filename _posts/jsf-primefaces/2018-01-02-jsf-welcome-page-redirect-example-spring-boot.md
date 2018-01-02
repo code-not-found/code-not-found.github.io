@@ -1,7 +1,7 @@
 ---
 title: "JSF - Welcome Page Redirect Example using Spring Boot"
 permalink: /jsf-welcome-page-redirect-example-spring-boot.html
-excerpt: "A detailed code sample on how to implement a JSF welcome page redirect using Spring Boot."
+excerpt: "A code sample on how to implement a JSF welcome page redirect using Spring Boot."
 date: 2018-01-02
 last_modified_at: 2018-01-02
 header:
