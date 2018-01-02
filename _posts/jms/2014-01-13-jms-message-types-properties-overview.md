@@ -1,29 +1,35 @@
 ---
-title: JMS - Message Structure Overview
-permalink: /2014/01/jms-message-structure-overview.html
-excerpt: A detailed overview on the different parts of a JMS message.
-date: 2014-01-13 21:00
+title: "JMS - Message Types and Properties Overview"
+permalink: /jms-message-types-properties-overview.html
+excerpt: "A detailed overview on the different types and properties of a JMS message."
+date: 2014-01-13
+last_modified_at: 2014-01-13
+header:
+  teaser: "assets/images/teaser/jms-teaser.png"
 categories: [JMS]
-tags: [Format, Java Message Service, JMS, Message, Properties, Structure]
+tags: [Format, Java Message Service, JMS, Message, Properties, Structure, Types]
 redirect_from:
   - /2014/01/jms-message-structure.html
+  - /2014/01/jms-message-structure-overview.html
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/jms-logo.png" alt="jms logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/jms-logo.png" alt="jms logo" class="logo">
 </figure>
 
-The basic structure of a JMS message consists out of three parts: **headers**, **properties** and **body**. In this blog post we will explore the different elements of the JMS message format and explain their use. For an exhaustive overview please check the [Java Message Service Concepts](http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html) chapter of The Java EE 6 Tutorial.
+The basic structure of a JMS message consists out of three parts: **headers**, **properties** and **body**. In this blog post, we will explore the different elements of the JMS message format and explain their use.
 
-The JMS API defines the standard form of a JMS message, which should be portable across all JMS providers. The picture below illustrates the high level structure of a JMS message.
+For an exhaustive overview please check the [Java Message Service Concepts](http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html){:target="_blank"} chapter of The Java EE 6 Tutorial.
+
+The JMS API defines the standard form of a JMS message, which should be portable across all JMS providers. The picture below illustrates the high-level structure of a JMS message.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/jms/jms-message-structure.png" alt="jms message structure">
+    <img src="{{ site.url }}/assets/images/posts/jms/jms-message-structure.png" alt="jms message structure">
 </figure>
 
 # JMS Message Headers
 
-The JMS message header part, contains a number of predefined fields that must be present in every JMS message. Most of the values in the header are set by the JMS provider (which overrides any client-set values) when the message is put on a JMS destination. The values are used by both clients and providers to identify and route messages.
+The JMS message header part contains a number of predefined fields that must be present in every JMS message. Most of the values in the header are set by the JMS provider (which overrides any client-set values) when the message is put on a JMS destination. The header values are used by both clients and providers to identify and route messages.
 
 The table below lists the JMS message header fields, indicates how their values are set and describes the content of each header field.
 
@@ -61,26 +67,26 @@ The message body contains the main information that is being exchanged by the JM
 | <var>StreamMessage</var> | A stream of primitive values in the Java programming language, filled and read sequentially.                                                                                                                                               |
 | <var>ObjectMessage</var> | A Serializable object in the Java programming language.                                                                                                                                                                                    |
 
-> Some JMS vendor implementations have added additional non-standard messages types; for example SonicMQ provides a **MultipartMessage** message type.
+> Some JMS vendor implementations have added additional non-standard messages types; for example, SonicMQ provides a **MultipartMessage** message type.
 
 The JMS API provides methods for creating messages of each type and for filling in their contents. For example, to create and send a `TextMessage`, you might use the following statements:
 
 ``` java
-    TextMessage message = session.createTextMessage();
-    message.setText(msg_text);  // msg_text is a String
-    producer.send(message);
+  TextMessage message = session.createTextMessage();
+  message.setText(msg_text);  // msg_text is a String
+  producer.send(message);
 ```
 
 At the consuming end, a message arrives as a generic `Message` object and must be cast to the appropriate message type. You can use one or more getter methods to extract the message contents. The following code fragment uses the `getText()` method:
 
 ``` java
-    Message m = consumer.receive();
-    if (m instanceof TextMessage) {
-        TextMessage message = (TextMessage) m;
-        System.out.println("Reading message: " + message.getText());
-    } else {
-        // Handle error
-    }
+  Message m = consumer.receive();
+  if (m instanceof TextMessage) {
+    TextMessage message = (TextMessage) m;
+    System.out.println("Reading message: " + message.getText());
+  } else {
+    // Handle error
+  }
 ```
 
 ---
