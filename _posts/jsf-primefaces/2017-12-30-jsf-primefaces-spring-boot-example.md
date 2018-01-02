@@ -31,7 +31,7 @@ Tools used:
 
 We will be building and running our example using [Apache Maven](https://maven.apache.org/){:target="_blank"}. Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
 
-The [JoinFaces](https://github.com/joinfaces/joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application. It auto-configures PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.
+The [JoinFaces](https://github.com/joinfaces/joinfaces#joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application. It auto-configures PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.
 
 We use the `jsf-spring-boot-parent` dependency to obtain the right version for any of the JSF related dependencies in our build configuration. As a result, it is no longer mandatory to specify a version in our build configuration as [Spring Boot is managing this for us](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/html/using-boot-build-systems.html#using-boot-dependency-managemen){:target="_blank"}.
 
