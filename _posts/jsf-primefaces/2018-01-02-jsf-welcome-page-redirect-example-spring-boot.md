@@ -17,7 +17,7 @@ published: true
 
 A [welcome-file-list](https://docs.oracle.com/cd/E19798-01/821-1841/bnaer/index.html){:target="_blank"} allows you to specify a list of files that the web container will use for appending to a request for a URL that is not mapped to a web component.
 
-The following example shows how to setup a welcome file redirect for your JSF web application using Spring Boot and Maven.
+The following example shows how to set a welcome file redirect for your JSF web application using Spring Boot and Maven.
 
 # General Project Setup
 
@@ -34,7 +34,7 @@ As we are running on Spring Boot we no longer have a <var>web.xml</var> in which
 
 A way to solve this is to [extend the WebMvcConfigurerAdapter](https://stackoverflow.com/a/29054676/4201470){:target="_blank"} and then forward the default mapping to the target web page. In this example we will forward to <var>helloworld.xhtml</var> as shown below.
 
-The `WelcomePageRedirect` class is annotated with `@Configuration` which [indicates](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/html/beans.html#beans-java-basic-concepts){:target="_blank"} that the class can be used by the Spring IoC container as a source of bean definitions. In other words we can specify the page redirect using Java-configuration instead of XML.
+The `WelcomePageRedirect` class is annotated with `@Configuration` which [indicates](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/html/beans.html#beans-java-basic-concepts){:target="_blank"} that the class can be used by the Spring IoC container as a source of bean definitions. In other words, we can specify the page redirect using Java-configuration instead of XML.
 
 ``` java
 package com.codenotfound.primefaces.config;
