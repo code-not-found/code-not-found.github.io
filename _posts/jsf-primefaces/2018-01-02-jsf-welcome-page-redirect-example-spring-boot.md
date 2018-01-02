@@ -100,4 +100,4 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the short code sample on how to setup a JSF welcome file XHTML using Spring Boot. Let me know if this example was helpful.
+This concludes the short code sample on how to setup a JSF welcome file XHTML using Spring Boot. Let us know if this example was helpful.
