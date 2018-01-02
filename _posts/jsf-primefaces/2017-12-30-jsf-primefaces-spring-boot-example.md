@@ -208,33 +208,7 @@ server:
   port: 9090
 ```
 
-As we are running on Spring Boot we no longer have a <var>web.xml</var> to specify a [welcome-file-list](https://docs.oracle.com/cd/E19798-01/821-1841/bnaer/index.html){:target="_blank"}. This can be solved by [extending the WebMvcConfigurerAdapter](https://stackoverflow.com/a/29054676/4201470){:target="_blank"} and then forwarding the default mapping to the <var>helloworld.xhtml</var> page.
-
-The class is annotated with `@Configuration` which [indicates](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/html/beans.html#beans-java-basic-concepts){:target="_blank"} that the class can be used by the Spring IoC container as a source of bean definitions.
-
-``` java
-package com.codenotfound.primefaces.config;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-@Configuration
-public class DefaultView extends WebMvcConfigurerAdapter {
-
-  @Override
-  public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addViewController("/")
-        .setViewName("forward:/helloworld.xhtml");
-    registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-    super.addViewControllers(registry);
-  }
-}
-```
-
 # Running the PrimeFaces Hello World Example
-
 
 In order to run the above example open a command prompt and execute following Maven command:
 
@@ -286,7 +260,7 @@ Maven will download the needed dependencies, compile the code and start an Apach
 2017-12-30 16:20:20.781  INFO 5112 --- [           main] c.c.p.SpringPrimeFacesApplication        : Started SpringPrimeFacesApplication in 4.627 seconds (JVM running for 7.815)
 ```
 
-Open a web browser and enter following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/){:target="_blank"}. The below web page should now be displayed.
+Open a web browser and enter following URL: [http://localhost:9090/codenotfound/helloworld.xhtml](http://localhost:9090/codenotfound/helloworld.xhtml){:target="_blank"}. The below web page should now be displayed.
 
 <figure>
   <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-spring-boot-hello-world-example.png" alt="jsf primefaces spring boot hello world example">
