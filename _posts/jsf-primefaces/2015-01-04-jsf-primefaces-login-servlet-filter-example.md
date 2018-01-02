@@ -526,7 +526,7 @@ public class FilterConfig {
 }
 ```
 
-# Running the Login Servlet Filter Example
+# Running the JSF Login Page Example 
 
 In order to run the above example open a command prompt and execute following Maven command:
 
