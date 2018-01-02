@@ -26,7 +26,7 @@ last_modified_at: 2017-12-30
 
 ## Security
 
-* [JSF - PrimeFaces Login Servlet Filter Example]({{ site.url }}/jsf-primefaces-login-servlet-filter-example.html)
+* [JSF - Login Servlet Filter Example]({{ site.url }}/jsf-login-servlet-filter-example.html)
 
 ## Testing
 

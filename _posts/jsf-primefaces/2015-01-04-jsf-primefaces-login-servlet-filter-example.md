@@ -1,7 +1,7 @@
 ---
-title: "JSF - PrimeFaces Login Servlet Filter Example"
-permalink: /jsf-primefaces-login-servlet-filter-example.html
-excerpt: "A detailed step-by-step tutorial on how to implement a PrimeFaces login servlet filter example using Spring Boot and Maven."
+title: "JSF - Login Servlet Filter Example"
+permalink: /jsf-login-servlet-filter-example.html
+excerpt: "A detailed step-by-step tutorial on how to implement a JSF login servlet filter example using PrimeFaces, Spring Boot, and Maven."
 date: 2015-01-04
 last_modified_at: 2015-01-04
 header:
@@ -11,6 +11,7 @@ tags: [Example, Filter, Hello World, JavaServer Faces, JSF, Login Servlet, Maven
 redirect_from:
   - /2016/01/jsf-primefaces-login-servlet-filter-example-using-jetty-and-maven.html
   - /2015/01/jsf-primefaces-login-servlet-filter-example-jetty-maven.html
+  - /jsf-primefaces-login-servlet-filter-example.html
 published: true
 ---
 
@@ -20,7 +21,7 @@ published: true
 
 When creating a Java Server Faces application that needs to ensure only authenticated users can access certain pages, a `Servlet Filter` in combination with a session managed bean could be used to achieve this.
 
-The following post illustrates how to implement a basic PrimeFaces login using Spring Boot and Maven. It is largely based on this excellent [post by BalusC at the Stack Overflow forum](https://stackoverflow.com/questions/3841361/jsf-http-session-login/3842060#3842060){:target="_blank"}.
+The following post illustrates how to implement a basic JSF login page example using PrimeFaces, Spring Boot, and Maven. It is largely based on this excellent [post by BalusC at the Stack Overflow forum](https://stackoverflow.com/questions/3841361/jsf-http-session-login/3842060#3842060){:target="_blank"}.
 
 Tools used:
 * PrimeFaces 6.1
@@ -535,7 +536,7 @@ mvn spring-boot:run
 
 Maven will download the needed dependencies, compile the code and start an Apache Tomcat instance on which the web application will be deployed.
 
-Open a web browser and enter the following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/). The result should be that below page is displayed:
+Open a web browser and enter the following URL: [http://localhost:9090/codenotfound/login.xhtml](http://localhost:9090/codenotfound/login.xhtml). The result should be that below page is displayed:
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-login-page.png" alt="jsf login page">
