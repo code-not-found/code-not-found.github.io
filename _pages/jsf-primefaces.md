@@ -23,6 +23,7 @@ last_modified_at: 2017-12-30
 ## Configuration
 
 * [JSF - Welcome Page Redirect Example using Spring Boot]({{ site.url }}/jsf-welcome-page-redirect-example-spring-boot.html)
+* [JSF - Primefaces Theme using Spring Boot]({{ site.url }}/jsf-primefaces-theme-spring-boot.html)
 
 ## Security
 
