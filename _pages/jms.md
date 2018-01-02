@@ -26,7 +26,7 @@ The [Java Message Service (JMS) API](http://docs.oracle.com/javaee/6/tutorial/do
 
 ## Core Concepts
 
-* [JMS - Message Structure Overview ](https://www.codenotfound.com/2014/01/jms-message-structure-overview.html)
+* [JMS - Message Types and Properties Overview](/jms-message-types-properties-overview.html)
 
 ## Provider Runtime Setup
 
