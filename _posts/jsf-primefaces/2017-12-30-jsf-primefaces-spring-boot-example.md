@@ -208,7 +208,7 @@ server:
   port: 9090
 ```
 
-As we are running on Spring Boot we no longer have a <var>web.xml</var> to specify a [welcome-file-list](https://docs.oracle.com/cd/E19798-01/821-1841/bnaer/index.html){:target="_blank"}. This can be solved by extending the WebMvcConfigurerAdapter and then forwarding the default mapping to the <var>helloworld.xhtml</var> page.
+As we are running on Spring Boot we no longer have a <var>web.xml</var> to specify a [welcome-file-list](https://docs.oracle.com/cd/E19798-01/821-1841/bnaer/index.html){:target="_blank"}. This can be solved by [extending the WebMvcConfigurerAdapter](https://stackoverflow.com/a/29054676/4201470){:target="_blank"} and then forwarding the default mapping to the <var>helloworld.xhtml</var> page.
 
 The class is annotated with `@Configuration` which [indicates](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/html/beans.html#beans-java-basic-concepts){:target="_blank"} that the class can be used by the Spring IoC container as a source of bean definitions.
 
