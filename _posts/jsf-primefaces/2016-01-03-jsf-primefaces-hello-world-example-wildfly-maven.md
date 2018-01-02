@@ -206,13 +206,13 @@ INFO: ELY00001: WildFly Elytron version 1.1.0.Final
 Open a web browser and enter following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/){:target="_blank"}. The below page should be displayed:
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-wildfly-hello-world-example.png" alt="primefaces wildfly hello world example">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-wildfly-hello-world-example.png" alt="jsf primefaces wildfly hello world example">
 </figure>
 
 Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-wildfly-hello-world-example-greeting.png" alt="primefaces wildfly hello world example greeting">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-wildfly-hello-world-example-greeting.png" alt="jsf primefaces wildfly hello world example greeting">
 </figure>
 
 ---

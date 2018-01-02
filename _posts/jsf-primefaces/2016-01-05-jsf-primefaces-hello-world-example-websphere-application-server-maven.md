@@ -319,13 +319,13 @@ Open the WAS admin console and navigate to <var>'Applications > Application Type
 Open a web browser and enter the following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/). The below page should be displayed:
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-websphere-application-server-hello-world-example.png" alt="websphere application server hello world example">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-websphere-application-server-hello-world-example.png" alt="jsf primefaces websphere application server hello world example">
 </figure>
 
 Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message. 
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-websphere-application-server-hello-world-example-greeting.png" alt="websphere application server hello world example greeting">
+    <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-websphere-application-server-hello-world-example-greeting.png" alt="jsf primefaces websphere application server hello world example greeting">
 </figure>
 
 ---

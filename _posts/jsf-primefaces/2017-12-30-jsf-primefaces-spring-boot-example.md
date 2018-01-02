@@ -33,7 +33,7 @@ We will be building and running our example using [Apache Maven](https://maven.a
 
 The [JoinFaces](https://github.com/joinfaces/joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application. It auto-configures PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.
 
-We use the `jsf-spring-boot-parent` dependency to obtain the right version for any of the JSF related dependencies in our build configuration. As a result, it is no longer mandatory to specify a version in our build configuration as [Spring Boot is managing this for us](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#using-boot-dependency-management){:target="_blank"}.
+We use the `jsf-spring-boot-parent` dependency to obtain the right version for any of the JSF related dependencies in our build configuration. As a result, it is no longer mandatory to specify a version in our build configuration as [Spring Boot is managing this for us](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/html/using-boot-build-systems.html#using-boot-dependency-managemen){:target="_blank"}.
 
 The `spring-boot-starter` dependency is the core starter, which includes auto-configuration support, logging, and YAML.
 
@@ -264,13 +264,13 @@ Maven will download the needed dependencies, compile the code and start an Apach
 Open a web browser and enter following URL: [http://localhost:9090/codenotfound/helloworld.xhtml](http://localhost:9090/codenotfound/helloworld.xhtml){:target="_blank"}. The below web page should now be displayed.
 
 <figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example.png" alt="primefaces spring boot hello world example">
+  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-spring-boot-hello-world-example.png" alt="jsf primefaces spring boot hello world example">
 </figure>
 
 Enter a first and last name and press the <var>Submit</var> button. A pop-up dialog will be shown with a greeting message.
 
 <figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/primefaces-spring-boot-hello-world-example-greeting.png" alt="primefaces spring boot hello world example greeting">
+  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-spring-boot-hello-world-example-greeting.png" alt="jsf primefaces spring boot hello world example greeting">
 </figure>
 
 ---
