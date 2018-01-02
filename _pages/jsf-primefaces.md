@@ -20,6 +20,14 @@ last_modified_at: 2017-12-30
 * [JSF - PrimeFaces Hello World Example using Apache Tomcat and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-apache-tomcat.html)
 * [JSF - PrimeFaces Hello World Example using WebSphere Application Server and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-websphere-application-server-maven.html)
 
+## Security
+
+* [JSF - PrimeFaces Login Servlet Filter Example]({{ site.url }}/jsf-primefaces-login-servlet-filter-example.html)
+
+## Testing
+
+* [JSF - Primefaces Automated Unit Testing using Selenium]({{ site.url }}/jsf-primefaces-automated-unit-testing-selenium.html)
+
 ## References
 
 * [PrimeFaces](http://primefaces.org/){:target="_blank"}

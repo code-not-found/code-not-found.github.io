@@ -107,7 +107,7 @@ Testing is based on a previous [JSF Page Object pattern example]({{ site.url }}/
 
 # Model
 
-First a `User` class is defined which models some basic information on a user.
+First, a `User` class is defined which models some basic information on a user.
 
 ``` java
 package com.codenotfound.primefaces.model;
@@ -160,11 +160,11 @@ public class User implements Serializable {
 
 # Controller
 
-Next we have the `UserManager`, which is a a session scoped managed bean that will handle all login related activities. It contains a `login()` method that will try to look-up a user based on a `userName` and `userPassword` combination entered on the login page.
+Next, we have the `UserManager`, which is a session scoped managed bean that will handle all login related activities. It contains a `login()` method that will try to look-up a user based on a `userName` and `userPassword` combination entered on the login page.
 
 When the user is found it is assigned to the `currentUser` variable and a redirect to the home page is returned. If the user is not found, a redirect to the login page is returned.
 
-A `logout()` method will invalidate the session and the redirect to the logout page will make sure that the [previous data is longer longer available](http://stackoverflow.com/a/5620582/4201470){:target="_blank"}.
+A `logout()` method will invalidate the session and the redirect to the logout page will make sure that the [previous data is longer available](http://stackoverflow.com/a/5620582/4201470){:target="_blank"}.
 
 The `isLoggedIn()` method will be used by the `LoginFilter` to check if a user is logged in. It checks the value of the `currentUser` which is only set after a successful login. The `isLoggedInForwardHome()` method will return a redirect to the home page in case a user is already logged in.
 
@@ -284,7 +284,7 @@ public class UserManager implements Serializable {
 
 # View
 
-In the example a number of web pages will be used which realize the view part of the JSF web application. The following picture show how the different pages are structured under the <var>src/main/resources/META-INF/resources</var> folder.
+In the example, a number of web pages will be used which realize the view part of the JSF web application. The following picture show how the different pages are structured under the <var>src/main/resources/META-INF/resources</var> folder.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-login-pages-overview.png" alt="jsf login pages overview">
@@ -296,7 +296,7 @@ The body contains a <var>&lt;p:inputText&gt;</var> and <var>&lt;p:password&gt;</
 
 The <var>'Login'</var> button will pass the entered values and call the `login()` method on the `UserManger` bean. Validation errors detected when submitting the credentials will be displayed using the <var>&lt;p:messages&gt;</var> component at the top of the page.
 
-> At the bottom of the page a number of links are included that make navigating the example easier.
+> At the bottom of the page, a number of links are included that make navigating the example easier.
 
 ``` html
 <?xml version="1.0" encoding="UTF-8"?>
@@ -384,7 +384,7 @@ The first panel is shown in case a user is not logged in and contains a confirma
 
 The <var>home.xhtml</var> page is located in a <var>/secured</var> folder, to which access will be protected by the `LoginFilter`. The page contains a basic welcome message returning the full name of the user using the `getName()` method.
 
-In addition a Logout button is available which allows a user to invalidate the session. 
+In addition, a <var>'Logout'</var> button is available which allows a user to invalidate the session. 
 
 ``` html
 <?xml version="1.0" encoding="UTF-8"?>
@@ -417,7 +417,7 @@ In addition a Logout button is available which allows a user to invalidate the s
 </html>
 ```
 
-The <var>unsecured.xhtml</var> page is an example of a page that can be accesses without needing to login.
+The <var>unsecured.xhtml</var> page is an example of a page that can be accessed without needing to log in.
 
 The <var>WEB-INF/template/links.xhtml</var> is a `ui:composition` component that is referenced from all the above page. It contains links to make navigating the example easier.
 
@@ -533,9 +533,9 @@ In order to run the above example open a command prompt and execute following Ma
 mvn spring-boot:run
 ```
 
-Maven will download the needed dependencies, compile the code and start a Apache Tomcat instance on which the web application will be deployed.
+Maven will download the needed dependencies, compile the code and start an Apache Tomcat instance on which the web application will be deployed.
 
-Open a web browser and enter following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/). The result should be that below page is displayed:
+Open a web browser and enter the following URL: [http://localhost:9090/codenotfound/](http://localhost:9090/codenotfound/). The result should be that below page is displayed:
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-login-page.png" alt="jsf login page">
