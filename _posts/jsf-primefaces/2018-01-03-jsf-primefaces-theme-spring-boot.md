@@ -17,8 +17,8 @@ published: true
 
 [PrimeFaces](http://primefaces.org/){:target="_blank"} is integrated with the ThemeRoller CSS Framework in order to support different themes. There are three types of themes you can configure:
 
-1. You can [purchase premium themes](https://www.primefaces.org/themes/#tab-premium-645){:target="_blank"}
-2. You can choose from the [free community themes](https://www.primefaces.org/themes/#tab-community-678){:target="_blank"}
+1. You can [purchase premium themes](https://www.primefaces.org/themes/){:target="_blank"}
+2. You can choose from the [free community themes](https://www.primefaces.org/themes/){:target="_blank"}
 3. You can create your own theme using the online theme generator tool of [ThemeRoller](http://jqueryui.com/themeroller/){:target="_blank"}.
 
 The following example shows how to setup a PrimeFaces theme using Spring Boot and Maven.
@@ -104,19 +104,19 @@ We will start from a previous [JSF Spring Boot Example ]({{ site.url }}/jsf-prim
 
 As we are using [JoinFaces](https://github.com/joinfaces/joinfaces#joinfaces){:target="_blank"} to setup Spring Boot we can use an [application property](https://github.com/joinfaces/joinfaces#jsf-properties-configuration-via-applicationproperties-or-applicationyml){:target="_blank"} in order to configure a PrimeFaces theme.
 
-We set the <var>'Cupertino'</var> theme by specifying the <var>'jsf.primefaces.theme'</var> property in <var>src/main/resources/application.yml</var> as shown below.
+We set the <var>'Afterdark'</var> theme by specifying the <var>'jsf.primefaces.theme'</var> property in <var>src/main/resources/application.yml</var> as shown below.
 
 ``` yaml
 jsf:
   primefaces: 
-    theme: cupertino
+    theme: afterdark
 
 server:
   context-path: /codenotfound
   port: 9090
 ```
 
-Let's checkout our configured theme by running following Maven command:
+Let's checkout our web applicatiosn new look by running following Maven command:
 
 ``` plaintext
 mvn spring-boot:run
@@ -124,7 +124,7 @@ mvn spring-boot:run
 
 Once Spring Boot has started, open a web browser and enter the following URL: [http://localhost:9090/codenotfound/helloworld.xhtml](http://localhost:9090/codenotfound/helloworld.xhtml){:target="_blank"}.
 
-The below web page should now be displayed in the configured theme.
+The below web page should now be displayed in the newly configured theme.
 
 <figure>
   <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-theme-spring-boot.png" alt="jsf primefaces theme spring boot">
