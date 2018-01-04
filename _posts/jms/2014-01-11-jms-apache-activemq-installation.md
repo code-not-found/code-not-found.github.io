@@ -19,9 +19,9 @@ redirect_from:
     <img src="{{ site.url }}/assets/images/logo/apache-activemq-logo.png" alt="apache activemq logo" class="logo">
 </figure>
 
-[Apache ActiveMQ](http://activemq.apache.org/){:target="_blank"} is an **open source message broker** written in Java that offers JMS, REST and WebSocket interfaces. It supports protocols like AMQP, MQTT, OpenWire and STOMP that can be used by applications in different languages.
+[Apache ActiveMQ](http://activemq.apache.org/){:target="_blank"} is an **open source message broker** written in Java that offers JMS, REST and WebSocket interfaces. It supports protocols like AMQP, MQTT, OpenWire, and STOMP that can be used by applications in different languages.
 
-Following tutorial details how to install ActiveMQ on Windows or Unix and in addition shows how perform a start/stop of the installed instance.
+Following tutorial details how to install ActiveMQ on Windows or Unix and in addition shows how to perform a start/stop of the installed instance.
 
  First thing to do is to download the ActiveMQ binaries. Go the the [ActiveMQ download page](http://activemq.apache.org/download.html){:target="_blank"} and click on the latest stable release link in the <var>Latest Releases</var> section. Then in the <var>Getting the Binary Distributions</var> section click on the download link for your operating system. At the time of writing the latest stable release was <var>apache-activemq-5.13.3</var>.
 
@@ -75,7 +75,7 @@ The ActiveMQ broker can also be started as a background process (note that the c
     <img src="{{ site.url }}/assets/images/posts/jms/unix-apache-activemq-start.png" alt="unix apache activemq start">
 </figure>
 
-Once started as a background process there are a number of additional commands we can run to manage the running broker instance. For example, execute following to see if ActiveMQ is still running:
+Once started as a background process there are a number of additional commands we can run to manage the running broker instance. For example, execute the following to see if ActiveMQ is still running:
 
 ``` plaintext
 ./activemq status
@@ -85,7 +85,7 @@ Once started as a background process there are a number of additional commands w
     <img src="{{ site.url }}/assets/images/posts/jms/unix-apache-activemq-status.png" alt="unix apache activemq status">
 </figure>
 
-The ActiveMQ web site contains a [complete overview of the available Unix commands](http://activemq.apache.org/unix-shell-script.html#UnixShellScript-Functionaloverview){:target="_blank"}. In order to stop the background process, use the below command, but for now leave the broker running as we will first explorer the web console.
+The ActiveMQ web site contains a [complete overview of the available Unix commands](http://activemq.apache.org/unix-shell-script.html#UnixShellScript-Functionaloverview){:target="_blank"}. In order to stop the background process, use the below command, but for now, leave the broker running as we will first explorer the web console.
 
 ``` plaintext
 ./activemq stop
@@ -95,11 +95,11 @@ The ActiveMQ web site contains a [complete overview of the available Unix comman
     <img src="{{ site.url }}/assets/images/posts/jms/unix-apache-activemq-stop.png" alt="unix apache activemq stop">
 </figure>
 
-Note that if you would like ActiveMQ to start automatically at system startup you would need to [run the ActiveMQ broker as a Unix deamon process](http://activemq.apache.org/unix-shell-script.html#UnixShellScript-Runningactivemqasaunixdaemon){:target="_blank"}.
+Note that if you would like ActiveMQ to start automatically at system startup you would need to [run the ActiveMQ broker as a Unix daemon process](http://activemq.apache.org/unix-shell-script.html#UnixShellScript-Runningactivemqasaunixdaemon){:target="_blank"}.
 
 # ActiveMQ WebConsole
 
-The ActiveMQ Web Console is a web based administration tool for working with ActiveMQ. The console can be accessed by entering following URL in a web browser: [http://localhost:8161/](http://localhost:8161/). If ActiveMQ is up and running and installed successfully, following welcome page should be displayed:
+The ActiveMQ Web Console is a web-based administration tool for working with ActiveMQ. The console can be accessed by entering the following URL in a web browser: [http://localhost:8161/](http://localhost:8161/). If ActiveMQ is up and running and installed successfully, following welcome page should be displayed:
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/jms/apache-activemq-console.png" alt="apache activemq console">
