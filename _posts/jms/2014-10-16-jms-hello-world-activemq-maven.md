@@ -24,7 +24,7 @@ The current version of the JMS specification is version 1.1.
 
 The following post introduces the basic JMS concepts and illustrates them with a JMS Hello World example using ActiveMQ and Maven.
 
-To use JMS, we need to have a JMS provider that can manage the sessions, queues and topics. Some examples of known JMS providers are [Apache ActiveMQ](http://activemq.apache.org/){:target="_blank"}, WebSphere MQ from IBM or SonicMQ from Aurea Software. Starting from Java EE version 1.4, a JMS provider has to be contained in all Java EE application servers.
+To use JMS, we need to have a JMS provider that can manage the sessions, queues, and topics. Some examples of known JMS providers are [Apache ActiveMQ](http://activemq.apache.org/){:target="_blank"}, WebSphere MQ from IBM or SonicMQ from Aurea Software. Starting from Java EE version 1.4, a JMS provider has to be contained in all Java EE application servers.
 
 # The JMS API Programming Model
 
@@ -32,7 +32,7 @@ To use JMS, we need to have a JMS provider that can manage the sessions, queues 
     <img src="{{ site.url }}/assets/images/posts/jms/jms-api-programming-model.png" alt="jms api programming model">
 </figure>
 
-The basic building blocks of the JMS API programming model are shown above. At the top we have the `ConnectionFactory` object which is the object a client uses to create a connection to a JMS provider. A connection factory encapsulates a set of connection configuration parameters like for example the broker URL. A connection factory is a JMS administered object that is typically created by an administrator and later used by JMS clients.
+The basic building blocks of the JMS API programming model are shown above. At the top, we have the `ConnectionFactory` object which is the object a client uses to create a connection to a JMS provider. A connection factory encapsulates a set of connection configuration parameters like for example the broker URL. A connection factory is a JMS administered object that is typically created by an administrator and later used by JMS clients.
 
 When you have a `ConnectionFactory` object, you can use it to create a connection. A `Connection` object encapsulates a virtual connection with a JMS provider. For example, a connection could represent an open TCP/IP socket between a client and a provider service daemon. Before an application completes, it must close any connections that were created. Failure to close a connection can cause resources not to be released by the JMS provider.
 
@@ -56,13 +56,13 @@ For more detailed information please check the [JMS API programming model chapte
 
 # ActiveMQ Example
 
-Let's illustrate the above by creating a message producer that sends a message containing a first and last name to a Hello World queue. In turn a message consumer will read the message and transform it into a greeting. The example uses Maven and assumes a default ActiveMQ message broker is up and running.
+Let's illustrate the above by creating a message producer that sends a message containing a first and last name to a Hello World queue. In turn, a message consumer will read the message and transform it into a greeting. The example uses Maven and assumes a default ActiveMQ message broker is up and running.
 
 Tools used:
 * ActiveMQ 5.15
 * Maven 3.5
 
-First let's look at the below Maven POM file which contains the needed dependencies for Logback, JUnit and ActiveMQ.
+First let's look at the below Maven POM file which contains the needed dependencies for Logback, JUnit, and ActiveMQ.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -207,7 +207,7 @@ public class Producer {
 
 For receiving messages, a `Consumer` class is defined which has the same `create()` and `close()` methods as the above `Producer`. The main difference is that in the case of a message consumer the connection is started.
 
-The `getGreeting()` method will receive the next message from the destination that was configured on the message consumer. A timeout parameter is passed to the `receive()` method in order to avoid waiting for an indefinite amount of time in case no message is present on the destination. As a result a check is needed to see if the `receive()` method returned a message or null.
+The `getGreeting()` method will receive the next message from the destination that was configured on the message consumer. A timeout parameter is passed to the `receive()` method in order to avoid waiting for an indefinite amount of time in case no message is present on the destination. As a result, a check is needed to see if the `receive()` method returned a message or null.
 
 If a message was received it is cast to a `TextMessage` and the received text is converted into a greeting that is returned. In case the message was `null` a default <var>"no greeting"</var> is returned.
 
