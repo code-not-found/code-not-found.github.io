@@ -62,7 +62,7 @@ Tools used:
 * ActiveMQ 5.15
 * Maven 3.5
 
-First let's look at the below Maven POM file which contains the needed dependencies for Logback, JUnit, and ActiveMQ.
+First let's look at the below [Maven](https://maven.apache.org/){:target="_blank"} POM file which contains the needed dependencies for Logback, JUnit, and ActiveMQ.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
