@@ -1,27 +1,33 @@
 ---
-title: JMS - Hello World using ActiveMQ 
-permalink: /2014/10/jms-hello-world-activemq-maven.html
-excerpt: A JMS Hello World example using ActiveMQ and Maven.
-date: 2014-10-16 21:00
+title: "JMS - Hello World using ActiveMQ"
+permalink: /jms-hello-world-activemq-maven.html
+excerpt: "A JMS Hello World example using ActiveMQ and Maven."
+date: 2014-10-16
+last_modified_at: 2014-10-16
+header:
+  teaser: "assets/images/teaser/jms-teaser.png"
 categories: [JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Example, Hello World, Java Message Service, JMS, Maven]
 redirect_from:
   - /2014/10/jms-hello-world-using-activemq.html
   - /2014/04/jms-spring-hello-world-using-activemq.html
+  - /2014/10/jms-hello-world-activemq-maven.html
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/jms-logo.png" alt="jms logo">
+    <img src="{{ site.url }}/assets/images/logo/jms-logo.png" alt="jms logo" class="logo">
 </figure>
 
-The Java Message Service (JMS) API is a Java Message Oriented Middleware (MOM) API for sending messages between two or more clients. It is a Java API that allows applications to create, send, receive, and read messages. The JMS API enables communication that is loosely coupled, asynchronous and reliable. The current version of the JMS specification is version 1.1. The following post introduces the basic JMS concepts and illustrates them with a JMS Hello World example using ActiveMQ and Maven.
+The [Java Message Service](https://en.wikipedia.org/wiki/Java_Message_Service){:target="_blank"} (JMS) API is a Java Message Oriented Middleware (MOM) API for sending messages between two or more clients. It is a Java API that allows applications to create, send, receive, and read messages. The JMS API enables communication that is loosely coupled, asynchronous and reliable. The current version of the JMS specification is version 1.1.
 
-To use JMS, one must have a JMS provider that can manage the sessions, queues and topics. Some examples of known JMS providers are [Apache ActiveMQ](http://activemq.apache.org/), WebSphere MQ from IBM or SonicMQ from Aurea Software. Starting from Java EE version 1.4, a JMS provider has to be contained in all Java EE application servers.
+The following post introduces the basic JMS concepts and illustrates them with a JMS Hello World example using ActiveMQ and Maven.
+
+To use JMS, we need to have a JMS provider that can manage the sessions, queues and topics. Some examples of known JMS providers are [Apache ActiveMQ](http://activemq.apache.org/){:target="_blank"}, WebSphere MQ from IBM or SonicMQ from Aurea Software. Starting from Java EE version 1.4, a JMS provider has to be contained in all Java EE application servers.
 
 # The JMS API Programming Model
 
 <figure>
-    <img src="{{ site.url }}/assets/images/jms/jms-api-programming-model.png" alt="jms api programming model">
+    <img src="{{ site.url }}/assets/images/posts/jms/jms-api-programming-model.png" alt="jms api programming model">
 </figure>
 
 The basic building blocks of the JMS API programming model are shown above. At the top we have the `ConnectionFactory` object which is the object a client uses to create a connection to a JMS provider. A connection factory encapsulates a set of connection configuration parameters like for example the broker URL. A connection factory is a JMS administered object that is typically created by an administrator and later used by JMS clients.
@@ -44,7 +50,7 @@ A `MessageConsumer` is an object that is created by a session and used for recei
 
 A `Destination` is the object a client uses to specify the target of messages it produces and the source of messages it consumes. In the point-to-point messaging domain, destinations are called queues. In the publish/subscribe messaging domain, destinations are called topics.
 
-For more detailed information please check the [JMS API programming model chapter](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html) of the [Java EE 6 tutorial](http://docs.oracle.com/javaee/6/tutorial/doc/index.html).
+For more detailed information please check the [JMS API programming model chapter](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html){:target="_blank"} of the [Java EE 6 tutorial](http://docs.oracle.com/javaee/6/tutorial/doc/index.html){:target="_blank"}.
 
 # ActiveMQ Example
 
@@ -346,7 +352,7 @@ public class ProducerTest {
 
 ```
 
-Make sure a default [ActiveMQ message broker is up and running]({{ site.url }}/2014/01/jms-apache-activemq-installation.html), open a command prompt and execute following Maven command: 
+Make sure a default [ActiveMQ message broker is up and running]({{ site.url }}/2014/01/jms-apache-activemq-installation.html), open a command prompt and execute following Maven command:
 
 ``` plaintext
 mvn test

@@ -1,24 +1,30 @@
 ---
-title: JMS - Point-to-Point messaging example using ActiveMQ and Maven
-permalink: /2014/10/jms-point-to-point-messaging-example-activemq-maven.html
-excerpt: A JMS Point-to-Point messaging example using ActiveMQ and Maven.
-date: 2014-10-16 21:00
+title: "JMS - Point-to-Point messaging example using ActiveMQ and Maven"
+permalink: /jms-point-to-point-messaging-example-activemq-maven.html
+excerpt: "A JMS Point-to-Point messaging example using ActiveMQ and Maven."
+date: 2014-10-16
+last_modified_at: 2014-10-16
+header:
+  teaser: "assets/images/teaser/jms-teaser.png"
 categories: [JMS]
-tags: [ActiveMQ, Apache ActiveMQ, Example, Java Message Service, JMS, Maven, point-to-point, ptp]
+tags: [ActiveMQ, Apache ActiveMQ, Example, Java Message Service, JMS, Maven, Point-To-Point, PTP]
 redirect_from:
   - /2014/10/jms-point-to-point-messaging-using.html
+  - /2014/10/jms-point-to-point-messaging-example-activemq-maven.html
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/jms-logo.png" alt="jms logo">
+    <img src="{{ site.url }}/assets/images/logo/jms-logo.png" alt="jms logo" class="logo">
 </figure>
 
-A point-to-point (PTP) product or application is built on the concept of message queues, senders and receivers. Each message is addressed to a specific queue and receiving clients extract messages from the queues established to hold their messages. Queues retain all messages sent to them until the messages are consumed. The following post introduces the basic concepts of JMS point-to-point messaging and illustrates them with a code sample using ActiveMQ and Maven.
+A point-to-point (PTP) product or application is built on the concept of message queues, senders and receivers. Each message is addressed to a specific queue and receiving clients extract messages from the queues established to hold their messages. Queues retain all messages sent to them until the messages are consumed.
+
+The following post introduces the basic concepts of JMS point-to-point messaging and illustrates them with a code sample using ActiveMQ and Maven.
 
 # Point-to-Point Messaging
 
 <figure>
-    <img src="{{ site.url }}/assets/images/jms/jms-point-to-point-messaging.png" alt="jms point-to-point messaging">
+    <img src="{{ site.url }}/assets/images/posts/jms/jms-point-to-point-messaging.png" alt="jms point-to-point messaging">
 </figure>
 
 PTP messaging has the following characteristics:
