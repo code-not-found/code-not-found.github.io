@@ -19,18 +19,22 @@ The [Java Message Service (JMS) API](http://docs.oracle.com/javaee/6/tutorial/do
 ## Quick Start
 
 * [JMS - Hello World using ActiveMQ]({{ site.url }}/jms-hello-world-activemq-maven.html)
-* [JMS - Point-to-Point messaging example using ActiveMQ and Maven](https://www.codenotfound.com/jms-point-to-point-messaging-example-activemq-maven.html)
-* [JMS - Publish/Subscribe messaging example using ActiveMQ & Maven](https://www.codenotfound.com/2014/11/jms-publish-subscribe-messaging-example-activemq-maven.html)
+* [JMS - Point-to-Point messaging example using ActiveMQ and Maven]({{ site.url }}/jms-point-to-point-messaging-example-activemq-maven.html)
+* [JMS - Publish/Subscribe messaging example using ActiveMQ & Maven]({{ site.url }}/2014/11/jms-publish-subscribe-messaging-example-activemq-maven.html)
 
 ## Core Concepts
 
-* [JMS - Message Types and Properties Overview](/jms-message-types-properties-overview.html)
+* [JMS - Message Types and Properties Overview]({{ site.url }}/jms-message-types-properties-overview.html)
+* [JMS - ActiveMQ Message Priority Example]({{ site.url }}/jms-activemq-message-priority-example.html)
 
-## Provider Runtime Setup
+## Tools
 
-* [JMS - Apache ActiveMQ Installation](https://www.codenotfound.com/2014/01/jms-apache-activemq-installation.html)
-* [AMQP - Install RabbitMQ on Windows](https://www.codenotfound.com/2014/11/amqp-install-rabbitmq-windows.html)
-* [JMS - HermesJMS Download & Installation ](https://www.codenotfound.com/2014/01/jms-hermesjms-download-installation.html)
+* [JMS - HermesJMS Download & Installation ]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html)
+
+## JMS Provider Setup
+
+* [JMS - Apache ActiveMQ Installation]({{ site.url }}/2014/01/jms-apache-activemq-installation.html)
+* [AMQP - Install RabbitMQ on Windows]({{ site.url }}/2014/11/amqp-install-rabbitmq-windows.html)
 
 ## References
 
