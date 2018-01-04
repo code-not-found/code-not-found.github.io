@@ -34,7 +34,7 @@ The JMS API relaxes this timing dependency mentioned in the second bullet to som
 
 # ActiveMQ Example
 
-Let's illustrate the above characteristics by creating a message producer that sends a message containing a first and last name to a topic. In turn a message consumer will read the message and transform it into a greeting. The code is very similar to the [JMS Hello World example]({{ site.url }}/jms-hello-world-activemq-maven.html) but contains a few key differences explained below.
+Let's illustrate the above characteristics by creating a message producer that sends a message containing a first and last name to a topic. In turn, a message consumer will read the message and transform it into a greeting. The code is very similar to the [JMS Hello World example]({{ site.url }}/jms-hello-world-activemq-maven.html) but contains a few key differences explained below.
 
 Tools used:
 * ActiveMQ 5.15
@@ -279,7 +279,7 @@ The below JUnit test class will be used to illustrate the Pub/Sub messaging char
 
 The `testMultipleConsumers()` test case will verify that the same message can be read by multiple consumers. In order to test this, two `Subscriber` instances are created on the same <var>'multipleconsumers.t'</var> topic.
 
-Finally the `testNonDurableSubscriber()` test case will illustrate the timing dependency between publisher and subscriber. First a message is sent to a topic on which only one subscriber listens. Then a second subscriber is added to the same topic and a second message is sent. The result is that the second subscriber only receives the second message and not the first one whereas the first subscriber has received both messages. 
+Finally, the `testNonDurableSubscriber()` test case will illustrate the timing dependency between publisher and subscriber. First, a message is sent to a topic on which only one subscriber listens. Then a second subscriber is added to the same topic and a second message is sent. The result is that the second subscriber only receives the second message and not the first one whereas the first subscriber has received both messages. 
 
 ``` java
 package com.codenotfound.jms.pubsub;
@@ -454,11 +454,11 @@ This will trigger Maven to run the above test cases which should result in the f
 
 # Durable Subscription
 
-As mentioned in the beginning of this post it is also possible to create a durable subscription which allows to receive messages sent while the subscribers are not active.
+As mentioned in the beginning of this post it is also possible to create a durable subscription which allows receiving messages sent while the subscribers are not active.
 
 The JMS specification dictates that the identification of a specific durable subscription is done by a combination of the <var>'client ID'</var>, the <var>'durable subscription name'</var> and the <var>'topic name'</var>.
 
-As a result the below `DurableSubscriber` has three main differences with the previous `Subscriber` class:
+As a result of the below `DurableSubscriber` has three main differences with the previous `Subscriber` class:
 1. A `clientId` **is mandatory** on the connection in order to allow a JMS provider to uniquely identify a durable subscriber.
 2. A durable subscriber is created using `Session.CreateDurableSubscriber`.
 3. A `subscriptionName` is needed when creating the durable subscriber.
