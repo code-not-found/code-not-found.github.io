@@ -20,7 +20,7 @@ The [Java Message Service (JMS) API](http://docs.oracle.com/javaee/6/tutorial/do
 
 * [JMS - Hello World using ActiveMQ]({{ site.url }}/jms-hello-world-activemq-maven.html)
 * [JMS - Point-to-Point messaging example using ActiveMQ and Maven]({{ site.url }}/jms-point-to-point-messaging-example-activemq-maven.html)
-* [JMS - Publish/Subscribe messaging example using ActiveMQ & Maven]({{ site.url }}/2014/11/jms-publish-subscribe-messaging-example-activemq-maven.html)
+* [JMS - Publish/Subscribe messaging example using ActiveMQ and Maven]({{ site.url }}/2014/11/jms-publish-subscribe-messaging-example-activemq-maven.html)
 
 ## Core Concepts
 
@@ -29,7 +29,7 @@ The [Java Message Service (JMS) API](http://docs.oracle.com/javaee/6/tutorial/do
 
 ## Tools
 
-* [JMS - HermesJMS Download & Installation ]({{ site.url }}/jms-hermesjms-download-installation.html)
+* [JMS - HermesJMS Download and Installation ]({{ site.url }}/jms-hermesjms-download-installation.html)
 
 ## JMS Provider Setup
 
