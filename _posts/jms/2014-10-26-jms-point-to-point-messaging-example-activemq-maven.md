@@ -17,7 +17,7 @@ redirect_from:
     <img src="{{ site.url }}/assets/images/logo/jms-logo.png" alt="jms logo" class="logo">
 </figure>
 
-A point-to-point (PTP) product or application is built on the concept of message queues, senders and receivers. Each message is addressed to a specific queue and receiving clients extract messages from the queues established to hold their messages. Queues retain all messages sent to them until the messages are consumed.
+A point-to-point (PTP) product or application is built on the concept of message queues, senders, and receivers. Each message is addressed to a specific queue and receiving clients extract messages from the queues established to hold their messages. Queues retain all messages sent to them until the messages are consumed.
 
 The following post introduces the basic concepts of JMS point-to-point messaging and illustrates them with a code sample using ActiveMQ and Maven.
 
@@ -34,13 +34,13 @@ PTP messaging has the following characteristics:
 
 # ActiveMQ Example
 
-Let's illustrate the above characteristics by creating a message producer that sends a message containing a first and last name to a queue. In turn a message consumer will read the message and transform it into a greeting. The code is very similar to the [JMS Hello World example]({{ site.url }}/jms-hello-world-activemq-maven.html) but contains a few key differences explained below.
+Let's illustrate the above characteristics by creating a message producer that sends a message containing a first and last name to a queue. In turn, a message consumer will read the message and transform it into a greeting. The code is very similar to the [JMS Hello World example]({{ site.url }}/jms-hello-world-activemq-maven.html) but contains a few key differences explained below.
 
 Tools used:
 * ActiveMQ 5.15
 * Maven 3.5
 
-The code is built and run using [Maven](https://maven.apache.org/){:target="_blank"}. Specified below is the Maven POM file which contains the needed dependencies for Logback, JUnit and ActiveMQ.
+The code is built and run using [Maven](https://maven.apache.org/){:target="_blank"}. Specified below is the Maven POM file which contains the needed dependencies for Logback, JUnit, and ActiveMQ.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -290,7 +290,7 @@ The `testOnlyOneConsumer()` test case will verify that a message is read by only
 
 The `testNoTimingDependencies()` test case illustrates that the consumer can successfully receive a message even if that consumer is created after the message was sent.
 
-Finally the `testAcknowledgeProcessing()` test case will verify that a message is not removed by the JMS provider in case it was not acknowledged by the consumer. In order to simulate this we first call the `getGreeting()` method with the acknowledge parameter set to `false`. Then the `getGreeting()` method is called a second time and as the first call did not acknowledge the message it is still available on the queue.
+Finally, the `testAcknowledgeProcessing()` test case will verify that a message is not removed by the JMS provider in case it was not acknowledged by the consumer. In order to simulate this, we first call the `getGreeting()` method with the acknowledge parameter set to `false`. Then the `getGreeting()` method is called a second time and as the first call did not acknowledge the message it is still available on the queue.
 
 ``` java
 package com.codenotfound.jms.ptp;
