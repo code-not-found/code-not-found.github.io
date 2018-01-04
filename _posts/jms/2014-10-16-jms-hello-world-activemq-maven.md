@@ -18,7 +18,9 @@ redirect_from:
     <img src="{{ site.url }}/assets/images/logo/jms-logo.png" alt="jms logo" class="logo">
 </figure>
 
-The [Java Message Service](https://en.wikipedia.org/wiki/Java_Message_Service){:target="_blank"} (JMS) API is a Java Message Oriented Middleware (MOM) API for sending messages between two or more clients. It is a Java API that allows applications to create, send, receive, and read messages. The JMS API enables communication that is loosely coupled, asynchronous and reliable. The current version of the JMS specification is version 1.1.
+The [Java Message Service](https://en.wikipedia.org/wiki/Java_Message_Service){:target="_blank"} (JMS) API is a Java Message Oriented Middleware (MOM) API for sending messages between two or more clients. It is a Java API that allows applications to create, send, receive, and read messages. The JMS API enables communication that is loosely coupled, asynchronous and reliable.
+
+The current version of the JMS specification is version 1.1.
 
 The following post introduces the basic JMS concepts and illustrates them with a JMS Hello World example using ActiveMQ and Maven.
 
@@ -57,76 +59,77 @@ For more detailed information please check the [JMS API programming model chapte
 Let's illustrate the above by creating a message producer that sends a message containing a first and last name to a Hello World queue. In turn a message consumer will read the message and transform it into a greeting. The example uses Maven and assumes a default ActiveMQ message broker is up and running.
 
 Tools used:
-* ActiveMQ 5.14
-* Maven 3
+* ActiveMQ 5.15
+* Maven 3.5
 
 First let's look at the below Maven POM file which contains the needed dependencies for Logback, JUnit and ActiveMQ.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.codenotfound</groupId>
-    <artifactId>jms-activemq-helloworld</artifactId>
-    <version>1.0</version>
-    <packaging>jar</packaging>
+  <groupId>com.codenotfound</groupId>
+  <artifactId>jms-activemq-helloworld</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
-    <name>JMS - Hello World using ActiveMQ</name>
-    <url>https://codenotfound.com/2014/10/jms-hello-world-using-activemq.html</url>
+  <name>jms-activemq-helloworld</name>
+  <description>JMS - Hello World using ActiveMQ</description>
+  <url>https://codenotfound.com/jms-hello-world-activemq-maven.html</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.8</java.version>
 
-        <logback.version>1.2.1</logback.version>
-        <slf4j.version>1.7.24</slf4j.version>
-        <junit.version>4.12</junit.version>
-        <activemq.version>5.14.3</activemq.version>
+    <logback.version>1.2.3</logback.version>
+    <slf4j.version>1.7.25</slf4j.version>
+    <junit.version>4.12</junit.version>
+    <activemq.version>5.15.2</activemq.version>
 
-        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-    </properties>
+    <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+  </properties>
 
-    <dependencies>
-        <!-- Logging -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <!-- JUnit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-        </dependency>
-        <!-- ActiveMQ -->
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-all</artifactId>
-            <version>${activemq.version}</version>
-        </dependency>
-    </dependencies>
+  <dependencies>
+    <!-- Logging -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <!-- JUnit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+    </dependency>
+    <!-- ActiveMQ -->
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-all</artifactId>
+      <version>${activemq.version}</version>
+    </dependency>
+  </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
 ```
 
@@ -154,50 +157,51 @@ import org.slf4j.LoggerFactory;
 
 public class Producer {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(Producer.class);
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(Producer.class);
 
-    private Connection connection;
-    private Session session;
-    private MessageProducer messageProducer;
+  private Connection connection;
+  private Session session;
+  private MessageProducer messageProducer;
 
-    public void create(String destinationName) throws JMSException {
+  public void create(String destinationName) throws JMSException {
 
-        // create a Connection Factory
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-                ActiveMQConnection.DEFAULT_BROKER_URL);
+    // create a Connection Factory
+    ConnectionFactory connectionFactory =
+        new ActiveMQConnectionFactory(
+            ActiveMQConnection.DEFAULT_BROKER_URL);
 
-        // create a Connection
-        connection = connectionFactory.createConnection();
+    // create a Connection
+    connection = connectionFactory.createConnection();
 
-        // create a Session
-        session = connection.createSession(false,
-                Session.AUTO_ACKNOWLEDGE);
+    // create a Session
+    session =
+        connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        // create the Destination to which messages will be sent
-        Destination destination = session.createQueue(destinationName);
+    // create the Destination to which messages will be sent
+    Destination destination = session.createQueue(destinationName);
 
-        // create a Message Producer for sending messages
-        messageProducer = session.createProducer(destination);
-    }
+    // create a Message Producer for sending messages
+    messageProducer = session.createProducer(destination);
+  }
 
-    public void close() throws JMSException {
-        connection.close();
-    }
+  public void close() throws JMSException {
+    connection.close();
+  }
 
-    public void sendName(String firstName, String lastName)
-            throws JMSException {
+  public void sendName(String firstName, String lastName)
+      throws JMSException {
 
-        String text = firstName + " " + lastName;
+    String text = firstName + " " + lastName;
 
-        // create a JMS TextMessage
-        TextMessage textMessage = session.createTextMessage(text);
+    // create a JMS TextMessage
+    TextMessage textMessage = session.createTextMessage(text);
 
-        // send the message to the queue destination
-        messageProducer.send(textMessage);
+    // send the message to the queue destination
+    messageProducer.send(textMessage);
 
-        LOGGER.debug("producer sent message with text='{}'", text);
-    }
+    LOGGER.debug("producer sent message with text='{}'", text);
+  }
 }
 ```
 
@@ -226,68 +230,67 @@ import org.slf4j.LoggerFactory;
 
 public class Consumer {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(Consumer.class);
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(Consumer.class);
 
-    private static String NO_GREETING = "no greeting";
+  private static String NO_GREETING = "no greeting";
 
-    private Connection connection;
-    private Session session;
-    private MessageConsumer messageConsumer;
+  private Connection connection;
+  private MessageConsumer messageConsumer;
 
-    public void create(String destinationName) throws JMSException {
+  public void create(String destinationName) throws JMSException {
 
-        // create a Connection Factory
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-                ActiveMQConnection.DEFAULT_BROKER_URL);
+    // create a Connection Factory
+    ConnectionFactory connectionFactory =
+        new ActiveMQConnectionFactory(
+            ActiveMQConnection.DEFAULT_BROKER_URL);
 
-        // create a Connection
-        connection = connectionFactory.createConnection();
+    // create a Connection
+    connection = connectionFactory.createConnection();
 
-        // create a Session
-        session = connection.createSession(false,
-                Session.AUTO_ACKNOWLEDGE);
+    // create a Session
+    Session session =
+        connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        // create the Destination from which messages will be received
-        Destination destination = session.createQueue(destinationName);
+    // create the Destination from which messages will be received
+    Destination destination = session.createQueue(destinationName);
 
-        // create a Message Consumer for receiving messages
-        messageConsumer = session.createConsumer(destination);
+    // create a Message Consumer for receiving messages
+    messageConsumer = session.createConsumer(destination);
 
-        // start the connection in order to receive messages
-        connection.start();
+    // start the connection in order to receive messages
+    connection.start();
+  }
+
+  public void close() throws JMSException {
+    connection.close();
+  }
+
+  public String getGreeting(int timeout) throws JMSException {
+
+    String greeting = NO_GREETING;
+
+    // read a message from the queue destination
+    Message message = messageConsumer.receive(timeout);
+
+    // check if a message was received
+    if (message != null) {
+      // cast the message to the correct type
+      TextMessage textMessage = (TextMessage) message;
+
+      // retrieve the message content
+      String text = textMessage.getText();
+      LOGGER.debug("consumer received message with text='{}'", text);
+
+      // create greeting
+      greeting = "Hello " + text + "!";
+    } else {
+      LOGGER.debug("consumer received no message");
     }
 
-    public void close() throws JMSException {
-        connection.close();
-    }
-
-    public String getGreeting(int timeout) throws JMSException {
-
-        String greeting = NO_GREETING;
-
-        // read a message from the queue destination
-        Message message = messageConsumer.receive(timeout);
-
-        // check if a message was received
-        if (message != null) {
-            // cast the message to the correct type
-            TextMessage textMessage = (TextMessage) message;
-
-            // retrieve the message content
-            String text = textMessage.getText();
-            LOGGER.debug("consumer received message with text='{}'",
-                    text);
-
-            // create greeting
-            greeting = "Hello " + text + "!";
-        } else {
-            LOGGER.debug("consumer received no message");
-        }
-
-        LOGGER.info("greeting={}", greeting);
-        return greeting;
-    }
+    LOGGER.info("greeting={}", greeting);
+    return greeting;
+  }
 }
 ```
 
@@ -307,52 +310,51 @@ import org.junit.Test;
 
 public class ProducerTest {
 
-    private static Producer producer;
-    private static Consumer consumer;
+  private static Producer producer;
+  private static Consumer consumer;
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws JMSException {
-        producer = new Producer();
-        producer.create("helloworld.q");
+  @BeforeClass
+  public static void setUpBeforeClass() throws JMSException {
+    producer = new Producer();
+    producer.create("helloworld.q");
 
-        consumer = new Consumer();
-        consumer.create("helloworld.q");
+    consumer = new Consumer();
+    consumer.create("helloworld.q");
+  }
+
+  @AfterClass
+  public static void tearDownAfterClass() throws JMSException {
+    producer.close();
+    consumer.close();
+  }
+
+  @Test
+  public void testGetGreeting() {
+    try {
+      producer.sendName("John", "Doe");
+
+      String greeting = consumer.getGreeting(1000);
+      assertEquals("Hello John Doe!", greeting);
+
+    } catch (JMSException e) {
+      fail("a JMS Exception occurred");
     }
+  }
 
-    @AfterClass
-    public static void tearDownAfterClass() throws JMSException {
-        producer.close();
-        consumer.close();
+  @Test
+  public void testNoGreeting() {
+    try {
+      String greeting = consumer.getGreeting(1000);
+      assertEquals("no greeting", greeting);
+
+    } catch (JMSException e) {
+      fail("a JMS Exception occurred");
     }
-
-    @Test
-    public void testGetGreeting() {
-        try {
-            producer.sendName("John", "Doe");
-
-            String greeting = consumer.getGreeting(1000);
-            assertEquals("Hello John Doe!", greeting);
-
-        } catch (JMSException e) {
-            fail("a JMS Exception occurred");
-        }
-    }
-
-    @Test
-    public void testNoGreeting() {
-        try {
-            String greeting = consumer.getGreeting(1000);
-            assertEquals("no greeting", greeting);
-
-        } catch (JMSException e) {
-            fail("a JMS Exception occurred");
-        }
-    }
+  }
 }
-
 ```
 
-Make sure a default [ActiveMQ message broker is up and running]({{ site.url }}/2014/01/jms-apache-activemq-installation.html), open a command prompt and execute following Maven command:
+Make sure a default [ActiveMQ message broker is up and running]({{ site.url }}/jms-apache-activemq-installation.html), open a command prompt and execute following Maven command:
 
 ``` plaintext
 mvn test
@@ -361,20 +363,50 @@ mvn test
 This will trigger Maven to run the above test case and will result in the following log statements.
 
 ``` plaintext
-13:38:19.844 DEBUG [main][Consumer] consumer received no message
-13:38:19.858 INFO  [main][Consumer] greeting=no greeting
-13:38:19.911 DEBUG [main][Producer] producer sent message with text='John Doe'
-13:38:19.912 DEBUG [main][Consumer] consumer received message with text='John Doe'
-13:38:19.912 INFO  [main][Consumer] greeting=Hello John Doe!
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.579 sec
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.codenotfound.jms.ProducerTest
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/C:/code/local-repo/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/C:/code/local-repo/org/apache/activemq/activemq-all/5.15.2/activemq-all-5.15.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorStaticBinder]
+21:31:24.887 DEBUG [main][Consumer]consumer received no message
+21:31:24.890 INFO  [main][Consumer]greeting=no greeting
+21:31:24.912 DEBUG [main][Producer]producer sent message with text='John Doe'
+21:31:24.914 DEBUG [main][Consumer]consumer received message with text='John Doe'
+21:31:24.914 INFO  [main][Consumer]greeting=Hello John Doe!
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.57 sec
+Running com.codenotfound.jms.UnidentifiedProducerTest
+21:31:25.946 DEBUG [main][Consumer]consumer received no message
+21:31:25.946 INFO  [main][Consumer]greeting=no greeting
+21:31:25.955 DEBUG [main][UnidentifiedProducer]unidentifiedProducer sent message with text='John Doe'
+21:31:25.955 DEBUG [main][Consumer]consumer received message with text='John Doe'
+21:31:25.955 INFO  [main][Consumer]greeting=Hello John Doe!
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.023 sec
+
+Results :
+
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 4.646 s
+[INFO] Finished at: 2018-01-04T21:31:26+01:00
+[INFO] Final Memory: 19M/212M
+[INFO] ------------------------------------------------------------------------
 ```
 
 ---
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jms/tree/master/jms-activemq-helloworld).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jms/tree/master/jms-activemq-helloworld){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the JMS Hello World example using ActiveMQ. Note that the code also contains a `UnidentifiedProducer` class and corresponding JUnit test class which illustrates the overloading of the `send()` method with the needed destination. If you found this post helpful or have any questions or remarks, please leave a comment.
+> Note that the code also contains a `UnidentifiedProducer` class and corresponding JUnit test class which illustrates the overloading of the `send()` method with the needed destination.
+
+This concludes the JMS Hello World example using ActiveMQ. If you found this post helpful or have any questions or remarks, please leave a comment.
