@@ -57,7 +57,7 @@ normal messages.
 
 For example [on ActiveMQ, there are a number of settings that need to be made in order to support message priority](http://activemq.apache.org/how-can-i-support-priority-queues.html). A typical example is lowering the consumer prefetch to 1 to ensure getting the high priority messages from the store ahead of lower priority messages. However this sort of tradeoff can have significant performance implications, so always test your scenarios thoroughly.
 
-Checkout following link if you would like to [know more on how ActiveMQ message priorities work](http://blog.christianposta.com/activemq/activemq-message-priorities-how-it-works/){:target="_blank"}.
+Checkout following link if you would like to [know more about how ActiveMQ message priorities work](http://blog.christianposta.com/activemq/activemq-message-priorities-how-it-works/){:target="_blank"}.
 
 # ActiveMQ Message Priority Example
 
@@ -211,9 +211,9 @@ public class Producer {
 }
 ```
 
-For receiving the messages, a `Consumer` class is created with two methods for opening/closing a connection to the message broker. In addition a method to create a message consumer for a specific queue and a method to receive a single message are available on the class.
+For receiving the messages, a `Consumer` class is created with two methods for opening/closing a connection to the message broker. In addition, a method to create a message consumer for a specific queue and a method to receive a single message are available on the class.
 
-> Note that instead of using the default connection to the ActiveMQ broker, we have specified the <var>'messagePrioritySupported'</var> property in order to assure the message are prioritized on consumer side.
+> Note that instead of using the default connection to the ActiveMQ broker, we have specified the <var>'messagePrioritySupported'</var> property in order to assure the message are prioritized on the consumer side.
 
 ``` java
 package com.codenotfound.jms.priority;
@@ -285,7 +285,7 @@ public class Consumer {
 
 Last, a JUnit test class in which a first `testSend()` test case will send three messages with default priority to a <var>'priority.q'</var> queue. It then verifies if the messages are read in first in, first out (FIFO) order.
 
-A second `testSendWithPriority()` test case which will send three messages with custom priorities where the last message gets the highest priority. In turn it verifies if the message are read in last in, first out (LIFO) order.
+A second `testSendWithPriority()` test case which will send three messages with custom priorities where the last message gets the highest priority. In turn, it verifies if the messages are read in last in, first out (LIFO) order.
 
 ``` java
 package com.codenotfound.jms.priority;
