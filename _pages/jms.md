@@ -29,12 +29,12 @@ The [Java Message Service (JMS) API](http://docs.oracle.com/javaee/6/tutorial/do
 
 ## Tools
 
-* [JMS - HermesJMS Download & Installation ]({{ site.url }}/2014/01/jms-hermesjms-download-installation.html)
+* [JMS - HermesJMS Download & Installation ]({{ site.url }}/jms-hermesjms-download-installation.html)
 
 ## JMS Provider Setup
 
 * [JMS - Apache ActiveMQ Installation]({{ site.url }}/2014/01/jms-apache-activemq-installation.html)
-* [AMQP - Install RabbitMQ on Windows]({{ site.url }}/2014/11/amqp-install-rabbitmq-windows.html)
+* [AMQP - Install RabbitMQ on Windows]({{ site.url }}/rabbitmq-download-install-windows.html)
 
 ## References
 

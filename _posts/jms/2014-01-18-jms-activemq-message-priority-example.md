@@ -55,7 +55,7 @@ normal messages.
 
 > When implementing JMS priority it is important to realize that correct configuration of the JMS provider and consumers/producers is key in getting higher-priority messages delivered before lower-priority ones. It is also important to note that **the JMS specification does not mandate a provider to implement a strict priority ordering of messages**.
 
-For example [on ActiveMQ, there are a number of settings that need to be made in order to support message priority](http://activemq.apache.org/how-can-i-support-priority-queues.html). A typical example is lowering the consumer prefetch to 1 to ensure getting the high priority messages from the store ahead of lower priority messages. However this sort of tradeoff can have significant performance implications, so always test your scenarios thoroughly.
+For example [on ActiveMQ, there are a number of settings that need to be made in order to support message priority](http://activemq.apache.org/how-can-i-support-priority-queues.html){:target="_blank"}. A typical example is lowering the consumer prefetch to 1 to ensure getting the high priority messages from the store ahead of lower priority messages. However this sort of tradeoff can have significant performance implications, so always test your scenarios thoroughly.
 
 Checkout following link if you would like to [know more about how ActiveMQ message priorities work](http://blog.christianposta.com/activemq/activemq-message-priorities-how-it-works/){:target="_blank"}.
 
