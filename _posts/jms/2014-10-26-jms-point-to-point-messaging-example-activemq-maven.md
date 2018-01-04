@@ -40,7 +40,7 @@ Tools used:
 * ActiveMQ 5.15
 * Maven 3.5
 
-The code is built and run using [Maven](https://maven.apache.org/){:target="_blank"}. Specified below is the Maven POM file which contains the needed dependencies for Logback, JUnit, and ActiveMQ.
+The code is built and run using [Maven](https://maven.apache.org/){:target="_blank"}. Specified below is the Maven POM file which contains the needed dependencies for Logback, JUnit, and [Apache ActiveMQ](http://activemq.apache.org/){:target="_blank"}.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
