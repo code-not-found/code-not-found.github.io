@@ -3,16 +3,16 @@ title: Apache CXF - Logging SOAP Request Response Fault Messages Example
 permalink: /apache-cxf-logging-soap-request-response-fault-messages-example.html
 excerpt: A detailed step-by-step tutorial on how to setup CXF to log SOAP request, response and fault messages.
 date: 2017-07-22
-modified: 2017-07-22
+last_modified_at: 2017-07-22
 header:
-  teaser: "assets/images/apache-cxf-teaser.png"
+  teaser: "assets/images/teaser/apache-cxf-teaser.png"
 categories: [Apache CXF - JAX-WS]
 tags: [Apache CXF, CXF, Example, Fault, Feature, Interceptor, Logging, Maven, Request, Response, SOAP, Spring Boot, Tutorial]
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
 [Since Apache CXF 3.1](http://cxf.apache.org/docs/message-logging.html){:target="_blank"}, the message logging code was moved into a separate module and gathered a number of new features.
@@ -25,7 +25,7 @@ If you want to learn more about Apache CXF for JAX-WS - head on over to the [Apa
 # General Project Setup
 
 Tools used:
-* Apache CXF 3.1
+* Apache CXF 3.2
 * Spring Boot 1.5
 * Maven 3.5
 
@@ -128,16 +128,23 @@ As the sample TicketAgent WSDL does not contain a SOAP fault we will add one in 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.4.RELEASE</version>
+    <version>1.5.9.RELEASE</version>
   </parent>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
 
-    <cxf.version>3.1.12</cxf.version>
+    <cxf.version>3.2.1</cxf.version>
   </properties>
 
   <dependencies>
+    <!-- spring-boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
     <!-- cxf -->
     <dependency>
       <groupId>org.apache.cxf</groupId>
@@ -148,12 +155,6 @@ As the sample TicketAgent WSDL does not contain a SOAP fault we will add one in 
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-features-logging</artifactId>
       <version>${cxf.version}</version>
-    </dependency>
-    <!-- spring-boot -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -195,7 +196,7 @@ As the sample TicketAgent WSDL does not contain a SOAP fault we will add one in 
 
 # Configure the CXF LoggingInInterceptor and CXF LoggingOutInterceptor
 
-[Interceptors](https://cxf.apache.org/docs/interceptors.html){:target="_blank"} are the fundamental processing unit inside CXF. For more information checkout following post on the basic [CXF interceptor architecture]({{ site.url }}/2015/01/cxf-feature-vs-interceptor.html).
+[Interceptors](https://cxf.apache.org/docs/interceptors.html){:target="_blank"} are the fundamental processing unit inside CXF. For more information checkout following post on the basic [CXF interceptor architecture]({{ site.url }}/cxf-feature-vs-interceptor.html).
 
 CXF ships with a `LoggingInInterceptor` that allows logging of the **received** (IN) messages. In addition, for logging **sent** (OUT) messages, a `LoggingOutInterceptor` is provided. These interceptors can be added to one of the CXF interceptor providers (`Client`, `Endpoint`, `Service`, `Bus` or `Binding`) that implement the `InterceptorProvider` interface.
 
@@ -205,7 +206,6 @@ In order to demonstrate this, we will add both `LoggingInInterceptor` and `Loggi
 
 ``` java
 package com.codenotfound.client;
-
 
 import org.apache.cxf.ext.logging.LoggingInInterceptor;
 import org.apache.cxf.ext.logging.LoggingOutInterceptor;
@@ -223,16 +223,20 @@ public class ClientConfig {
 
   @Bean(name = "ticketAgentProxy")
   public TicketAgent ticketAgentProxy() {
-    JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+    JaxWsProxyFactoryBean jaxWsProxyFactoryBean =
+        new JaxWsProxyFactoryBean();
     jaxWsProxyFactoryBean.setServiceClass(TicketAgent.class);
     jaxWsProxyFactoryBean.setAddress(address);
 
     // add an interceptor to log the outgoing request messages
-    jaxWsProxyFactoryBean.getOutInterceptors().add(loggingOutInterceptor());
+    jaxWsProxyFactoryBean.getOutInterceptors()
+        .add(loggingOutInterceptor());
     // add an interceptor to log the incoming response messages
-    jaxWsProxyFactoryBean.getInInterceptors().add(loggingInInterceptor());
+    jaxWsProxyFactoryBean.getInInterceptors()
+        .add(loggingInInterceptor());
     // add an interceptor to log the incoming fault messages
-    jaxWsProxyFactoryBean.getInFaultInterceptors().add(loggingInInterceptor());
+    jaxWsProxyFactoryBean.getInFaultInterceptors()
+        .add(loggingInInterceptor());
 
     return (TicketAgent) jaxWsProxyFactoryBean.create();
   }
@@ -280,7 +284,8 @@ public class EndpointConfig {
 
   @Bean
   public Endpoint endpoint() {
-    EndpointImpl endpoint = new EndpointImpl(bus(), new TicketAgentImpl());
+    EndpointImpl endpoint =
+        new EndpointImpl(bus(), new TicketAgentImpl());
     endpoint.publish("/ticketagent");
 
     return endpoint;
@@ -288,7 +293,8 @@ public class EndpointConfig {
 
   @Bean
   public Bus bus() {
-    cxfBus.setFeatures(new ArrayList<>(Arrays.asList(loggingFeature())));
+    cxfBus.setFeatures(
+        new ArrayList<>(Arrays.asList(loggingFeature())));
 
     return cxfBus;
   }
@@ -361,8 +367,7 @@ In this sample, we will avoid logging all messages that are received (by either 
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-      </pattern>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
   </appender>
 
@@ -374,12 +379,9 @@ In this sample, we will avoid logging all messages that are received (by either 
   <logger name="org.apache.cxf.services" level="INFO" />
 
   <!-- fine tune individual service logging -->
-  <logger name="org.apache.cxf.services.TicketAgent.REQ_IN"
-    level="WARN" />
-  <logger name="org.apache.cxf.services.TicketAgent.RESP_IN"
-    level="WARN" />
-  <logger name="org.apache.cxf.services.TicketAgent.FAULT_IN"
-    level="WARN" />
+  <logger name="org.apache.cxf.services.TicketAgent.REQ_IN" level="WARN" />
+  <logger name="org.apache.cxf.services.TicketAgent.RESP_IN" level="WARN" />
+  <logger name="org.apache.cxf.services.TicketAgent.FAULT_IN" level="WARN" />
 
   <root level="WARN">
     <appender-ref ref="STDOUT" />
@@ -448,7 +450,7 @@ Maven will download the needed dependencies, compile the code and run the unit t
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
 07:27:54.753 [main] INFO  c.c.SpringCxfApplicationTests - Starting SpringCxfApplicationTests on cnf-pc with PID 1000 (started by CodeNotFound in c:\codenotfound\code\cxf-jaxws\cxf-jaxws-logging-logback)
 07:27:54.755 [main] INFO  c.c.SpringCxfApplicationTests - No active profile set, falling back to default profiles: default
@@ -536,7 +538,7 @@ Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/cxf-jaxws/tree/master/cxf-jaxws-logging-logback).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/cxf-jaxws/tree/master/cxf-jaxws-logging-logback){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
