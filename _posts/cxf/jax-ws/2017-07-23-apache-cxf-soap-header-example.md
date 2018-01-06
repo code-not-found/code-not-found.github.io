@@ -1,5 +1,5 @@
 ---
-title: Apache CXF - SOAP Header Example
+title: "Apache CXF - SOAP Header Example"
 permalink: /apache-cxf-soap-header-example.html
 excerpt: "A detailed step-by-step tutorial on how to add and get a SOAP header using Apache CXF and Spring Boot."
 date: 2017-07-23

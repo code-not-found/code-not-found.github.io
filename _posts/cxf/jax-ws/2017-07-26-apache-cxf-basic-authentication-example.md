@@ -1,18 +1,18 @@
 ---
-title: Apache CXF - Basic Authentication Example
+title: "Apache CXF - Basic Authentication Example"
 permalink: /apache-cxf-basic-authentication-example.html
 excerpt: "A detailed step-by-step tutorial on how to configure basic authentication using Apache CXF and Spring Boot."
 date: 2017-07-26
-modified: 2017-07-26
+last_modified_at: 2017-07-26
 header:
-  teaser: "assets/images/apache-cxf-teaser.png"
+  teaser: "assets/images/teaser/apache-cxf-teaser.png"
 categories: [Apache CXF - JAX-WS]
 tags: [Apache CXF, Basic Authentication, Client, CXF, Endpoint, Example, HTTP, Maven, Spring Boot, Tutorial]
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
 [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication){:target="_blank"} (BA) is a method for a HTTP client to provide a user name and password when making a request. There is no [confidentiality](https://en.wikipedia.org/wiki/Confidentiality){:target="_blank"} protection for the transmitted credentials. therefore it is strongly advised to use it in conjunction with HTTPS.
@@ -45,13 +45,13 @@ If you want to learn more about Apache CXF for JAX-WS - head on over to the [Apa
 # General Project Setup
 
 Tools used:
-* Apache CXF 3.1
+* Apache CXF 3.2
 * Spring Boot 1.5
 * Maven 3.5
 
 The setup of the sample is based on a previous [Apache CXF tutorial]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html) in which we have swapped out the basic <var>helloworld.wsdl</var> for a more generic <var>ticketagent.wsdl</var> from the [W3C WSDL 1.1 specification](https://www.w3.org/TR/wsdl11elementidentifiers/#Iri-ref-ex){:target="_blank"}.
 
-In order for this example to work we need to add one additional dependency to the Maven POM file which is the `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters){:target="_blank"} dependency that will be used for the server setup.
+In order for this example to work we need to add one additional dependency to the Maven POM file which is the `spring-boot-starter-security` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} dependency that will be used for the server setup.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -71,31 +71,32 @@ In order for this example to work we need to add one additional dependency to th
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.4.RELEASE</version>
+    <version>1.5.9.RELEASE</version>
   </parent>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
 
-    <cxf.version>3.1.12</cxf.version>
+    <cxf.version>3.2.1</cxf.version>
   </properties>
 
   <dependencies>
-    <!-- cxf -->
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
-      <version>${cxf.version}</version>
-    </dependency>
     <!-- spring-boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- cxf -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+      <version>${cxf.version}</version>
     </dependency>
   </dependencies>
 
@@ -141,7 +142,15 @@ The CXF framework ships with an `AuthorizationPolicy` class that can be set on t
 
 We update the `ClientConfig` by adding a <var>'basicAuthorization'</var> `Bean` on which we set the username and password that are both retrieved from the <var>application.yml</var> properties file. As a basic authentication HTTP header needs to be added we set the type to <var>'Basic'</var>.
 
-The `HTTPConduit` is retieved from the <var>'ticketAgentProxy'</var> `Bean` and using the `setAuthorization()` method the policy is set.
+``` yaml
+client:
+  ticketagent:
+    address: http://localhost:9090/codenotfound/ws/ticketagent
+    user-name: codenotfound
+    password: p455w0rd
+```
+
+The `HTTPConduit` is retrieved from the <var>'ticketAgentProxy'</var> `Bean` and using the `setAuthorization()` method the policy is set.
 
 ``` java
 package com.codenotfound.client;
@@ -161,16 +170,17 @@ public class ClientConfig {
 
   @Value("${client.ticketagent.address}")
   private String address;
-  
+
   @Value("${client.ticketagent.user-name}")
   private String userName;
-  
+
   @Value("${client.ticketagent.password}")
   private String password;
 
   @Bean(name = "ticketAgentProxy")
   public TicketAgent ticketAgentProxy() {
-    JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+    JaxWsProxyFactoryBean jaxWsProxyFactoryBean =
+        new JaxWsProxyFactoryBean();
     jaxWsProxyFactoryBean.setServiceClass(TicketAgent.class);
     jaxWsProxyFactoryBean.setAddress(address);
 
@@ -184,7 +194,8 @@ public class ClientConfig {
 
   @Bean
   public HTTPConduit ticketAgentConduit() {
-    HTTPConduit httpConduit = (HTTPConduit) ticketAgentClientProxy().getConduit();
+    HTTPConduit httpConduit =
+        (HTTPConduit) ticketAgentClientProxy().getConduit();
     httpConduit.setAuthorization(basicAuthorization());
 
     return httpConduit;
@@ -192,7 +203,8 @@ public class ClientConfig {
 
   @Bean
   public AuthorizationPolicy basicAuthorization() {
-    AuthorizationPolicy authorizationPolicy = new AuthorizationPolicy();
+    AuthorizationPolicy authorizationPolicy =
+        new AuthorizationPolicy();
     authorizationPolicy.setUserName(userName);
     authorizationPolicy.setPassword(password);
     authorizationPolicy.setAuthorizationType("Basic");
@@ -234,7 +246,7 @@ The test case will run successfully as basic authentication is correctly configu
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
 20:01:07.938 [main] INFO  c.c.SpringCxfApplicationTests - Starting SpringCxfApplicationTests on cnf-pc with PID 4104 (started by CodeNotFound in c:\codenotfound\code\cxf-jaxws\cxf-jaxws-basic-authenticat
 ion)
@@ -285,7 +297,7 @@ Now change the password in the <var>application.yml</var> file to a different va
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
 21:33:07.861 [main] INFO  c.c.SpringCxfApplicationTests - Starting SpringCxfApplicationTests on cnf-pc with PID 3308 (started by CodeNotFound in c:\codenotfound\code\cxf-jaxws\cxf-jaxws-basic-authenticat
 ion)
@@ -369,7 +381,7 @@ javax.xml.ws.WebServiceException: Could not send Message.
 Results :
 
 Tests in error:
-  SpringCxfApplicationTests.testListFlights:26 ╗ WebService Could not send Messa...
+  SpringCxfApplicationTests.testListFlights:26 WebService Could not send Messa...
 
 Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
 
@@ -386,7 +398,7 @@ Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/cxf-jaxws/tree/master/cxf-jaxws-basic-authentication).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/cxf-jaxws/tree/master/cxf-jaxws-basic-authentication){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 

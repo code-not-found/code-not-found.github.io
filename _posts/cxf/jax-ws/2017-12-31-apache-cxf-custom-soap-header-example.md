@@ -1,18 +1,18 @@
 ---
-title: Apache CXF - Custom SOAP Header Example
+title: "Apache CXF - Custom SOAP Header Example"
 permalink: /apache-cxf-custom-soap-header-example.html
 excerpt: "A detailed step-by-step tutorial on how to add and get a custom SOAP header using Apache CXF and Spring Boot."
 date: 2017-07-24
-modified: 2017-07-24
+last_modified_at: 2017-07-24
 header:
-  teaser: "assets/images/apache-cxf-teaser.png"
+  teaser: "assets/images/teaser/apache-cxf-teaser.png"
 categories: [Apache CXF - JAX-WS]
 tags: [Apache CXF, Client, CXF, Endpoint, Example, Header, Maven, SOAP, Spring Boot, Tutorial]
 published: false
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
 The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497){:target="_blank"} is an optional sub-element of the SOAP envelope. It is used to pass application related information that is processed by SOAP nodes along the message flow.

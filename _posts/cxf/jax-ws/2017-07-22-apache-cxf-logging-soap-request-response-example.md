@@ -1,7 +1,7 @@
 ---
-title: Apache CXF - Logging SOAP Request Response Fault Messages Example
+title: "Apache CXF - Logging SOAP Request Response Fault Messages Example"
 permalink: /apache-cxf-logging-soap-request-response-fault-messages-example.html
-excerpt: A detailed step-by-step tutorial on how to setup CXF to log SOAP request, response and fault messages.
+excerpt: "A detailed step-by-step tutorial on how to setup CXF to log SOAP request, response and fault messages."
 date: 2017-07-22
 last_modified_at: 2017-07-22
 header:
