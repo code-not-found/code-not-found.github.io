@@ -1,11 +1,11 @@
 ---
-title: Apache CXF - Spring Boot SOAP Web Service Client Server Example
+title: "Apache CXF - Spring Boot SOAP Web Service Client Server Example"
 permalink: /apache-cxf-spring-boot-soap-web-service-client-server-example.html
-excerpt: A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Apache CXF and Spring Boot.
+excerpt: "A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Apache CXF and Spring Boot."
 date: 2016-10-16
-modified: 2016-10-16
+last_modified_at: 2015-01-08
 header:
-  teaser: "assets/images/apache-cxf-teaser.png"
+  teaser: "assets/images/teaser/apache-cxf-teaser.png"
 categories: [Apache CXF - JAX-WS]
 tags: [Apache CXF, Client, Consumer, Contract First, CXF, Endpoint, Example, Hello World, Maven, Provider, SOAP, Spring Boot, Tutorial, WSDL]
 redirect_from:
@@ -15,7 +15,7 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
 [Apache CXF](http://cxf.apache.org/){:target="_blank"} is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS.
@@ -28,11 +28,11 @@ If you want to learn more about Apache CXF for JAX-WS - head on over to the [Apa
 # General Project Setup
 
 Tools used:
-* Apache CXF 3.1
+* Apache CXF 3.2
 * Spring Boot 1.5
 * Maven 3.5
 
-The below code is organized in such a way that you can choose to only run the [client]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-client-consumer) (consumer) or [endpoint]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-endpoint-provider) (provider) part. In the example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
+The below code is organized in such a way that you can choose to only run the [client]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-client-consumer) (consumer) or [endpoint]({{ site.url }}/apache-cxf-spring-boot-soap-web-service-client-server-example.html#creating-the-cxf-endpoint-provider) (provider) part. In the example, we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
 For this example, we will start from an existing WSDL file (contract-first) which is shown below. The content represents a SOAP service in which a person is sent as input and a greeting is received as a response.
 
@@ -107,7 +107,7 @@ For this example, we will start from an existing WSDL file (contract-first) whic
 </wsdl:definitions>
 ```
 
-[Maven](https://maven.apache.org/){:target="_blank"} is used to build and run the example. The Hello World service endpoint will be hosted on an embedded Apache Tomcat server that ships directly with [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"}. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application.
+[Maven](https://maven.apache.org/){:target="_blank"} is used to build and run the example. The Hello World service endpoint will be hosted on an embedded Apache Tomcat server that ships directly with [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"}. To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application.
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
@@ -124,38 +124,39 @@ To take advantage of Spring Boot's capability to create a single, runnable "uber
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.codenotfound</groupId>
-  <artifactId>cxf-jaxws-helloworld-example</artifactId>
+  <artifactId>cxf-jaxws-spring-boot</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>cxf-jaxws-helloworld-example</name>
+  <name>cxf-jaxws-spring-boot</name>
   <description>Apache CXF - Spring Boot SOAP Web Service Client Server Example</description>
-  <url>https://www.codenotfound.com/2016/10/cxf-spring-boot-soap-web-service-client-server-example.html</url>
+  <url>https://www.codenotfound.com/apache-cxf-spring-boot-soap-web-service-client-server-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.4.RELEASE</version>
+    <version>1.5.9.RELEASE</version>
   </parent>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
 
-    <cxf.version>3.1.12</cxf.version>
+    <cxf.version>3.2.1</cxf.version>
   </properties>
 
   <dependencies>
-    <!-- cxf -->
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
-      <version>${cxf.version}</version>
-    </dependency>
     <!-- spring-boot -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <!-- cxf -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+      <version>${cxf.version}</version>
     </dependency>
   </dependencies>
 
@@ -228,9 +229,9 @@ public class SpringCxfApplication {
 
 # Creating the CXF Endpoint (Provider)
 
-In order for the CXF framework to be able to process incoming SOAP request over HTTP, we need to setup a `CXFServlet`. In our previous [CXF SOAP Web Service tutorial]({{ site.url }}/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) we did this by using a deployment descriptor file (<var>web.xml</var> file under the <var>WEB-INF</var> directory) or an alternative with Spring is to use a `ServletRegistrationBean`. In this example there is nothing to be done as the `cxf-spring-boot-starter-jaxws` automatically register the `CXFServlet` for us, great!
+In order for the CXF framework to be able to process incoming SOAP request over HTTP, we need to setup a `CXFServlet`. In our previous [CXF SOAP Web Service tutorial]({{ site.url }}/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) we did this by using a deployment descriptor file (<var>web.xml</var> file under the <var>WEB-INF</var> directory) or an alternative with Spring is to use a `ServletRegistrationBean`. In this example, there is nothing to be done as the `cxf-spring-boot-starter-jaxws` automatically register the `CXFServlet` for us, great!
 
-In this example we want the `CXFServlet` to listen for incoming requests on the following URI: "<kbd>/codenotfound/ws</kbd>", instead of the default value which is: "<kbd>/services/*</kbd>". This can be achieved by setting the <var>'cxf.path'</var> property in the <var>application.yml</var> file located under the <var>src/main/resources</var> folder.
+We want the `CXFServlet` to listen for incoming requests on the following URI: "<kbd>/codenotfound/ws</kbd>", instead of the default value which is: "<kbd>/services/*</kbd>". This can be achieved by setting the <var>'cxf.path'</var> property in the <var>application.yml</var> file located under the <var>src/main/resources</var> folder.
 
 ``` yaml
 client:
@@ -267,7 +268,8 @@ public class EndpointConfig {
 
   @Bean
   public Endpoint endpoint() {
-    EndpointImpl endpoint = new EndpointImpl(bus, new HelloWorldImpl());
+    EndpointImpl endpoint =
+        new EndpointImpl(bus, new HelloWorldImpl());
     endpoint.publish("/helloworld");
 
     return endpoint;
@@ -289,7 +291,8 @@ public class HelloWorldImpl implements HelloWorldPortType {
 
   @Override
   public Greeting sayHello(Person request) {
-    String greeting = "Hello " + request.getFirstName() + " " + request.getLastName() + "!";
+    String greeting = "Hello " + request.getFirstName() + " "
+        + request.getLastName() + "!";
 
     ObjectFactory factory = new ObjectFactory();
     Greeting response = factory.createGreeting();
@@ -328,7 +331,8 @@ public class ClientConfig {
 
   @Bean(name = "helloWorldProxy")
   public HelloWorldPortType helloWorldProxy() {
-    JaxWsProxyFactoryBean jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
+    JaxWsProxyFactoryBean jaxWsProxyFactoryBean =
+        new JaxWsProxyFactoryBean();
     jaxWsProxyFactoryBean.setServiceClass(HelloWorldPortType.class);
     jaxWsProxyFactoryBean.setAddress(address);
 
@@ -403,7 +407,8 @@ public class SpringCxfApplicationTests {
 
   @Test
   public void testSayHello() {
-    assertThat(helloWorldClient.sayHello("John", "Doe")).isEqualTo("Hello John Doe!");
+    assertThat(helloWorldClient.sayHello("John", "Doe"))
+        .isEqualTo("Hello John Doe!");
   }
 }
 ```
@@ -423,13 +428,12 @@ Maven will download the needed dependencies, compile the code and run the unit t
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
-13:08:44.303 [main] INFO  c.c.SpringCxfApplicationTests - Starting SpringCxfApplicationTests on cnf-pc with PID 4404 (started by CodeNotFound in c:\codenotfound\code\cxf-jaxws\cxf-jaxws-helloworld-exampl
-e)
-13:08:44.306 [main] INFO  c.c.SpringCxfApplicationTests - No active profile set, falling back to default profiles: default
-13:08:47.224 [main] INFO  c.c.SpringCxfApplicationTests - Started SpringCxfApplicationTests in 3.203 seconds (JVM running for 3.894)
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.57 sec - in com.codenotfound.SpringCxfApplicationTests
+10:26:47.793 [main] INFO  c.c.SpringCxfApplicationTests - Starting SpringCxfApplicationTests on cnf-pc with PID 5732 (started by CodeNotFound in c:\codenotfound\code\cxf-jaxws\cxf-jaxws-spring-boot)
+10:26:47.796 [main] INFO  c.c.SpringCxfApplicationTests - No active profile set, falling back to default profiles: default
+10:26:51.132 [main] INFO  c.c.SpringCxfApplicationTests - Started SpringCxfApplicationTests in 3.7 seconds (JVM running for 4.39)
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.141 sec - in com.codenotfound.SpringCxfApplicationTests
 
 Results :
 
@@ -438,9 +442,9 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 6.312 s
-[INFO] Finished at: 2017-07-21T13:08:47+02:00
-[INFO] Final Memory: 21M/220M
+[INFO] Total time: 7.924 s
+[INFO] Finished at: 2018-01-06T10:26:51+01:00
+[INFO] Final Memory: 32M/360M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -454,10 +458,10 @@ mvn spring-boot:run
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/cxf-jaxws/tree/master/cxf-jaxws-helloworld-example).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-primefaces-spring-boot){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes our example on how to use Apache CXF together with Spring Boot in order to create a Web Service client and server starting from a WSDL file.
+This concludes our example of how to use Apache CXF together with Spring Boot in order to create a Web Service client and server starting from a WSDL file.
 
 Drop a line in case something was unclear or if you just liked the tutorial.
