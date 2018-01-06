@@ -309,7 +309,7 @@ public class EndpointConfig {
 }
 ```
 
-> There is also an `@Features` annotation that can be used on either the service endpoint interface (SEI) or the SEI implementation class. In this example we have already added the `LoggingFeature` to the CXF bus but if we wanted to use the annotation instead it would need to be applied to the `TicketAgentImpl` class as shown below.
+> There is also an `@Features` annotation that can be used on either the service endpoint interface (SEI) or the SEI implementation class. In this example, we have already added the `LoggingFeature` to the CXF bus but if we wanted to use the annotation instead it would need to be applied to the `TicketAgentImpl` class as shown below.
 
 ``` java
 package com.codenotfound.endpoint;
@@ -360,7 +360,7 @@ You can use the logger name to fine tune which services you want to log. The log
 * RESP_OUT
 * FAULT_OUT
 
-In this sample, we will avoid logging all messages that are received (by either client or endpoint) by setting them to <var>'WARN'</var>.
+> In this sample, we only want to log the messages that are sent. In other words, we don't want to log the messages that are received (by either client or endpoint). As such we sett them to <var>'WARN'</var>.
 
 ``` xml
 <configuration>

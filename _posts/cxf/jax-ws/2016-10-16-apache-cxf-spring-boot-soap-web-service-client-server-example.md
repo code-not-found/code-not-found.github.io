@@ -3,7 +3,7 @@ title: "Apache CXF - Spring Boot SOAP Web Service Client Server Example"
 permalink: /apache-cxf-spring-boot-soap-web-service-client-server-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement a Hello World web service starting from a WSDL and using Apache CXF and Spring Boot."
 date: 2016-10-16
-last_modified_at: 2015-01-08
+last_modified_at: 2016-10-16
 header:
   teaser: "assets/images/teaser/apache-cxf-teaser.png"
 categories: [Apache CXF - JAX-WS]
@@ -205,7 +205,7 @@ mvn generate-sources
 After running above command you should be able to find back a number of auto-generated classes among which the `HelloWorldPortType` interface in addition to `Person` and `Greeting` as shown below. 
 
 <figure>
-    <img src="{{ site.url }}/assets/images/cxf/jaxws/cxf-codegen-plugin-generated-classes.png" alt="cxf-codegen-plugin generated classes">
+    <img src="{{ site.url }}/assets/images/posts/cxf/jaxws/cxf-codegen-plugin-generated-classes.png" alt="cxf-codegen-plugin generated classes">
 </figure>
 
 Next, we create a `SpringCxfApplication` class. It contains a `main()` method that delegates to Spring Boot's `SpringApplication` class by calling `run()`. `SpringApplication` will bootstrap our application, starting Spring which will, in turn, start the auto-configured Tomcat web server.

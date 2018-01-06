@@ -3,16 +3,16 @@ title: Apache CXF - SOAP Header Example
 permalink: /apache-cxf-soap-header-example.html
 excerpt: "A detailed step-by-step tutorial on how to add and get a SOAP header using Apache CXF and Spring Boot."
 date: 2017-07-23
-modified: 2017-07-23
+last_modified_at: 2017-07-23
 header:
-  teaser: "assets/images/apache-cxf-teaser.png"
+  teaser: "assets/images/teaser/apache-cxf-teaser.png"
 categories: [Apache CXF - JAX-WS]
 tags: [Apache CXF, Client, CXF, Endpoint, Example, Header, Maven, SOAP, Spring Boot, Tutorial]
 published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
 The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497){:target="_blank"} is an optional sub-element of the SOAP envelope. It is used to pass application related information that is processed by SOAP nodes along the message flow.
@@ -25,7 +25,7 @@ If you want to learn more about Apache CXF for JAX-WS - head on over to the [Apa
 # General Project Setup
 
 Tools used:
-* Apache CXF 3.1
+* Apache CXF 3.2
 * Spring Boot 1.5
 * Maven 3.5
 
@@ -35,7 +35,7 @@ There are two different ways to define the use of SOAP header fields in a Web se
 
 A header definition is called explicit if it is part of the service <var>'&lt;portType&gt;'</var>. If the message part that is transferred in the header does not show up anywhere in the <var>'&lt;portType&gt;'</var> element, then it is an implicit header.
 
-In the context of this code sample, we will tackle implicit SOAP headers. The reason for this is that with explicit headers there is no specific configuration needed in order to have CXF process the headers and make them available as part of the generated service interface. For those interested, there is an [explicit SOAP header CXF project](https://github.com/code-not-found/cxf-jaxws/tree/master/cxf-jaxws-soap-header-explicit) available on the CXF JAX-WS GitHub repository.
+In the context of this code sample, we will tackle implicit SOAP headers. The reason for this is that with explicit headers there is no specific configuration needed in order to have CXF process the headers and make them available as part of the generated service interface. For those interested, there is an [explicit SOAP header CXF project](https://github.com/code-not-found/cxf-jaxws/tree/master/cxf-jaxws-soap-header-explicit){:target="_blank"} available on the [CXF JAX-WS GitHub repository](https://github.com/code-not-found/cxf-jaxws){:target="_blank"}.
 
 As the sample ticketing WSDL does not contain a SOAP header we will add an <var>'clientId'</var> element. Note that the header is only defined on the binding, as such it is implicit.
 
@@ -128,33 +128,34 @@ In the Maven POM file, add the <var>&lt;extendedSoapHeaders&gt;</var> element wi
   <packaging>jar</packaging>
 
   <name>cxf-jaxws-soap-header</name>
-  <description>Spring WS - SOAP Header Example</description>
+  <description>Apache CXF - SOAP Header Example</description>
   <url>https://www.codenotfound.com/apache-cxf-soap-header-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.4.RELEASE</version>
+    <version>1.5.9.RELEASE</version>
   </parent>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
 
-    <cxf.version>3.1.12</cxf.version>
+    <cxf.version>3.2.1</cxf.version>
   </properties>
 
   <dependencies>
-    <!-- cxf -->
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
-      <version>${cxf.version}</version>
-    </dependency>
     <!-- spring-boot -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <!-- cxf -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+      <version>${cxf.version}</version>
     </dependency>
   </dependencies>
 
@@ -180,7 +181,8 @@ In the Maven POM file, add the <var>&lt;extendedSoapHeaders&gt;</var> element wi
                 <wsdlOption>
                   <wsdl>${project.basedir}/src/main/resources/wsdl/ticketagent.wsdl</wsdl>
                   <wsdlLocation>classpath:wsdl/ticketagent.wsdl</wsdlLocation>
-                  <!-- enables processing of implicit SOAP headers, default is false -->
+                  <!-- enables processing of implicit SOAP headers, default 
+                    is false -->
                   <extendedSoapHeaders>true</extendedSoapHeaders>
                 </wsdlOption>
               </wsdlOptions>
@@ -203,7 +205,7 @@ mvn generate-sources
 ```
 
 <figure>
-    <img src="{{ site.url }}/assets/images/cxf/jaxws/cxf-codegen-plugin-soap-header-generated-class.png" alt="cxf-codegen-plugin soap header generated class">
+    <img src="{{ site.url }}/assets/images/posts/cxf/jaxws/cxf-codegen-plugin-soap-header-generated-class.png" alt="cxf-codegen-plugin soap header generated class">
 </figure>
 
 # CXF Add SOAP Header
@@ -235,10 +237,12 @@ public class TicketAgentClient {
     TListFlights tListFlights = factory.createTListFlights();
 
     // create the SOAP header
-    TListFlightsHeader tListFlightsHeader = factory.createTListFlightsHeader();
+    TListFlightsHeader tListFlightsHeader =
+        factory.createTListFlightsHeader();
     tListFlightsHeader.setClientId(clientId);
 
-    TFlightsResponse response = ticketAgentProxy.listFlights(tListFlights, tListFlightsHeader);
+    TFlightsResponse response = ticketAgentProxy
+        .listFlights(tListFlights, tListFlightsHeader);
 
     return response.getFlightNumber();
   }
@@ -267,7 +271,8 @@ import org.example.ticketagent_wsdl11.TicketAgent;
 public class TicketAgentImpl implements TicketAgent {
 
   @Override
-  public TFlightsResponse listFlights(TListFlights body, TListFlightsHeader header) {
+  public TFlightsResponse listFlights(TListFlights body,
+      TListFlightsHeader header) {
     ObjectFactory factory = new ObjectFactory();
     TFlightsResponse response = factory.createTFlightsResponse();
     response.getFlightNumber().add(BigInteger.valueOf(101));
@@ -311,7 +316,8 @@ public class SpringCxfApplicationTests {
 
   @Test
   public void testListFlights() {
-    assertThat(ticketAgentClient.listFlights("abc123").get(1)).isEqualTo(BigInteger.valueOf(202));
+    assertThat(ticketAgentClient.listFlights("abc123").get(1))
+        .isEqualTo(BigInteger.valueOf(202));
   }
 }
 ```
@@ -331,7 +337,7 @@ The outcome should be a successful test run in which the request and response me
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.4.RELEASE)
+ :: Spring Boot ::        (v1.5.9.RELEASE)
 
 11:27:50.992 [main] INFO  c.c.SpringCxfApplicationTests - Starting SpringCxfApplicationTests on cnf-pc with PID 5708 (started by CodeNotFound in c:\codenotfound\code\cxf-jaxws\cxf-jaxws-soap-header)
 11:27:50.994 [main] INFO  c.c.SpringCxfApplicationTests - No active profile set, falling back to default profiles: default
@@ -374,7 +380,7 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-soap-header).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-soap-header){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
