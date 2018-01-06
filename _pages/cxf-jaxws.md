@@ -3,11 +3,11 @@ title: "Apache CXF - JAX-WS"
 permalink: /cxf-jaxws/
 excerpt: "Step-by-step tutorials on Apache CXF and JAX-WS"
 date: 2017-07-21
-modified: 2017-07-21
+last_modified_at: 2018-01-06
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
 [Apache CXF](http://cxf.apache.org/){:target="_blank"} is an open source services framework that helps build and develop services using frontend programming APIs, like JAX-WS.
@@ -18,7 +18,7 @@ modified: 2017-07-21
 
 ## Concepts
 
-* [CXF - Feature vs Interceptor]({{ site.url }}/2015/01/cxf-feature-vs-interceptor.html)
+* [CXF - Feature vs Interceptor]({{ site.url }}/cxf-feature-vs-interceptor.html)
 
 ## Headers
 

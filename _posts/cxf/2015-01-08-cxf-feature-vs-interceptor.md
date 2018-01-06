@@ -11,7 +11,7 @@ tags: [Apache CXF, Concepts, CXF, Feature, Interceptor, Learning]
 redirect_from:
   - /2015/01/cxf-feature-versus-interceptor.html
   - /2015/01/cxf-feature-vs-interceptor.html
-  published: true
+published: true
 ---
 
 <figure>
