@@ -140,7 +140,7 @@ In order for this example to work we need to add one additional dependency to th
 
 The CXF framework ships with an `AuthorizationPolicy` class that can be set on the `HTTPConduit` which handles the HTTP(S) transport protocols.
 
-We update the `ClientConfig` by adding a <var>'basicAuthorization'</var> `Bean` on which we set the username and password that are both retrieved from the <var>application.yml</var> properties file. As a basic authentication HTTP header needs to be added we set the type to <var>'Basic'</var>.
+We update the `ClientConfig` by adding a <var>'basicAuthorization'</var> `Bean` on which we set the username and password that are both retrieved from the <var>application.yml</var> properties file shown below. As a basic authentication HTTP header needs to be added we set the type to <var>'Basic'</var>.
 
 ``` yaml
 client:
