@@ -216,11 +216,11 @@ public class ClientConfig {
 
 # CXF Basic Authentication Server
 
-The Spring Boot security starter that was added to our Maven setup has a dependency on Spring Security. If Spring Security is on the classpath then [web applications will automatically be secured with HTTP basic authentication](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security){:target="_blank"} on all HTTP endpoints. In other words our, `TicketAgentEndpoint` is now secured with basic auth.
+The Spring Boot security starter that was added to our Maven setup has a dependency on Spring Security. If Spring Security is on the classpath then [web applications will automatically be secured with HTTP basic authentication](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/html/boot-features-security.html){:target="_blank"} on all HTTP endpoints. In other words our, `TicketAgentEndpoint` is now secured with basic auth.
 
 The default user that will be configured has as name <var>'user'</var>. The password is randomly generated at startup (it is displayed in the startup logs).
 
-Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} in the application properties file. In this example we set the <var>'user'</var> to <kbd>"codenotfound"</kbd> and the <var>'password'</var> to <kbd>"p455w0rd"</kbd> in <var>application.yml</var> using the YAML variant as shown below.
+Typically you will want to configure a custom value for the user and password, in order to do this you need to set the [Spring Boot security properties](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/html/common-application-properties.html){:target="_blank"} in the application properties file. In this example we set the <var>'user'</var> to <kbd>"codenotfound"</kbd> and the <var>'password'</var> to <kbd>"p455w0rd"</kbd> in <var>application.yml</var> using the YAML variant as shown below.
 
 ``` yaml
 security:
