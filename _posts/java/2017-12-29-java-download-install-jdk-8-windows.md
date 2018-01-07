@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to download and install jdk 8u
 date: 2017-12-29
 last_modified_at: 2017-12-29
 header:
-  teaser: "assets/images/header/java-teaser.png"
+  teaser: "assets/images/teaser/java-teaser.png"
 categories: [Java]
 tags: [Download, Install, Java, JDK, jdk 8u152, Tutorial, Windows]
 published: false

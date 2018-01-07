@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to download and install jdk 1.
 date: 2017-11-18
 last_modified_at: 2017-11-18
 header:
-  teaser: "assets/images/header/java-teaser.png"
+  teaser: "assets/images/teaser/java-teaser.png"
 categories: [Java]
 tags: [Download, Install, Java, JDK, jdk 1.7.0_80, Tutorial, Windows]
 published: true

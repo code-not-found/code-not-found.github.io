@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to download and install jdk1.6
 date: 2014-06-28
 last_modified_at: 2014-06-28
 header:
-  teaser: "assets/images/header/java-teaser.png"
+  teaser: "assets/images/teaser/java-teaser.png"
 categories: [Java]
 tags: [Download, Install, Java, JDK, jdk1.6.0_45, Tutorial, Windows]
 redirect_from:

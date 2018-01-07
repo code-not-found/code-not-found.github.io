@@ -5,7 +5,7 @@ excerpt: "A detailed tutorial on how to download and install jdk 1.5.0_22 on Win
 date: 2017-11-19
 last_modified_at: 2017-11-19
 header:
-  teaser: "assets/images/header/java-teaser.png"
+  teaser: "assets/images/teaser/java-teaser.png"
 categories: [Java]
 tags: [Download, Install, Java, JDK, jdk 1.5.0_22, Tutorial, Windows]
 published: true
