@@ -2,8 +2,8 @@
 title: "Java - Download & Install JDK 1.8 on Windows"
 permalink: /java-download-install-jdk-8-windows.html
 excerpt: "A detailed step-by-step tutorial on how to download and install jdk 8u152 on Windows."
-date: 2017-12-29
-last_modified_at: 2017-12-29
+date: 2018-01-09
+last_modified_at: 2018-01-09
 header:
   teaser: "assets/images/teaser/java-teaser.png"
 categories: [Java]

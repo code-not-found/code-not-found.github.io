@@ -138,4 +138,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this post, we illustrated how to configure a Spring Boot PrimeFaces theme. Drop a line below if you enjoyed reading this post.
+In this post, we illustrated how to configure a Spring Boot PrimeFaces theme.
+
+Drop a line below if you enjoyed reading this post.

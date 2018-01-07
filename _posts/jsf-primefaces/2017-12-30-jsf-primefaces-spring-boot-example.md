@@ -280,4 +280,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-JoinFaces makes it easy to setup a PrimeFaces example using Spring Boot and Maven. If you found this post helpful or have any questions or remarks, please leave a comment below.
+JoinFaces makes it easy to setup a PrimeFaces example using Spring Boot and Maven.
+
+If you found this post helpful or have any questions or remarks, please leave a comment below.

@@ -299,4 +299,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Using the PageObject pattern we were able to unit test a previous PrimeFaces Hello World example using Selenium, Spring Boot, and Maven. Drop a line below in case you enjoyed reading or just to let us know how you are testing your JSF application.
+Using the PageObject pattern we were able to unit test a previous PrimeFaces Hello World example using Selenium, Spring Boot, and Maven.
+
+Drop a line below in case you enjoyed reading or just to let us know how you are testing your JSF application.
