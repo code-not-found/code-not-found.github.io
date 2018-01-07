@@ -9,7 +9,7 @@ published: false
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 [Spring Web Services](http://projects.spring.io/spring-ws/) (Spring-WS) framework 

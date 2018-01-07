@@ -12,7 +12,7 @@ published: false
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 [Spring Boot auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html) will try to automatically configure your Spring application based on the JAR dependencies that are available. In other words if the `spring-jms` and `activemq-broker` dependencies are on the classpath and you have not manually configured any `ConnectionFactory`, `JmsTemplate` or `JmsListenerContainerFactory` beans, then Spring Boot will auto-configure them for you using default values.

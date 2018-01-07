@@ -9,7 +9,7 @@ published: false
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.png" alt="spring logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 [Unit testing](https://en.wikipedia.org/wiki/Unit_testing) is a software testing method by which **individual units of source code** are tested to determine whether they are fit for proper operation. Unit testing can be done manually but by preference it is automated. In this example we'll show how to unit test a Spring-WS web service client and endpoint by using Mockito, Spring WS Test, Spring Boot and Maven.

@@ -7,7 +7,7 @@ modified: 2017-12-13
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/spring-logo.jpg" alt="spring logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/spring-logo.png" alt="spring logo" class="logo">
 </figure>
 
 Spring provides a JMS integration framework that simplifies the use of the JMS API much like Spring's integration does for the JDBC API.
