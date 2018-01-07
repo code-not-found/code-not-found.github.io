@@ -35,7 +35,7 @@ java -version
 # Download and Setup ZooKeeper
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-zookeeper-logo.png" alt="apache zookeeper logo">
+    <img src="{{ site.url }}/assets/images/logo/apache-zookeeper-logo.png" alt="apache zookeeper logo">
 </figure>
 
 Head over to the [Apache ZooKeeper download](https://zookeeper.apache.org/releases.html){:target="_blank"} page and and click on the download link in the <var>Download</var> section. This will redirect to a mirror site, click on the suggested mirror link and from the <var>index</var> select the <var>stable</var> directory as shown below. Download the gzipped TAR file.
