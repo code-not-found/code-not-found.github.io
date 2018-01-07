@@ -31,8 +31,6 @@ last_modified_at: 2018-01-06
 ## Logging
 
 * [Apache CXF - Logging SOAP Request Response Fault Messages Example]({{ site.url }}/apache-cxf-logging-soap-request-response-fault-messages-example.html)
-* [JAX-WS - CXF logging request and response SOAP messages using Log4j]({{ site.url }}/2015/01/jaxws-cxf-logging-request-response-soap-messages-log4j.html)
-* [JAX-WS - CXF logging request and response SOAP messages using Log4j2]({{ site.url }}/2015/01/jaxws-cxf-logging-request-response-soap-messages-log4j2.html)
 
 ## References
 
