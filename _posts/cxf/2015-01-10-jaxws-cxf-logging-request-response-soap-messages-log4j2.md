@@ -18,7 +18,7 @@ published: true
     <img src="{{ site.url }}/assets/images/logo/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
-[Apache CXF](https://cxf.apache.org/){:target="_blank"} uses Java SE Logging for both client- and server-side logging of SOAP requests and responses. Logging is activated by use of separate in/out interceptors that can be attached to the requester and/or provider as required. These interceptors can be specified either programmatically (via Java code and/or annotations) or via use of configuration files.
+[Apache CXF](https://cxf.apache.org/){:target="_blank"} uses Java SE Logging for both client- and server-side logging of SOAP requests and responses. Logging is activated by use of separate in/out interceptors that can be attached to the requester and/or provider as required. These interceptors can be specified either programmatically (via Java code and/or annotations) or via the use of configuration files.
 
 The following code sample shows how to configure CXF interceptors using Log4j2 for the Hello World web service from a previous [post]({{ site.url }}/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html).
 
@@ -45,7 +45,7 @@ As the Hello World example uses Spring, the commons-logging calls from the Sprin
     <img src="{{ site.url }}/assets/images/posts/cxf/cxf-logging-using-log4j2.png" alt="cxf logging using log4j2">
 </figure>
 
-The below Maven POM file contains the needed dependencies for the SLF4 bridge `jcl-over-slf4j`, Log4j 2 SLF4J Binding `log4j-slf4j-impl` and Log4j2 `log4j-core`. In addition it contains all other needed dependencies and plugins needed in order to run the example.
+The below Maven POM file contains the needed dependencies for the SLF4 bridge `jcl-over-slf4j`, Log4j 2 SLF4J Binding `log4j-slf4j-impl` and Log4j2 `log4j-core`. In addition, it contains all other needed dependencies and plugins needed in order to run the example.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -250,7 +250,7 @@ Log4j2 can be configured in 1 of 4 ways:
 3. Programmatically, by calling the APIs exposed in the `Configuration` interface to add components to the default configuration.
 4. Programmatically, by calling methods on the internal `Logger` class.
 
-For this example a configuration script in XML is used as shown below. The script will write all logging events to a file except for the request and response SOAP messages that will be written to a different file.
+For this example, a configuration script in XML is used as shown below. The script will write all logging events to a file except for the request and response SOAP messages that will be written to a different file.
 
 After defining some properties that contain the layout pattern and file names, two appenders are configured to write logging events to a rolling file. The first file <var>jaxws-jetty-cxf-logging.log</var> will contain all log events except for the ones emitted by the CXF logging interceptors as these are going to be written to <var>jaxws-jetty-cxf-logging-ws.log</var>.
 
@@ -315,7 +315,7 @@ In order to activate the logging interceptors provided by the CXF framework, the
 
 The other option, where the logging feature is used to configure all interceptors, will be shown in the provider section down below. Check out following post for more information on [cxf feature vs interceptor]({{ site.url }}/cxf-feature-vs-interceptor.html).
 
-First an instance of the abstract `AbstractLoggingInterceptor` class is created to enable pretty printing of the SOAP messages. Next, instances of the `LoggingInInterceptor` and `LoggingOutInterceptor` are specified which have as parent the previously defined `abstractLoggingInterceptor` instance. In a last step the interceptors are added to the CXF bus, which is the backbone of the CXF architecture that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. The interceptors are added to both in/out and respective fault interceptor chains as shown below.
+First, an instance of the abstract `AbstractLoggingInterceptor` class is created to enable pretty printing of the SOAP messages. Next, instances of the `LoggingInInterceptor` and `LoggingOutInterceptor` are specified which have as parent the previously defined `abstractLoggingInterceptor` instance. In a last step, the interceptors are added to the CXF bus, which is the backbone of the CXF architecture that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. The interceptors are added to both in/out and respective fault interceptor chains as shown below.
 
 > Note that interceptors can be added to a client, server or bus.
 
@@ -369,7 +369,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 # Provider
  Activating the interceptors at provider(server) side will be done using the `LoggingFeature` that is supplied with the CXF framework.
 
-First an instance of the abstract `LoggingFeature` class is created with the `prettyLogging` set to true in order to enable pretty printing of the SOAP messages. As with the interceptors, the feature is added to the CXF bus in order to activate them as shown below.
+First, an instance of the abstract `LoggingFeature` class is created with the `prettyLogging` set to true in order to enable pretty printing of the SOAP messages. As with the interceptors, the feature is added to the CXF bus in order to activate them as shown below.
 
 > Note that features can be added to a client, server or a bus.
 
@@ -405,7 +405,7 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
 # Testing
 
-Testing of the service is done using a unit and an integration test case. For the unit test case the provider is created without Spring (using `JaxWsServerFactoryBean`), as such the logging feature needs to be added programmatically as shown below. 
+Testing of the service is done using a unit and an integration test case. For the unit test case, the provider is created without Spring (using `JaxWsServerFactoryBean`), as such the logging feature needs to be added programmatically as shown below. 
 
 ``` java
 package com.codenotfound.soap.http.cxf;
