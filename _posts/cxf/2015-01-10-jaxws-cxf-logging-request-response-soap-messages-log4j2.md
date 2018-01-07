@@ -7,7 +7,7 @@ last_modified_at: 2015-01-10
 header:
   teaser: "assets/images/teaser/apache-cxf-teaser.png"
 categories: [Apache CXF]
-tags: [Apache CXF, Code Sample, CXF, JAX-WS, Jetty, log4j2, Logging, Maven, SOAP message]
+tags: [Apache CXF, Code Sample, CXF, JAX-WS, Jetty, log4j2, Logging, Maven, SOAP Message]
 redirect_from:
   - /2015/01/jaxws-cxf-logging-inbound-outbound-soap-messages-log4j2.html
   - /2015/01/jaxws-cxf-logging-request-response-soap-messages-log4j2.html
@@ -315,7 +315,9 @@ In order to activate the logging interceptors provided by the CXF framework, the
 
 The other option, where the logging feature is used to configure all interceptors, will be shown in the provider section down below. Check out following post for more information on [cxf feature vs interceptor]({{ site.url }}/cxf-feature-vs-interceptor.html).
 
-First, an instance of the abstract `AbstractLoggingInterceptor` class is created to enable pretty printing of the SOAP messages. Next, instances of the `LoggingInInterceptor` and `LoggingOutInterceptor` are specified which have as parent the previously defined `abstractLoggingInterceptor` instance. In a last step, the interceptors are added to the CXF bus, which is the backbone of the CXF architecture that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. The interceptors are added to both in/out and respective fault interceptor chains as shown below.
+First, an instance of the abstract `AbstractLoggingInterceptor` class is created to enable pretty printing of the SOAP messages. Next, instances of the `LoggingInInterceptor` and `LoggingOutInterceptor` are specified which have as parent the previously defined `abstractLoggingInterceptor` instance.
+
+In a last step, the interceptors are added to the CXF bus, which is the backbone of the CXF architecture that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. The interceptors are added to both in/out and respective fault interceptor chains as shown below.
 
 > Note that interceptors can be added to a client, server or bus.
 
