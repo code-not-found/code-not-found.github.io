@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to configure HTTP proxy authen
 date: 2017-09-03
 modified: 2017-09-03
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/teaser/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Authentication, Client, Example, HTTP, Maven, Proxy, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
 published: false

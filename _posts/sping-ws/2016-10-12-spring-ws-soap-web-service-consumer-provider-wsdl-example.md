@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to implement a Hello World web
 date: 2016-10-12
 modified: 2017-04-18
 header:
-  teaser: "assets/images/header/spring-ws-teaser.png"
+  teaser: "assets/images/teaser/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Client, Consumer, Endpoint, Example, Hello World, Maven, Provider, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, WSDL]
 redirect_from:

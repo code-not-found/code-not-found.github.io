@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to configure basic authenticat
 date: 2017-04-24
 modified: 2017-04-29
 header:
-  teaser: "assets/images/header/spring-ws-teaser.png"
+  teaser: "assets/images/teaser/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Basic Authentication, Client, Endpoint, Example, HTTP, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
 redirect_from:

@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how setup mutual certificate authe
 date: 2017-07-07
 modified: 2017-07-07
 header:
-  teaser: "assets/images/header/spring-ws-teaser.png"
+  teaser: "assets/images/teaser/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Certificate, Client, Example, Maven, Mutual Authentication, Server, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial, Two-Way Authentication]
 redirect_from:

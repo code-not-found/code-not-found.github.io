@@ -5,7 +5,7 @@ excerpt: A detailed step-by-step tutorial on how to implement a soap tolerant re
 date: 2017-07-25
 modified: 2017-07-25
 header:
-  teaser: "assets/images/spring-ws-teaser.jpg"
+  teaser: "assets/images/teaser/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Books, Spring Web Services, Spring-WS]
 published: false

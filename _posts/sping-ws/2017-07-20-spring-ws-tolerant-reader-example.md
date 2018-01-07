@@ -5,7 +5,7 @@ excerpt: A detailed step-by-step tutorial on how to implement a SOAP tolerant re
 date: 2017-07-20
 modified: 2017-07-20
 header:
-  teaser: "assets/images/header/spring-ws-teaser.png"
+  teaser: "assets/images/teaser/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Design Pattern, Example, SOAP, Spring, Spring Boot, Spring Web Services, Spring-WS, Tolerant Reader, Tutorial]
 redirect_from:

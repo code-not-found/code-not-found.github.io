@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to log the client and server H
 date: 2017-04-23
 modified: 2017-04-23
 header:
-  teaser: "assets/images/header/spring-ws-teaser.png"
+  teaser: "assets/images/teaser/spring-ws-teaser.png"
 categories: [Spring-WS]
 tags: [Client, Endpoint, Example, Headers, HTTP, Log, Logging, Maven, Spring, Spring Boot, Spring Web Services, Spring-WS, Tutorial]
 redirect_from:
