@@ -20,7 +20,7 @@ published: true
 
 [Apache CXF](https://cxf.apache.org/){:target="_blank"} uses Java SE Logging for both client- and server-side logging of SOAP requests and responses. Logging is activated by use of separate in/out interceptors that can be attached to the requester and/or provider as required. These interceptors can be specified either programmatically (via Java code and/or annotations) or via the use of configuration files.
 
-The following code sample shows how to configure CXF interceptors using Log4j2 for the Hello World web service from a previous [post]({{ site.url }}/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html).
+The following code sample shows how to configure CXF interceptors using Log4j2 for the [Hello World web service from a previous post]({{ site.url }}/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html).
 
 Tools used:
 * CXF 3.0
@@ -514,7 +514,7 @@ Payload: <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxws-cxf/tree/master/jaxws-jetty-cxf-logging-log4j2).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/cxf-jaxws/tree/master/cxf-jaxws-jetty-logging-log4j2){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
