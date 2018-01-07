@@ -3,7 +3,7 @@ title: "JAX-WS - CXF Contract First Hello World Webservice Tutorial"
 permalink: /jaxws-cxf-contract-first-hello-world-webservice-tutorial.html
 excerpt: "A detailed step-by-step tutorial on how to implement a CXF contract first Hello World web service."
 date: 2014-08-23
-last_modified_at: 2016-10-16
+last_modified_at: 2014-08-23
 header:
   teaser: "assets/images/teaser/apache-cxf-teaser.png"
 categories: [Apache CXF]
@@ -112,7 +112,7 @@ Next is the [Maven](https://maven.apache.org/){:target="_blank"} POM file which 
 
 CXF supports the Spring 2.0 XML syntax, which makes it easy to declare endpoints which are backed by Spring and inject clients into application code. It is also possible to use CXF without Spring but it may take a little extra effort. A number of things like policies and annotation processing are not wired in without Spring. To take advantage of those you would need to do some pre-setup coding. The example below will use Spring to create both requester (client) and provider (service) as such the needed Spring dependencies are included.
 
-In addition to a unit test case we will also create an integration test case for which an instance of Jetty will be started that will host the above Hello World service. In order to achieve this the `jetty-maven-plugin` has been added which is configured to be started/stopped, before/after the <var>'integration-test'</var> phase of Maven. The <var>'&lt;daemon&gt;true&lt;/daemon&gt;'<var>/ configuration option forces [Jetty](https://www.eclipse.org/jetty/){:target="_blank"} to execute only while Maven is running, instead of running indefinitely.
+In addition to a unit test case we will also create an integration test case for which an instance of Jetty will be started that will host the above Hello World service. In order to achieve this the `jetty-maven-plugin` has been added which is configured to be started/stopped, before/after the <var>'integration-test'</var> phase of Maven. The <var>'&lt;daemon&gt;true&lt;/daemon&gt;'</var>/ configuration option forces [Jetty](https://www.eclipse.org/jetty/){:target="_blank"} to execute only while Maven is running, instead of running indefinitely.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>

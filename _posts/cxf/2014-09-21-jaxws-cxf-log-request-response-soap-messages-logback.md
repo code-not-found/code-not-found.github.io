@@ -1,22 +1,26 @@
 ---
-title: JAX-WS - CXF Log Request/Response SOAP Messages Logback
+title: "JAX-WS - CXF Log Request/Response SOAP Messages Logback"
 permalink: /2014/09/jaxws-cxf-log-request-response-soap-messages-logback.html
-excerpt: A detailed example on how to setup CXF to log request and response SOAP messages using the Logback logging framework.
-date: 2014-09-21 21:00
+excerpt: "A detailed example on how to setup CXF to log request and response SOAP messages using the Logback logging framework."
+date: 2014-09-21
+last_modified_at: 2014-09-21
+header:
+  teaser: "assets/images/teaser/apache-cxf-teaser.png"
 categories: [Apache CXF]
-tags: [Apache CXF, CXF, Feature, Interceptor, JAX-WS, Log, logback, logging, Messages, Request, Response, SOAP]
+tags: [Apache CXF, CXF, Feature, Interceptor, JAX-WS, Log, Logback, logging, Messages, Request, Response, SOAP]
 redirect_from:
   - /2014/09/jaxws-cxf-logging-request-response-soap-messages-logback.html
   - /2014/09/jaxws-cxf-logging-inbound-outbound-soap-messages-logback.html
+published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-cxf-logo.png" alt="apache cxf logo">
+    <img src="{{ site.url }}/assets/images/logo/apache-cxf-logo.png" alt="apache cxf logo" class="logo">
 </figure>
 
-CXF uses Java SE Logging for both client- and server-side logging of SOAP requests and responses. Logging is activated by use of separate in/out interceptors that can be attached to the requester and/or provider as required. These interceptors can be specified either programmatically (via Java code and/or annotations) or via use of configuration files.
+[Apache CXF](https://cxf.apache.org/){:target="_blank"} uses Java SE Logging for both client- and server-side logging of SOAP requests and responses. Logging is activated by use of separate in/out interceptors that can be attached to the requester and/or provider as required. These interceptors can be specified either programmatically (via Java code and/or annotations) or via use of configuration files.
 
-The following tutorial shows how to configure CXF logging interceptors using Logback for the [contract first Hello World web service example]({{ site.url }}/2014/08/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) from a previous post.
+The following tutorial shows how to configure CXF logging interceptors using Logback for the [contract first Hello World web service example]({{ site.url }}/jaxws-cxf-contract-first-hello-world-webservice-tutorial.html) from a previous post.
 
 An updated version of this blog post has been created that contains a [CXF logging example]({{ site.url }}/apache-cxf-logging-soap-request-response-fault-messages-example.html) which uses the new log features that were added since version 3.1.
 {: .notice--primary}
@@ -32,19 +36,19 @@ Specifying the interceptors via configuration files offers two benefits over pro
 1. Logging requirements **can be altered without needing to recompile** the code
 2. **No Apache CXF-specific APIs need to be added** to your code, which helps it remain interoperable with other JAX-WS compliant web service stacks
 
-For this example [Logback](http://logback.qos.ch/) will be used which is a successor to the [Log4j](https://logging.apache.org/log4j/1.2/) project. As a best practice the CXF `java.util.logging` calls will first be redirected to [SLF4J](http://www.slf4j.org/) (Simple Logging Facade for Java) as described [here](https://cxf.apache.org/docs/general-cxf-logging.html#GeneralCXFLogging-UsingSLF4JInsteadofjava.util.logging(since2.2.8)). In other words a <var>META-INF/cxf/org.apache.cxf.Logger</var> file needs to be created on the classpath containing the following:
+For this example [Logback](http://logback.qos.ch/){:target="_blank"} will be used which is a successor to the [Log4j](https://logging.apache.org/log4j/1.2/){:target="_blank"} project. As a best practice the CXF `java.util.logging` calls will first be redirected to [SLF4J](http://www.slf4j.org/){:target="_blank"} (Simple Logging Facade for Java) as described [here](https://cxf.apache.org/docs/general-cxf-logging.html#GeneralCXFLogging-UsingSLF4JInsteadofjava.util.logging(since2.2.8){:target="_blank"}). In other words a <var>META-INF/cxf/org.apache.cxf.Logger</var> file needs to be created on the classpath containing the following:
 
 ``` plaintext
 org.apache.cxf.common.logging.Slf4jLogger
 ```
 
-As the Hello World example uses Spring, the commons-logging calls from the Spring framework will also be redirected to SLF4J using jcl-over-slf4j. Now that all logging calls of both CXF and Spring are redirected to SLF4J, Logback will receive them automatically as it natively implements SLF4J. The picture below illustrates the described approach.
+As the Hello World example uses Spring, the commons-logging calls from the Spring framework will also be redirected to SLF4J using `jcl-over-slf4j`. Now that all logging calls of both CXF and Spring are redirected to SLF4J, Logback will receive them automatically as it natively implements SLF4J. The picture below illustrates the described approach.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/cxf/cxf-logging-using-logback.png" alt="cxf logging using logback">
+    <img src="{{ site.url }}/assets/images/posts/cxf/cxf-logging-using-logback.png" alt="cxf logging using logback">
 </figure>
 
-The below Maven POM file contains the needed dependencies for the SLF4 bridge (<var>'jcl-over-slf4j'</var>) and Logback (<var>'logback-classic'</var>). In addition it contains all other needed dependencies and plugins needed in order to run the example.
+The below Maven POM file contains the needed dependencies for the SLF4 bridge (`jcl-over-slf4j`) and Logback (`logback-classic`). In addition it contains all other needed dependencies and plugins needed in order to run the example.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -293,7 +297,7 @@ Note the <var>'additivity="false"'</var> parameter which makes sure the log even
 
 # The Requester (Client)
 
-In order to activate the logging interceptors provided by the CXF framework, there are two options. For the requester(client) the option where all logging interceptors are configured manually will be illustrated. The other option, where the logging feature is used to configure all interceptors, will be shown in the provider section down below. Check following link for more [detailed information on the difference between CXF interceptors and features]({{ site.url }}/2015/01/cxf-feature-vs-interceptor.html).
+In order to activate the logging interceptors provided by the CXF framework, there are two options. For the requester(client) the option where all logging interceptors are configured manually will be illustrated. The other option, where the logging feature is used to configure all interceptors, will be shown in the provider section down below. Check following link for more [detailed information on the difference between CXF interceptors and features]({{ site.url }}/cxf-feature-vs-interceptor.html).
 
 First an instance of the abstract `AbstractLoggingInterceptor` class is created to enable pretty printing of the SOAP messages. Next, instances of the `LoggingInInterceptor` and `LoggingOutInterceptor` are specified which have as parent the previously defined `abstractLoggingInterceptor` instance. In a last step the interceptors are added to the CXF bus, which is the backbone of the CXF architecture that manages the respective inbound and outbound message and fault interceptor chains for all client and server endpoints. The interceptors are added to both in/out and respective fault interceptor chains as shown below.
 
@@ -527,8 +531,8 @@ Payload: <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxws-cxf/tree/master/jaxws-cxf-logging-logback).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jaxws-cxf/tree/master/jaxws-cxf-logging-logback){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes our tutorial on setting up logging of the request and response SOAP messages using CXF and Logback. If you found this post helpful or have any questions or remarks, please leave a comment. 
+This concludes our tutorial on setting up logging of the request and response SOAP messages using CXF and Logback. If you found this post helpful or have any questions or remarks, please leave a comment.
