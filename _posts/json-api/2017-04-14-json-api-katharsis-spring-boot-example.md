@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to provide and consume a RESTf
 date: 2017-04-21
 modified: 2017-12-16
 header:
-  teaser: "assets/images/header/katharsis-teaser.png"
+  teaser: "assets/images/teaser/katharsis-teaser.png"
 categories: [JSON API]
 tags: [Example, Hello World, JSON API, Katharsis, Maven, Spring, Spring Boot, Tutorial]
 redirect_from:

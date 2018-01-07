@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to implement a JSON API relati
 date: 2017-12-17
 modified: 2017-12-17
 header:
-  teaser: "assets/images/header/crnk-teaser.png"
+  teaser: "assets/images/teaser/crnk-teaser.png"
 categories: [JSON API]
 tags: [Example, JSON API, Crnk, Maven, Relationship, Spring, Spring Boot, Tutorial]
 published: false

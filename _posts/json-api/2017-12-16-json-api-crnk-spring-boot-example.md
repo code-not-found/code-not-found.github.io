@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to provide and consume a RESTf
 date: 2017-12-16
 modified: 2017-12-16
 header:
-  teaser: "assets/images/header/crnk-teaser.png"
+  teaser: "assets/images/teaser/crnk-teaser.png"
 categories: [JSON API]
 tags: [Example, Hello World, JSON API, Crnk, Maven, Spring, Spring Boot, Tutorial]
 redirect_from:
