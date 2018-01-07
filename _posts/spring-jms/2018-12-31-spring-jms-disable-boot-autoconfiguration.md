@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to autoconfigure ActiveMQ and 
 date: 2017-05-08
 modified: 2017-05-08
 header:
-  teaser: "assets/images/spring-jms-teaser.jpg"
+  teaser: "assets/images/teaser/spring-jms-teaser.jpg"
 categories: [Spring JMS]
 tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
 published: false

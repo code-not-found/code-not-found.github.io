@@ -5,7 +5,7 @@ excerpt: "A detailed step-by-step tutorial on how to implement an ActiveMQ Consu
 date: 2017-12-14
 modified: 2017-12-14
 header:
-  teaser: "assets/images/header/spring-jms-teaser.png"
+  teaser: "assets/images/teaser/spring-jms-teaser.jpg"
 categories: [Spring JMS]
 tags: [ActiveMQ, Apache ActiveMQ, Consumer, Example, Hello World, Maven, Producer, Spring, Spring Boot, Spring JMS, Tutorial]
 published: false
