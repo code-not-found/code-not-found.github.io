@@ -3,9 +3,9 @@ title: "Apache Kafka - Download and Install on Windows"
 permalink: /apache-kafka-download-installation.html
 excerpt: "A step-by-step tutorial on how to download, install and run Apache Kafka on Windows."
 date: 2016-09-19
-modified: 2016-09-19
+last_modified_at: 2016-09-19
 header:
-  teaser: "assets/images/header/apache-kafka-teaser.png"
+  teaser: "assets/images/teaser/apache-kafka-teaser.png"
 categories: [Spring Kafka]
 tags: [Apache Kafka, Apache ZooKeeper, Download, Installation, Kafka, Windows, ZooKeeper]
 redirect_from:
@@ -35,7 +35,7 @@ java -version
 # Download and Setup ZooKeeper
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logos/apache-zookeeper-logo.jpg" alt="apache zookeeper logo">
+    <img src="{{ site.url }}/assets/images/logos/apache-zookeeper-logo.png" alt="apache zookeeper logo">
 </figure>
 
 Head over to the [Apache ZooKeeper download](https://zookeeper.apache.org/releases.html){:target="_blank"} page and and click on the download link in the <var>Download</var> section. This will redirect to a mirror site, click on the suggested mirror link and from the <var>index</var> select the <var>stable</var> directory as shown below. Download the gzipped TAR file.
@@ -43,13 +43,13 @@ Head over to the [Apache ZooKeeper download](https://zookeeper.apache.org/releas
 At the moment of writing this tutorial, the latest stable release was [zookeeper-3.4.9](http://www-us.apache.org/dist/zookeeper/stable/){:target="_blank"}.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-kafka/apache-zookeeper-stable-releases.png" alt="apache zookeeper stable releases">
+    <img src="{{ site.url }}/assets/images/posts/spring-kafka/apache-zookeeper-stable-releases.png" alt="apache zookeeper stable releases">
 </figure>
 
 Extract the archive that was downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. From now on we will refer to this directory as: <var>[zookeeper_install_dir]</var>.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-kafka/apache-zookeeper-install-directory.png" alt="apache zookeeper install directory">
+    <img src="{{ site.url }}/assets/images/posts/spring-kafka/apache-zookeeper-install-directory.png" alt="apache zookeeper install directory">
 </figure>
 
 Follow the below steps in order to setup a minimal working ZooKeeper configuration:
@@ -62,7 +62,7 @@ Follow the below steps in order to setup a minimal working ZooKeeper configurati
     * Edit (or add if it doesn't exist) the variable with name "<kbd>PATH</kbd>" and add "<kbd>;%ZOOKEEPER_HOME%\bin</kbd>" to the end of the value. Click "<kbd>OK</kbd>" to save.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-kafka/set-apache-zookeeper-environment-variables.png" alt="set apache zookeeper environment variables">
+    <img src="{{ site.url }}/assets/images/posts/spring-kafka/set-apache-zookeeper-environment-variables.png" alt="set apache zookeeper environment variables">
 </figure>
 
 Now that ZooKeeper is configured, let's go ahead and start it. Open a command prompt by clicking on the Windows Start button and typing "<kbd>cmd</kbd>" followed by pressing "<kbd>ENTER</kbd>". Use the following command to startup ZooKeeper:
@@ -74,7 +74,7 @@ zkserver
 By default, ZooKeeper will generate a number of log statements at start-up as shown below. One of the log entries will mention <var>'binding to port 0.0.0.0/0.0.0.0:2181'</var>. This indicates that ZooKeeper was successfully started.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-kafka/apache-zookeeper-startup-trace.png" alt="apache zookeeper startup trace">
+    <img src="{{ site.url }}/assets/images/posts/spring-kafka/apache-zookeeper-startup-trace.png" alt="apache zookeeper startup trace">
 </figure>
 
 # Download and Setup Kafka
@@ -90,7 +90,7 @@ Extract the gzipped TAR file, downloaded in the previous step. The extracted roo
 > Make sure to extract to a directory path that does not contain spaces.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-kafka/apache-kafka-install-directory.png" alt="apache kafka install directory">
+    <img src="{{ site.url }}/assets/images/posts/spring-kafka/apache-kafka-install-directory.png" alt="apache kafka install directory">
 </figure>
 
 Follow the below steps in order to setup a minimal working Kakfa configuration: 
@@ -109,7 +109,7 @@ In order to start Kafka, open a command prompt by clicking on the Windows Start 
 When starting, Kafka will generate a number of log statements as shown below. The last log entries will mention <var>'[Kafka Server 01], started'</var>. This means that a Kafka instance is up and running.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/spring-kafka/apache-kafka-startup-trace.png" alt="apache kafka startup trace">
+    <img src="{{ site.url }}/assets/images/posts/spring-kafka/apache-kafka-startup-trace.png" alt="apache kafka startup trace">
 </figure>
 
 ---
