@@ -47,7 +47,7 @@ A dependency to `spring-kafka` is added in addition to a property that specifies
 
 We also include `spring-kafka-test` in order to have access to an embedded Kafka broker when running our unit test.
 
-In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar", which is convenient to execute and transport our written code. In addition, the plugin allowq us to start the example via a Maven command.
+In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar", which is convenient to execute and transport our written code. In addition, the plugin allows us to start the example via a Maven command.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -178,6 +178,7 @@ public class Sender {
     kafkaTemplate.send(topic, payload);
   }
 }
+```
 
 The creation of the `KafkaTemplate` and `Sender` is handled in the `SenderConfig` class. The class is annotated with `@Configuration` which [indicates](http://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/html/beans.html#beans-java-basic-concepts){:target="_blank"} that the class can be used by the Spring IoC container as a source of bean definitions.
 
