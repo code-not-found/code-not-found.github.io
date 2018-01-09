@@ -292,7 +292,7 @@ In this example, a number of mandatory properties are set amongst which the init
 
 We also specify a <var>'GROUP_ID_CONFIG'</var> which allows to [identify the group](https://stackoverflow.com/a/41377616/4201470){:target="_blank"} this consumer belongs to. Messages will effectively be load balanced over consumer instances that have the same group id.
 
-On top of that we also set <var>'AUTO_OFFSET_RESET_CONFIG'</var> to <kbd>"earliest"</kbd>. This ensures that our consumer reads from the beginning of the topic even if some messages were already been sent before it was able to start up.
+On top of that we also set <var>'AUTO_OFFSET_RESET_CONFIG'</var> to <kbd>"earliest"</kbd>. This ensures that our consumer reads from the beginning of the topic even if some messages were already sent before it was able to startup.
 
 For a complete list of the other configuration parameters, you can consult the [Kafka ConsumerConfig API](https://kafka.apache.org/0110/javadoc/index.html?org/apache/kafka/clients/consumer/ConsumerConfig.html){:target="_blank"}.
 
