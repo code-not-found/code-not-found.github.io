@@ -28,7 +28,7 @@ Java can be obtained from the Oracle Java download page. There are a number of [
 
 In order to be able to compile Java code, we need the Java Development Kit (JDK) package that comes with a Java compiler. The JDK package also comes with a Java runtime environment (JRE) that is needed to run compiled Java code.
 
-As we are installing the latest Java version, you can find it at the top of the [Oracle Java download page](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"}. Click on the <var>Download</var> button right below the <var>JDK</var>.
+As we are installing the latest Java version, you can find it at the top of the [Oracle Java download page](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"}. Click on the <var>Download</var> button right below <var>JDK</var>.
 
 > Here is the direct link to [download the jdk 9.0.1 installer for Windows 64 bit](http://www.oracle.com/technetwork/java/javase/downloads/jdk9-downloads-3848520.html){:target="_blank"}.
 
