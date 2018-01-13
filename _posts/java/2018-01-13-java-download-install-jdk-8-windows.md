@@ -1,5 +1,5 @@
 ---
-title: "Java - Download & Install JDK 1.8 on Windows"
+title: "Java - Download and Install JDK 1.8 on Windows"
 permalink: /java-download-install-jdk-8-windows.html
 excerpt: "A detailed step-by-step tutorial on how to download and install jdk 8u152 on Windows."
 date: 2018-01-09
@@ -38,7 +38,7 @@ Accept the License Agreement and pick the correct download for your operating sy
     <img src="{{ site.url }}/assets/images/posts/java/java-8-download-jdk.png" alt="java 8 download jdk">
 </figure>
 
-Sign in using your Oracle account (or create a new one) and the download should start. Once the download is complete, locate the <var>jdk-7u80-windows-x64.exe</var> file and double-click to run the installer.
+Sign in using your Oracle account (or create a new one) and the download should start. Once the download is complete, locate the <var>jdk-8u152-windows-x64.exe</var> file and double-click to run the installer.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-8-installer-start.png" alt="java 8 installer start">

@@ -1,5 +1,5 @@
 ---
-title: "Java - Download & Install JDK 1.9 on Windows"
+title: "Java - Download and Install JDK 1.9 on Windows"
 permalink: /java-download-install-jdk-9-windows.html
 excerpt: "A detailed step-by-step tutorial on how to download and install jdk 9.0.1 on Windows."
 date: 2018-01-13
