@@ -112,4 +112,6 @@ The result should be as shown below.
 
 ---
 
-This concludes the setting up and configuring JDK 1.7 on Windows. If you found this post helpful or have any questions or remarks, please leave a comment.
+This concludes the setting up and configuring JDK 1.7 on Windows.
+
+If you found this post helpful or have any questions or remarks, please leave a comment.
