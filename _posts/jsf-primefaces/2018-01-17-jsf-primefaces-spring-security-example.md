@@ -91,7 +91,7 @@ In order to use Spring Security we add `spring-boot-starter-security` to the exi
 
 Spring Security ships with a [default login page generator](https://github.com/spring-projects/spring-security/blob/master/web/src/main/java/org/springframework/security/web/authentication/ui/DefaultLoginPageGeneratingFilter.java){:target="_blank"} however in this example we will configure a custom login page using [PrimeFaces](https://www.primefaces.org/){:target="_blank"} components.
 
-The <var>login.xhtml</var> page is located under <var>src/main/resources/META-INF/resources</var> and consists out of an <var>&lt;p:inputText&gt;</var> for the user name and a <var>p:password</var> for the password. A <var>p:commandButton</var> is used to submit the form.
+The <var>login.xhtml</var> page is located under <var>src/main/resources/META-INF/resources</var> and consists out of an <var>&lt;p:inputText&gt;</var> for the user name and a <var>&lt;p:password&gt;</var> for the password. A <var>&lt;p:commandButton&gt;</var> is used to submit the form.
 
 > Note that the IDs of the input fields need to be <var>'username'</var> and <var>'password'</var> respectively as by default Spring Security will look for parameters with these names. We also specify `prependId="false"` on the form as otherwise the JSF framework will prefix the parameters with the ID of the form. Another option would be to override the default field names using the `usernameParameter()` and `passwordParameter()` methods on [formLogin()](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/html/jc.html#jc-form){:target="_blank"} which we use further below.
 
@@ -145,7 +145,7 @@ If the login fails we redirect to the same login page with a <var>error=true</va
 
 Using `WebSecurityConfigurerAdapter`, logout capabilities are automatically applied. The default is that accessing the URL <var>/logout</var> will [log the user out](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/html/jc.html#jc-logout){:target="_blank"}. By specifying `logout().logoutSuccessUrl("/login.xhtml")` we redirect the user to the login page once he/she is successfully logged out.
 
-Spring Security automatically applies measures to prevents [CSRF attacks](https://en.wikipedia.org/wiki/Cross-site_request_forgery){:target="_blank"} by requiring a [randomly generated token as an HTTP parameter](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/html/csrf.html#synchronizer-token-pattern){:target="_blank"}. However as JSF 2.2 already contains an [explicit protection against CSRF attacks](http://arjan-tijms.omnifaces.org/p/jsf-22.html#869){:target="_blank"} we disable the Spring Security protection by specifying `http.csrf().disable()`.
+Spring Security automatically applies measures to prevents [CSRF attacks](https://en.wikipedia.org/wiki/Cross-site_request_forgery){:target="_blank"} by requiring a [randomly generated token](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/html/csrf.html#synchronizer-token-pattern){:target="_blank"} as an HTTP parameter. However as JSF 2.2 already contains an [explicit protection against CSRF attacks](http://arjan-tijms.omnifaces.org/p/jsf-22.html#869){:target="_blank"} we disable the Spring Security protection by specifying `http.csrf().disable()`.
 
 We will override the default single user `AuthenticationManager` that Spring Boot sets by auto-wiring an `AuthenticationManagerBuilder` into the `configureGlobal()` of our `SecurityConfig` `@Configuration` class. For this example we use in-memory authentication in which two users (<var>'john.doe'</var> and <var>'jane.doe'</var>) with different roles (<var>'USER'</var> and <var>'ADMIN'</var>) are defined.
 
@@ -195,7 +195,7 @@ Spring Security has its own [taglib](https://docs.spring.io/spring-security/site
 
 On the <var>helloworld.xhtml</var> page we add a <var>lt&;divgt&;</var> element in which we use the authorize tag in order to display a message in case the user has the <var>'USER'</var> or <var>'ADMIN'</var> role.
 
-We also add a <var>Logout</var> <var>lt&;p:commandButton&;</var> at the bottom of the page. Note that we do not use <var>lt&;h:formgt&;</var> as [JSF sets the form action automatically to the current page](https://stackoverflow.com/a/19200679/4201470){:target="_blank"} and what we want to do is to navigate to the default logout URL offered by Spring Security.
+We also add a <var>Logout</var> <var>&lt;p:commandButton&gt;</var> at the bottom of the page. Note that we do not use <var>&lt;h:form&gt;</var> as [JSF sets the form action automatically to the current page](https://stackoverflow.com/a/19200679/4201470){:target="_blank"} and what we want to do is to navigate to the default logout URL offered by Spring Security.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -312,7 +312,7 @@ As we are not authenticated, Spring Security will redirect us to the login page.
   <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-login-page.png" alt="jsf primefaces login page">
 </figure>
 
-Go ahead and enter the following user name = <kbd>john.doe</kbd> and password = <kbd>1234</kbd> and click the <var>Login</var> button. We now see the Hello World page and the role of the user is displayed up top as shown below.
+Go ahead and enter the following user name=<kbd>john.doe</kbd> and password=<kbd>1234</kbd> and click the <var>Login</var> button. We now see the Hello World page and the role of the user is displayed up top as shown below.
 
 <figure>
   <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-user-role.png" alt="jsf primefaces user role">
@@ -321,13 +321,13 @@ Go ahead and enter the following user name = <kbd>john.doe</kbd> and password = 
 If we click on <var>Submit</var> then the user name that was used to log in will be displayed.
 
 <figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces-authentication-user-name.png" alt="jsf primefaces authentication user name">
+  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-authentication-user-name.png" alt="jsf primefaces authentication user name">
 </figure>
 
 Press the <var>Logout</var> button in order to be redirected to the login page. If we now enter the same user but with an incorrect password an error message will be displayed.
 
 <figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces-login-error.png" alt="jsf primefaces login error">
+  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-login-error.png" alt="jsf primefaces login error">
 </figure>
 
 ---
