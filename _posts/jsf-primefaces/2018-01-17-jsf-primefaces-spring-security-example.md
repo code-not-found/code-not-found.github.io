@@ -193,7 +193,7 @@ Now that access to our application is secured we will adapt the Hello World exam
 
 Spring Security has its own [taglib](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/html/taglibs.html){:target="_blank"} which provides basic support for accessing security information and applying security constraints in JSPs.
 
-On the <var>helloworld.xhtml</var> page we add a <var>lt&;divgt&;</var> element in which we use the authorize tag in order to display a message in case the user has the <var>'USER'</var> or <var>'ADMIN'</var> role.
+On the <var>helloworld.xhtml</var> page we add a <var>&lt;div&gt;</var> element in which we use the authorize tag in order to display a message in case the user has the <var>'USER'</var> or <var>'ADMIN'</var> role.
 
 We also add a <var>Logout</var> <var>&lt;p:commandButton&gt;</var> at the bottom of the page. Note that we do not use <var>&lt;h:form&gt;</var> as [JSF sets the form action automatically to the current page](https://stackoverflow.com/a/19200679/4201470){:target="_blank"} and what we want to do is to navigate to the default logout URL offered by Spring Security.
 
