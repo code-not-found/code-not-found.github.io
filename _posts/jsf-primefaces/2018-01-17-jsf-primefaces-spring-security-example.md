@@ -1,6 +1,6 @@
 ---
 title: "JSF - Primefaces Spring Security Example"
-permalink: /jsf-primefaces-spring-security-example.html
+permalink: /jsf-primefaces-spring-security.html
 excerpt: "A detailed step-by-step tutorial on how to implement a PrimeFaces login page using Spring Security, Spring Boot and Maven."
 date: 2018-01-17
 last_modified_at: 2018-01-17
