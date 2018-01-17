@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/teaser/primefaces-teaser.png"
 categories: [PrimeFaces]
 tags: [Example, JavaServer Faces, JSF, Login, Maven, PrimeFaces, Spring Boot, Spring Security]
-published: false
+published: true
 ---
 
 <figure>
@@ -334,7 +334,7 @@ Press the <var>Logout</var> button in order to be redirected to the login page. 
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-primefaces-theme-spring-boot){:target="_blank"}.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-primefaces-spring-security){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
