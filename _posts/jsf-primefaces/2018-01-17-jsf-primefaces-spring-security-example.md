@@ -131,7 +131,7 @@ The <var>login.xhtml</var> page is located under <var>src/main/resources/META-IN
 
 If Spring Security is on the classpath Spring Boot automatically [configures a number of basic security features](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/htmlsingle/#boot-features-security){:target="_blank"} for a web application.
 
-We will customize the web application security configuration by creating a `SecurityConfig` class that extends `WebSecurityConfigurerAdapter` which is a convenient base class that provides a default security configuration. The class is annotated with `@EnableWebSecurity` to enable Spring Security’s web security support.
+We will customize the web application security configuration by creating a `SecurityConfig` class that extends `WebSecurityConfigurerAdapter` which is a convenient base class that provides a default security configuration. The class is annotated with `@EnableWebSecurity` to enable Spring Security's web security support.
 
 In the below `SecurityConfig` configuration class we override the `configure(HttpSecurity http)` method in order to define when and how users need to be authenticated.
 
