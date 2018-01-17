@@ -116,7 +116,7 @@ server:
   port: 9090
 ```
 
-Let's checkout our web applicatiosn new look by running following Maven command:
+Let's checkout the new look of our web application by running following Maven command:
 
 ``` plaintext
 mvn spring-boot:run
