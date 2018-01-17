@@ -1,7 +1,7 @@
 ---
 title: "JSF - Primefaces Spring Security Example"
-permalink: /jsf-primefaces-spring-security.html
-excerpt: "A detailed step-by-step tutorial on how to implement a PrimeFaces login page using Spring Security, Spring Boot and Maven."
+permalink: /jsf-primefaces-spring-security-example.html
+excerpt: "A detailed step-by-step tutorial on how to implement a PrimeFaces login page using Spring Security, Spring Boot, and Maven."
 date: 2018-01-17
 last_modified_at: 2018-01-17
 header:
@@ -17,7 +17,7 @@ published: true
 
 [Spring Security](https://projects.spring.io/spring-security/){:target="_blank"} is a framework that focuses on providing both [authentication](https://en.wikipedia.org/wiki/Authentication){:target="_blank"} and [authorization](https://en.wikipedia.org/wiki/Authorization){:target="_blank"} to Java applications.
 
-The following example shows how to setup a PrimeFaces in combination with Spring Security, Spring Boot and Maven.
+The following example shows how to setup a PrimeFaces in combination with Spring Security, Spring Boot, and Maven.
 
 # General Project Setup
 
@@ -189,7 +189,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 # Role Based Access Control
 
-Now that access to our application is secured we will adapt the Hello World example to illustrate role based access control.
+Now that access to our application is secured we will adapt the Hello World example to illustrate role-based access control.
 
 Spring Security has its own [taglib](https://docs.spring.io/spring-security/site/docs/4.2.3.RELEASE/reference/html/taglibs.html){:target="_blank"} which provides basic support for accessing security information and applying security constraints in JSPs.
 
