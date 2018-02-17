@@ -26,7 +26,7 @@ If you want to learn more about how to connect to Apache Kafka - head on over to
 
 It is important to note that Kafka will not work without [Apache ZooKeeper](https://zookeeper.apache.org/){:target="_blank"}, which is essentially a distributed hierarchical key-value store. Like Kafka, ZooKeeper is a software project of the Apache Software Foundation. Kafka uses ZooKeeper for [electing a controller, cluster membership, topic configuration, quotas and ACLs](https://www.quora.com/What-is-the-actual-role-of-ZooKeeper-in-Kafka){:target="_blank"}.
 
-Note that for running Kafka and ZooKeeper, a [Java Runtime Environment needs to be installed and configured](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (with JAVA_HOME correctly set){:target="_blank"}. If you are not sure if Java is installed on your machine, open a console and execute the following command:
+Note that for running Kafka and ZooKeeper, a [Java Runtime Environment needs to be installed and configured](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"} (with JAVA_HOME correctly set). If you are not sure if Java is installed on your machine, open a console and execute the following command:
 
 ``` plaintext
 java -version
