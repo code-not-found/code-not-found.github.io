@@ -20,6 +20,10 @@ last_modified_at: 2017-12-30
 * [JSF - PrimeFaces Hello World Example using Apache Tomcat and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-apache-tomcat.html)
 * [JSF - PrimeFaces Hello World Example using WebSphere Application Server and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-websphere-application-server-maven.html)
 
+## Components
+
+* [JSF - Primefaces DataTable Example]({{ site.url }}/jsf-primefaces-datatable-example.html)
+
 ## Configuration
 
 * [JSF - Welcome Page Redirect Example using Spring Boot]({{ site.url }}/jsf-welcome-page-redirect-example-spring-boot.html)
@@ -28,6 +32,7 @@ last_modified_at: 2017-12-30
 ## Security
 
 * [JSF - Login Servlet Filter Example]({{ site.url }}/jsf-login-servlet-filter-example.html)
+* [JSF - Primefaces Spring Security Example]({{ site.url }}/jsf-primefaces-spring-security-example.html)
 
 ## Testing
 
