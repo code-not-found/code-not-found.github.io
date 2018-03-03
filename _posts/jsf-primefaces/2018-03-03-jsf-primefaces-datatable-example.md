@@ -98,11 +98,13 @@ In addition the [Spring Data JPA](https://projects.spring.io/spring-data-jpa/){:
 
 Similar to the [PrimeFaces ShowCase example](https://www.primefaces.org/showcase/ui/data/datatable/basic.xhtml){:target="_blank"} we will be displaying different cars in the DataTable. The below class represents a car with a basic structure.
 
-We will use the [Java Persistence API](http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html){:target="_blank"} to define how the `Car` class maps to a H2 relational database table.
+We will use the [Java Persistence API](http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html){:target="_blank"} to define how the `Car` class maps to a relational database table.
 
-The `@Entity` annotation, which marks the class as an entity class. Typically, an entity represents a table in a relational database, and each entity instance corresponds to a row in that table. So for the `Car` class, a table named <var>CAR</var> will be created with the `id`, `brand`, `year` and `color` fields as columns.
+The class is annotated with the `@Entity` annotation, which marks the class as an entity class. Typically, an entity represents a table in a relational database, and each entity instance corresponds to a row in that table.
 
-The `id` filed is annotated with `@Id` to marks it as a primary key. The @GeneratedValue annotation specifies that the primary key will be automatically generated.
+So for the `Car` class, a table named <var>CAR</var> will be created with the `id`, `brand`, `year` and `color` fields as columns.
+
+The `id` filed is annotated with `@Id` to mark it as a primary key. The `@GeneratedValue` annotation specifies that the primary key will be automatically generated.
 
 ``` java
 package com.codenotfound.primefaces.model;
@@ -165,7 +167,7 @@ public class Car {
 }
 ```
 
-Next we create a [Spring Data Repository](https://docs.spring.io/spring-data/jpa/docs/1.11.7.RELEASE/reference/html/#repositories.core-concepts){:target="_blank"} which will auto-generate the implementation for our `Car` domain object. Simply extend the `JpaRepository` and pass the domain class to manage as well as the id type of the domain class as type arguments.
+Next we create a [Spring Data Repository](https://docs.spring.io/spring-data/jpa/docs/1.11.7.RELEASE/reference/html/#repositories.core-concepts){:target="_blank"} which will auto-generate the implementation for our `Car` domain object. To do so extend the `JpaRepository` and pass the domain class to manage in addition to the id type of the domain class as type arguments.
 
 We annotated the below interface with `@Repository` which is a marker for any class that fulfills the role or stereotype (also known as Data Access Object or DAO) of a repository. It is also a specialization of `@Component` annotation which means that Spring will automatically create a Bean for this class in case a component scan is performed. 
 
@@ -184,7 +186,9 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 }
 ```
 
-In addition to setting up the H2 database, [Spring Boot will also initialize it with data](https://docs.spring.io/spring-boot/docs/1.5.7.RELEASE/reference/html/howto-database-initialization.html#howto-initialize-a-database-using-spring-jdbc){:target="_blank"} if the needed script is found on the classpath. Simply add an <var>data.sql</var> file under <var>src/main/resources/META-INF/resources</var> that contains the data to be inserted.
+In addition to setting up the H2 database, [Spring Boot will also initialize it with data](https://docs.spring.io/spring-boot/docs/1.5.7.RELEASE/reference/html/howto-database-initialization.html#howto-initialize-a-database-using-spring-jdbc){:target="_blank"} if the needed script is found on the classpath.
+
+Simply add an <var>data.sql</var> file under <var>src/main/resources/META-INF/resources</var> that contains the data to be inserted.
 
 ``` sql
 INSERT INTO car (brand, year, color) VALUES
@@ -204,7 +208,9 @@ INSERT INTO car (brand, year, color) VALUES
 
 We create a <var>cars.xhtml</var> page under <var>src/main/resources/META-INF/resources</var>. It contains a <var>&lt;dataTable&gt;</var> element on which we specify the list of objects that need to be displayed using the <var>value</var> attribute. In this example we use the `cars` field on the `carsView` Managed Bean that we will create further below.
 
-The <var>var</var> attribute specifies the name of the variable created by the data table that represents the current item in the value. We use this name in order to specify what field from the object needs to be displayed in each column. For example in the first column we specify <var>#{car.id}</var> so that the `id` of the current `Car` object is shown.
+The <var>var</var> attribute specifies the name of the variable created by the data table that represents the current item in the value. We use this name in order to specify what field from the object needs to be displayed in each column.
+
+For example in the first column we specify <var>#{car.id}</var> so that the `id` of the current `Car` object is shown.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -241,7 +247,7 @@ The <var>var</var> attribute specifies the name of the variable created by the d
 </html>
 ```
 
-The only thing left to do is to create a Bean that can be accessed by the above JSF page in order to access to the `JpaRepository` so that data can be fetched from the database.
+The only thing left to do is to create a Bean that can be used by the above JSF page in order to access to the `JpaRepository` so that data can be fetched from the database.
 
 We create a `CarsView` class in which we auto-wire the `CarRepository`. The `cars` field is then initialized using the `findAll()` method on the repository which retrieves all available cars.
 
