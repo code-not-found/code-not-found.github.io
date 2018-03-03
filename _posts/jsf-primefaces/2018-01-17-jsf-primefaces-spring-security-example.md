@@ -195,7 +195,7 @@ Spring Security has its own [taglib](https://docs.spring.io/spring-security/site
 
 On the <var>helloworld.xhtml</var> page we add a <var>&lt;div&gt;</var> element in which we use the authorize tag in order to display a message in case the user has the <var>'USER'</var> or <var>'ADMIN'</var> role.
 
-We also add a <var>Logout</var> <var>&lt;p:commandButton&gt;</var> at the bottom of the page. Note that we do not use <var>&lt;h:form&gt;</var> as [JSF sets the form action automatically to the current page](https://stackoverflow.com/a/19200679/4201470){:target="_blank"} and what we want to do is to navigate to the default logout URL offered by Spring Security.
+We also add a logout <var>&lt;p:commandButton&gt;</var> at the bottom of the page. Note that we do not use <var>&lt;h:form&gt;</var> as [JSF sets the form action automatically to the current page](https://stackoverflow.com/a/19200679/4201470){:target="_blank"} and what we want to do is to navigate to the default logout URL offered by Spring Security.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
