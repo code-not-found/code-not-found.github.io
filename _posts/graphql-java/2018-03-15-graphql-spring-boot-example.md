@@ -119,7 +119,7 @@ A schema defines your GraphQL API by specifying each field that can be interacte
 1. Programmatically as Java code
 2. Via a GraphQL schema language often referred to as Interface Definition Language (IDL) or Schema Definition Language (SDL)
 
-In this example, we will use the second option in this way we don't rely on a specific programming language syntax.
+In this example, we will use the second option. In this way we don't rely on a specific programming language syntax.
 
 We start by defining a <var>Greeting</var> type that has two fields: an <var>id</var> and a <var>message</var>. Each field can be a [scalar type](http://graphql.org/learn/schema/#scalar-types){:target="_blank"} (Int, Float, String, Boolean and ID) an [enumeration type](http://graphql.org/learn/schema/#enumeration-types){:target="_blank"} or a reference to another type.
 
@@ -127,7 +127,7 @@ We start by defining a <var>Greeting</var> type that has two fields: an <var>id<
 
 When creating a GraphQL schema there must be exactly one root query, and up to one root mutation.
 
-For this tutorial we create a <var>getGreeting</var> **query** that will allow us to retrieve a <var>Greeting</var> by passing an <var>id</var>. We also define a <var>newGreeting</var> **mutation** that will enable us to create a <var>Greeting</var> by passing a <var>message</var>.
+For this tutorial we create a <var>getGreeting</var> Query that will allow us to retrieve a <var>Greeting</var> by passing an <var>id</var>. We also define a <var>newGreeting</var> Mutation that will enable us to create a <var>Greeting</var> by passing a <var>message</var>.
 
 ``` json
 type Greeting {
@@ -296,7 +296,9 @@ The easiest way to explore and interact with a GraphQL API is by using the Graph
   <img src="{{ site.url }}/assets/images/posts/graphql-java/graphiql-welcome.png" alt="graphiql welcome">
 </figure>
 
-Let's start by creating a new greeting by using the <var>newGreeting</var> Mutation. Notice how we first specify that we want a new greeting to be created with a "Hello Spring Boot GrapQL!" message. We then declare that we want the <var>id</var> and <var>message</var> fields of the greeting to be returned once it is created.
+We start by creating a new greeting by using the <var>newGreeting</var> Mutation.
+
+Notice how we first specify that we want a new greeting to be created with a "Hello Spring Boot GrapQL!" message. We then declare that we want the <var>id</var> and <var>message</var> fields of the greeting to be returned once it is created.
 
 ``` json
 mutation {
@@ -313,7 +315,9 @@ Click on the "Execute Query" button (play icon) and the result should appear on 
   <img src="{{ site.url }}/assets/images/posts/graphql-java/graphiql-new-greeting.png" alt="graphiql new greeting">
 </figure>
 
-Now that we have created a greeting we can fetch it using the <var>getGreeting</var> Query. As the <var>id</var> is auto-generated simply copy/paste the value from the response of the above <var>newGreeting</var> Mutation. Again we first specify the Query followed by the fields we would like to see returned.
+Now that we have created a greeting we can fetch it using the <var>getGreeting</var> Query. As the <var>id</var> is auto-generated simply copy/paste the value from the response of the above <var>newGreeting</var> Mutation.
+
+Again we first specify the Query followed by the fields we would like to see returned.
 
 ``` json
 {
