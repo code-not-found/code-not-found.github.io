@@ -35,11 +35,11 @@ In order to configure and expose the Hello World GraphQL API endpoint, we will u
 
 To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application. We include the `spring-boot-starter-web` dependency which will automatically setup an embedded Apache Tomcat that will host the GraphQL API endpoint.
 
-The [GraphQL-Java](https://github.com/graphql-java/graphql-java){:target="_blank"} project provides a GraphQL Java implementation. It contains a [graphql-spring-boot](https://github.com/graphql-java/graphql-spring-boot){:target="_blank"} project that offers a `graphql-spring-boot-starter` which will auto-configure a GraphQL Servlet that is accessible on <var>/graphql</var>.
+The [GraphQL-Java](https://github.com/graphql-java/graphql-java){:target="_blank"} project provides a Java implementation for GraphQL. It contains a [graphql-spring-boot](https://github.com/graphql-java/graphql-spring-boot){:target="_blank"} project that offers a `graphql-spring-boot-starter` which will auto-configure a GraphQL Servlet that is accessible on <var>/graphql</var>.
 
 In addition, the GraphQL starter will automatically create a GraphQL schema by parsing all GraphQL schema files found on the classpath. In order for this to work the `graphql-java-tools` library also needs to be added as a dependency.
 
-[GraphiQL](https://github.com/graphql/graphiql){:target="_blank"} provides an interface for editing and testing GraphQL queries/mutations. GraphiQL becomes accessible at <var>/graphiql</var> if the `graphiql-spring-boot-starter` is added as a dependency.
+[GraphiQL](https://github.com/graphql/graphiql){:target="_blank"} provides an interface for editing and testing your GraphQL API. It becomes accessible at <var>/graphiql</var> if the `graphiql-spring-boot-starter` is added as a dependency.
 
 The plugins section includes the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to startup our GraphQL API server via a Maven command.
 
@@ -111,7 +111,7 @@ The plugins section includes the `spring-boot-maven-plugin` Maven plugin so that
 
 # Creating a GraphQL Schema
 
-A schema defines your GraphQL API by specifying each field that can be queried or mutated. More specifically the schema will contain:
+A schema defines your GraphQL API by specifying each field that can be interacted with. More specifically the schema will contain:
 * Types and fields on those types
 * Operations to get data ([queries](http://graphql.org/learn/queries/){:target="_blank"}) or to create, update, and delete data ([mutations](http://graphql.org/learn/queries/#mutations){:target="_blank"}).
 
@@ -119,7 +119,7 @@ A schema defines your GraphQL API by specifying each field that can be queried o
 1. Programmatically as Java code
 2. Via a GraphQL schema language often referred to as Interface Definition Language (IDL) or Schema Definition Language (SDL)
 
-In this example we will use the second option as this way we don't rely on a specific programming language syntax.
+In this example, we will use the second option in this way we don't rely on a specific programming language syntax.
 
 We start by defining a <var>Greeting</var> type that has two fields: an <var>id</var> and a <var>message</var>. Each field can be a [scalar type](http://graphql.org/learn/schema/#scalar-types){:target="_blank"} (Int, Float, String, Boolean and ID) an [enumeration type](http://graphql.org/learn/schema/#enumeration-types){:target="_blank"} or a reference to another type.
 
@@ -127,7 +127,7 @@ We start by defining a <var>Greeting</var> type that has two fields: an <var>id<
 
 When creating a GraphQL schema there must be exactly one root query, and up to one root mutation.
 
-For this example we create a <var>getGreeting</var> **query** that will allow us to retrieve a <var>Greeting</var> by passing an <var>id</var>. We also define a <var>newGreeting</var> **mutation** that will enable us to create a <var>Greeting</var> by passing a <var>message</var>.
+For this tutorial we create a <var>getGreeting</var> **query** that will allow us to retrieve a <var>Greeting</var> by passing an <var>id</var>. We also define a <var>newGreeting</var> **mutation** that will enable us to create a <var>Greeting</var> by passing a <var>message</var>.
 
 ``` json
 type Greeting {
@@ -245,7 +245,7 @@ public class GreetingMutation implements GraphQLMutationResolver {
 }
 ```
 
-In a real life application data will typically be fetched from a database or via an existing API. In this example we define a basic `GreetingRepository` that simply stores the `Greeting` objects in an in memory `HashMap`.
+In a real-life application, data will typically be fetched from a database or via an existing API. For this setup, we define a basic `GreetingRepository` that simply stores the `Greeting` objects in an in-memory `HashMap`.
 
 ``` java
 package com.codenotfound.repository;
@@ -307,7 +307,7 @@ mutation {
 }
 ```
 
-Click on the "Execute Query" button (play icon) and the result should appear on the right side pane as shown below. 
+Click on the "Execute Query" button (play icon) and the result should appear on the right side as shown below. 
 
 <figure>
   <img src="{{ site.url }}/assets/images/posts/graphql-java/graphiql-new-greeting.png" alt="graphiql new greeting">
@@ -328,7 +328,7 @@ Now that we have created a greeting we can fetch it using the <var>getGreeting</
   <img src="{{ site.url }}/assets/images/posts/graphql-java/graphiql-get-greeting.png" alt="graphiql get greeting">
 </figure>
 
-We will finish by illustrating that a client ask for exactly what they need and nothing more. Let's execute the query of the previous step but this time we specify we only need the <var>message</var> to be returned.
+We will finish by illustrating that a client can ask for exactly what they need and nothing more. Let's execute the query of the previous step but this time we specify we only need the <var>message</var> to be returned.
 
 ``` json
 {
