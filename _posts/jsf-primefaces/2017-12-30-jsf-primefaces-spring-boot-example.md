@@ -17,29 +17,29 @@ published: true
   <img src="{{ site.url }}/assets/images/logo/primefaces-logo.png" alt="primefaces logo" class="logo">
 </figure>
 
-[PrimeFaces](http://primefaces.org/){:target="_blank"} is an open source component library for [JavaServer Faces](http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html){:target="_blank"} (JSF). It provides a collection of mostly visual components (widgets) that can be used by JSF programmers to build the UI for a web application. An overview of these widgets can be found at the [PrimeFaces showcase](http://www.primefaces.org/showcase/){:target="_blank"}.
+[PrimeFaces](http://primefaces.org/){:target="_blank"} is an open source component library for [JavaServer Faces](http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html){:target="_blank"} (JSF). It provides a collection of mostly visual components (widgets) that can be used by JSF programmers to build the UI for a web application.
+
+An overview of these widgets can be found at the [PrimeFaces showcase](http://www.primefaces.org/showcase/){:target="_blank"}.
 
 In the following tutorial, we will configure, build and run a Hello World example using PrimeFaces, Spring Boot, and Maven.
 
 # General Project Setup
 
 Tools used:
-* PrimeFaces 6.1
-* JoinFaces 2.4
-* Spring Boot 1.5
+* PrimeFaces 6.2
+* JoinFaces 3.2
+* Spring Boot 2.0
 * Maven 3.5
 
 We will be building and running our example using [Apache Maven](https://maven.apache.org/){:target="_blank"}. Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
 
-The [JoinFaces](https://github.com/joinfaces/joinfaces#joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application. It auto-configures PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.
+The [JoinFaces](https://github.com/joinfaces/joinfaces#joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application. It can auto-configure PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.
 
-We use the `jsf-spring-boot-parent` dependency to obtain the right version for any of the JSF related dependencies in our build configuration. As a result, it is no longer mandatory to specify a version in our build configuration as [Spring Boot is managing this for us](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/html/using-boot-build-systems.html#using-boot-dependency-managemen){:target="_blank"}.
+We use the `joinfaces-parent` dependency to define all modules except for the joinfaces dependencies.
 
-The `spring-boot-starter` dependency is the core starter, which includes auto-configuration support, logging, and YAML.
+To facilitate the management of the different Spring JSF dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-3.x){:target="_blank"} can be used which are a set of convenient dependency descriptors that you can include in your application. There are sixteen JoinFaces Starters available: six basic starters, two utility starters, one meta starter, five component starters, one theme starter and one extra starter.
 
-To facilitate the management of the different Spring JSF dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-2.x){:target="_blank"} can be used which are a set of convenient dependency descriptors that you can include in your application. There are twelve JSF Spring Boot Starters available: six basic starters, one utility starter, one meta starter and five component starters.
-
-In this example, we will use the `jsf-spring-boot-starter` to import the needed dependencies for PrimeFaces.
+In this example, we will use the `primefaces-spring-boot-starter` which imports the needed dependencies for PrimeFaces and Spring Boot.
 
 In the plugins section, we include the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the example via a Maven command.
 
@@ -60,25 +60,22 @@ In the plugins section, we include the `spring-boot-maven-plugin` Maven plugin s
 
   <parent>
     <groupId>org.joinfaces</groupId>
-    <artifactId>jsf-spring-boot-parent</artifactId>
-    <version>2.4.1</version>
+    <artifactId>joinfaces-parent</artifactId>
+    <version>3.2.0</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
   </properties>
 
   <dependencies>
-    <!-- spring-boot -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
     <!-- joinfaces -->
     <dependency>
       <groupId>org.joinfaces</groupId>
-      <artifactId>jsf-spring-boot-starter</artifactId>
+      <artifactId>primefaces-spring-boot-starter</artifactId>
     </dependency>
   </dependencies>
 
@@ -115,14 +112,14 @@ public class SpringPrimeFacesApplication {
 
 The `HelloWorld` class which is a simple POJO (Plain Old Java Object) that will provide data for the PrimeFaces (JSF) components. It contains the getters and setters for first and last name fields as well as a method to show a greeting.
 
-In JSF, a class that can be accessed from a JSF page is called Managed Bean. By annotating the `HelloWorld` class with the `@ManagedBean` annotation it becomes a Managed Bean which is accessible and controlled by the JSF framework.
+We annotated the Bean with `@Named` so that it becomes a CDI managed bean with an EL name that is accessible by the JSF framework.
 
 ``` java
 package com.codenotfound.primefaces.model;
 
-import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 
-@ManagedBean
+@Named
 public class HelloWorld {
 
   private String firstName = "John";
@@ -148,8 +145,8 @@ public class HelloWorld {
     return "Hello " + firstName + " " + lastName + "!";
   }
 }
-```
 
+```
 
 The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <p:inputText> fields, that will be used to enter a first and last name, surrounded by a <var>&lt;p:panel&gt;</var>.
 
@@ -171,7 +168,7 @@ In order to use the PrimeFaces components, the following namespace needs to be d
 </h:head>
 
 <h:body>
-  <h:form id="hello-world">
+  <h:form id="helloworld-form">
 
     <p:panel header="PrimeFaces Hello World Example">
       <h:panelGrid columns="2" cellpadding="4">
@@ -181,14 +178,15 @@ In order to use the PrimeFaces components, the following namespace needs to be d
         <h:outputText value="Last Name: " />
         <p:inputText id="last-name" value="#{helloWorld.lastName}" />
 
-        <p:commandButton id="submit" value="Submit" update="greeting"
+        <p:commandButton id="submit" value="Submit"
+          update="greeting-panel"
           oncomplete="PF('greetingDialog').show()" />
       </h:panelGrid>
     </p:panel>
 
     <p:dialog header="Greeting" widgetVar="greetingDialog"
       modal="true" resizable="false">
-      <h:panelGrid id="greeting" columns="1" cellpadding="4">
+      <h:panelGrid id="greeting-panel" columns="1" cellpadding="4">
         <h:outputText value="#{helloWorld.showGreeting()}" />
       </h:panelGrid>
     </p:dialog>
@@ -196,16 +194,6 @@ In order to use the PrimeFaces components, the following namespace needs to be d
   </h:form>
 </h:body>
 </html>
-```
-
-JoinFaces ships with a number of [JSF properties](https://github.com/joinfaces/joinfaces#jsf-properties-configuration-via-applicationproperties-or-applicationyml){:target="_blank"} that allow you to auto-configure your project.
-
-In this example we will change the default Spring Boot server HTTP port value from <var>'8080'</var> to <var>'9090'</var> by explicitly setting it in the <var>application.yml</var> properties file located under <var>src/main/resources</var>. We also set the context path to <var>'codenotfound'</var> as shown below.
-
-``` yaml
-server:
-  context-path: /codenotfound
-  port: 9090
 ```
 
 # Running the PrimeFaces Hello World Example
@@ -225,42 +213,43 @@ Maven will download the needed dependencies, compile the code and start an Apach
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.7.RELEASE)
+ :: Spring Boot ::        (v2.0.1.RELEASE)
 
-2017-12-30 16:20:16.551  INFO 5112 --- [           main] c.c.p.SpringPrimeFacesApplication        : Starting SpringPrimeFacesApplication on cnf-pc with PID 5112 (c:\codenotfound\code\jsf-primefaces\jsf-primefaces-spring-boot\target\classes started by CodeNotFound in c:\codenotfound\code\jsf-primefaces\jsf-primefaces-spring-boot)
-2017-12-30 16:20:16.555  INFO 5112 --- [           main] c.c.p.SpringPrimeFacesApplication        : No active profile set, falling back to default profiles: default
-2017-12-30 16:20:16.599  INFO 5112 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@424e77fe: startup date [Sat Dec 30 16:20:16 CET 2017]; root of context hierarchy
-2017-12-30 16:20:17.532  INFO 5112 --- [           main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
-2017-12-30 16:20:17.585  INFO 5112 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.joinfaces.javaxfaces.ProjectStageAutoConfiguration' of type [org.joinfaces.javaxfaces.ProjectStageAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2017-12-30 16:20:17.947  INFO 5112 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 9090 (http)
-2017-12-30 16:20:17.957  INFO 5112 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2017-12-30 16:20:17.958  INFO 5112 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.20
-2017-12-30 16:20:18.250  INFO 5112 --- [ost-startStop-1] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
-2017-12-30 16:20:18.270  INFO 5112 --- [ost-startStop-1] o.a.c.c.C.[.[localhost].[/codenotfound]  : Initializing Spring embedded WebApplicationContext
-2017-12-30 16:20:18.270  INFO 5112 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1674 ms
-2017-12-30 16:20:19.033  INFO 5112 --- [ost-startStop-1] org.reflections.Reflections              : Reflections took 364 ms to scan 6 urls, producing 712 keys and 3778 values
-2017-12-30 16:20:19.291  INFO 5112 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: 'dispatcherServlet' to [/]
-2017-12-30 16:20:19.294  INFO 5112 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
-2017-12-30 16:20:19.294  INFO 5112 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
-2017-12-30 16:20:19.294  INFO 5112 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
-2017-12-30 16:20:19.295  INFO 5112 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
-2017-12-30 16:20:19.345  INFO 5112 --- [ost-startStop-1] j.e.resource.webcontainer.jsf.config     : Initializing Mojarra 2.2.14 ( 20161114-2152 unable to get svn info) for context '/codenotfound'
-2017-12-30 16:20:19.512  INFO 5112 --- [ost-startStop-1] j.e.r.webcontainer.jsf.application       : JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
-2017-12-30 16:20:20.140  INFO 5112 --- [ost-startStop-1] .w.PostConstructApplicationEventListener : Running on PrimeFaces 6.1
-2017-12-30 16:20:20.140  INFO 5112 --- [ost-startStop-1] .a.PostConstructApplicationEventListener : Running on PrimeFaces Extensions 6.1
-2017-12-30 16:20:20.140  INFO 5112 --- [ost-startStop-1] o.omnifaces.VersionLoggerEventListener   : Using OmniFaces version 1.14
-2017-12-30 16:20:20.407  INFO 5112 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@424e77fe: startup date [Sat Dec 30 16:20:16 CET 2017]; root of context hierarchy
-2017-12-30 16:20:20.468  INFO 5112 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
-2017-12-30 16:20:20.471  INFO 5112 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
-2017-12-30 16:20:20.498  INFO 5112 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-2017-12-30 16:20:20.499  INFO 5112 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-2017-12-30 16:20:20.533  INFO 5112 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
-2017-12-30 16:20:20.711  INFO 5112 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
-2017-12-30 16:20:20.775  INFO 5112 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 9090 (http)
-2017-12-30 16:20:20.781  INFO 5112 --- [           main] c.c.p.SpringPrimeFacesApplication        : Started SpringPrimeFacesApplication in 4.627 seconds (JVM running for 7.815)
+2018-04-30 20:49:09.666  INFO 5400 --- [           main] c.c.p.SpringPrimeFacesApplication        : Starting SpringPrimeFacesApplication on cnf-pc with PID 5400 (c:\blogs\codenotfound\code\jsf-primefaces\jsf-primefaces-spring-boot\target\classes started by CodeNotFound in c:\blogs\codenotfound\code\jsf-primefaces\jsf-primefaces-spring-boot)
+2018-04-30 20:49:09.670  INFO 5400 --- [           main] c.c.p.SpringPrimeFacesApplication        : No active profile set, falling back to default profiles: default
+2018-04-30 20:49:09.746  INFO 5400 --- [           main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@18fffd14: startup date [Mon Apr 30 20:49:09 CEST 2018]; root of context hierarchy
+2018-04-30 20:49:10.901  INFO 5400 --- [           main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-04-30 20:49:11.327  INFO 5400 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2018-04-30 20:49:11.355  INFO 5400 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-04-30 20:49:11.355  INFO 5400 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.29
+2018-04-30 20:49:11.367  INFO 5400 --- [ost-startStop-1] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_172\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_172\bin;C:\code\tools\apache-maven-3.5.3\bin;.]
+2018-04-30 20:49:11.701  INFO 5400 --- [ost-startStop-1] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2018-04-30 20:49:11.717  INFO 5400 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-04-30 20:49:11.718  INFO 5400 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1976 ms
+2018-04-30 20:49:11.942  INFO 5400 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet FacesServlet mapped to [/faces/*, *.jsf, *.faces, *.xhtml]
+2018-04-30 20:49:11.943  INFO 5400 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+2018-04-30 20:49:11.949  INFO 5400 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-04-30 20:49:11.950  INFO 5400 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-04-30 20:49:11.950  INFO 5400 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-04-30 20:49:11.951  INFO 5400 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-04-30 20:49:12.470  INFO 5400 --- [ost-startStop-1] org.reflections.Reflections              : Reflections took 457 ms to scan 6 urls, producing 752 keys and 4129 values
+2018-04-30 20:49:12.809  INFO 5400 --- [ost-startStop-1] j.e.resource.webcontainer.jsf.config     : Initializing Mojarra 2.3.4 ( 20180405-0442 7a05fbdf38c7d725ccac9237e44de6dbc77bee7d) for context ''
+2018-04-30 20:49:12.962  INFO 5400 --- [ost-startStop-1] j.e.r.webcontainer.jsf.application       : JSF1048: PostConstruct/PreDestroy annotations present.  ManagedBeans methods marked with these annotations will have said annotations processed.
+2018-04-30 20:49:13.552  INFO 5400 --- [ost-startStop-1] .w.PostConstructApplicationEventListener : Running on PrimeFaces 6.2
+2018-04-30 20:49:13.553  INFO 5400 --- [ost-startStop-1] .a.PostConstructApplicationEventListener : Running on PrimeFaces Extensions 6.2.4
+2018-04-30 20:49:13.553  INFO 5400 --- [ost-startStop-1] o.omnifaces.VersionLoggerEventListener   : Using OmniFaces version 1.14.1
+2018-04-30 20:49:13.892  INFO 5400 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-04-30 20:49:14.101  INFO 5400 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@18fffd14: startup date [Mon Apr 30 20:49:09 CEST 2018]; root of context hierarchy
+2018-04-30 20:49:14.178  INFO 5400 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-04-30 20:49:14.181  INFO 5400 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-04-30 20:49:14.211  INFO 5400 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-04-30 20:49:14.211  INFO 5400 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-04-30 20:49:14.540  INFO 5400 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-04-30 20:49:14.592  INFO 5400 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2018-04-30 20:49:14.596  INFO 5400 --- [           main] c.c.p.SpringPrimeFacesApplication        : Started SpringPrimeFacesApplication in 5.303 seconds (JVM running for 8.969)
 ```
 
-Open a web browser and enter following URL: [http://localhost:9090/codenotfound/helloworld.xhtml](http://localhost:9090/codenotfound/helloworld.xhtml){:target="_blank"}. The below web page should now be displayed.
+Open a web browser and enter following URL: [http://localhost:8080/helloworld.xhtml](http://localhost:8080/helloworld.xhtml){:target="_blank"}. The below web page should now be displayed.
 
 <figure>
   <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-spring-boot-hello-world-example.png" alt="jsf primefaces spring boot hello world example">
@@ -280,6 +269,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-JoinFaces makes it easy to setup a PrimeFaces example using Spring Boot and Maven.
+JoinFaces makes it easy to set up a PrimeFaces example using Spring Boot and Maven.
 
 If you found this post helpful or have any questions or remarks, please leave a comment below.
