@@ -28,7 +28,9 @@ The following tutorial shows how to download, install and configure Apache Maven
 
 # Maven Prerequisites
 
-As Maven needs [Java](https://java.com/en/download/){:target="_blank"} in order to work, make sure that [a Java runtime environment (JRE) is installed and configured on your system]({{ site.url }}/java-download-install-jdk-8-windows.html). Maven 3.2 requires JDK 1.6 or above to execute.
+As Maven needs [Java](https://java.com/en/download/){:target="_blank"} in order to work, make sure that [a Java runtime environment (JRE) is installed and configured on your system]({{ site.url }}/java-download-install-jdk-8-windows.html).
+
+Maven 3.2 requires JDK 1.6 or above to execute.
 
 In order to check if Java is available on your system, open a command prompt and execute the following statement.
 
@@ -44,7 +46,7 @@ If a Java Runtime Environment (JRE) is correctly installed and configured the ve
 
 # Maven Download & Install
 
-Head over to the [Maven download page](https://maven.apache.org/download.cgi){:target="_blank"} and locate the [archives](https://archive.apache.org/dist/maven/maven-3/){:target="_blank"} link at the bottom of the page. Navigata to the correct directory and download the Maven 3.2.2 installer.
+Head over to the [Maven download page](https://maven.apache.org/download.cgi){:target="_blank"} and locate the [archives](https://archive.apache.org/dist/maven/maven-3/){:target="_blank"} link at the bottom of the page. Navigate to the correct directory and download the Maven 3.2.2 installer.
 
 > Here is the direct link to [download the Maven 3.2.2 binary ZIP for Windows 32 or 64 bit](https://archive.apache.org/dist/maven/maven-3/3.2.2/binaries/apache-maven-3.2.2-bin.zip){:target="_blank"}.
 
@@ -52,7 +54,9 @@ Head over to the [Maven download page](https://maven.apache.org/download.cgi){:t
     <img src="{{ site.url }}/assets/images/posts/maven/maven-3-2-archive-download-page.png" alt="maven 3.2 archive download page">
 </figure>
 
-Extract the binaries archive downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below. In this example the install location is <var>'C:\tools\apache-maven-3.2.2'</var>. From now on we will refer to this directory as: <var>[maven_install_dir]</var>.
+Extract the binaries archive downloaded in the previous step. The extracted root directory should contain a number of files and subdirectories as shown below.
+
+In this example the install location is <var>'C:\tools\apache-maven-3.2.2'</var>. From now on we will refer to this directory as: <var>[maven_install_dir]</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/maven/maven-3-2-install-location.png" alt="maven 3.2 install location">
@@ -82,9 +86,9 @@ Click on the <var>New</var> button and enter "<kbd>M2_HOME</kbd>" as variable na
     <img src="{{ site.url }}/assets/images/posts/maven/maven-3-2-set-home.png" alt="maven 3.2 set home">
 </figure>
 
-Select the <var>'PATH'</var> entry and click on the <var>Edit</var> button. Add "<kbd>;%M2_HOME%\bin</kbd>" at the end of the variable value and click <var>OK</var> to save.
+Select the <var>'PATH'</var> entry and click on the <var>Edit</var> button. Add "<kbd>;%M2_HOME%\bin;</kbd>" at the end of the variable value and click <var>OK</var> to save.
 
-> Note that in case a <var>'PATH'</var> variable does not exist you can create it and use "<kbd>%M2_HOME%\bin</kbd>" as the variable value.
+> Note that in case a <var>'PATH'</var> variable does not exist you can create it and use "<kbd>%M2_HOME%\bin;</kbd>" as the variable value.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/maven/maven-set-path.png" alt="maven set path">
@@ -111,7 +115,9 @@ The result should be that the Maven version is printed as shown below.
 
 Let's finish the tutorial by creating a basic Maven HelloWorld project.
 
-Open a command prompt and navigate to the directory in which you want to create the project. In the example below we will use <var>C:\Users\codenotfound</var>. Next enter following Maven command and press <var>ENTER</var>.
+Open a command prompt and navigate to the directory in which you want to create the project. In the example below we will use <var>C:\Users\codenotfound</var>.
+
+Next enter following Maven command and press <var>ENTER</var>.
 
 ``` plaintext
 mvn archetype:generate -DgroupId=com.codenotfound -DartifactId=hello-world -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
@@ -122,9 +128,11 @@ Maven will start looking for the needed dependencies in order to create the proj
 Feel free to browse the created <var>hello-world</var> directory. At the root you should be able to find the <var>pom.xml</var>, which is the XML representation of the Maven project.
 
 <figure>
-    <img src="{{ site.url }}/assets/images/posts/maven/maven-create-new-project.png" alt="maven create new project">
+    <img src="{{ site.url }}/assets/images/posts/maven/maven-3-2-create-new-project.png" alt="maven 3.2 create new project">
 </figure>
 
 ---
 
-This concludes the setting up and configuring Maven 3.2. If you found this post helpful or have any questions or remarks, please leave a comment.
+This concludes the setting up and configuring Maven 3.2.
+
+If you found this post helpful or have any questions or remarks, please leave a comment.
