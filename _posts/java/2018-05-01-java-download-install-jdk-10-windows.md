@@ -44,7 +44,7 @@ Sign in using your Oracle account (or create a new one) and the download should 
     <img src="{{ site.url }}/assets/images/posts/java/java-10-installer-start.png" alt="java 10 installer start">
 </figure>
 
-Click <var>Next</var> and on the following screen optionally change the installation location by clicking on the <var>Change...</var> button. In this example the install location was changed to <var>'C:\Java\jdk-10.0.1'</var>. From now on we will refer to this directory as: <var>[java_install_dir]</var>.
+Click <var>Next</var> and on the following screen optionally change the installation location by clicking on the <var>Change...</var> button. In this example the default install location of <var>'C:\Program Files\Java\jdk-10.0.1\'</var> was kept. From now on we will refer to this directory as: <var>[java_install_dir]</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-10-jdk-location.png" alt="java 10 jdk location">
@@ -112,6 +112,6 @@ The result should be as shown below.
 
 ---
 
-This concludes the setting up and configuring JDK 1.10 on Windows.
+This concludes the setting up and configuring JDK 10 on Windows.
 
 If you found this post helpful or have any questions or remarks, please leave a comment.
