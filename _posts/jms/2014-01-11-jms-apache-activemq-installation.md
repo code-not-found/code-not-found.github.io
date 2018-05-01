@@ -85,7 +85,7 @@ Once started as a background process there are a number of additional commands w
     <img src="{{ site.url }}/assets/images/posts/jms/unix-apache-activemq-status.png" alt="unix apache activemq status">
 </figure>
 
-The ActiveMQ web site contains a [complete overview of the available Unix commands](http://activemq.apache.org/unix-shell-script.html#UnixShellScript-Functionaloverview){:target="_blank"}. In order to stop the background process, use the below command, but for now, leave the broker running as we will first explorer the web console.
+The ActiveMQ web site contains a [complete overview of the available Unix commands](http://activemq.apache.org/unix-shell-script.html#UnixShellScript-Functionaloverview){:target="_blank"}. In order to stop the background process, use the below command, but for now, leave the broker running as we will first explore the web console.
 
 ``` plaintext
 ./activemq stop
