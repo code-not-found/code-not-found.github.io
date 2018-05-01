@@ -1,13 +1,13 @@
 ---
 title: "Java - Download and Install JDK 1.8 on Windows"
 permalink: /java-download-install-jdk-8-windows.html
-excerpt: "A detailed step-by-step tutorial on how to download and install jdk 8u152 on Windows."
+excerpt: "A detailed step-by-step tutorial on how to download and install jdk 8u172 on Windows."
 date: 2018-01-09
 last_modified_at: 2018-01-09
 header:
   teaser: "assets/images/teaser/java-teaser.png"
 categories: [Java]
-tags: [Download, Install, Java, JDK, jdk 8u152, Tutorial, Windows]
+tags: [Download, Install, Java, JDK, jdk 8u172, Tutorial, Windows]
 published: true
 ---
 
@@ -19,7 +19,7 @@ published: true
 
 Java is currently owned by the Oracle Corporation which acquired Sun Microsystems in 2010. Following tutorial will show you how to setup and configure Java 1.8 on Windows so you can develop and run Java code.
 
-Check following posts if you are looking to download and install [JDK 1.5]({{ site.url }}/java-download-install-jdk-5-windows.html), [JDK 1.6]({{ site.url }}/java-download-install-jdk-6-windows.html), [JDK 1.7]({{ site.url }}/java-download-install-jdk-7-windows.html) or [JDK 1.9]({{ site.url }}/java-download-install-jdk-9-windows.html).
+Check following posts if you are looking to download and install [JDK 1.5]({{ site.url }}/java-download-install-jdk-5-windows.html), [JDK 1.6]({{ site.url }}/java-download-install-jdk-6-windows.html), [JDK 1.7]({{ site.url }}/java-download-install-jdk-7-windows.html), [JDK 1.9]({{ site.url }}/java-download-install-jdk-9-windows.html) or [JDK 1.10]({{ site.url }}/java-download-install-jdk-10-windows.html).
 {: .notice--primary}
 
 # JDK Download & Install
@@ -28,9 +28,9 @@ Java can be obtained from the Oracle Java download page. There are a number of [
 
 In order to be able to compile Java code, we need the Java Development Kit (JDK) package that comes with a Java compiler. The JDK package also comes with a Java runtime environment (JRE) that is needed to run compiled Java code.
 
-Scroll to the <var>Java SE 8u151/ 8u152</var> section in the middle of the [Oracle Java download page](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"} and click on the <var>Download</var> button right below <var>JDK</var>. Then look for the <var>Java SE Development Kit 8u152</var> section.
+Scroll to the <var>Java SE 8u171/ 8u172</var> section in the middle of the [Oracle Java download page](http://www.oracle.com/technetwork/java/javase/downloads/index.html){:target="_blank"} and click on the <var>Download</var> button right below <var>JDK</var>. Then look for the <var>Java SE Development Kit 8u172</var> section.
 
-> Here is the direct link to [download the jdk 8u152 installer for Windows 32 or 64 bit](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html){:target="_blank"}.
+> Here is the direct link to [download the jdk 8u172 installer for Windows 32 or 64 bit](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html){:target="_blank"}.
 
 Accept the License Agreement and pick the correct download for your operating system. In this example, we will use the Windows 64 bit version.
 
@@ -38,13 +38,13 @@ Accept the License Agreement and pick the correct download for your operating sy
     <img src="{{ site.url }}/assets/images/posts/java/java-8-download-jdk.png" alt="java 8 download jdk">
 </figure>
 
-Sign in using your Oracle account (or create a new one) and the download should start. Once the download is complete, locate the <var>jdk-8u152-windows-x64.exe</var> file and double-click to run the installer.
+Sign in using your Oracle account (or create a new one) and the download should start. Once the download is complete, locate the <var>jdk-8u172-windows-x64.exe</var> file and double-click to run the installer.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-8-installer-start.png" alt="java 8 installer start">
 </figure>
 
-Click <var>Next</var> and on the following screen optionally change the installation location by clicking on the <var>Change...</var> button. In this example the install location was changed to <var>'C:\Java\jdk1.8.0_152'</var>. From now on we will refer to this directory as: <var>[java_install_dir]</var>.
+Click <var>Next</var> and on the following screen optionally change the installation location by clicking on the <var>Change...</var> button. In this example the default install location of <var>'C:\Program Files\Java\jdk1.8.0_172\'</var> was kept. From now on we will refer to this directory as: <var>[java_install_dir]</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-8-jdk-location.png" alt="java 8 jdk location">
@@ -78,7 +78,7 @@ Environment variables can be set at account level or at system level. For this e
     <img src="{{ site.url }}/assets/images/posts/java/environment-variables.png" alt="environment variables">
 </figure>
 
-Click on the <var>New</var> button and enter "<kbd>JAVA_HOME</kbd>" as variable name and the <var>[java_install_dir]</var> as variable value. In this tutorial the installation directory is <var>'C:\Java\jdk1.8.0_152'</var>. Click <var>OK</var> to to save.
+Click on the <var>New</var> button and enter "<kbd>JAVA_HOME</kbd>" as variable name and the <var>[java_install_dir]</var> as variable value. In this tutorial the installation directory is <var>'C:\Program Files\Java\jdk1.8.0_172'</var>. Click <var>OK</var> to to save.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-8-set-home.png" alt="java 8 set home">
