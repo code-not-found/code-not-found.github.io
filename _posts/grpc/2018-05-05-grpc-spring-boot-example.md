@@ -25,15 +25,17 @@ In the following tutorial, we will configure, build and run a Hello World gRPC s
 
 gRPC services are defined using [protocol buffers](https://developers.google.com/protocol-buffers/){:target="_blank"}. These are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.
 
-You specify how you want the information you're serializing to be structured by defining protocol buffer message types in <var>.proto<var> files. Each protocol buffer message is a small logical record of information, containing a series of name-value pairs.
+You specify how you want the information you're serializing to be structured by defining protocol buffer message types in <var>.proto</var> files. Each protocol buffer message is a small logical record of information, containing a series of name-value pairs.
 
-For this example we define a first message containing information about a <var>Person</var> and a second message containing a <var>Greeting</var>. Both are then used in a <var>sayHello</var> RPC method that takes the Person parameter from the client and returns a Greeting from the server.
+For this example we define a first message containing information about a <var>Person</var> and a second message containing a <var>Greeting</var>. Both are then used in a <var>sayHello()</var> RPC method that takes the person message from the client and returns a greeting from the server.
 
-We also define the version of the protocol buffers language that is used (proto3) in addition to package name and an option that enables the generation of separate files for different classes. For more information check the [protocol buffers language guide](https://developers.google.com/protocol-buffers/docs/proto3){:target="_blank"}.
+We also define the version of the protocol buffers language that is used (proto3) in addition to package name and an option that enables the generation of separate files for different classes.
+
+For more information check the [protocol buffers language guide](https://developers.google.com/protocol-buffers/docs/proto3){:target="_blank"}.
 
 The below protocol buffer file is stored in <var>src/main/proto/HelloWorld.proto</var>.
 
-``` yaml
+``` json
 syntax = "proto3";
 
 option java_multiple_files = true;
@@ -76,7 +78,7 @@ Protocol buffers support generated code in a number of [programming languages](h
 
 There are multiple ways to generate the protobuf-based code and for this example we will use the [protobuf-maven-plugin](https://github.com/xolstice/protobuf-maven-plugin){:target="_blank"} as documented on the [grpc-java](https://github.com/grpc/grpc-java){:target="_blank"} GitHub page.
 
-We also include the [os-maven-plugin](https://github.com/trustin/os-maven-plugin){:target="_blank"} extension that generates various useful platform-dependent project properties. This information is needed as the Protocol Buffer compiler is native code. In other words the `protobuf-maven-plugin` needs to fetch the correct compiler for the platform it is running on.
+We also include the [os-maven-plugin](https://github.com/trustin/os-maven-plugin){:target="_blank"} extension that generates various useful platform-dependent project properties. This information is needed as the Protocol Buffer compiler is native code. In other words, the `protobuf-maven-plugin` needs to fetch the correct compiler for the platform it is running on.
 
 Finally, the plugins section includes the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to startup our gRPC server via a Maven command.
 
@@ -186,10 +188,12 @@ mvn compile
 ```
 
 <figure>
-  <img src="{{ site.url }}/assets/images/logo/grpc-logo.png" alt="grpc logo">
+  <img src="{{ site.url }}/assets/images/posts/grpc/protobuf-generated-classes.png" alt="protobuf generated classes">
 </figure>
 
-We also create a `SpringGRPCApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap the application, starting Spring. For more information on Spring Boot, we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
+We also create a `SpringGRPCApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap the application, starting Spring.
+
+For more information on Spring Boot, we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
 
 ``` java
 package com.codenotfound.grpc;
@@ -208,11 +212,11 @@ public class SpringGRPCApplication {
 
 # Creating the Server
 
-The service implementation is defined in the `HelloWorldServiceImpl` POJO that implements the `HelloWorldServiceImplBase` class that was generated from the <var>HelloWorld.proto</var> file. We override the `sayHello()` method and generate a `Greeting` response based on the first and last name of the `Person` passed in the the request.
+The service implementation is defined in the `HelloWorldServiceImpl` POJO that implements the `HelloWorldServiceImplBase` class that was generated from the <var>HelloWorld.proto</var> file. We override the `sayHello()` method and generate a `Greeting` response based on the first and last name of the `Person` passed in the request.
 
-> Note that the response is a `StreamObserver` object. In other words the service is by default asynchronous and whether you want to block or not when receiving the response(s) is the decision of the client as we will see further below.
+> Note that the response is a `StreamObserver` object. In other words, the service is by default asynchronous and whether you want to block or not when receiving the response(s) is the decision of the client as we will see further below.
 
-We use the response observer's `onNext()` method to return the `Greeting` and then call the response observer's `onCompleted()` method to to tell gRPC that we've finished writing responses.
+We use the response observer's `onNext()` method to return the `Greeting` and then call the response observer's `onCompleted()` method to tell gRPC that we've finished writing responses.
 
 The `HelloWorldServiceImpl` POJO is annotated with `@GRpcService` which auto-configures the specified gRPC service to be exposed on port <var>6565</var>.
 
