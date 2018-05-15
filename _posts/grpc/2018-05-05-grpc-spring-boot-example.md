@@ -263,11 +263,11 @@ To call gRPC service methods, we first need to create a stub. There are two type
 
 The client code is specified in the `HelloWorldClient` class.
 
-In order to transport messages gRPC uses http/2 and some abstraction layers in between. This complexity is hidden behind a `MessageChannel` that handles the connectivity. The general recommendation is to use one channel per application and share it among service stubs.
+In order to transport messages, gRPC uses http/2 and some abstraction layers in between. This complexity is hidden behind a `MessageChannel` that handles the connectivity. The general recommendation is to use one channel per application and share it among service stubs.
 
-We use an `init()` method annotated with `@PostConstruct` in order to build a new `MessageChannel` only once right after the after the bean has been initialized. The channel is then used to create the `helloWorldServiceBlockingStub` stub.
+We use an `init()` method annotated with `@PostConstruct` in order to build a new `MessageChannel` right after the after the bean has been initialized. The channel is then used to create the `helloWorldServiceBlockingStub` stub.
 
-> gRPC by default uses a secure connection mechanism such as TLS. As this is a simple develoment test will will use `usePlaintext()` in order to avoid having to setup the different security artifacts such as key/trust stores.
+> gRPC by default uses a secure connection mechanism such as TLS. As this is a simple development test will use `usePlaintext()` in order to avoid having to setup the different security artifacts such as key/trust stores.
 
  The `sayHello()` method creates a Person object using the Builder pattern on which we set the <var>'firstname'</var> and <var>'lastname'</var> input parameters.
 
@@ -365,7 +365,7 @@ Run the above test case by opening a command prompt in the projects root folder 
 mvn test
 ```
 
-The result should be a successful build during which the gRPC server is started and a call is made to the Hello World service:
+The result should be a successful build during which the gRPC server is started and a call is made to the Hello World service.
 
 ``` plaintext
   .   ____          _            __ _ _
@@ -431,6 +431,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes our tutorial on how to implement a gRPC service and corresponding client using a Spring Boot starter and Maven.
+This concludes our tutorial on how to implement a gRPC service and the corresponding client using a Spring Boot starter and Maven.
 
 If you liked this example or have a question you would like to ask, leave a comment below!
