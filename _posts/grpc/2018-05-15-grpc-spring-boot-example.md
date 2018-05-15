@@ -427,7 +427,7 @@ mvn spring-boot:run
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-ws/tree/master/spring-ws-helloworld){:target="_blank"}.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/grpc/tree/master/grpc-spring-boot-helloworld){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 

@@ -12,7 +12,7 @@ published: true
 ---
 
 <figure>
-  <img src="{{ site.url }}/assets/images/logo/graphql-logo.png" alt="primefaces logo" class="logo">
+  <img src="{{ site.url }}/assets/images/logo/graphql-logo.png" alt="graphql logo" class="logo">
 </figure>
 
 [GraphQL](http://graphql.org/){:target="_blank"} is a query language for APIs. It provides a complete and understandable description of the data in your API and gives clients the power to ask for exactly what they need and nothing more.

@@ -277,7 +277,7 @@ public class EndpointConfig {
 }
 ```
 
-The service implementation is specified the `HelloWorldImpl` POJO that implements the `HelloWorldPortType` interface that was generated from the WSDL file earlier. We simply use the name of the received `Person` to construct a `Greeting` that is returned.
+The service implementation is specified in the `HelloWorldImpl` POJO that implements the `HelloWorldPortType` interface that was generated from the WSDL file earlier. We simply use the name of the received `Person` to construct a `Greeting` that is returned.
 
 ``` java
 package com.codenotfound.endpoint;
