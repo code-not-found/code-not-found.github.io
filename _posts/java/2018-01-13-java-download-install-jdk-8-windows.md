@@ -1,6 +1,7 @@
 ---
 title: "Java - Download and Install JDK 1.8 on Windows"
 layout: single
+author_profile: false
 permalink: /java-download-install-jdk-8-windows.html
 excerpt: "A detailed step-by-step tutorial on how to download and install jdk 8u172 on Windows."
 date: 2018-01-09
@@ -13,7 +14,7 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logo/java-logo.png" alt="java logo" class="logo">
+    <img src="{{ site.url }}/assets/images/logo/java-logo.png" alt="java logo">
 </figure>
 
 This tutorial has everything you need to know about installing JDK 8 on Windows.
