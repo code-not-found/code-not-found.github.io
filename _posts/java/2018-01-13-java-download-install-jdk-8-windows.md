@@ -13,10 +13,6 @@ tags: [Download, Install, Java, JDK, jdk 8u172, Tutorial, Windows]
 published: true
 ---
 
-<figure>
-    <img src="{{ site.url }}/assets/images/logo/java-logo.png" alt="java logo" class="logo-no-ads">
-</figure>
-
 This tutorial has everything you need to know about installing JDK 8 on Windows.
 
 If you're new to Java, I'll show you how to setup the Java Development Kit.
