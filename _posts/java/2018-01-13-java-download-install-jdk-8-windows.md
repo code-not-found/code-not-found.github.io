@@ -14,7 +14,7 @@ published: true
 ---
 
 <figure>
-    <img src="{{ site.url }}/assets/images/logo/java-logo.png" alt="java logo">
+    <img src="{{ site.url }}/assets/images/logo/java-logo.png" alt="java logo" class="logo-no-ads">
 </figure>
 
 This tutorial has everything you need to know about installing JDK 8 on Windows.
@@ -29,7 +29,7 @@ If you want to get up and running with Java, **you'll love this tutorial**.
 
 <figure>
   <a href="https://codenotfound.teachable.com/p/java-download-install-jdk-8-windows">
-    <img src="{{ site.url }}/assets/images/courses/java-installation-course.jpg" alt="java installation course">
+    <img src="{{ site.url }}/assets/images/courses/jdk-installation-course.jpg" alt="jdk installation course">
   </a>
 </figure>
 
