@@ -1,7 +1,5 @@
 ---
 title: "Java - Download and Install JDK 1.8 on Windows"
-layout: single
-author_profile: false
 permalink: /java-download-install-jdk-8-windows.html
 excerpt: "A detailed step-by-step tutorial on how to download and install jdk 8u172 on Windows."
 date: 2018-01-09
@@ -13,6 +11,10 @@ tags: [Download, Install, Java, JDK, jdk 8u172, Tutorial, Windows]
 published: true
 ---
 
+<figure>
+    <img src="{{ site.url }}/assets/images/logo/java-logo.png" alt="java logo" class="logo">
+</figure>
+
 This tutorial has everything you need to know about installing JDK 8 on Windows.
 
 If you're new to Java, I'll show you how to setup the Java Development Kit.
@@ -23,17 +25,11 @@ Bottom line:
 
 If you want to get up and running with Java, **you'll love this tutorial**.
 
-<figure>
-  <a href="https://codenotfound.teachable.com/p/java-download-install-jdk-8-windows">
-    <img src="{{ site.url }}/assets/images/courses/jdk-installation-course.jpg" alt="jdk installation course">
-  </a>
-</figure>
+# JDK Download & Install
 
 [Java](https://www.java.com/en/){:target="_blank"} is a computer programming language that is concurrent, class-based and object-oriented. Java applications compile to bytecode (class file) that can then run on a Java Virtual Machine (JVM).
 
 James Gosling created Java at Sun Microsystems. It is currently owned by the Oracle Corporation.
-
-# JDK Download & Install
 
 Consult following posts if you are looking to download and install [JDK 1.5]({{ site.url }}/java-download-install-jdk-5-windows.html), [JDK 1.6]({{ site.url }}/java-download-install-jdk-6-windows.html), [JDK 1.7]({{ site.url }}/java-download-install-jdk-7-windows.html), [JDK 1.9]({{ site.url }}/java-download-install-jdk-9-windows.html) or [JDK 1.10]({{ site.url }}/java-download-install-jdk-10-windows.html).
 {: .notice--primary}
