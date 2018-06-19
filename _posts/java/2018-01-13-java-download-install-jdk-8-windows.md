@@ -17,7 +17,7 @@ This tutorial has everything you need to know about installing JDK 8 on Windows.
 
 If you're new to Java, I'll show you how to setup the Java Development Kit.
 
-And if you're a Java pro? I'll highlight the needed links that you can use to download.
+And if you're a Java pro? I'll highlight the needed links that you can use to download the installer.
 
 Bottom line:
 
