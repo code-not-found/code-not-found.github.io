@@ -22,10 +22,10 @@ The following example shows how to setup an automated unit test for your PrimeFa
 # General Project Setup
 
 Tools used:
-* PrimeFaces 6.1
-* Selenium 3.8
-* JoinFaces 2.4
-* Spring Boot 1.5
+* PrimeFaces 6.2
+* JoinFaces 3.2
+* Spring Boot 2.0
+* Selenium 3.12
 * Maven 3.5
 
 We will start from a previous [Spring Boot Primefaces Tutorial]({{ site.url }}/jsf-primefaces-example-spring-boot-maven.html) in which we created a greeting dialog based on a first and last name input form.
@@ -34,9 +34,11 @@ We add `spring-boot-starter-test` to the existing [Maven](https://maven.apache.o
 
 In order to create local Selenium scripts, we need to make use of language-specific client drivers. As this example is based on Java we include the `selenium-java` client dependency.
 
-The key interface against which tests should be written in Java is the [WebDriver](http://www.seleniumhq.org/projects/webdriver/){:target="_blank"} which has a number of implementing classes.
+The key interface against which tests should be written in Java is the [WebDriver](http://www.seleniumhq.org/projects/webdriver/){:target="_blank"} interface which has a number of implementing classes.
 
-For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/htmlunit-driver){:target="_blank"} which is a WebDriver compatible driver for the [HtmlUnit](http://htmlunit.sourceforge.net/){:target="_blank"} headless browser. As such we also add the `selenium-htmlunit-driver` dependency.
+For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/htmlunit-driver){:target="_blank"} which is a WebDriver compatible driver for the [HtmlUnit](http://htmlunit.sourceforge.net/){:target="_blank"} headless browser. As such we also add the `htmlunit-driver` dependency.
+
+HtmlUnit uses a [CSS parser](https://github.com/HtmlUnit/htmlunit-cssparser){:target="_blank"}. We include it by adding the `htmlunit-cssparser` dependency.
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -55,16 +57,19 @@ For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/html
 
   <parent>
     <groupId>org.joinfaces</groupId>
-    <artifactId>jsf-spring-boot-parent</artifactId>
-    <version>2.4.1</version>
+    <artifactId>joinfaces-parent</artifactId>
+    <version>3.2.1</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
 
-    <selenium-java.version>3.8.1</selenium-java.version>
-    <selenium-htmlunit-driver.version>2.52.0</selenium-htmlunit-driver.version>
+    <selenium-java.version>3.12.0</selenium-java.version>
+    <htmlunit-driver.version>2.31.0</htmlunit-driver.version>
+    <htmlunit-cssparser.version>1.0.0</htmlunit-cssparser.version>
   </properties>
 
   <dependencies>
@@ -81,7 +86,7 @@ For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/html
     <!-- joinfaces -->
     <dependency>
       <groupId>org.joinfaces</groupId>
-      <artifactId>jsf-spring-boot-starter</artifactId>
+      <artifactId>primefaces-spring-boot-starter</artifactId>
     </dependency>
     <!-- selenium -->
     <dependency>
@@ -92,8 +97,14 @@ For this example we will use [HtmlUnitDriver](https://github.com/seleniumhq/html
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-htmlunit-driver</artifactId>
-      <version>${selenium-htmlunit-driver.version}</version>
+      <artifactId>htmlunit-driver</artifactId>
+      <version>${htmlunit-driver.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.htmlunit</groupId>
+      <artifactId>htmlunit-cssparser</artifactId>
+      <version>${htmlunit-cssparser.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -209,7 +220,7 @@ public class HelloWorldTest extends WebDriverTest {
 
   @Test
   public void testSubmit() {
-    driver.get("http://localhost:9090/codenotfound/helloworld.xhtml");
+    driver.get("http://localhost:8080/helloworld.xhtml");
 
     HelloWorldPage page = new HelloWorldPage(driver);
     page.submit("Jane", "Doe");
@@ -265,29 +276,29 @@ mvn test
 The result should be a successful build during which the test is executed.
 
 ``` plaintext
+
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v1.5.7.RELEASE)
+ :: Spring Boot ::        (v2.0.2.RELEASE)
 
-09:25:38.666 [main] INFO  c.c.primefaces.view.HelloWorldTest - Starting HelloWorldTest on cnf-pc with PID 2808 (started by CodeNotFound in c:\codenotfound\code\jsf-primefaces\jsf-primefaces-unit-testing-selenium)
-09:25:38.668 [main] INFO  c.c.primefaces.view.HelloWorldTest - No active profile set, falling back to default profiles: default
-09:25:43.773 [main] INFO  c.c.primefaces.view.HelloWorldTest - Started HelloWorldTest in 5.405 seconds (JVM running for 6.127)
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.454 sec - in com.codenotfound.primefaces.view.HelloWorldTest
-
-Results :
-
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-
+20:35:26.875 [main] INFO  c.c.primefaces.view.HelloWorldTest - Starting HelloWorldTest on cnf-pc with PID 4024 (started by CodeNotFound in c:\blogs\codenotfound\code\jsf-primefaces\jsf-primefaces-unit-testing-selenium)
+20:35:26.875 [main] INFO  c.c.primefaces.view.HelloWorldTest - No active profile set, falling back to default profiles: default
+20:35:32.507 [main] INFO  c.c.primefaces.view.HelloWorldTest - Started HelloWorldTest in 5.881 seconds (JVM running for 8.08)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.231 s - in com.codenotfound.primefaces.view.HelloWorldTest
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 10.405 s
-[INFO] Finished at: 2018-01-01T09:25:45+01:00
-[INFO] Final Memory: 23M/228M
+[INFO] Total time: 12.488 s
+[INFO] Finished at: 2018-06-19T20:35:34+02:00
 [INFO] ------------------------------------------------------------------------
 ```
 
