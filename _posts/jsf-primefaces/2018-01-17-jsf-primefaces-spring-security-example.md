@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/teaser/primefaces-teaser.png"
 categories: [PrimeFaces]
 tags: [Example, JavaServer Faces, JSF, Login, Maven, PrimeFaces, Spring Boot, Spring Security]
+redirect_from:
+  - /jsf-primefaces-spring-security.html
 published: true
 ---
 
