@@ -193,6 +193,7 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-redirect-from
+  - jekyll-redirect-to
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -202,6 +203,7 @@ whitelist:
   - jekyll-feed
   - jemoji
   - jekyll-redirect-from
+  - jekyll-redirect-to
 
 
 # Archives
