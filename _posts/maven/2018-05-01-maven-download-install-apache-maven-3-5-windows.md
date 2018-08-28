@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/teaser/maven-teaser.png"
 categories: [Apache Maven]
 tags: [Apache Maven, Apache Maven 3.5, Download, Install, Maven, Tutorial, Windows]
+redirect_to:
+  - https://downlinko.com/download-install-apache-maven-3-5-0-windows.html
 published: true
 ---
 
