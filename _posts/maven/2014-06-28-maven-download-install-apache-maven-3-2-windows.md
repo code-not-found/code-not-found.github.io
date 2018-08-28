@@ -13,6 +13,8 @@ redirect_from:
   - /2014/06/maven-install-maven.html
   - /2014/06/maven-install-maven-windows.html
   - /2014/06/maven-download-install-apache-maven-3-2-windows.html
+redirect_to:
+  - https://downlinko.com/download-install-apache-maven-3-2-2-windows.html
 published: true
 ---
 
