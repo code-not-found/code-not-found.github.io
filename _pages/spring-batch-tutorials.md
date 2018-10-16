@@ -1,14 +1,9 @@
 ---
 title: "Spring Batch Tutorials"
-permalink: /spring-batch-tutorials.html
+permalink: /spring-batch/
 excerpt: "Detailed step-by-step tutorials on how to use Spring Batch."
 date: 2018-10-16
 last_modified_at: 2018-10-16
-header:
-  teaser: "assets/images/posts/spring-batch/spring-batch-tutorials.png"
-categories: [Spring Batch]
-tags: [Tutorial]
-published: true
 ---
 
 <img src="{{ site.url }}/assets/images/posts/spring-batch/spring-batch-tutorials.png" alt="spring batch tutorials" class="align-right title-image">
