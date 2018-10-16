@@ -23,7 +23,7 @@ Ready?
 
 ## How Does the Spring Batch Framework Work?
 
-Before we dive into the code let's look at how the Spring Batch framework works. It contains following key building blocks:
+Before we dive into the code let's look at the Spring Batch framework. It contains following key building blocks:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-framework.png" alt="spring batch framework">
 
@@ -45,7 +45,7 @@ Our Maven project has the following structure:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-maven-project.png" alt="spring batch hello world maven project">
 
-We will use these tools:
+It uses the following tools/frameworks:
 * Spring Batch 4.0
 * Spring Boot 2.0
 * Maven 3.5
@@ -128,7 +128,9 @@ We use Spring Boot so that we have a Spring Batch application that you can "just
 
 For more information on Spring Boot, check the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
 
-Spring Batch by default uses a database to store metadata on the configured batch jobs. In this example we will **run Spring Batch without a database**. Instead an in memory `Map` based repository is used. For this to work we need to specify <var>exclude = {DataSourceAutoConfiguration.class}</var> (line 7). This prevents Spring Boot from auto-configuring a `DataSource` to connect to a stand-alone database.
+Spring Batch by default uses a database to store metadata on the configured batch jobs. In this example we will **run Spring Batch without a database**. Instead an in memory `Map` based repository is used.
+
+For this to work we need to specify <var>exclude = {DataSourceAutoConfiguration.class}</var> (_line 7_). This prevents Spring Boot from auto-configuring a `DataSource` to connect to a stand-alone database.
 
 {% highlight java linenos %}
 package com.codenotfound.batch;
