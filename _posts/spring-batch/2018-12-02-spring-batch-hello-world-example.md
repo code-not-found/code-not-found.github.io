@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/spring-batch/spring-batch-hello-world-example.png"
 categories: [Spring Batch]
 tags: [Example, Maven, Spring Batch, Spring Boot, Tutorial ]
-published: true
+published: false
 ---
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-example.png" alt="spring batch hello world example" class="align-right title-image">
@@ -23,7 +23,7 @@ Let’s dive right in…
 
 ## How Does the Spring Batch Framework Work?
 
-Before we dive into the code let's look at how the Spring Batch framework works. It contains following key concepts:
+Before we dive into the code let's look at how the Spring Batch framework works. It contains following key building blocks:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-framework.png" alt="spring batch framework">
 
@@ -37,6 +37,6 @@ And finally the `JobRepository` stores metadata about configured and executed `J
 
 ## General Project Setup
 
-To demonstrate how Spring Batch works we will build a simple Hello World batch job.
+To demonstrate how Spring Batch works let's build a simple Hello World batch job.
 
-We will read person data from a CSV file. From this data a greeting is generated. This greeting is then written to a text file.
+We will first read person data from a CSV file. From this data a greeting is generated. This greeting is then written to a text file.
