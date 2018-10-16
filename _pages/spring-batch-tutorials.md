@@ -8,7 +8,7 @@ last_modified_at: 2018-10-16
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-tutorials.png" alt="spring batch tutorials" class="align-right title-image">
 
-These tutorials will help you learn Spring Batch in record time.
+These tutorials will help you learn [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} in record time.
 
 The best part?
 
@@ -18,8 +18,8 @@ Let’s get started…
 
 ## What is Spring Batch?
 
-[Spring Batch](https://en.wikipedia.org/wiki/Spring_Batch){:target="_blank"} is an open source framework for batch processing. It provides **reusable functions** that you can use to process large volumes of records.
+[Spring Batch](https://en.wikipedia.org/wiki/Spring_Batch){:target="_blank"} is an open source framework for batch processing. It provides **reusable functions** that you can use to **process large volumes of records**.
 
-Spring Batch works by first reading items from a specified source. Then the items are processed. And in a last step the processed items are written to a specific destination.
+Spring Batch works by first reading items from a specified source. Then in a next step, the items are processed. And finally, the processed items are written to a specific destination.
 
 Spring Batch is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
