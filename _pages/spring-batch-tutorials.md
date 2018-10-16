@@ -6,7 +6,7 @@ date: 2018-10-16
 last_modified_at: 2018-10-16
 ---
 
-<img src="{{ site.url }}/assets/images/posts/spring-batch/spring-batch-tutorials.png" alt="spring batch tutorials" class="align-right title-image">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-tutorials.png" alt="spring batch tutorials" class="align-right title-image">
 
 These tutorials will help you learn Spring Batch in record time.
 
