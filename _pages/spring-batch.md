@@ -12,7 +12,7 @@ These tutorials will help you learn [Spring Batch](https://spring.io/projects/sp
 
 The best part?
 
-They all come with **detailed explanations, source code, and accompanying test cases**.
+They all come with **detailed explanations**, **source code**, and **accompanying test cases**.
 
 Let’s get started…
 
