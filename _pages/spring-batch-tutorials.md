@@ -23,3 +23,13 @@ Let’s get started…
 Spring Batch works by first reading items from a specified source. Then in a next step, the items are processed. And finally, the processed items are written to a specific destination.
 
 Spring Batch is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
+
+## Tutorials
+
+
+## References
+
+* [Spring Batch - Project](https://spring.io/projects/spring-batch){:target="_blank"}
+* [Spring Batch - Reference Documentation](https://spring.io/projects/spring-batch#learn){:target="_blank"}
+* [GitHub - spring-projects/spring-batch](https://github.com/spring-projects/spring-batch){:target="_blank"}
+* [Stack Overflow - Spring Batch Questions](https://stackoverflow.com/questions/tagged/spring-batch){:target="_blank"}
