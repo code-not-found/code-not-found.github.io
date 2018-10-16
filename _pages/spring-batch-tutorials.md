@@ -20,12 +20,13 @@ Let’s get started…
 
 [Spring Batch](https://en.wikipedia.org/wiki/Spring_Batch){:target="_blank"} is an open source framework for batch processing. It provides **reusable functions** that you can use to **process large volumes of records**.
 
-Spring Batch works by first reading items from a specified source. Then in a next step, the items are processed. And finally, the processed items are written to a specific destination.
+Spring Batch works by first reading items from a specified source. Then in a next step, the items are processed. And finally, the processed items are written to a specified destination.
 
 Spring Batch is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
 ## Tutorials
 
+* [Spring Batch Hello World Example]({{ site.url }}/spring-batch-hello-world-example.html)
 
 ## References
 
