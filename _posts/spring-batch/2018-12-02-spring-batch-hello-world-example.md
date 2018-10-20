@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/spring-batch/spring-batch-hello-world-example.png"
 categories: [Spring Batch]
 tags: [Example, Maven, Spring Batch, Spring Boot, Tutorial ]
-published: false
+published: true
 ---
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-example.png" alt="spring batch hello world example" class="align-right title-image">
@@ -122,6 +122,8 @@ In the plugins section, we define the [Spring Boot Maven Plugin](https://docs.sp
 </project>
 {% endhighlight %}
 
+## Spring Boot Setup
+
 We use Spring Boot so that we have a Spring Batch application that you can "just run". Start by creating a `SpringBatchApplication` class. It contains the `main()` method that uses Spring Boot's `SpringApplication.run()` to launch the application.
 
 > Note that `@SpringBootApplication` is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan`.
@@ -130,7 +132,7 @@ For more information on Spring Boot, check the [Spring Boot getting started guid
 
 Spring Batch by default uses a database to store metadata on the configured batch jobs. In this example, we will **run Spring Batch without a database**. Instead, an in-memory `Map` based repository is used.
 
-For this to work we need to specify <var>exclude = {DataSourceAutoConfiguration.class}</var> (_line 7_). This prevents Spring Boot from auto-configuring a `DataSource` to connect to a stand-alone database.
+For this to work we need to specify <var>exclude = {DataSourceAutoConfiguration.class}</var> (_line 7_). This prevents Spring Boot from auto-configuring a `DataSource` connection to a database.
 
 {% highlight java linenos %}
 package com.codenotfound.batch;
@@ -144,6 +146,134 @@ public class SpringBatchApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(SpringBatchApplication.class, args);
+  }
+}
+{% endhighlight %}
+
+## Creating the Model
+
+Before you process data it is generally expected that you map it to a domain object.
+
+In this example we will map the comma separated data from the CSV file to a `Person` object. This is a simple POJO that contains a first and last name.
+
+{% highlight java linenos %}
+package com.codenotfound.model;
+
+public class Person {
+  private String firstName;
+  private String lastName;
+
+  public Person() {}
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  @Override
+  public String toString() {
+    return "person[firstName=" + firstName + " ,lastName=" + lastName + "]";
+  }
+}
+{% endhighlight %}
+
+## Configuring the Spring Batch Job
+
+Let's go ahead and configure our batch job.
+
+We create a `HelloWorldJobConfig` class. The `@Configuration` annotation at the top of the class [indicates](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} that Spring can use this class as a source of bean definitions.
+
+We then add the `@EnableBatchProcessing` (_line 22_) annotation which [enables](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} Spring Batch features and provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a Map based `JobRepository` is used.
+
+By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
+* a `JobRepository` (bean name "jobRepository")
+* a `JobLauncher` (bean name "jobLauncher")
+* a `JobRegistry` (bean name "jobRegistry")
+* a `JobExplorer` (bean name "jobExplorer")
+* a `PlatformTransactionManager` (bean name "transactionManager")
+* a `JobBuilderFactory` (bean name "jobBuilders") as a convenience to prevent you from having to inject the job repository into every job
+* a `StepBuilderFactory` (bean name "stepBuilders") as a convenience to prevent you from having to inject the job repository and transaction manager into every step
+
+We use the last two factories to create our job and the steps it consists of. [Autowire](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation){:target="_blank"} both `jobBuilders` and `stepBuilders`.
+
+In the `helloWorlJob()` bean we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be executed.
+
+The `helloWorldStep()` bean defines the different items our step executes. We use the `StepBuilderFactory` to define the step.
+
+First we pass the name of the step. Using `chunk()` we specify the number of items that are processed within each transaction. Chunk also specifies the input (`Person`) and output (`String`) type of the step. We then add the `ItemReader` (reader), `ItemProcessor` (processor), and `ItemWriter` (writer) to the step.
+
+
+
+{% highlight java linenos %}
+package com.codenotfound.batch.job;
+
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
+import org.springframework.batch.item.file.transform.PassThroughLineAggregator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import com.codenotfound.model.Person;
+
+@Configuration
+@EnableBatchProcessing
+public class HelloWorldJobConfig {
+
+  @Autowired
+  public JobBuilderFactory jobBuilders;
+
+  @Autowired
+  public StepBuilderFactory stepBuilders;
+
+  @Bean
+  public Job helloWorlJob() {
+    return jobBuilders.get("helloWorldJob").start(helloWorldStep()).build();
+  }
+
+  @Bean
+  public Step helloWorldStep() {
+    return stepBuilders.get("helloWorldStep").<Person, String>chunk(10).reader(reader())
+        .processor(processor()).writer(writer()).build();
+  }
+
+  @Bean
+  public FlatFileItemReader<Person> reader() {
+    return new FlatFileItemReaderBuilder<Person>().name("personItemReader")
+        .resource(new ClassPathResource("persons.csv")).delimited()
+        .names(new String[] {"firstName", "lastName"}).targetType(Person.class).build();
+  }
+
+  @Bean
+  public PersonItemProcessor processor() {
+    return new PersonItemProcessor();
+  }
+
+  @Bean
+  public FlatFileItemWriter<String> writer() {
+    return new FlatFileItemWriterBuilder<String>().name("greetingItemWriter")
+        .resource(new FileSystemResource("target/test-outputs/greetings.txt"))
+        .lineAggregator(new PassThroughLineAggregator<>()).build();
   }
 }
 {% endhighlight %}
