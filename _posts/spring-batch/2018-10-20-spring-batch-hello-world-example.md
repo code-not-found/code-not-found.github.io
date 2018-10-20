@@ -223,13 +223,13 @@ In order for the `FlatFileItemReader` to process our file we need to specify som
 
 We also specify how each field on a line needs to be mapped to our `Person` object. This is done using `names()` that enables Spring Batch to automatically map fields by matching a name with a setter on the object. So in our example the first field of a line will be mapped using the <var>firstName</var> setter. For this to work we also need to specify the target type which is a `Person` object.
 
-The `PersonItemProcessor` handles the processing of the data. It is defined further below.
+The `PersonItemProcessor` handles the processing of the data. It converts a `Person` into a greeting `String`. This is defined in a separate class further below.
 
 Once the data is processed we will write it to a text file. We use the [FlatFileItemWriter](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemWriter){:target="_blank"} to help us with this task.
 
 We use a `FlatFileItemWriterBuilder` builder implementation to create a `FlatFileItemWriter`. We specify a name for the writer and the resource (in this case the <var>greeting.txt</var> file) to which data needs to be written.
 
-
+The `FlatFileItemWriter` needs to know how to turn our generated output into a single string that can be written to a file. As in this example our output is already a string we can use the `PassThroughLineAggregator`. This is the most basic implementation, which assumes that the object is already a string.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
@@ -290,6 +290,32 @@ public class HelloWorldJobConfig {
     return new FlatFileItemWriterBuilder<String>().name("greetingItemWriter")
         .resource(new FileSystemResource("target/test-outputs/greetings.txt"))
         .lineAggregator(new PassThroughLineAggregator<>()).build();
+  }
+}
+{% endhighlight %}
+
+## Processing the Data
+
+
+
+{% highlight java %}
+package com.codenotfound.batch.job;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.batch.item.ItemProcessor;
+import com.codenotfound.model.Person;
+
+public class PersonItemProcessor implements ItemProcessor<Person, String> {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(PersonItemProcessor.class);
+
+  @Override
+  public String process(Person person) throws Exception {
+    String greeting = "Hello " + person.getFirstName() + " " + person.getLastName() + "!";
+    LOGGER.info("converting {} into {}", person, greeting);
+
+    return greeting;
   }
 }
 {% endhighlight %}
