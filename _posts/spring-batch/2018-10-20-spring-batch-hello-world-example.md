@@ -335,6 +335,111 @@ public class PersonItemProcessor implements ItemProcessor<Person, String> {
 }
 {% endhighlight %}
 
+## Testing the Spring Batch Example
+
+To wrap up our example we will create a basic unit test case. It will run our batch job and check if it finishes successfully.
+
+We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.spring.io/spring-boot/docs/2.0.6.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications){:target="_blank"} to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
+
+{% highlight java %}
+package com.codenotfound.batch;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.launch.NoSuchJobException;
+import org.springframework.batch.test.JobLauncherTestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
+import com.codenotfound.batch.job.HelloWorldJobConfig;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {SpringBatchApplicationTests.BatchTestConfig.class})
+public class SpringBatchApplicationTests {
+
+  @Autowired
+  private JobLauncherTestUtils jobLauncherTestUtils;
+
+  @Test
+  public void testHelloWorldJob() throws Exception {
+    JobExecution jobExecution = jobLauncherTestUtils.launchJob();
+    assertThat(jobExecution.getExitStatus().getExitCode()).isEqualTo("COMPLETED");
+  }
+
+  @Configuration
+  @Import(HelloWorldJobConfig.class)
+  static class BatchTestConfig {
+
+    @Autowired
+    private Job helloWorlJob;
+
+    @Bean
+    JobLauncherTestUtils jobLauncherTestUtils() throws NoSuchJobException {
+      JobLauncherTestUtils jobLauncherTestUtils = new JobLauncherTestUtils();
+      jobLauncherTestUtils.setJob(helloWorlJob);
+
+      return jobLauncherTestUtils;
+    }
+  }
+}
+{% endhighlight %}
+
+To run above test case, open a command prompt in the projects root folder and execute following Maven command:
+
+{% highlight plaintext %}
+mvn test
+{% endhighlight %}
+
+The result is a successful build during which the batch job is run.
+
+{% highlight plaintext %}
+.   ____          _            __ _ _
+/\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+\\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+'  |____| .__|_| |_|_| |_\__, | / / / /
+=========|_|==============|___/=/_/_/_/
+:: Spring Boot ::        (v2.0.6.RELEASE)
+
+2018-10-20 07:50:47.269  INFO 1224 --- [           main] c.c.batch.SpringBatchApplicationTests    : Starting SpringBatchApplicationTests on DESKTOP-2RB3C1U with PID 1224 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world)
+2018-10-20 07:50:47.285  INFO 1224 --- [           main] c.c.batch.SpringBatchApplicationTests    : No active profile set, falling back to default profiles: default
+2018-10-20 07:50:47.316  INFO 1224 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4fb3ee4e: startup date [Sat Oct 20 07:50:47 CEST 2018]; root of context hierarchy
+2018-10-20 07:50:47.909  INFO 1224 --- [           main] c.c.batch.SpringBatchApplicationTests    : Started SpringBatchApplicationTests in 0.913 seconds (JVM running for 1.807)
+2018-10-20 07:50:48.007  WARN 1224 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
+2018-10-20 07:50:48.023  INFO 1224 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2018-10-20 07:50:48.085  INFO 1224 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] launched with the following parameters: [{random=838810}]
+2018-10-20 07:50:48.101  INFO 1224 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [helloWorldStep]
+2018-10-20 07:50:48.132  INFO 1224 --- [           main] c.c.batch.job.PersonItemProcessor        : converting person[firstName=John ,lastName=Doe] into Hello John Doe!
+2018-10-20 07:50:48.132  INFO 1224 --- [           main] c.c.batch.job.PersonItemProcessor        : converting person[firstName=Jane ,lastName=Doe] into Hello Jane Doe!
+2018-10-20 07:50:48.163  INFO 1224 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] completed with the following parameters: [{random=838810}] and the following status: [COMPLETED]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.866 s - in com.codenotfound.batch.SpringBatchApplicationTests
+2018-10-20 07:50:48.288  INFO 1224 --- [       Thread-1] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@4fb3ee4e: startup date [Sat Oct 20 07:50:47 CEST 2018]; root of context hierarchy
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 4.848 s
+[INFO] Finished at: 2018-10-20T07:50:48+02:00
+[INFO] ------------------------------------------------------------------------
+{% endhighlight %}
+
+You can find the result in the <var>target/test-outputs/greetings.txt</var> file.
+
+{% highlight plaintext %}
+Hello John Doe!
+Hello Jane Doe!
+{% endhighlight %}
+
 ---
 
 {% capture notice-github %}
