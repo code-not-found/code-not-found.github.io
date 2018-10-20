@@ -39,7 +39,7 @@ And finally the `JobRepository` stores metadata about configured and executed `J
 
 To show how Spring Batch works let's build a simple _Hello World_ batch job.
 
-In the example, we read person data from a CSV file (<var>person.csv</var>). From this data, a greeting is generated. This greeting is then written to a text file (<var>greetings.txt</var>).
+In the example, we read person data from a <var>person.csv</var> CSV file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> text file.
 
 We will use the following tools/frameworks:
 * Spring Batch 4.0
@@ -194,9 +194,9 @@ public class Person {
 
 Let's go ahead and configure our batch job.
 
-We create a `HelloWorldJobConfig` class. The `@Configuration` annotation at the top of the class [indicates](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} that Spring can use this class as a source of bean definitions.
+We create a `HelloWorldJobConfig` class. The [@Configuration](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} annotation at the top of the class indicates that Spring can use this class as a source of bean definitions.
 
-We then add the `@EnableBatchProcessing` annotation which [enables](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a `Map` based `JobRepository` is used.
+We then add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which enables Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a `Map` based `JobRepository` is used.
 
 By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
 * a `JobRepository` (bean name "jobRepository")
@@ -229,7 +229,7 @@ Once the data is processed we will write it to a text file. We use the [FlatFile
 
 We use a `FlatFileItemWriterBuilder` builder implementation to create a `FlatFileItemWriter`. We specify a name for the writer and the resource (in this case the <var>greeting.txt</var> file) to which data needs to be written.
 
-The `FlatFileItemWriter` needs to know how to turn our generated output into a single string that can be written to a file. As in this example our output is already a string we can use the `PassThroughLineAggregator`. This is the most basic implementation, which assumes that the object is already a string.
+The `FlatFileItemWriter` needs to know how to turn our generated output into a single string that can be written to a file. As in this example our output is already a string we can use the [PassThroughLineAggregator](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#PassThroughLineAggregator){:target="_blank"}. This is the most basic implementation, which assumes that the object is already a string.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
