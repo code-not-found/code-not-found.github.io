@@ -42,9 +42,9 @@ To show how Spring Batch works let's build a simple _Hello World_ batch job.
 In the example, we read person data from a <var>person.csv</var> CSV file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> text file.
 
 We will use the following tools/frameworks:
-* Spring Batch 4.0
-* Spring Boot 2.0
-* Maven 3.5
+* **Spring Batch 4.0**
+* **Spring Boot 2.0**
+* **Maven 3.5**
 
 Our Maven project has the following structure:
 
@@ -52,7 +52,7 @@ Our Maven project has the following structure:
 
 ## Maven Setup
 
-We will build and run our example using **Maven**. If not already the case make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
+We build and run our example using **Maven**. If not already the case make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
 Shown below is the XML representation of our Maven project. It is stored in the <var>pom.xml</var> file. It contains the needed dependencies to compile and run the example.
 
@@ -64,7 +64,7 @@ The `spring-boot-starter-test` starter includes the dependencies for testing Spr
 
 We also declare a dependency on `spring-batch-test`. This library contains some helper classes that will help test our batch job.
 
-In the plugins section, we define the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. This allows us to build a single, runnable "uber-jar" which is a convenient way to execute and transport our code. Also, the plugin allows us to start the example via a Maven command.
+In the plugins section, we define the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. This allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport our code. Also, the plugin allows us to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -156,7 +156,14 @@ public class SpringBatchApplication {
 
 Before you process data it is generally expected that you map it to a domain object.
 
-In this example we will map the comma separated data from the CSV file to a `Person` object. This is a simple POJO that contains a first and last name.
+In our example the input data is stored in the <var>src/main/resources/persons.csv</var> file. Each line in the file contains a comma separated first and last name.
+
+{% highlight plaintext %}
+John, Doe
+Jane, Doe
+{% endhighlight %}
+
+We will map this data to a `Person` object. This is a simple POJO that contains a first and last name.
 
 {% highlight java %}
 package com.codenotfound.model;
@@ -319,3 +326,11 @@ public class PersonItemProcessor implements ItemProcessor<Person, String> {
   }
 }
 {% endhighlight %}
+
+---
+
+{% capture notice-github %}
+![github mark](/assets/images/logos/github-mark.png){: .align-left}
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-hello-world){:target="_blank"}.
+{% endcapture %}
+<div class="notice--info">{{ notice-github | markdownify }}</div>
