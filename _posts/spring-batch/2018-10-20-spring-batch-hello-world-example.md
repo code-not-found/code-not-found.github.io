@@ -13,7 +13,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-example.png" alt="spring batch hello world example" class="align-right title-image">
 
-I’m going to show you exactly how to create a [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} Hello World example that uses [Maven](https://maven.apache.org/){:target="_blank"} and [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}.
+I’m going to show you exactly how to create a [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} _Hello World_ example that uses [Maven](https://maven.apache.org/){:target="_blank"} and [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}.
 
 (Step-by-step)
 
@@ -37,9 +37,9 @@ And finally the `JobRepository` stores metadata about configured and executed `J
 
 ## General Project Setup
 
-To show how Spring Batch works let's build a simple _Hello World_ batch job.
+To show how Spring Batch works let's build a simple HelloWorld batch job.
 
-In the example, we read person data from a <var>person.csv</var> CSV file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> text file.
+In the example, we read a persons first and last name from a <var>person.csv</var> CSV file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> text file.
 
 We will use the following tools/frameworks:
 * _Spring Batch 4.0_
@@ -132,7 +132,9 @@ We use Spring Boot so that we have a Spring Batch application that you can "just
 
 For more information on Spring Boot, check the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
 
-Spring Batch by default uses a database to store metadata on the configured batch jobs. In this example, we will **run Spring Batch without a database**. Instead, an in-memory `Map` based repository is used.
+Spring Batch by default uses a database to store metadata on the configured batch jobs.
+
+In this example, we will **run Spring Batch without a database**. Instead, an in-memory `Map` based repository is used.
 
 > For this to work we need to specify <var>exclude = {DataSourceAutoConfiguration.class}</var>. This prevents Spring Boot from auto-configuring a `DataSource` connection to a database.
 
