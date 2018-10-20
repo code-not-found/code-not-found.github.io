@@ -341,6 +341,12 @@ To wrap up our example we will create a basic unit test case. It will run our ba
 
 We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.spring.io/spring-boot/docs/2.0.6.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications){:target="_blank"} to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
 
+Spring Batch ships with a `JobLauncherTestUtils` utility class for testing batch jobs.
+
+We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean.
+
+We then use the `launchJob()` method to run the job. If the job ran successfully the exit code is equals to <var>COMPLETED</var>.
+
 {% highlight java %}
 package com.codenotfound.batch;
 
