@@ -54,7 +54,7 @@ Our Maven project has the following structure:
 
 We build and run our example using **Maven**. If not already the case make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
-Shown below is the XML representation of our Maven project. It is stored in the <var>pom.xml</var> file. It contains the needed dependencies to compile and run the example.
+Shown below is the XML representation of our Maven project. We define it in a <var>pom.xml</var> file. It contains the needed dependencies to compile and run the example.
 
 To run the batch job, we will use **Spring Boot**. We also use [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} so that we do not have to manage the different Spring dependencies.
 
@@ -156,9 +156,9 @@ public class SpringBatchApplication {
 
 Before you process data it is generally expected that you map it to a domain object.
 
-In our example the input data is stored in a <var>src/main/resources/persons.csv</var> file.
+In our example, the input data is stored in a <var>src/main/resources/persons.csv</var> file.
 
-Each line in the file contains a comma separated first and last name.
+Each line in the file contains a comma-separated first and last name.
 
 {% highlight plaintext %}
 John, Doe
@@ -222,23 +222,23 @@ In the `helloWorlJob()` bean we use the `JobBuilderFactory` to create the job. W
 
 The `helloWorldStep()` bean defines the different items our step executes. We use the `StepBuilderFactory` to define the step.
 
-First we pass the name of the step. Using `chunk()` we specify the number of items that are processed within each transaction. Chunk also specifies the input (`Person`) and output (`String`) type of the step. We then add the `ItemReader` (reader), `ItemProcessor` (processor), and `ItemWriter` (writer) to the step.
+First, we pass the name of the step. Using `chunk()` we specify the number of items that are processed within each transaction. Chunk also specifies the input (`Person`) and output (`String`) type of the step. We then add the `ItemReader` (reader), `ItemProcessor` (processor), and `ItemWriter` (writer) to the step.
 
 To read the person CSV file we use the [FlatFileItemReader](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemReader){:target="_blank"}. This is a class that provides basic functionality to read and parse flat files.
 
-There is a `FlatFileItemReaderBuilder` builder implementation that allows us to quickly create a `FlatFileItemReader`. We start by specifying that the result of reading each line in the file is a `Person` object. We then add a name for the reader and the resource (in this case the <var>persons.csv</var> file) that needs to be read.
+There is a `FlatFileItemReaderBuilder` builder implementation that allows us to create a `FlatFileItemReader`. We start by specifying that the result of reading each line in the file is a `Person` object. We then add a name for the reader and the specify the resource (in this case the <var>persons.csv</var> file) that needs to be read.
 
-In order for the `FlatFileItemReader` to process our file we need to specify some extra information. First we define that the data in the file is delimited (defaults to comma as its delimiter).
+In order for the `FlatFileItemReader` to process our file, we need to specify some extra information. First, we define that the data in the file is delimited (defaults to comma as its delimiter).
 
-We also specify how each field on a line needs to be mapped to our `Person` object. This is done using `names()` that enables Spring Batch to automatically map fields by matching a name with a setter on the object. So in our example the first field of a line will be mapped using the <var>firstName</var> setter. For this to work we also need to specify the target type which is a `Person` object.
+We also specify how each field on a line needs to be mapped to our `Person` object. This is done using `names()` that enables Spring Batch to map fields by matching a name with a setter on the object. So in our example, the first field of a line will be mapped using the <var>firstName</var> setter. For this to work, we also need to specify the target type which is a `Person` object.
 
-The `PersonItemProcessor` handles the processing of the data. It converts a `Person` into a greeting `String`. This is defined in a separate class further below.
+The `PersonItemProcessor` handles the processing of the data. It converts a `Person` into a greeting `String`. We will define this in a separate class further below.
 
 Once the data is processed we will write it to a text file. We use the [FlatFileItemWriter](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemWriter){:target="_blank"} to help us with this task.
 
-We use a `FlatFileItemWriterBuilder` builder implementation to create a `FlatFileItemWriter`. We specify a name for the writer and the resource (in this case the <var>greeting.txt</var> file) to which data needs to be written.
+We use a `FlatFileItemWriterBuilder` builder implementation to create a `FlatFileItemWriter`. We add a name for the writer and specify the resource (in this case the <var>greeting.txt</var> file) to which data needs to be written.
 
-The `FlatFileItemWriter` needs to know how to turn our generated output into a single string that can be written to a file. As in this example our output is already a string we can use the [PassThroughLineAggregator](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#PassThroughLineAggregator){:target="_blank"}. This is the most basic implementation, which assumes that the object is already a string.
+The `FlatFileItemWriter` needs to know how to turn our generated output into a single string that can be written to a file. As in this example, our output is already a string we can use the [PassThroughLineAggregator](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#PassThroughLineAggregator){:target="_blank"}. This is the most basic implementation, which assumes that the object is already a string.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
@@ -305,13 +305,13 @@ public class HelloWorldJobConfig {
 
 ## Processing the Data
 
-In most cases you will want to apply some data processing during a batch job. An [ItemProcessor](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#itemProcessor){:target="_blank"} allows you to do just that.
+In most cases, you will want to apply some data processing during a batch job. An [ItemProcessor](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#itemProcessor){:target="_blank"} allows you to do just that.
 
-In our example we convert a `Person` object to a simple greeting `String`.
+In our example, we convert a `Person` object to a simple greeting `String`.
 
 To do so, we create a `PersonItemProcessor` that implements the `ItemProcessor` interface. We implement the `process()` method which adds the first and last name of a person to a string.
 
-For debugging purposes we also log the result.
+For debugging purposes, we also log the result.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
@@ -343,7 +343,7 @@ We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.s
 
 Spring Batch ships with a `JobLauncherTestUtils` utility class for testing batch jobs.
 
-We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean. We then use the `launchJob()` method of this bean to run the batch job. If the job ran successfully the exit code is equals to <var>COMPLETED</var>.
+We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean. We then use the `launchJob()` method of this bean to run the batch job. If the job ran without any errors, the value of the exit code is <var>COMPLETED</var>.
 
 {% highlight java %}
 package com.codenotfound.batch;
