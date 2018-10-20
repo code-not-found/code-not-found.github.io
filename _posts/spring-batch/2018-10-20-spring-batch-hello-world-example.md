@@ -343,9 +343,7 @@ We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.s
 
 Spring Batch ships with a `JobLauncherTestUtils` utility class for testing batch jobs.
 
-We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean.
-
-We then use the `launchJob()` method to run the job. If the job ran successfully the exit code is equals to <var>COMPLETED</var>.
+We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean. We then use the `launchJob()` method of this bean to run the batch job. If the job ran successfully the exit code is equals to <var>COMPLETED</var>.
 
 {% highlight java %}
 package com.codenotfound.batch;
@@ -402,7 +400,7 @@ To run above test case, open a command prompt in the projects root folder and ex
 mvn test
 {% endhighlight %}
 
-The result is a successful build during which the batch job is run.
+The result is a successful build during which the batch job is executed.
 
 {% highlight plaintext %}
 .   ____          _            __ _ _
@@ -439,7 +437,7 @@ The result is a successful build during which the batch job is run.
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
-You can find the result in the <var>target/test-outputs/greetings.txt</var> file.
+You can find the result in the <var>target/test-outputs/greetings.txt</var> file:
 
 {% highlight plaintext %}
 Hello John Doe!
@@ -453,3 +451,9 @@ Hello Jane Doe!
 If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-hello-world){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
+
+In this getting started tutorial you learned how to create a simple Spring Batch example with Spring Boot and Maven.
+
+Let me know if you liked this post.
+
+Leave a comment below.
