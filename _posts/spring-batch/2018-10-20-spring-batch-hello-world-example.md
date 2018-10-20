@@ -42,9 +42,9 @@ To show how Spring Batch works let's build a simple _Hello World_ batch job.
 In the example, we read person data from a <var>person.csv</var> CSV file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> text file.
 
 We will use the following tools/frameworks:
-* **Spring Batch 4.0**
-* **Spring Boot 2.0**
-* **Maven 3.5**
+* _Spring Batch 4.0_
+* _Spring Boot 2.0_
+* _Maven 3.5_
 
 Our Maven project has the following structure:
 
@@ -156,7 +156,9 @@ public class SpringBatchApplication {
 
 Before you process data it is generally expected that you map it to a domain object.
 
-In our example the input data is stored in the <var>src/main/resources/persons.csv</var> file. Each line in the file contains a comma separated first and last name.
+In our example the input data is stored in a <var>src/main/resources/persons.csv</var> file.
+
+Each line in the file contains a comma separated first and last name.
 
 {% highlight plaintext %}
 John, Doe
@@ -303,7 +305,13 @@ public class HelloWorldJobConfig {
 
 ## Processing the Data
 
+In most cases you will want to apply some data processing during a batch job. An [ItemProcessor](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#itemProcessor){:target="_blank"} allows you to do just that.
 
+In our example we convert a `Person` object to a simple greeting `String`.
+
+To do so, we create a `PersonItemProcessor` that implements the `ItemProcessor` interface. We implement the `process()` method which adds the first and last name of a person to a string.
+
+For debugging purposes we also log the result.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
