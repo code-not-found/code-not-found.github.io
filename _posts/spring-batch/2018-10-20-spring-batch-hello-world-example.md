@@ -31,13 +31,13 @@ A batch process consists out of a `Job`. This is an entity that encapsulates the
 
 A `Job` can consist out of one or more `Step`s. In most cases, a step will read data (`ItemReader`), process it (`ItemProcessor`) and then write it (`ItemWriter`).
 
-The `JobLauncher` is responsible for launching a `Job`.
+The `JobLauncher` handles launching a `Job`.
 
 And finally the `JobRepository` stores metadata about configured and executed `Job`s.
 
 ## General Project Setup
 
-To demonstrate how Spring Batch works let's build a simple Hello World batch job.
+To show how Spring Batch works let's build a simple _Hello World_ batch job.
 
 In the example, we read person data from a CSV file. From this data, a greeting is generated. This greeting is then written to a text file.
 
@@ -49,6 +49,8 @@ It uses the following tools/frameworks:
 * Spring Batch 4.0
 * Spring Boot 2.0
 * Maven 3.5
+
+## Maven Setup
 
 We will build and run our example using **Maven**. If not already the case make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
@@ -62,9 +64,9 @@ The `spring-boot-starter-test` starter includes the dependencies for testing Spr
 
 We also declare a dependency on `spring-batch-test`. This library contains some helper classes that will help test our batch job.
 
-In the plugins section, we define the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. This allows us to build a single, runnable "uber-jar" which is a convenient way to execute and transport our code. In addition, the plugin allows us to start the example via a Maven command.
+In the plugins section, we define the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. This allows us to build a single, runnable "uber-jar" which is a convenient way to execute and transport our code. Also, the plugin allows us to start the example via a Maven command.
 
-{% highlight xml linenos %}
+{% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -132,9 +134,9 @@ For more information on Spring Boot, check the [Spring Boot getting started guid
 
 Spring Batch by default uses a database to store metadata on the configured batch jobs. In this example, we will **run Spring Batch without a database**. Instead, an in-memory `Map` based repository is used.
 
-For this to work we need to specify <var>exclude = {DataSourceAutoConfiguration.class}</var> (_line 7_). This prevents Spring Boot from auto-configuring a `DataSource` connection to a database.
+> For this to work we need to specify <var>exclude = {DataSourceAutoConfiguration.class}</var>. This prevents Spring Boot from auto-configuring a `DataSource` connection to a database.
 
-{% highlight java linenos %}
+{% highlight java %}
 package com.codenotfound.batch;
 
 import org.springframework.boot.SpringApplication;
@@ -156,7 +158,7 @@ Before you process data it is generally expected that you map it to a domain obj
 
 In this example we will map the comma separated data from the CSV file to a `Person` object. This is a simple POJO that contains a first and last name.
 
-{% highlight java linenos %}
+{% highlight java %}
 package com.codenotfound.model;
 
 public class Person {
@@ -194,7 +196,7 @@ Let's go ahead and configure our batch job.
 
 We create a `HelloWorldJobConfig` class. The `@Configuration` annotation at the top of the class [indicates](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} that Spring can use this class as a source of bean definitions.
 
-We then add the `@EnableBatchProcessing` (_line 22_) annotation which [enables](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} Spring Batch features and provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a Map based `JobRepository` is used.
+We then add the `@EnableBatchProcessing` annotation which [enables](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a Map based `JobRepository` is used.
 
 By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
 * a `JobRepository` (bean name "jobRepository")
@@ -213,9 +215,19 @@ The `helloWorldStep()` bean defines the different items our step executes. We us
 
 First we pass the name of the step. Using `chunk()` we specify the number of items that are processed within each transaction. Chunk also specifies the input (`Person`) and output (`String`) type of the step. We then add the `ItemReader` (reader), `ItemProcessor` (processor), and `ItemWriter` (writer) to the step.
 
+To read the person CSV file we use the (FlatFileItemReader)[https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemReader]{:target="_blank"}. This is a class that provides basic functionality to read and parse flat files.
 
+There is a `FlatFileItemReaderBuilder` builder implementation that allows us to quickly create a `FlatFileItemReader`. We start by specifying that the result of reading each line in the file is a `Person` object. We then add a name for the reader and the resource (in this case the <var>persons.csv</var> file) that needs to be read.
 
-{% highlight java linenos %}
+In order for the `FlatFileItemReader` to process our file we need to specify some extra information. First we define that the data in the file is delimited (defaults to comma as its delimiter).
+
+We also specify how each field on a line needs to be mapped to our `Person` object. This is done using `names()` that enables Spring Batch tp automatically map fields by matching a name with a setter on the object. So in our example the first field of a line will be mapped using the <var>firstName</var> setter. For this to work we also need to specify the target type which is a `Person` object.
+
+The `PersonItemProcessor` handles the processing of the data. It is defined further below.
+
+Once the data is processed we will write it to a new file. 
+
+{% highlight java %}
 package com.codenotfound.batch.job;
 
 import org.springframework.batch.core.Job;
