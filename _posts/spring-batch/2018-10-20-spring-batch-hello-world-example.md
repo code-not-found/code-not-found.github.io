@@ -41,14 +41,14 @@ To show how Spring Batch works let's build a simple _Hello World_ batch job.
 
 In the example, we read person data from a CSV file. From this data, a greeting is generated. This greeting is then written to a text file.
 
-Our Maven project has the following structure:
-
-<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-maven-project.png" alt="spring batch hello world maven project">
-
-It uses the following tools/frameworks:
+We will use the following tools/frameworks:
 * Spring Batch 4.0
 * Spring Boot 2.0
 * Maven 3.5
+
+Our Maven project has the following structure:
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-maven-project.png" alt="spring batch hello world maven project">
 
 ## Maven Setup
 
@@ -215,7 +215,7 @@ The `helloWorldStep()` bean defines the different items our step executes. We us
 
 First we pass the name of the step. Using `chunk()` we specify the number of items that are processed within each transaction. Chunk also specifies the input (`Person`) and output (`String`) type of the step. We then add the `ItemReader` (reader), `ItemProcessor` (processor), and `ItemWriter` (writer) to the step.
 
-To read the person CSV file we use the (FlatFileItemReader)[https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemReader]{:target="_blank"}. This is a class that provides basic functionality to read and parse flat files.
+To read the person CSV file we use the [FlatFileItemReader](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemReader){:target="_blank"}. This is a class that provides basic functionality to read and parse flat files.
 
 There is a `FlatFileItemReaderBuilder` builder implementation that allows us to quickly create a `FlatFileItemReader`. We start by specifying that the result of reading each line in the file is a `Person` object. We then add a name for the reader and the resource (in this case the <var>persons.csv</var> file) that needs to be read.
 
@@ -225,7 +225,7 @@ We also specify how each field on a line needs to be mapped to our `Person` obje
 
 The `PersonItemProcessor` handles the processing of the data. It is defined further below.
 
-Once the data is processed we will write it to a new file. 
+Once the data is processed we will write it to a text file. We use the [FlatFileItemWriter](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemWriter){:target="_blank"} to help us with this task.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
