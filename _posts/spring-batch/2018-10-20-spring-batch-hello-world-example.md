@@ -39,7 +39,7 @@ And finally the `JobRepository` stores metadata about configured and executed `J
 
 To show how Spring Batch works let's build a simple _Hello World_ batch job.
 
-In the example, we read person data from a CSV file. From this data, a greeting is generated. This greeting is then written to a text file.
+In the example, we read person data from a CSV file (<var>person.csv</var>). From this data, a greeting is generated. This greeting is then written to a text file (<var>greetings.txt</var>).
 
 We will use the following tools/frameworks:
 * Spring Batch 4.0
@@ -196,7 +196,7 @@ Let's go ahead and configure our batch job.
 
 We create a `HelloWorldJobConfig` class. The `@Configuration` annotation at the top of the class [indicates](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} that Spring can use this class as a source of bean definitions.
 
-We then add the `@EnableBatchProcessing` annotation which [enables](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a Map based `JobRepository` is used.
+We then add the `@EnableBatchProcessing` annotation which [enables](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a `Map` based `JobRepository` is used.
 
 By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
 * a `JobRepository` (bean name "jobRepository")
@@ -221,11 +221,15 @@ There is a `FlatFileItemReaderBuilder` builder implementation that allows us to 
 
 In order for the `FlatFileItemReader` to process our file we need to specify some extra information. First we define that the data in the file is delimited (defaults to comma as its delimiter).
 
-We also specify how each field on a line needs to be mapped to our `Person` object. This is done using `names()` that enables Spring Batch tp automatically map fields by matching a name with a setter on the object. So in our example the first field of a line will be mapped using the <var>firstName</var> setter. For this to work we also need to specify the target type which is a `Person` object.
+We also specify how each field on a line needs to be mapped to our `Person` object. This is done using `names()` that enables Spring Batch to automatically map fields by matching a name with a setter on the object. So in our example the first field of a line will be mapped using the <var>firstName</var> setter. For this to work we also need to specify the target type which is a `Person` object.
 
 The `PersonItemProcessor` handles the processing of the data. It is defined further below.
 
 Once the data is processed we will write it to a text file. We use the [FlatFileItemWriter](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemWriter){:target="_blank"} to help us with this task.
+
+We use a `FlatFileItemWriterBuilder` builder implementation to create a `FlatFileItemWriter`. We specify a name for the writer and the resource (in this case the <var>greeting.txt</var> file) to which data needs to be written.
+
+
 
 {% highlight java %}
 package com.codenotfound.batch.job;
