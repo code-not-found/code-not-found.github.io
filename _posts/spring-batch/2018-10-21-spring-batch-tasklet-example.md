@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/spring-batch/spring-batch-tasklet-example.png"
 categories: [Spring Batch]
 tags: [Example, Maven, Spring Batch, Spring Boot, Tasklet, Tutorial ]
-published: false
+published: true
 ---
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-tasklet-example.png" alt="spring batch tasklet example" class="align-right title-image">
@@ -33,7 +33,33 @@ In our [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-exampl
 
 A [Tasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html){:target="_blank"} is in fact a simple interface that has one method: `execute()`. A `Step` calls this method repeatedly until it either finishes or throws an exception.
 
-Spring Batch contains a number of implementations of the `Tasklet` interface. One of them is a chunk oriented processing `Tasklet`.
+Spring Batch contains a number of implementations of the `Tasklet` interface. One of them is a chunk oriented processing `Tasklet`. If you look at the [ChunkOrientedTasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html){:target="_blank"} you can see it implements the `Tasklet` interface.
+
+> In Spring batch, a `Tasklet` is an interface that performs a single task within a `Step`. A typical use case for implementing a `Tasklet` is the setup up or cleaning of resources before or after the execution of a `Step`.
+
+So let's recap:
+
+| Question                            | Answer                                                                           |
+|:------------------------------------|:---------------------------------------------------------------------------------|
+| When do I use a Tasklet?            | When you need to execute a single granular task.                                 |
+| How does a Tasklet work?            | Everything happens within a single transaction boundary.                         |
+| Is a Tasklet often used?            | In most cases you will use chunks to handle large volumes.                       |
+| What is a typical Tasklet use case? | Usually used to setup up or clean resources before or after the main processing. |
+
+## General Project Setup
+
+To show how Spring Batch `Tasklet` works let's build an example.
+
+TODO
+
+We will use the following tools/frameworks:
+* _Spring Batch 4.0_
+* _Spring Boot 2.0_
+* _Maven 3.5_
+
+Our Maven project has the following structure:
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-tasklet-maven-project.png" alt="spring batch tasklet maven project">
 
 ---
 
