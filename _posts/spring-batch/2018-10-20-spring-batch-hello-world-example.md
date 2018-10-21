@@ -209,7 +209,7 @@ We create a `HelloWorldJobConfig` class. The [@Configuration](https://docs.sprin
 
 We then add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which enables Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a `Map` based `JobRepository` is used.
 
-By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
+> By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
 * a `JobRepository` (bean name "jobRepository")
 * a `JobLauncher` (bean name "jobLauncher")
 * a `JobRegistry` (bean name "jobRegistry")
@@ -220,7 +220,7 @@ By adding this annotation a lot happens. Here is an overview of what `@EnableBat
 
 We use the last two factories to create our job and the steps it consists of. [Autowire](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation){:target="_blank"} both `jobBuilders` and `stepBuilders`.
 
-In the `helloWorlJob()` bean we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be executed.
+In the `helloWorlJob()` bean we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be run.
 
 The `helloWorldStep()` bean defines the different items our step executes. We use the `StepBuilderFactory` to define the step.
 
@@ -459,3 +459,5 @@ In this getting started tutorial you learned how to create a simple Spring Batch
 Let me know if you liked this post.
 
 Leave a comment below.
+
+Thanks!
