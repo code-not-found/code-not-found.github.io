@@ -35,11 +35,11 @@ The `JobLauncher` handles launching a `Job`.
 
 And finally the `JobRepository` stores metadata about configured and executed `Job`s.
 
-## General Project Setup
-
 To show how Spring Batch works let's build a simple HelloWorld batch job.
 
 In the example, we read a persons first and last name from a <var>person.csv</var> CSV file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> text file.
+
+## General Project Setup
 
 We will use the following tools/frameworks:
 * _Spring Batch 4.0_
