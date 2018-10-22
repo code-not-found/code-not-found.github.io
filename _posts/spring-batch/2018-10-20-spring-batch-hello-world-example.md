@@ -46,7 +46,7 @@ We will use the following tools/frameworks:
 * _Spring Boot 2.0_
 * _Maven 3.5_
 
-Our Maven project has the following structure:
+Our project has the following directory structure:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-maven-project.png" alt="spring batch hello world maven project">
 
@@ -210,6 +210,7 @@ We create a `HelloWorldJobConfig` class. The [@Configuration](https://docs.sprin
 We then add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which enables Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a `Map` based `JobRepository` is used.
 
 > By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
+
 * a `JobRepository` (bean name "jobRepository")
 * a `JobLauncher` (bean name "jobLauncher")
 * a `JobRegistry` (bean name "jobRegistry")
