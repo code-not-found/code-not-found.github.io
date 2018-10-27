@@ -414,19 +414,19 @@ The result is a successful build during which the batch job is executed.
 =========|_|==============|___/=/_/_/_/
 :: Spring Boot ::        (v2.0.6.RELEASE)
 
-2018-10-20 07:50:47.269  INFO 1224 --- [           main] c.c.batch.SpringBatchApplicationTests    : Starting SpringBatchApplicationTests on DESKTOP-2RB3C1U with PID 1224 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world)
-2018-10-20 07:50:47.285  INFO 1224 --- [           main] c.c.batch.SpringBatchApplicationTests    : No active profile set, falling back to default profiles: default
-2018-10-20 07:50:47.316  INFO 1224 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4fb3ee4e: startup date [Sat Oct 20 07:50:47 CEST 2018]; root of context hierarchy
-2018-10-20 07:50:47.909  INFO 1224 --- [           main] c.c.batch.SpringBatchApplicationTests    : Started SpringBatchApplicationTests in 0.913 seconds (JVM running for 1.807)
-2018-10-20 07:50:48.007  WARN 1224 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
-2018-10-20 07:50:48.023  INFO 1224 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
-2018-10-20 07:50:48.085  INFO 1224 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] launched with the following parameters: [{random=838810}]
-2018-10-20 07:50:48.101  INFO 1224 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [helloWorldStep]
-2018-10-20 07:50:48.132  INFO 1224 --- [           main] c.c.batch.job.PersonItemProcessor        : converting person[firstName=John ,lastName=Doe] into Hello John Doe!
-2018-10-20 07:50:48.132  INFO 1224 --- [           main] c.c.batch.job.PersonItemProcessor        : converting person[firstName=Jane ,lastName=Doe] into Hello Jane Doe!
-2018-10-20 07:50:48.163  INFO 1224 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] completed with the following parameters: [{random=838810}] and the following status: [COMPLETED]
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.866 s - in com.codenotfound.batch.SpringBatchApplicationTests
-2018-10-20 07:50:48.288  INFO 1224 --- [       Thread-1] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@4fb3ee4e: startup date [Sat Oct 20 07:50:47 CEST 2018]; root of context hierarchy
+2018-10-27 10:21:51.563  INFO 15792 --- [           main] c.c.batch.SpringBatchApplicationTests    : Starting SpringBatchApplicationTests on DESKTOP-2RB3C1U with PID 15792 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world)
+2018-10-27 10:21:51.563  INFO 15792 --- [           main] c.c.batch.SpringBatchApplicationTests    : No active profile set, falling back to default profiles: default
+2018-10-27 10:21:51.594  INFO 15792 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4fb3ee4e: startup date [Sat Oct 27 10:21:51 CEST 2018]; root of context hierarchy
+2018-10-27 10:21:52.188  INFO 15792 --- [           main] c.c.batch.SpringBatchApplicationTests    : Started SpringBatchApplicationTests in 0.937 seconds (JVM running for 1.87)
+2018-10-27 10:21:52.297  WARN 15792 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
+2018-10-27 10:21:52.329  INFO 15792 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2018-10-27 10:21:52.376  INFO 15792 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] launched with the following parameters: [{random=617281}]
+2018-10-27 10:21:52.391  INFO 15792 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [helloWorldStep]
+2018-10-27 10:21:52.438  INFO 15792 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'John Doe' into 'Hello John Doe!'
+2018-10-27 10:21:52.438  INFO 15792 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jane Doe' into 'Hello Jane Doe!'
+2018-10-27 10:21:52.454  INFO 15792 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] completed with the following parameters: [{random=617281}] and the following status: [COMPLETED]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.906 s - in com.codenotfound.batch.SpringBatchApplicationTests
+2018-10-27 10:21:52.594  INFO 15792 --- [       Thread-1] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@4fb3ee4e: startup date [Sat Oct 27 10:21:51 CEST 2018]; root of context hierarchy
 [INFO]
 [INFO] Results:
 [INFO]
@@ -435,8 +435,8 @@ The result is a successful build during which the batch job is executed.
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 4.848 s
-[INFO] Finished at: 2018-10-20T07:50:48+02:00
+[INFO] Total time: 6.089 s
+[INFO] Finished at: 2018-10-27T10:21:53+02:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
