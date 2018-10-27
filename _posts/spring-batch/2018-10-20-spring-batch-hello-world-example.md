@@ -158,7 +158,7 @@ public class SpringBatchApplication {
 
 Before you process data it is generally expected that you map it to a domain object.
 
-In our example, the input data is stored in a <var>src/main/resources/persons.csv</var> file.
+In our example, the input data is stored in a <var>src/test/resources/csv/persons.csv</var> file.
 
 Each line in the file contains a comma-separated first and last name.
 
@@ -196,7 +196,7 @@ public class Person {
 
   @Override
   public String toString() {
-    return "person[firstName=" + firstName + " ,lastName=" + lastName + "]";
+    return firstName + " " + lastName;
   }
 }
 {% endhighlight %}
@@ -288,7 +288,7 @@ public class HelloWorldJobConfig {
   @Bean
   public FlatFileItemReader<Person> reader() {
     return new FlatFileItemReaderBuilder<Person>().name("personItemReader")
-        .resource(new ClassPathResource("persons.csv")).delimited()
+        .resource(new ClassPathResource("csv/persons.csv")).delimited()
         .names(new String[] {"firstName", "lastName"}).targetType(Person.class).build();
   }
 
@@ -331,8 +331,8 @@ public class PersonItemProcessor implements ItemProcessor<Person, String> {
   @Override
   public String process(Person person) throws Exception {
     String greeting = "Hello " + person.getFirstName() + " " + person.getLastName() + "!";
-    LOGGER.info("converting {} into {}", person, greeting);
 
+    LOGGER.info("converting '{}' into '{}'", person, greeting);
     return greeting;
   }
 }
