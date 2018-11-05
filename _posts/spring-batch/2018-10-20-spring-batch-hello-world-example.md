@@ -3,7 +3,7 @@ title: "Spring Batch Hello World Example"
 permalink: /spring-batch-hello-world-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement a Hello World Spring Batch job using Spring Boot and Maven."
 date: 2018-10-20
-last_modified_at: 2018-10-20
+last_modified_at: 2018-11-05
 header:
   teaser: "assets/images/spring-batch/spring-batch-hello-world-example.png"
 categories: [Spring Batch]
@@ -42,8 +42,8 @@ In the example, we read a persons first and last name from a <var>person.csv</va
 ## General Project Setup
 
 We will use the following tools/frameworks:
-* _Spring Batch 4.0_
-* _Spring Boot 2.0_
+* _Spring Batch 4.1_
+* _Spring Boot 2.1_
 * _Maven 3.5_
 
 Our project has the following directory structure:
@@ -84,7 +84,7 @@ In the plugins section, we define the [Spring Boot Maven Plugin](https://docs.sp
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.6.RELEASE</version>
+    <version>2.1.0.RELEASE</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
 
@@ -412,7 +412,7 @@ The result is a successful build during which the batch job is executed.
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
 '  |____| .__|_| |_|_| |_\__, | / / / /
 =========|_|==============|___/=/_/_/_/
-:: Spring Boot ::        (v2.0.6.RELEASE)
+:: Spring Boot ::        (v2.1.0.RELEASE)
 
 2018-10-27 10:21:51.563  INFO 15792 --- [           main] c.c.batch.SpringBatchApplicationTests    : Starting SpringBatchApplicationTests on DESKTOP-2RB3C1U with PID 15792 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world)
 2018-10-27 10:21:51.563  INFO 15792 --- [           main] c.c.batch.SpringBatchApplicationTests    : No active profile set, falling back to default profiles: default
