@@ -225,7 +225,7 @@ public class CapitalizeNamesJobConfig {
 
 Let's adapt the exiting unit test case so that we can test if our file deleting Tasklet works.
 
-First we copy the input files to the location from which our Batch Job will read. This is done in the `copyFiles()` method.
+First we copy the input files to the location from which our Batch Job will read. This is done in the `copyFiles()` method before the test case runs using the `@Before` annotation.
 
 When then launch the Batch Job and check if it finishes successfully. We also check if all input files have been deleted.
 
@@ -306,7 +306,54 @@ public class SpringBatchApplicationTests {
 }
 {% endhighlight %}
 
+Let’s run above test case by opening a command prompt and executing following Maven command:
 
+{% highlight plaintext %}
+mvn test
+{% endhighlight %}
+
+Maven will download the needed dependencies, compile the code and run the unit test case. The result should be a successful build during which following logs are generated:
+
+{% highlight plaintext %}
+.   ____          _            __ _ _
+/\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+\\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+'  |____| .__|_| |_|_| |_\__, | / / / /
+=========|_|==============|___/=/_/_/_/
+:: Spring Boot ::        (v2.1.0.RELEASE)
+
+2018-11-06 11:22:13.598  INFO 8840 --- [           main] c.c.batch.SpringBatchApplicationTests    : Starting SpringBatchApplicationTests on DESKTOP-2RB3C1U with PID 8840 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-tasklet)
+2018-11-06 11:22:13.598  INFO 8840 --- [           main] c.c.batch.SpringBatchApplicationTests    : No active profile set, falling back to default profiles: default
+2018-11-06 11:22:14.192  INFO 8840 --- [           main] c.c.batch.SpringBatchApplicationTests    : Started SpringBatchApplicationTests in 0.875 seconds (JVM running for 1.955)
+2018-11-06 11:22:14.379  WARN 8840 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
+2018-11-06 11:22:14.379  WARN 8840 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No transaction manager was provided, using a ResourcelessTransactionManager
+2018-11-06 11:22:14.410  INFO 8840 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2018-11-06 11:22:14.515  INFO 8840 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=capitalizeNamesJob]] launched with the following parameters: [{random=591022}]
+2018-11-06 11:22:14.546  INFO 8840 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [capitalizeNamesStep]
+2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jessica Doe' into 'JESSICA DOE'
+2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Julia Doe' into 'JULIA DOE'
+2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jasmin Doe' into 'JASMIN DOE'
+2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jennifer Doe' into 'JENNIFER DOE'
+2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jack Doe' into 'JACK DOE'
+2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jake Doe' into 'JAKE DOE'
+2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Josh Doe' into 'JOSH DOE'
+2018-11-06 11:22:14.655  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Joe Doe' into 'JOE DOE'
+2018-11-06 11:22:14.702  INFO 8840 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [deleteFilesStep]
+2018-11-06 11:22:14.749  INFO 8840 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=capitalizeNamesJob]] completed with the following parameters: [{random=591022}] and the following status: [COMPLETED]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.236 s - in com.codenotfound.batch.SpringBatchApplicationTests
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 5.474 s
+[INFO] Finished at: 2018-11-06T11:22:15+01:00
+[INFO] ------------------------------------------------------------------------
+{% endhighlight %}
 
 ---
 
