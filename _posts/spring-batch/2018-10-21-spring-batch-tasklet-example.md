@@ -31,11 +31,11 @@ In fact, Spring Batch offers two different ways for **implementing a step of a b
 1. using [chunks](https://docs.spring.io/spring-batch/4.0.x/reference/html/step.html#chunkOrientedProcessing){:target="_blank"}
 2. using a [tasklet](https://docs.spring.io/spring-batch/4.0.x/reference/html/step.html#taskletStep){:target="_blank"}
 
-In our [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-example.html) we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
+In the [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-example.html) we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
 
 A [Tasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html){:target="_blank"} is in fact a simple interface that has one method: `execute()`. A `Step` calls this method repeatedly until it either finishes or throws an exception.
 
-> Spring Batch contains a number of implementations of the `Tasklet` interface. One of them is a "chunk oriented processing" `Tasklet`. If you look at the [ChunkOrientedTasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html){:target="_blank"} you can see it implements the `Tasklet` interface.
+Spring Batch contains a number of implementations of the `Tasklet` interface. One of them is a "chunk oriented processing" `Tasklet`. If you look at the [ChunkOrientedTasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html){:target="_blank"} you can see it implements the `Tasklet` interface.
 
 So let's recap the above:
 
@@ -71,7 +71,7 @@ To create a Spring Batch Tasklet you need to implement the `Tasklet` interface.
 
 Let's start by creating a `FileDeletingTasklet` that will delete all files in a directory. Add the `execute()` method that loops over the available files and tries to delete them. When all files are deleted we return the <var>FINISHED</var> status so that the `Step` finishes.
 
-We add a `setDirectory()` that allows setting the directory that needs to be cleaned.
+We add a `setDirectory()` method that allows configuring the directory that needs to be cleaned.
 
 The [afterPropertiesSet()](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/InitializingBean.html){:target="_blank"} allows to check if a directory was set when `FileDeletingTasklet` is initialized as a Spring Bean.
 
@@ -117,6 +117,107 @@ public class FileDeletingTasklet implements Tasklet {
   }
 }
 {% endhighlight %}
+
+Now that our Spring Batch Tasklet is created let's adapt the `CapitalizeNamesJobConfig` to include it.
+
+{% highlight java %}
+package com.codenotfound.batch.job;
+
+import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.file.MultiResourceItemReader;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
+import org.springframework.batch.item.file.builder.MultiResourceItemReaderBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
+import com.codenotfound.model.Person;
+
+@Configuration
+@EnableBatchProcessing
+public class CapitalizeNamesJobConfig {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(CapitalizeNamesJobConfig.class);
+
+  @Autowired
+  public JobBuilderFactory jobBuilders;
+
+  @Autowired
+  public StepBuilderFactory stepBuilders;
+
+  @Bean
+  public Job convertNamesJob() {
+    return jobBuilders.get("capitalizeNamesJob").start(convertNamesStep()).next(deleteFilesStep())
+        .build();
+  }
+
+  @Bean
+  public Step convertNamesStep() {
+    return stepBuilders.get("capitalizeNamesStep").<Person, Person>chunk(10)
+        .reader(multiItemReader()).processor(itemProcessor()).writer(itemWriter()).build();
+  }
+
+  @Bean
+  public Step deleteFilesStep() {
+    return stepBuilders.get("deleteFilesStep").tasklet(fileDeletingTasklet()).build();
+  }
+
+  @Bean
+  public MultiResourceItemReader<Person> multiItemReader() {
+    ResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
+    Resource[] resources = null;
+    try {
+      resources = patternResolver.getResources("file:target/test-inputs/*.csv");
+    } catch (IOException e) {
+      LOGGER.error("error reading files", e);
+    }
+
+    return new MultiResourceItemReaderBuilder<Person>().name("multiPersonItemReader")
+        .delegate(itemReader()).resources(resources).setStrict(true).build();
+  }
+
+  @Bean
+  public FlatFileItemReader<Person> itemReader() {
+    return new FlatFileItemReaderBuilder<Person>().name("personItemReader").delimited()
+        .names(new String[] {"firstName", "lastName"}).targetType(Person.class).build();
+  }
+
+  @Bean
+  public PersonItemProcessor itemProcessor() {
+    return new PersonItemProcessor();
+  }
+
+  @Bean
+  public FlatFileItemWriter<Person> itemWriter() {
+    return new FlatFileItemWriterBuilder<Person>().name("personItemWriter")
+        .resource(new FileSystemResource("target/test-outputs/persons.txt")).delimited()
+        .delimiter(", ").names(new String[] {"firstName", "lastName"}).build();
+  }
+
+  @Bean
+  public FileDeletingTasklet fileDeletingTasklet() {
+    FileDeletingTasklet tasklet = new FileDeletingTasklet();
+    tasklet.setDirectory(new FileSystemResource("target/test-inputs"));
+
+    return tasklet;
+  }
+}
+{% endhighlight %}
+
+## Unit Test the Spring Batch Tasklet
 
 
 
