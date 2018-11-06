@@ -44,11 +44,11 @@ _So let's recap the above:_
 | Is a Tasklet often used?            | It is not used very often. In most cases, you will use chunks to handle large volumes. |
 | What is a typical Tasklet use case? | Usually used to setup up or clean resources before or after the main processing.                 |
 
-To show how Spring Batch Tasklet works let's build an example.
+To show you how a Spring Batch Tasklet works let's create a simple example.
 
-We start from a basic [Spring Batch capitalize names example](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} that converts person names from lower case into upper case.
+We start from a basic [Spring Batch capitalize names](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} project that converts person names from lower case into upper case.
 
-We then change the example so that it reads multiple CSV files. When the batch `Job` finishes we delete the input CSV files using a `Tasklet`.
+We then change the batch job so that it reads multiple CSV files. When the `Job` finishes we cleanup the input files using a `Tasklet`.
 
 ## General Project Setup
 
@@ -67,51 +67,48 @@ The Maven and Spring Boot setup are identical to a previous [Spring Batch exampl
 
 To create a Spring Batch Tasklet you need to implement the `Tasklet` interface.
 
-Let's start by creating a `FileDeletingTasklet` that will delete all files in a directory. Add the `execute()` method that loops over the available files and tries to delete them. When all files are deleted we return the <var>FINISHED</var> status so that the calling `Step` can finish.
+Let's start by creating a `FileDeletingTasklet` that will delete all files in a directory. Add the `execute()` method that walks over the available files and tries to delete them. When all files are deleted we return the <var>FINISHED</var> status so that the `Step` that calls the `FileDeletingTasklet` can finish.
 
-We add a `setDirectory()` method that allows configuring the directory that needs to be cleaned.
-
-The [afterPropertiesSet()](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/InitializingBean.html){:target="_blank"} allows to check if a directory was set when `FileDeletingTasklet` is initialized as a Spring Bean.
+We also add a constructor that sets the directory that needs to be cleaned.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.UnexpectedJobExecutionException;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.core.io.Resource;
-import org.springframework.util.Assert;
 
 public class FileDeletingTasklet implements Tasklet {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(FileDeletingTasklet.class);
+
   private Resource directory;
 
-  @Override
-  public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext)
-      throws IOException {
-
-    File dir = directory.getFile();
-    Assert.state(dir.isDirectory(), "Not a directory");
-
-    for (File file : dir.listFiles()) {
-      boolean deleted = file.delete();
-      if (!deleted) {
-        throw new UnexpectedJobExecutionException("Could not delete file: " + file.getPath());
-      }
-    }
-    return RepeatStatus.FINISHED;
-  }
-
-  public void setDirectory(Resource directory) {
+  public FileDeletingTasklet(Resource directory) {
     this.directory = directory;
   }
 
-  public void afterPropertiesSet() throws Exception {
-    Assert.notNull(directory, "Directory must be set");
+  @Override
+  public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) {
+    try (Stream<Path> walk = Files.walk(Paths.get(directory.getFile().getPath()))) {
+      walk.filter(Files::isRegularFile).map(Path::toFile).forEach(File::delete);
+    } catch (IOException e) {
+      LOGGER.error("error deleting files", e);
+      throw new UnexpectedJobExecutionException("unable to delete files");
+    }
+
+    return RepeatStatus.FINISHED;
   }
 }
 {% endhighlight %}
@@ -157,15 +154,12 @@ public class CapitalizeNamesJobConfig {
   private static final Logger LOGGER = LoggerFactory.getLogger(CapitalizeNamesJobConfig.class);
 
   @Autowired
-  public JobBuilderFactory jobBuilders;
-
-  @Autowired
   public StepBuilderFactory stepBuilders;
 
   @Bean
-  public Job capitalizeNamesJob() {
-    return jobBuilders.get("capitalizeNamesJob").start(convertNamesStep()).next(deleteFilesStep())
-        .build();
+  public Job capitalizeNamesJob(JobBuilderFactory jobBuilders) {
+    return jobBuilders.get("capitalizeNamesJob").start(capitalizeNamesStep())
+        .next(deleteFilesStep()).build();
   }
 
   @Bean
@@ -213,10 +207,7 @@ public class CapitalizeNamesJobConfig {
 
   @Bean
   public FileDeletingTasklet fileDeletingTasklet() {
-    FileDeletingTasklet tasklet = new FileDeletingTasklet();
-    tasklet.setDirectory(new FileSystemResource("target/test-inputs"));
-
-    return tasklet;
+    return new FileDeletingTasklet(new FileSystemResource("target/test-inputs"));
   }
 }
 {% endhighlight %}
