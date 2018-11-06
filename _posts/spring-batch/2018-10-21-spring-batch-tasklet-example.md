@@ -117,11 +117,11 @@ public class FileDeletingTasklet implements Tasklet {
 
 Now that our Spring Batch Tasklet is created let's change the `CapitalizeNamesJobConfig` to include it.
 
-We add a `deleteFilesStep()` Bean that uses the `FileDeletingTasklet`. We then adapt the `capitalizeNamesJob()` Bean so that this new `Step` is executed at the end.
+We add a `deleteFilesStep` Bean that uses the `FileDeletingTasklet`. We then adapt the `capitalizeNamesJob` Bean so that this new `Step` is executed at the end.
 
-We also add a `MultiResourceItemReader` Bean that reads multiple input files.
+We also add a `multiItemReader` Bean that reads multiple input files.
 
-We finish by creating the `fileDeletingTasklet()` Bean on which we specify the directory that needs to be cleaned.
+We finish by creating the `fileDeletingTasklet` Bean on which we specify the directory that needs to be cleaned.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
@@ -140,7 +140,6 @@ import org.springframework.batch.item.file.MultiResourceItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
 import org.springframework.batch.item.file.builder.MultiResourceItemReaderBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
@@ -155,23 +154,20 @@ public class CapitalizeNamesJobConfig {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CapitalizeNamesJobConfig.class);
 
-  @Autowired
-  public StepBuilderFactory stepBuilders;
-
   @Bean
-  public Job capitalizeNamesJob(JobBuilderFactory jobBuilders) {
-    return jobBuilders.get("capitalizeNamesJob").start(capitalizeNamesStep())
-        .next(deleteFilesStep()).build();
+  public Job capitalizeNamesJob(JobBuilderFactory jobBuilders, StepBuilderFactory stepBuilders) {
+    return jobBuilders.get("capitalizeNamesJob").start(capitalizeNamesStep(stepBuilders))
+        .next(deleteFilesStep(stepBuilders)).build();
   }
 
   @Bean
-  public Step capitalizeNamesStep() {
+  public Step capitalizeNamesStep(StepBuilderFactory stepBuilders) {
     return stepBuilders.get("capitalizeNamesStep").<Person, Person>chunk(10)
         .reader(multiItemReader()).processor(itemProcessor()).writer(itemWriter()).build();
   }
 
   @Bean
-  public Step deleteFilesStep() {
+  public Step deleteFilesStep(StepBuilderFactory stepBuilders) {
     return stepBuilders.get("deleteFilesStep").tasklet(fileDeletingTasklet()).build();
   }
 

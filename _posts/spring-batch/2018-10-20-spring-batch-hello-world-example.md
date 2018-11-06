@@ -221,11 +221,11 @@ We then add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1
 * a `JobBuilderFactory` (bean name "jobBuilders") as a convenience to prevent you from having to inject the job repository into every job
 * a `StepBuilderFactory` (bean name "stepBuilders") as a convenience to prevent you from having to inject the job repository and transaction manager into every step
 
-We use the last two factories to create our job and the steps it consists of. [Autowire](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation){:target="_blank"} both `jobBuilders` and `stepBuilders`.
+In the `helloWorlJob` Bean we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be run.
 
-In the `helloWorlJob()` bean we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be run.
+> Note that [Spring will automatically wire](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation){:target="_blank"} the `jobBuilders` and `stepBuilders` Beans In the `helloWorlJob()` Bean.
 
-The `helloWorldStep()` bean defines the different items our step executes. We use the `StepBuilderFactory` to create the step.
+The `helloWorldStep` Bean defines the different items our step executes. We use the `StepBuilderFactory` to create the step.
 
 First, we pass the name of the step. Using `chunk()` we specify the number of items that are processed within each transaction. Chunk also specifies the input (`Person`) and output (`String`) type of the step. We then add the `ItemReader` (reader), `ItemProcessor` (processor), and `ItemWriter` (writer) to the step.
 
@@ -336,7 +336,7 @@ public class PersonItemProcessor implements ItemProcessor<Person, String> {
 
 To wrap up our example we will create a basic unit test case. It will run our batch job and check if it finishes successfully.
 
-We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.spring.io/spring-boot/docs/2.0.6.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications){:target="_blank"} to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
+We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications){:target="_blank"} to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
 
 Spring Batch ships with a `JobLauncherTestUtils` utility class for testing batch jobs.
 
