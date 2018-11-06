@@ -3,7 +3,7 @@ title: "Spring Batch Tutorials"
 permalink: /spring-batch/
 excerpt: "Detailed step-by-step tutorials on how to use Spring Batch."
 date: 2018-10-16
-last_modified_at: 2018-10-16
+last_modified_at: 2018-11-06
 ---
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-tutorials.png" alt="spring batch tutorials" class="align-right title-image">
