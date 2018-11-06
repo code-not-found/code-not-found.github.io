@@ -223,7 +223,7 @@ We then add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1
 
 In the `helloWorlJob` Bean we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be run.
 
-> Note that [Spring will automatically wire](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation){:target="_blank"} the `jobBuilders` and `stepBuilders` Beans In the `helloWorlJob()` Bean.
+> Note that [Spring will automatically wire](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation){:target="_blank"} the `jobBuilders` and `stepBuilders` Beans in the `helloWorlJob()` Bean.
 
 The `helloWorldStep` Bean defines the different items our step executes. We use the `StepBuilderFactory` to create the step.
 
