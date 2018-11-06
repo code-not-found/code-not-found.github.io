@@ -33,7 +33,7 @@ In the [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-exampl
 
 A [Tasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html){:target="_blank"} is in fact a simple interface that has one method: `execute()`. A `Step` calls this method repeatedly until it either finishes or throws an exception.
 
-Spring Batch contains a number of implementations of the `Tasklet` interface. One of them is a "chunk oriented processing" `Tasklet`. If you look at the [ChunkOrientedTasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html){:target="_blank"} you can see it implements the `Tasklet` interface.
+The Spring Batch framework contains some implementations of the `Tasklet` interface. One of them is a "chunk oriented processing" `Tasklet`. If you look at the [ChunkOrientedTasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html){:target="_blank"} you can see it implements the `Tasklet` interface.
 
 _So let's recap the above:_
 
@@ -41,14 +41,14 @@ _So let's recap the above:_
 |:------------------------------------|:-------------------------------------------------------------------------------------------------|
 | When do I use a Tasklet?            | When you need to execute a single granular task.                                                 |
 | How does a Tasklet work?            | Everything happens within a single transaction boundary that either finishes or throws an error. |
-| Is a Tasklet often used?            | It is typically not used very often. In most cases, you will use chunks to handle large volumes. |
+| Is a Tasklet often used?            | It is not used very often. In most cases, you will use chunks to handle large volumes. |
 | What is a typical Tasklet use case? | Usually used to setup up or clean resources before or after the main processing.                 |
 
 To show how Spring Batch Tasklet works let's build an example.
 
 We start from a basic [Spring Batch capitalize names example](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} that converts person names into upper case.
 
-We then change the example so that it reads two CSV files. When the batch `Job` is finishes we delete the input CSV files using a `Tasklet`.
+We then change the example so that it reads two CSV files. When the batch `Job` finishes we delete the input CSV files using a `Tasklet`.
 
 ## General Project Setup
 
@@ -116,11 +116,11 @@ public class FileDeletingTasklet implements Tasklet {
 }
 {% endhighlight %}
 
-Now that our Spring Batch Tasklet is created let's adapt the `CapitalizeNamesJobConfig` to include it.
+Now that our Spring Batch Tasklet is created let's change the `CapitalizeNamesJobConfig` to include it.
 
 We add a `deleteFilesStep()` Bean that uses the `FileDeletingTasklet`. We adapt the <var>capitalizeNamesJob</var> so that this new `Step` is executed at the end.
 
-We also add an `MultiResourceItemReader` Bean that reads multiple input files.
+We also add a `MultiResourceItemReader` Bean that reads multiple input files.
 
 We finish by creating the `fileDeletingTasklet()` Bean on which we specify the directory that needs to be cleaned.
 
@@ -223,9 +223,9 @@ public class CapitalizeNamesJobConfig {
 
 ## Unit Test the Spring Batch Tasklet
 
-Let's adapt the exiting unit test case so that we can test if our file deleting Tasklet works.
+Let's update the existing unit test case so that we can check if our file deleting Tasklet works.
 
-First we copy the input files to the location from which our Batch Job will read. This is done in the `copyFiles()` method before the test case runs using the `@Before` annotation.
+First, we copy the input files to the location from which our Batch Job will read. This is done in the `copyFiles()` method before the test case runs using the `@Before` annotation.
 
 When then launch the Batch Job and check if it finishes successfully. We also check if all input files have been deleted.
 
@@ -312,7 +312,7 @@ Let’s run above test case by opening a command prompt and executing following 
 mvn test
 {% endhighlight %}
 
-Maven will download the needed dependencies, compile the code and run the unit test case. The result should be a successful build during which following logs are generated:
+Maven will download the needed dependencies, compile the code and run the unit test case. The result should be a successful build as shown below:
 
 {% highlight plaintext %}
 .   ____          _            __ _ _
