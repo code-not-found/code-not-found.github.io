@@ -7,7 +7,7 @@ last_modified_at: 2018-11-06
 header:
   teaser: "assets/images/spring-batch/spring-batch-tasklet-example.png"
 categories: [Spring Batch]
-tags: [Example, Maven, Spring Batch, Spring Boot, Tasklet, Tutorial ]
+tags: [Example, Maven, Spring Batch, Spring Boot, Tasklet, Tutorial]
 published: true
 ---
 

@@ -7,7 +7,7 @@ last_modified_at: 2018-11-05
 header:
   teaser: "assets/images/spring-batch/spring-batch-hello-world-example.png"
 categories: [Spring Batch]
-tags: [Example, Maven, Spring Batch, Spring Boot, Tutorial ]
+tags: [Example, Maven, Spring Batch, Spring Boot, Tutorial]
 published: true
 ---
 
