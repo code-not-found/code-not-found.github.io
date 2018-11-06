@@ -27,7 +27,7 @@ Let’s do this!
 
 In Spring batch, a `Tasklet` is an interface that performs a single task within a `Step`. A typical use case for implementing a `Tasklet` is the setup up or cleaning of resources before or after the execution of a `Step`.
 
-In fact, Spring Batch offers two different ways for **implementing a step of a batch job**: using [chunks](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#chunkOrientedProcessing){:target="_blank"} or using a [tasklet](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#taskletStep){:target="_blank"}.
+In fact, Spring Batch offers two different ways for **implementing a step of a batch job**: using [Chunks](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#chunkOrientedProcessing){:target="_blank"} or using a [Tasklet](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#taskletStep){:target="_blank"}.
 
 In the [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-example.html) we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
 
@@ -48,7 +48,7 @@ To show you how a Spring Batch Tasklet works let's create a simple example.
 
 We start from a basic [Spring Batch capitalize names](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} project that converts person names from lower case into upper case.
 
-We then change the batch job so that it reads multiple CSV files. When the `Job` finishes we cleanup the input files using a `Tasklet`.
+We then change the batch job so that it reads multiple CSV files. When the `Job` finishes we clean up the input files using a `Tasklet`.
 
 ## General Project Setup
 
@@ -67,7 +67,9 @@ The Maven and Spring Boot setup are identical to a previous [Spring Batch exampl
 
 To create a Spring Batch Tasklet you need to implement the `Tasklet` interface.
 
-Let's start by creating a `FileDeletingTasklet` that will delete all files in a directory. Add the `execute()` method that walks over the available files and tries to delete them. When all files are deleted we return the <var>FINISHED</var> status so that the `Step` that calls the `FileDeletingTasklet` can finish.
+Let's start by creating a `FileDeletingTasklet` that will delete all files in a directory. Add the `execute()` method that walks over the available files and tries to delete them.
+
+When all files are deleted we return the <var>FINISHED</var> status so that the `Step` that calls the `FileDeletingTasklet` can finish.
 
 We also add a constructor that sets the directory that needs to be cleaned.
 
@@ -216,9 +218,9 @@ public class CapitalizeNamesJobConfig {
 
 Let's update the existing unit test case so that we can check if our file deleting Tasklet works.
 
-First, we copy the input files to the location from which our Batch Job will read. This is done in the `copyFiles()` method before the test case runs using the `@Before` annotation.
+First, we copy the input files to the location from which our batch job will read. This is done in the `copyFiles()` method before the test case runs using the `@Before` annotation.
 
-When then launch the Batch Job and check if it finishes successfully. We also check if all input files have been deleted.
+We then launch the batch job and check if it finishes successfully. We also check if all input files have been deleted.
 
 {% highlight java %}
 package com.codenotfound.batch;
@@ -354,10 +356,8 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this tutorial, you learned the difference between a `Tasklet` and a `Chunk`. We also created a Tasklet example using Spring Batch.
+In this tutorial, you learned what a Spring Batch `Tasklet` is. We also created a Tasklet example using Spring Batch, Spring Boot, and Maven.
 
-If you have any questions or if you enjoyed this post.
-
-Drop a line below.
+Leave a comment if you have any questions. Or if you enjoyed this post.
 
 Thanks!
