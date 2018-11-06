@@ -27,9 +27,7 @@ Let’s do this!
 
 In Spring batch, a `Tasklet` is an interface that performs a single task within a `Step`. A typical use case for implementing a `Tasklet` is the setup up or cleaning of resources before or after the execution of a `Step`.
 
-In fact, Spring Batch offers two different ways for **implementing a step of a batch job**:
-1. using [chunks](https://docs.spring.io/spring-batch/4.0.x/reference/html/step.html#chunkOrientedProcessing){:target="_blank"}
-2. using a [tasklet](https://docs.spring.io/spring-batch/4.0.x/reference/html/step.html#taskletStep){:target="_blank"}
+In fact, Spring Batch offers two different ways for **implementing a step of a batch job**: using [chunks](https://docs.spring.io/spring-batch/4.0.x/reference/html/step.html#chunkOrientedProcessing){:target="_blank"} or using a [tasklet](https://docs.spring.io/spring-batch/4.0.x/reference/html/step.html#taskletStep){:target="_blank"}.
 
 In the [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-example.html) we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
 
@@ -37,7 +35,7 @@ A [Tasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframewor
 
 Spring Batch contains a number of implementations of the `Tasklet` interface. One of them is a "chunk oriented processing" `Tasklet`. If you look at the [ChunkOrientedTasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html){:target="_blank"} you can see it implements the `Tasklet` interface.
 
-So let's recap the above:
+_So let's recap the above:_
 
 | Question                            | Answer                                                                                           |
 |:------------------------------------|:-------------------------------------------------------------------------------------------------|
@@ -46,7 +44,7 @@ So let's recap the above:
 | Is a Tasklet often used?            | It is typically not used very often. In most cases, you will use chunks to handle large volumes. |
 | What is a typical Tasklet use case? | Usually used to setup up or clean resources before or after the main processing.                 |
 
-To show how Spring Batch `Tasklet` works let's build an example.
+To show how Spring Batch Tasklet works let's build an example.
 
 We start from a basic [Spring Batch capitalize names example](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} that converts person names into upper case.
 
@@ -119,6 +117,12 @@ public class FileDeletingTasklet implements Tasklet {
 {% endhighlight %}
 
 Now that our Spring Batch Tasklet is created let's adapt the `CapitalizeNamesJobConfig` to include it.
+
+We add a `deleteFilesStep()` Bean that uses the `FileDeletingTasklet`. We adapt the <var>capitalizeNamesJob</var> so that this new `Step` is executed at the end.
+
+We also add an `MultiResourceItemReader` Bean that reads multiple input files.
+
+We finish by creating the `fileDeletingTasklet()` Bean on which we specify the directory that needs to be cleaned.
 
 {% highlight java %}
 package com.codenotfound.batch.job;

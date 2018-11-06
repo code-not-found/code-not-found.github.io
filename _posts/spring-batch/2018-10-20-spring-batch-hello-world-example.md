@@ -207,7 +207,7 @@ Let's go ahead and configure our batch job.
 
 We create a `HelloWorldJobConfig` class. The [@Configuration](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} annotation at the top of the class indicates that Spring can use this class as a source of bean definitions.
 
-We then add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which enables Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a `Map` based `JobRepository` is used.
+We then add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which enables Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a `Map` based `JobRepository` is used.
 
 > By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
 
@@ -227,7 +227,7 @@ The `helloWorldStep()` bean defines the different items our step executes. We us
 
 First, we pass the name of the step. Using `chunk()` we specify the number of items that are processed within each transaction. Chunk also specifies the input (`Person`) and output (`String`) type of the step. We then add the `ItemReader` (reader), `ItemProcessor` (processor), and `ItemWriter` (writer) to the step.
 
-To read the person CSV file we use the [FlatFileItemReader](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemReader){:target="_blank"}. This is a class that provides basic functionality to read and parse flat files.
+To read the person CSV file we use the [FlatFileItemReader](https://docs.spring.io/spring-batch/4.1.x/reference/html/readersAndWriters.html#flatFileItemReader){:target="_blank"}. This is a class that provides basic functionality to read and parse flat files.
 
 There is a `FlatFileItemReaderBuilder` builder implementation that allows us to create a `FlatFileItemReader`. We start by specifying that the result of reading each line in the file is a `Person` object. We then add a name for the reader and the specify the resource (in this case the <var>persons.csv</var> file) that needs to be read.
 
@@ -237,11 +237,11 @@ We also specify how each field on a line needs to be mapped to our `Person` obje
 
 The `PersonItemProcessor` handles the processing of the data. It converts a `Person` into a greeting `String`. We will define this in a separate class further below.
 
-Once the data is processed we will write it to a text file. We use the [FlatFileItemWriter](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#flatFileItemWriter){:target="_blank"} to help us with this task.
+Once the data is processed we will write it to a text file. We use the [FlatFileItemWriter](https://docs.spring.io/spring-batch/4.1.x/reference/html/readersAndWriters.html#flatFileItemWriter){:target="_blank"} to help us with this task.
 
 We use a `FlatFileItemWriterBuilder` builder implementation to create a `FlatFileItemWriter`. We add a name for the writer and specify the resource (in this case the <var>greeting.txt</var> file) to which data needs to be written.
 
-The `FlatFileItemWriter` needs to know how to turn our generated output into a single string that can be written to a file. As in this example, our output is already a string we can use the [PassThroughLineAggregator](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#PassThroughLineAggregator){:target="_blank"}. This is the most basic implementation, which assumes that the object is already a string.
+The `FlatFileItemWriter` needs to know how to turn our generated output into a single string that can be written to a file. As in this example, our output is already a string we can use the [PassThroughLineAggregator](https://docs.spring.io/spring-batch/4.1.x/reference/html/readersAndWriters.html#PassThroughLineAggregator){:target="_blank"}. This is the most basic implementation, which assumes that the object is already a string.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
@@ -308,7 +308,7 @@ public class HelloWorldJobConfig {
 
 ## Processing the Data
 
-In most cases, you will want to apply some data processing during a batch job. An [ItemProcessor](https://docs.spring.io/spring-batch/4.0.x/reference/html/readersAndWriters.html#itemProcessor){:target="_blank"} allows you to do just that.
+In most cases, you will want to apply some data processing during a batch job. An [ItemProcessor](https://docs.spring.io/spring-batch/4.1.x/reference/html/readersAndWriters.html#itemProcessor){:target="_blank"} allows you to do just that.
 
 In our example, we convert a `Person` object to a simple greeting `String`.
 
