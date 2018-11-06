@@ -31,7 +31,7 @@ In fact, Spring Batch offers two different ways for **implementing a step of a b
 
 In the [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-example.html) we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
 
-A [Tasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html){:target="_blank"} is in fact a simple interface that has one method: `execute()`. A `Step` calls this method repeatedly until it either finishes or throws an exception.
+The [Tasklet interface](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html){:target="_blank"} has one method: `execute()`. A `Step` calls this method repeatedly until it either finishes or throws an exception.
 
 The Spring Batch framework contains some implementations of the `Tasklet` interface. One of them is a "chunk oriented processing" `Tasklet`. If you look at the [ChunkOrientedTasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html){:target="_blank"} you can see it implements the `Tasklet` interface.
 
@@ -46,9 +46,9 @@ _So let's recap the above:_
 
 To show how Spring Batch Tasklet works let's build an example.
 
-We start from a basic [Spring Batch capitalize names example](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} that converts person names into upper case.
+We start from a basic [Spring Batch capitalize names example](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} that converts person names from lower case into upper case.
 
-We then change the example so that it reads two CSV files. When the batch `Job` finishes we delete the input CSV files using a `Tasklet`.
+We then change the example so that it reads multiple CSV files. When the batch `Job` finishes we delete the input CSV files using a `Tasklet`.
 
 ## General Project Setup
 
@@ -67,7 +67,7 @@ The Maven and Spring Boot setup are identical to a previous [Spring Batch exampl
 
 To create a Spring Batch Tasklet you need to implement the `Tasklet` interface.
 
-Let's start by creating a `FileDeletingTasklet` that will delete all files in a directory. Add the `execute()` method that loops over the available files and tries to delete them. When all files are deleted we return the <var>FINISHED</var> status so that the `Step` finishes.
+Let's start by creating a `FileDeletingTasklet` that will delete all files in a directory. Add the `execute()` method that loops over the available files and tries to delete them. When all files are deleted we return the <var>FINISHED</var> status so that the calling `Step` can finish.
 
 We add a `setDirectory()` method that allows configuring the directory that needs to be cleaned.
 
@@ -118,7 +118,7 @@ public class FileDeletingTasklet implements Tasklet {
 
 Now that our Spring Batch Tasklet is created let's change the `CapitalizeNamesJobConfig` to include it.
 
-We add a `deleteFilesStep()` Bean that uses the `FileDeletingTasklet`. We adapt the <var>capitalizeNamesJob</var> so that this new `Step` is executed at the end.
+We add a `deleteFilesStep()` Bean that uses the `FileDeletingTasklet`. We then adapt the `capitalizeNamesJob()` Bean so that this new `Step` is executed at the end.
 
 We also add a `MultiResourceItemReader` Bean that reads multiple input files.
 
@@ -163,13 +163,13 @@ public class CapitalizeNamesJobConfig {
   public StepBuilderFactory stepBuilders;
 
   @Bean
-  public Job convertNamesJob() {
+  public Job capitalizeNamesJob() {
     return jobBuilders.get("capitalizeNamesJob").start(convertNamesStep()).next(deleteFilesStep())
         .build();
   }
 
   @Bean
-  public Step convertNamesStep() {
+  public Step capitalizeNamesStep() {
     return stepBuilders.get("capitalizeNamesStep").<Person, Person>chunk(10)
         .reader(multiItemReader()).processor(itemProcessor()).writer(itemWriter()).build();
   }
@@ -306,7 +306,7 @@ public class SpringBatchApplicationTests {
 }
 {% endhighlight %}
 
-Let’s run above test case by opening a command prompt and executing following Maven command:
+Now run above test case. Open a command prompt and execute following Maven command:
 
 {% highlight plaintext %}
 mvn test
