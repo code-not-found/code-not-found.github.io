@@ -176,7 +176,9 @@ public class Person {
   private String firstName;
   private String lastName;
 
-  public Person() {}
+  public Person() {
+    // default constructor
+  }
 
   public String getFirstName() {
     return firstName;
@@ -223,7 +225,7 @@ We use the last two factories to create our job and the steps it consists of. [A
 
 In the `helloWorlJob()` bean we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be run.
 
-The `helloWorldStep()` bean defines the different items our step executes. We use the `StepBuilderFactory` to define the step.
+The `helloWorldStep()` bean defines the different items our step executes. We use the `StepBuilderFactory` to create the step.
 
 First, we pass the name of the step. Using `chunk()` we specify the number of items that are processed within each transaction. Chunk also specifies the input (`Person`) and output (`String`) type of the step. We then add the `ItemReader` (reader), `ItemProcessor` (processor), and `ItemWriter` (writer) to the step.
 
@@ -248,7 +250,6 @@ package com.codenotfound.batch.job;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -257,7 +258,6 @@ import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
 import org.springframework.batch.item.file.transform.PassThroughLineAggregator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -268,19 +268,13 @@ import com.codenotfound.model.Person;
 @EnableBatchProcessing
 public class HelloWorldJobConfig {
 
-  @Autowired
-  public JobBuilderFactory jobBuilders;
-
-  @Autowired
-  public StepBuilderFactory stepBuilders;
-
   @Bean
-  public Job helloWorlJob() {
-    return jobBuilders.get("helloWorldJob").start(helloWorldStep()).build();
+  public Job helloWorlJob(JobBuilderFactory jobBuilders, StepBuilderFactory stepBuilders) {
+    return jobBuilders.get("helloWorldJob").start(helloWorldStep(stepBuilders)).build();
   }
 
   @Bean
-  public Step helloWorldStep() {
+  public Step helloWorldStep(StepBuilderFactory stepBuilders) {
     return stepBuilders.get("helloWorldStep").<Person, String>chunk(10).reader(reader())
         .processor(processor()).writer(writer()).build();
   }
