@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/teaser/java-teaser.png"
 categories: [Java]
 tags: [Download, Install, Java, JDK, jdk 1.5.0_22, Tutorial, Windows]
+redirect_to:
+  - https://downlinko.com/download-install-jdk-5-windows.html
 published: true
 ---
 
