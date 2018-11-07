@@ -230,7 +230,7 @@ public class HelloWorldTest extends WebDriverTest {
 }
 ```
 
-Based on following great example on [writing functional tests using Selenium](https://www.pluralsight.com/guides/software-engineering-best-practices/getting-started-with-page-object-pattern-for-your-selenium-tests){:target="_blank"} we have made above test case extend a `WebDriverTest` class.
+Based on following great example on [writing functional tests using Selenium](https://www.pluralsight.com/guides/getting-started-with-page-object-pattern-for-your-selenium-tests){:target="_blank"} we have made above test case extend a `WebDriverTest` class.
 
 This class holds all the `WebDriver` lifecycle management code and assures correct setup and cleanup is done after each test case.
 
