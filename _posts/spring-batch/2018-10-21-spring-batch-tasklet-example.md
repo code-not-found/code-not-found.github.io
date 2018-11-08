@@ -3,17 +3,17 @@ title: "Spring Batch Tasklet Example"
 permalink: /spring-batch-tasklet-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement a Spring Batch Tasklet using Spring Boot and Maven."
 date: 2018-10-21
-last_modified_at: 2018-11-06
+last_modified_at: 2018-11-08
 header:
-  teaser: "assets/images/spring-batch/spring-batch-tasklet-example.png"
+  teaser: "assets/images/spring-batch/spring-batch-tasklet.png"
 categories: [Spring Batch]
 tags: [Example, Maven, Spring Batch, Spring Boot, Tasklet, Tutorial]
 published: true
 ---
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-tasklet-example.png" alt="spring batch tasklet example" class="align-right title-image">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-tasklet.png" alt="spring batch tasklet" class="align-right title-image">
 
-Want to know what a _Spring Batch Tasklet_ is?
+Want to know what a [Spring Batch Tasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html){:target="_blank"} is?
 
 And more important: **when to use it?**
 
@@ -31,7 +31,7 @@ In fact, Spring Batch offers two different ways for **implementing a step of a b
 
 In the [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-example.html) we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
 
-The [Tasklet interface](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html){:target="_blank"} has one method: `execute()`. A `Step` calls this method repeatedly until it either finishes or throws an exception.
+The `Tasklet` interface has one method: [execute()](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html#execute-org.springframework.batch.core.StepContribution-org.springframework.batch.core.scope.context.ChunkContext-){:target="_blank"}. A `Step` calls this method repeatedly until it either finishes or throws an exception.
 
 The Spring Batch framework contains some implementations of the `Tasklet` interface. One of them is a "chunk oriented processing" `Tasklet`. If you look at the [ChunkOrientedTasklet](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/item/ChunkOrientedTasklet.html){:target="_blank"} you can see it implements the `Tasklet` interface.
 
