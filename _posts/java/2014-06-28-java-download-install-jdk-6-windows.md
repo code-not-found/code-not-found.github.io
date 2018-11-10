@@ -13,6 +13,8 @@ redirect_from:
   - /2014/06/java-download-install-jdk
   - /2014/06/java-install-jdk.html
   - /2014/06/java-download-install-jdk-6-windows.html
+redirect_to:
+    - https://downlinko.com/download-install-jdk-6-windows.html
 published: true
 ---
 
@@ -49,7 +51,7 @@ Sign in using your Oracle account (or create a new one) and the download should 
     <img src="{{ site.url }}/assets/images/posts/java/java-6-installer-start.png" alt="java 6 installer start">
 </figure>
 
-Click <var>Next</var> and on the following screen optionally change the installation location by clicking on the <var>Change...</var> button. In the example below the install location was changed to <var>'C:\Java\jdk1.6.0_45'</var>. From now on we will refer to this directory as: <var>[java_install_dir]</var>. 
+Click <var>Next</var> and on the following screen optionally change the installation location by clicking on the <var>Change...</var> button. In the example below the install location was changed to <var>'C:\Java\jdk1.6.0_45'</var>. From now on we will refer to this directory as: <var>[java_install_dir]</var>.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/java/java-6-jdk-location.png" alt="java 6 jdk location">
