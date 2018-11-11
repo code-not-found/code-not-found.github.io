@@ -357,7 +357,9 @@ Now it's time to add our Spring Batch Task. Click on the <var>Add Application(s)
 
 Click on <var>Register one or more applications</var>.
 
-Enter a <var>name</var> and select <kbd>Task</kbd> as the <var>type</var>. As <var>URI</var> we enter the location of our Spring Boot Task JAR file: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
+Enter <kbd>spring-batch-task</kbd> as <var>name</var> and select <kbd>Task</kbd> as the <var>type</var>.
+
+As <var>URI</var> we enter the location of our Spring Boot Task JAR file: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
 
 Once done click on <var>Register the application(s)</var>.
 
@@ -369,7 +371,9 @@ Click on <var>Task</var> menu to setup a new task.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-applications.png" alt="spring cloud data flow applications">
 
+Click on the <var>Create task(s)</var> button.
 
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-create-task.png" alt="spring cloud data flow create task">
 
 ---
 
