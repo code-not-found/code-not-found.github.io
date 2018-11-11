@@ -387,7 +387,7 @@ Enter <kbd>spring-batch-task</kbd> as task name and click on <var>Create the tas
 
 Our capitalize-names-task is now ready to used used. Click on the play icon to start an instance.
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-definitions.png" alt="spring cloud data flow tasks definitions">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-definitions-launch.png" alt="spring cloud data flow tasks definitions launch">
 
 Click on the <var>Launch the task</var> button.
 
@@ -395,7 +395,21 @@ Click on the <var>Launch the task</var> button.
 
 A new <var>Executions</var> tab now appears under the <var>Task</var> section. Click on it to consult the status of the tasks that were started.
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-tab.png" alt="spring cloud data flow tasks executions tab">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-executions.png" alt="spring cloud data flow tasks executions">
+
+We can see that there is one execution instance for our <var>capitalize-names-task</var>. Click on the information icon to see the details.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-show-details.png" alt="spring cloud data flow tasks executions show details">
+
+Information on the task that was executed is shown. To see information on the batch job that was run click on the <var>Job Execution Ids</var> identifier.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-details.png" alt="spring cloud data flow tasks executions details">
+
+A new page opens that shows us the details on the Spring Batch <var>capitalizeNamesJob</var> job. We can see the status and information on the step that was executed.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-batch-job-details.png" alt="spring cloud data flow tasks executions batch job details">
+
+
 
 ---
 
