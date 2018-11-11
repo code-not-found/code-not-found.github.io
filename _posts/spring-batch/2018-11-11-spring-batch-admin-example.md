@@ -411,8 +411,9 @@ A new page opens that shows us the details on the Spring Batch <var>capitalizeNa
 
 In other words we successfully used a Spring Batch Admin UI to launch a Spring Batch job!
 
-If you check the console output of the Spring Cloud Server you will notice that
+Note that you can also consult the log files of the executed batch job. Just check the console output of the Spring Cloud Server for the location of the log files.
 
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-console-log-location.png" alt="spring cloud data flow console log location">
 
 ---
 
@@ -422,10 +423,10 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this getting started tutorial you learned how to create a simple Spring Batch example with Spring Boot and Maven.
+In this tutorial we illustrated an end-to-end scenario in which we used a admin UI to execute a Spring Batch job.
 
-Let me know if you liked this post.
+Hope you enjoyed this post.
 
-Leave a comment below.
+Leave a comment if you did.
 
 Thanks!
