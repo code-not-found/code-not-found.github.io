@@ -23,11 +23,11 @@ Let's dive right in.
 
 ## What is Spring Batch Admin?
 
-Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project however is **end of life since December 31, 2017**.
+Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project however is _end of life since December 31, 2017_.
 
-[Spring Cloud Data Flow](https://cloud.spring.io/spring-cloud-dataflow/){:target="_blank"} is now the recommended replacement for managing and monitoring Spring Batch jobs. It is one of the [main Spring Projects](https://spring.io/projects){:target="_blank"} that [Pivotal Software](https://pivotal.io/){:target="_blank"} maintains.
+[Spring Cloud Data Flow](https://cloud.spring.io/spring-cloud-dataflow/){:target="_blank"} is now the [recommended replacement](https://github.com/spring-projects/spring-batch-admin#note-this-project-is-being-moved-to-the-spring-attic-and-is-not-recommended-for-new-projects--spring-cloud-data-flow-is-the-recommended-replacement-for-managing-and-monitoring-spring-batch-jobs-going-forward--you-can-read-more-about-migrating-to-spring-cloud-data-flow-here){:target="_blank"} for managing and monitoring Spring Batch jobs. It is one of the [main Spring Projects](https://spring.io/projects){:target="_blank"}.
 
-Let's demonstrate how you can use Spring Cloud Data Flow to run a batch job.
+Let's demonstrate how you can configure Spring Cloud Data Flow to run a batch job.
 
 We re-use the [Spring Batch capitalize names](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} project. It contains a batch job that converts person names from lower case into upper case.
 
@@ -35,12 +35,12 @@ We then start a Spring Cloud Data Flow server and configure the batch job. Using
 
 ## General Project Setup
 
-> [Spring Cloud Data Flow](https://github.com/spring-cloud/spring-cloud-dataflow){:target="_blank"} does not yet support Spring Boot 2.0. That is why this example uses Spring Boot 1.5 and Spring Batch 3.0.
-
 We will use the following tools/frameworks:
 * _Spring Batch 3.0_
 * _Spring Boot 1.5_
 * _Maven 3.5_
+
+> [Spring Cloud Data Flow](https://github.com/spring-cloud/spring-cloud-dataflow){:target="_blank"} does not yet support Spring Boot 2.0. That is why this example uses Spring Boot 1.5 and Spring Batch 3.0.
 
 We will create two Maven projects (one for the batch job and one for Spring Cloud Data Flow) that have the following structure:
 
@@ -48,15 +48,15 @@ We will create two Maven projects (one for the batch job and one for Spring Clou
 
 ## Creating a Spring Batch Task
 
-Spring Cloud Data Flow is a toolkit for building data processing pipelines. The pipelines consist of Spring Boot applications. This means we can run a Spring Boot batch job using a Data Flow server.
+Spring Cloud Data Flow is **a toolkit for building data processing pipelines**. The pipelines consist of Spring Boot applications. This means we can run a Spring Boot batch job using a Data Flow server.
 
 All we need to do is annotate our existing `SpringBatchApplication` with `@EnableTask` as shown below.
 
 This class-level annotation tells Spring Cloud Task to bootstrap it's functionality. It enables a `TaskConfigurer` that registers the application in a `TaskRepository`.
 
-Spring Cloud Task will also [associate the execution of a batch job with a task's execution](https://docs.spring.io/spring-cloud-task/docs/1.3.0.RELEASE/reference/htmlsingle/#batch-association){:target="_blank"} so that one can be traced back to the other. This is by default in any context that has both a Spring Batch Job configured and the `spring-cloud-task-batch` JAR available within the classpath.
+Spring Cloud Task will also [associate the execution of a batch job with a task's execution](https://docs.spring.io/spring-cloud-task/docs/1.3.0.RELEASE/reference/htmlsingle/#batch-association){:target="_blank"} so that one can be traced back to the other. This association is by default in any context that has both a Spring Batch Job configured and the `spring-cloud-task-batch` JAR available within the classpath.
 
-We can now create a [Spring Cloud Task](https://spring.io/projects/spring-cloud-task){:target="_blank"} as we will see in the next section.
+We can now define a [Spring Cloud Task](https://spring.io/projects/spring-cloud-task){:target="_blank"} as we will see in the next section.
 
 {% highlight xml %}
 package com.codenotfound.batch;
@@ -88,7 +88,7 @@ spring:
     driverClassName: org.h2.Driver
 {% endhighlight %}
 
- To enable the above configuration changes we need to add additional dependencies in the Maven <var>pom.xml</var> file.
+ To enable above configuration changes we need to add additional dependencies in the Maven <var>pom.xml</var> file.
 
 The `spring-cloud-starter-task` starter includes the dependencies for testing Spring Boot applications. It imports libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](https://site.mockito.org/){:target="_blank"}.
 
