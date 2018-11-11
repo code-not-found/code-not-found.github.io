@@ -136,7 +136,7 @@ Spring Batch by default uses a database to store metadata on the configured batc
 
 In this example, we will **run Spring Batch without a database**. Instead, an in-memory `Map` based repository is used.
 
-> For this to work we need to specify <var>exclude = {DataSourceAutoConfiguration.class}</var>. This prevents Spring Boot from auto-configuring a `DataSource` connection to a database.
+> The `spring-boot-starter-batch` starter has a dependency on `spring-boot-starter-jdbc` and will try to instantiate a datasource. Specify <var>exclude = {DataSourceAutoConfiguration.class}</var>. This prevents Spring Boot from auto-configuring a `DataSource` connection to a database.
 
 {% highlight java %}
 package com.codenotfound.batch;
@@ -205,11 +205,9 @@ public class Person {
 
 ## Configuring the Spring Batch Job
 
-Let's go ahead and configure our batch job.
+We start by creating a `BatchConfig` class that will configure Spring Batch. The [@Configuration](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} annotation at the top of the class indicates that Spring can use this class as a source of bean definitions.
 
-We create a `HelloWorldJobConfig` class. The [@Configuration](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} annotation at the top of the class indicates that Spring can use this class as a source of bean definitions.
-
-We then add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which enables Spring Batch features. It also provides a base configuration for setting up batch jobs. As we disabled the auto-configuration of a `DataSource`, by default a `Map` based `JobRepository` is used.
+We add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which auto-enables all needed Spring Batch features. It also provides a base configuration for setting up batch jobs.
 
 > By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
 
@@ -220,6 +218,31 @@ We then add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1
 * a `PlatformTransactionManager` (bean name "transactionManager")
 * a `JobBuilderFactory` (bean name "jobBuilders") as a convenience to prevent you from having to inject the job repository into every job
 * a `StepBuilderFactory` (bean name "stepBuilders") as a convenience to prevent you from having to inject the job repository and transaction manager into every step
+
+For Spring Batch to use a Map based `JobRepository` we need to extend the `DefaultBatchConfigurer`. We override the `setDataSource()` method to not set a `DataSource`. This will cause the auto-configuration to [use a Map based JobRepository](https://github.com/spring-projects/spring-batch/blob/342d27bc1ed83312bdcd9c0cb30510f4c469e47d/spring-batch-core/src/main/java/org/springframework/batch/core/configuration/annotation/DefaultBatchConfigurer.java#L84){:target="_blank"}.
+
+{% highlight java %}
+package com.codenotfound.batch.job;
+
+import javax.sql.DataSource;
+import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@EnableBatchProcessing
+public class BatchConfig extends DefaultBatchConfigurer {
+
+  @Override
+  public void setDataSource(DataSource dataSource) {
+    // initialize will use a Map based JobRepository (instead of database)
+  }
+}
+{% endhighlight %}
+
+Let's go ahead and configure our Hello World Spring Batch job.
+
+Create a `HelloWorldJobConfig` configuration class and annotate it with `@Configuration`.
 
 In the `helloWorlJob` Bean we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be run.
 
@@ -265,7 +288,6 @@ import org.springframework.core.io.FileSystemResource;
 import com.codenotfound.model.Person;
 
 @Configuration
-@EnableBatchProcessing
 public class HelloWorldJobConfig {
 
   @Bean
@@ -358,6 +380,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.codenotfound.batch.job.BatchConfig;
 import com.codenotfound.batch.job.HelloWorldJobConfig;
 
 @RunWith(SpringRunner.class)
@@ -374,7 +397,7 @@ public class SpringBatchApplicationTests {
   }
 
   @Configuration
-  @Import(HelloWorldJobConfig.class)
+  @Import({BatchConfig.class, HelloWorldJobConfig.class})
   static class BatchTestConfig {
 
     @Autowired
@@ -408,29 +431,23 @@ The result is a successful build during which the batch job is executed.
 =========|_|==============|___/=/_/_/_/
 :: Spring Boot ::        (v2.1.0.RELEASE)
 
-2018-10-27 10:21:51.563  INFO 15792 --- [           main] c.c.batch.SpringBatchApplicationTests    : Starting SpringBatchApplicationTests on DESKTOP-2RB3C1U with PID 15792 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world)
-2018-10-27 10:21:51.563  INFO 15792 --- [           main] c.c.batch.SpringBatchApplicationTests    : No active profile set, falling back to default profiles: default
-2018-10-27 10:21:51.594  INFO 15792 --- [           main] s.c.a.AnnotationConfigApplicationContext : Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@4fb3ee4e: startup date [Sat Oct 27 10:21:51 CEST 2018]; root of context hierarchy
-2018-10-27 10:21:52.188  INFO 15792 --- [           main] c.c.batch.SpringBatchApplicationTests    : Started SpringBatchApplicationTests in 0.937 seconds (JVM running for 1.87)
-2018-10-27 10:21:52.297  WARN 15792 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
-2018-10-27 10:21:52.329  INFO 15792 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
-2018-10-27 10:21:52.376  INFO 15792 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] launched with the following parameters: [{random=617281}]
-2018-10-27 10:21:52.391  INFO 15792 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [helloWorldStep]
-2018-10-27 10:21:52.438  INFO 15792 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'John Doe' into 'Hello John Doe!'
-2018-10-27 10:21:52.438  INFO 15792 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jane Doe' into 'Hello Jane Doe!'
-2018-10-27 10:21:52.454  INFO 15792 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] completed with the following parameters: [{random=617281}] and the following status: [COMPLETED]
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.906 s - in com.codenotfound.batch.SpringBatchApplicationTests
-2018-10-27 10:21:52.594  INFO 15792 --- [       Thread-1] s.c.a.AnnotationConfigApplicationContext : Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@4fb3ee4e: startup date [Sat Oct 27 10:21:51 CEST 2018]; root of context hierarchy
-[INFO]
-[INFO] Results:
-[INFO]
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-[INFO]
+2018-11-11 20:37:27.573  INFO 14436 --- [           main] c.c.batch.SpringBatchApplication         : Starting SpringBatchApplication on DESKTOP-2RB3C1U with PID 14436 (C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world\target\classes started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world)
+2018-11-11 20:37:27.589  INFO 14436 --- [           main] c.c.batch.SpringBatchApplication         : No active profile set, falling back to default profiles: default
+2018-11-11 20:37:28.245  WARN 14436 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
+2018-11-11 20:37:28.245  WARN 14436 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No transaction manager was provided, using a ResourcelessTransactionManager
+2018-11-11 20:37:28.276  INFO 14436 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2018-11-11 20:37:28.667  INFO 14436 --- [           main] c.c.batch.SpringBatchApplication         : Started SpringBatchApplication in 1.406 seconds (JVM running for 5.269)
+2018-11-11 20:37:28.667  INFO 14436 --- [           main] o.s.b.a.b.JobLauncherCommandLineRunner   : Running default command line with: []
+2018-11-11 20:37:28.729  INFO 14436 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] launched with the following parameters: [{}]
+2018-11-11 20:37:28.745  INFO 14436 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [helloWorldStep]
+2018-11-11 20:37:28.776  INFO 14436 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'John Doe' into 'Hello John Doe!'
+2018-11-11 20:37:28.776  INFO 14436 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jane Doe' into 'Hello Jane Doe!'
+2018-11-11 20:37:28.792  INFO 14436 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] completed with the following parameters: [{}] and the following status: [COMPLETED]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 6.089 s
-[INFO] Finished at: 2018-10-27T10:21:53+02:00
+[INFO] Total time: 4.140 s
+[INFO] Finished at: 2018-11-11T20:37:28+01:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
