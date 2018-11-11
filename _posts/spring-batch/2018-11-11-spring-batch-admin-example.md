@@ -377,7 +377,7 @@ Click on the <var>Create task(s)</var> button.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-create-task.png" alt="spring cloud data flow tasks create task">
 
-Drag the <var>Spring-Batch-Task</var> task on the canvas and connect the <var>START</var> and <var>END</var> nodes as shown below.
+Drag the <var>Capitalize-Names-App</var> task on the canvas and connect the <var>START</var> and <var>END</var> nodes as shown below.
 
 Click on <var>Create Task</var>.
 
