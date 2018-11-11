@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/spring-batch/spring-batch-admin.png"
 categories: [Spring Batch]
 tags: [Admin, Example, Maven, Spring Batch, Spring Boot, Tutorial, UI]
-published: false
+published: true
 ---
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-admin.png" alt="spring batch admin" class="align-right title-image">
@@ -165,9 +165,191 @@ We also declare a dependency on `h2`. Spring Boot will take care of the [auto-co
 </project>
 {% endhighlight %}
 
+The last thing left to do is to package our Spring Batch Task application as a Spring Boot JAR.
+
+Open a command prompt and navigate to the <var>spring-batch-task</var> project. Execute following Maven command:
+
+{% highlight plaintext %}
+mvn install
+{% endhighlight %}
+
+The result is a <var>spring-batch-task-0.0.1-SNAPSHOT.jar</var> JAR file in the <var>spring-batch-task/target</var> directory:
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-task-jar.png" alt="spring batch task jar">
+
 ## Running a Spring Cloud Data Flow Server
 
+In this example we will run Spring Cloud Data Flow on a local server.
 
+Create a new <var>spring-cloud-data-flow-server</var> Maven project.
+
+The `spring-boot-starter` starter in the <var>pom.xml</var> will import the needed Spring Boot dependencies.
+
+`spring-cloud-dataflow-server-local` takes care of the Spring Cloud Data Flow dependencies.
+
+> We also specify the <var>hibernate.version</var> as otherwise a `java.lang.reflect.InvocationTargetException is` thrown.
+
+{% highlight xml %}
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.codenotfound</groupId>
+  <artifactId>spring-cloud-data-flow-server</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>spring-cloud-data-flow-server</name>
+  <description>Spring Cloud Data Server on Spring Boot</description>
+  <url>https://www.codenotfound.com/spring-batch-admin-example.html</url>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.17.RELEASE</version>
+    <relativePath /> <!-- lookup parent from repository -->
+  </parent>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+
+    <spring-cloud-dataflow.version>1.7.1.RELEASE</spring-cloud-dataflow.version>
+    <hibernate.version>5.3.7.FINAL</hibernate.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-dataflow-server-local</artifactId>
+      <version>${spring-cloud-dataflow.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
+{% endhighlight %}
+
+Add the `@EnableDataFlowServer` annotation to the Spring Boot main class. This activates a Spring Cloud Data Flow Server implementation.
+
+{% highlight xml %}
+package com.codenotfound.batch;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.dataflow.server.EnableDataFlowServer;
+
+@EnableDataFlowServer
+@SpringBootApplication
+public class SpringDataFlowServerApplication {
+
+  public static void main(String[] args) {
+    SpringApplication.run(SpringDataFlowServerApplication.class, args);
+  }
+}
+{% endhighlight %}
+
+That's it. We can now start our Local Data Flow Server.
+
+Fire up a command prompt in the <var>spring-cloud-data-flow-server</var> project directory. Execute following Maven command:
+
+{% highlight plaintext %}
+mvn spring-boot:run
+{% endhighlight %}
+
+The application will boot up as shown below.
+
+{% highlight plaintext %}
+____                              ____ _                __
+/ ___| _ __  _ __(_)_ __   __ _   / ___| | ___  _   _  __| |
+\___ \| '_ \| '__| | '_ \ / _` | | |   | |/ _ \| | | |/ _` |
+___) | |_) | |  | | | | | (_| | | |___| | (_) | |_| | (_| |
+|____/| .__/|_|  |_|_| |_|\__, |  \____|_|\___/ \__,_|\__,_|
+____ |_|    _          __|___/                 __________
+|  _ \  __ _| |_ __ _  |  ___| | _____      __  \ \ \ \ \ \
+| | | |/ _` | __/ _` | | |_  | |/ _ \ \ /\ / /   \ \ \ \ \ \
+| |_| | (_| | || (_| | |  _| | | (_) \ V  V /    / / / / / /
+|____/ \__,_|\__\__,_| |_|   |_|\___/ \_/\_/    /_/_/_/_/_/
+
+
+
+2018-11-11 11:38:49.831  INFO 7516 --- [           main] c.c.c.ConfigServicePropertySourceLocator : Fetching config from server at: http://localhost:8888
+2018-11-11 11:38:50.975  WARN 7516 --- [           main] c.c.c.ConfigServicePropertySourceLocator : Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/spring-cloud-dataflow-server-local/default": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+2018-11-11 11:38:50.975  INFO 7516 --- [           main] c.c.b.SpringDataFlowServerApplication    : No active profile set, falling back to default profiles: default
+2018-11-11 11:38:52.224  INFO 7516 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2018-11-11 11:38:52.251  INFO 7516 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2018-11-11 11:38:52.382  INFO 7516 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2018-11-11 11:38:52.853  INFO 7516 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=4515019a-2b81-3169-9bfb-ef940568dc6f
+2018-11-11 11:38:53.970  INFO 7516 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 9393 (http)
+2018-11-11 11:38:54.001  INFO 7516 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-11-11 11:38:54.001  INFO 7516 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.34
+2018-11-11 11:38:54.131  INFO 7516 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-11-11 11:38:54.584  INFO 7516 --- [ost-startStop-1] o.s.c.d.s.config.web.WebConfiguration    : Start Embedded H2
+2018-11-11 11:38:54.584  INFO 7516 --- [ost-startStop-1] o.s.c.d.s.config.web.WebConfiguration    : Starting H2 Server with URL: jdbc:h2:tcp://localhost:19092/mem:dataflow
+2018-11-11 11:38:55.081  INFO 7516 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Started.
+2018-11-11 11:38:55.184  INFO 7516 --- [           main] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-11-11 11:38:55.213  INFO 7516 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+      name: default
+      ...]
+2018-11-11 11:38:55.692  INFO 7516 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.7.Final}
+2018-11-11 11:38:55.694  INFO 7516 --- [           main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2018-11-11 11:38:55.923  INFO 7516 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2018-11-11 11:38:56.136  INFO 7516 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2018-11-11 11:38:57.011  INFO 7516 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-11-11 11:38:57.664  INFO 7516 --- [           main] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: H2
+2018-11-11 11:38:57.841  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from class path resource [org/springframework/batch/core/schema-h2.sql]
+2018-11-11 11:38:57.876  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from class path resource [org/springframework/batch/core/schema-h2.sql] in 33 ms.
+2018-11-11 11:38:57.883  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from class path resource [org/springframework/cloud/task/schema-h2.sql]
+2018-11-11 11:38:57.891  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from class path resource [org/springframework/cloud/task/schema-h2.sql] in 8 ms.
+2018-11-11 11:38:58.610  INFO 7516 --- [           main] o.s.b.a.s.SimpleJobServiceFactoryBean    : No database type set, using meta data indicating: H2
+2018-11-11 11:38:59.151  INFO 7516 --- [           main] b.a.s.AuthenticationManagerConfiguration :
+
+Using default security password: c99c3621-2859-4028-9173-d93b6697ea5a
+
+2018-11-11 11:38:59.365  INFO 7516 --- [           main] o.s.c.d.s.r.s.DataflowRdbmsInitializer   : Adding dataflow schema classpath:schemas/h2/common.sql for h2 database
+2018-11-11 11:38:59.365  INFO 7516 --- [           main] o.s.c.d.s.r.s.DataflowRdbmsInitializer   : Adding dataflow schema classpath:schemas/h2/streams.sql for h2 database
+2018-11-11 11:38:59.365  INFO 7516 --- [           main] o.s.c.d.s.r.s.DataflowRdbmsInitializer   : Adding dataflow schema classpath:schemas/h2/tasks.sql for h2 database
+2018-11-11 11:38:59.365  INFO 7516 --- [           main] o.s.c.d.s.r.s.DataflowRdbmsInitializer   : Adding dataflow schema classpath:schemas/h2/deployment.sql for h2 database
+2018-11-11 11:38:59.365  INFO 7516 --- [           main] o.s.c.d.s.r.s.DataflowRdbmsInitializer   : Adding dataflow schema classpath:schemas/h2/jpa.sql for h2 database
+2018-11-11 11:38:59.371  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from class path resource [schemas/h2/common.sql]
+2018-11-11 11:38:59.371  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from class path resource [schemas/h2/common.sql] in 0 ms.
+2018-11-11 11:38:59.371  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from class path resource [schemas/h2/streams.sql]
+2018-11-11 11:38:59.371  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from class path resource [schemas/h2/streams.sql] in 0 ms.
+2018-11-11 11:38:59.371  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from class path resource [schemas/h2/tasks.sql]
+2018-11-11 11:38:59.381  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from class path resource [schemas/h2/tasks.sql] in 10 ms.
+2018-11-11 11:38:59.386  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from class path resource [schemas/h2/deployment.sql]
+2018-11-11 11:38:59.386  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from class path resource [schemas/h2/deployment.sql] in 0 ms.
+2018-11-11 11:38:59.386  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executing SQL script from class path resource [schemas/h2/jpa.sql]
+2018-11-11 11:38:59.391  INFO 7516 --- [           main] o.s.jdbc.datasource.init.ScriptUtils     : Executed SQL script from class path resource [schemas/h2/jpa.sql] in 5 ms.
+2018-11-11 11:38:59.592  WARN 7516 --- [           main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2018-11-11 11:38:59.592  INFO 7516 --- [           main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2018-11-11 11:38:59.602  WARN 7516 --- [           main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2018-11-11 11:38:59.602  INFO 7516 --- [           main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2018-11-11 11:39:00.423  INFO 7516 --- [           main] o.s.l.c.support.AbstractContextSource    : Property 'userDn' not set - anonymous context will be used for read-write operations
+2018-11-11 11:39:00.683  INFO 7516 --- [           main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2018-11-11 11:39:01.702  INFO 7516 --- [           main] o.s.c.d.s.c.support.MetricStore          : Metrics Collector URI = []
+2018-11-11 11:39:02.332  INFO 7516 --- [           main] ration$HystrixMetricsPollerConfiguration : Starting poller
+2018-11-11 11:39:02.402  INFO 7516 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 9393 (http)
+2018-11-11 11:39:02.412  INFO 7516 --- [           main] c.c.b.SpringDataFlowServerApplication    : Started SpringDataFlowServerApplication in 14.471 seconds (JVM running for 19.197)
+{% endhighlight %}
+
+Open a web browser and navigate to [http://localhost:9393/dashboard](http://localhost:9393/dashboard){:target="_blank"}. This will open the Spring Cloud Data Flow dashboard as shown below.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-dashboard.png" alt="spring cloud data flow dashboard">
 
 
 ---
