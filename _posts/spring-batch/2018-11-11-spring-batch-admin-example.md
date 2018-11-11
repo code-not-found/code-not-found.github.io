@@ -409,6 +409,9 @@ A new page opens that shows us the details on the Spring Batch <var>capitalizeNa
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-batch-job-details.png" alt="spring cloud data flow tasks executions batch job details">
 
+In other words we successfully used a Spring Batch Admin UI to launch a Spring Batch job!
+
+If you check the console output of the Spring Cloud Server you will notice that
 
 
 ---
