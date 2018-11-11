@@ -23,15 +23,15 @@ Let's dive right in.
 
 ## What is Spring Batch Admin?
 
-Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project however, is **end-of-life since December 31, 2017**.
+Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project, however, is **end-of-life since December 31, 2017**.
 
 [Spring Cloud Data Flow](https://cloud.spring.io/spring-cloud-dataflow/){:target="_blank"} is now the [recommended replacement](https://github.com/spring-projects/spring-batch-admin#note-this-project-is-being-moved-to-the-spring-attic-and-is-not-recommended-for-new-projects--spring-cloud-data-flow-is-the-recommended-replacement-for-managing-and-monitoring-spring-batch-jobs-going-forward--you-can-read-more-about-migrating-to-spring-cloud-data-flow-here){:target="_blank"} for managing and monitoring Spring Batch jobs. It is one of the [main Spring Projects](https://spring.io/projects){:target="_blank"}.
 
-Let's demonstrate how you can configure Spring Cloud Data Flow to run a batch job.
+Let's show how you can configure Spring Cloud Data Flow to run a batch job.
 
 We re-use the [Spring Batch capitalize names](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} project. It contains a batch job that converts person names from lower case into upper case.
 
-We then start a Spring Cloud Data Flow server and configure the batch job. Using the web-based UI we launch the job and monitor the status.
+We then start a Spring Cloud Data Flow server and configure the batch job. Using the web-based UI we launch the job and check the status.
 
 ## General Project Setup
 
@@ -88,7 +88,7 @@ spring:
     driverClassName: org.h2.Driver
 {% endhighlight %}
 
-To enable the above configuration changes we need to add additional dependencies in the Maven <var>pom.xml</var> file.
+To enable the above configuration changes we need to add extra dependencies in the Maven <var>pom.xml</var> file.
 
 The `spring-cloud-starter-task` starter includes the dependencies for testing Spring Boot applications. It imports libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](https://site.mockito.org/){:target="_blank"}.
 
@@ -387,7 +387,7 @@ Enter <kbd>capitalize-names-task</kbd> as task name and click on <var>Create the
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-task-creation-confirmation.png" alt="spring cloud data flow task creation confirmation">
 
-Our capitalize-names-task is now ready to be used. Click on the play icon to start an instance.
+Our <var>capitalize-names-task</var> is now ready to be used. Click on the play icon to start an instance.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-definitions-launch.png" alt="spring cloud data flow tasks definitions launch">
 
@@ -395,7 +395,7 @@ Click on the <var>Launch the task</var> button.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-launch-task.png" alt="spring cloud data flow tasks launch task">
 
-A new <var>Executions</var> tab now appears under the <var>Task</var> section. Click on it to consult the status of the task that we just started.
+A new <var>Executions</var> tab now appears under the <var>Task</var> section. Click on it to consult the status of the task that we started.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-executions.png" alt="spring cloud data flow tasks executions">
 
@@ -411,9 +411,9 @@ A new page opens that shows us the details on the Spring Batch <var>capitalizeNa
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-batch-job-details.png" alt="spring cloud data flow tasks executions batch job details">
 
-So in other words we successfully used a Spring Batch Admin UI to launch a Spring Batch job!
+So, in other words, we successfully used a Spring Batch Admin UI to launch a Spring Batch job!
 
-> Note that you can also consult the log files of the executed batch job. Just check the console output of the Spring Cloud Server for the location of the log files.
+> Note that you can also consult the log files of the executed batch job. Check the console output of the Spring Cloud Server for the location of the log files.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-console-log-location.png" alt="spring cloud data flow console log location">
 
@@ -425,7 +425,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this tutorial we illustrated an end-to-end scenario in which we used an admin UI to launch and monitor a Spring Batch job.
+In this tutorial, we illustrated an end-to-end scenario in which we used an admin UI to launch and monitor a Spring Batch job.
 
 Hope you enjoyed this post.
 
