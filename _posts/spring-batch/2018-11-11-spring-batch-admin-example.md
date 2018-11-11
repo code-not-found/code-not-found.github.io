@@ -367,13 +367,19 @@ Once done click on <var>Register the application(s)</var>.
 
 Our application is now registered.
 
-Click on <var>Task</var> menu to setup a new task.
+Click on the <var>Task</var> menu to create a new task.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-applications.png" alt="spring cloud data flow applications">
 
 Click on the <var>Create task(s)</var> button.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-create-task.png" alt="spring cloud data flow create task">
+
+Drag the <var>Spring-Batch-Task</var> task on the canvas and connect the <var>START<var> and <var>END<var> nodes as shown below.
+
+Click on <var>Create Task</var>.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-task-visual-editor.png" alt="spring cloud data flow task visual editor">
 
 ---
 
