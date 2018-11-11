@@ -23,7 +23,7 @@ Let's dive right in.
 
 ## What is Spring Batch Admin?
 
-Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project however is **end of life since December 31, 2017**.
+Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. However, the project is **end-of-life since December 31, 2017**.
 
 [Spring Cloud Data Flow](https://cloud.spring.io/spring-cloud-dataflow/){:target="_blank"} is now the [recommended replacement](https://github.com/spring-projects/spring-batch-admin#note-this-project-is-being-moved-to-the-spring-attic-and-is-not-recommended-for-new-projects--spring-cloud-data-flow-is-the-recommended-replacement-for-managing-and-monitoring-spring-batch-jobs-going-forward--you-can-read-more-about-migrating-to-spring-cloud-data-flow-here){:target="_blank"} for managing and monitoring Spring Batch jobs. It is one of the [main Spring Projects](https://spring.io/projects){:target="_blank"}.
 
@@ -52,7 +52,7 @@ Spring Cloud Data Flow is **a toolkit for building data processing pipelines**. 
 
 All we need to do is annotate our existing `SpringBatchApplication` with `@EnableTask` as shown below.
 
-This class-level annotation tells Spring Cloud Task to bootstrap it's functionality. It enables a `TaskConfigurer` that registers the application in a `TaskRepository`.
+This class-level annotation tells Spring Cloud Task to bootstrap its functionality. It enables a `TaskConfigurer` that registers the application in a `TaskRepository`.
 
 Spring Cloud Task will also [associate the execution of a batch job with a task's execution](https://docs.spring.io/spring-cloud-task/docs/1.3.0.RELEASE/reference/htmlsingle/#batch-association){:target="_blank"} so that one can be traced back to the other. This association is by default in any context that has both a Spring Batch Job configured and the `spring-cloud-task-batch` JAR available within the classpath.
 
@@ -88,7 +88,7 @@ spring:
     driverClassName: org.h2.Driver
 {% endhighlight %}
 
- To enable above configuration changes we need to add additional dependencies in the Maven <var>pom.xml</var> file.
+To enable the above configuration changes we need to add additional dependencies in the Maven <var>pom.xml</var> file.
 
 The `spring-cloud-starter-task` starter includes the dependencies for testing Spring Boot applications. It imports libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](https://site.mockito.org/){:target="_blank"}.
 
@@ -179,7 +179,7 @@ The result is a <var>spring-batch-task-0.0.1-SNAPSHOT.jar</var> JAR file in the 
 
 ## Running a Spring Cloud Data Flow Server
 
-In this example we will run Spring Cloud Data Flow on a local server.
+In this example, we will run Spring Cloud Data Flow on a local server.
 
 Create a new <var>spring-cloud-data-flow-server</var> Maven project.
 
@@ -353,11 +353,13 @@ This will open the Spring Cloud Data Flow dashboard as shown below.
 
 Now it's time to add our Spring Batch Task. Click on the <var>Add Application(s)</var> button.
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-dashboard.png" alt="spring cloud data flow dashboard">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-dashboard-add-application.png" alt="spring cloud data flow dashboard add application">
 
 Click on <var>Register one or more applications</var>.
 
-Enter <kbd>spring-batch-task-application</kbd> as <var>name</var> and select <kbd>Task</kbd> as <var>type</var>.
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-dashboard-add-application-register.png" alt="spring cloud data flow dashboard add application register">
+
+Enter <kbd>capitalize-names-app</kbd> as <var>name</var> and select <kbd>Task</kbd> as <var>type</var>.
 
 For the <var>URI</var> we enter the location of our Spring Boot Task JAR file: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
 
@@ -367,7 +369,7 @@ Once done click on <var>Register the application(s)</var>.
 
 Our application is now registered.
 
-Click on the <var>Task</var> menu to create a new task.
+Now click on the <var>Task</var> menu to create a new task that we can execute.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-applications.png" alt="spring cloud data flow applications">
 
@@ -385,7 +387,7 @@ Enter <kbd>spring-batch-task</kbd> as task name and click on <var>Create the tas
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-task-creation-confirmation.png" alt="spring cloud data flow task creation confirmation">
 
-Our capitalize-names-task is now ready to used used. Click on the play icon to start an instance.
+Our capitalize-names-task is now ready to be used. Click on the play icon to start an instance.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-definitions-launch.png" alt="spring cloud data flow tasks definitions launch">
 
