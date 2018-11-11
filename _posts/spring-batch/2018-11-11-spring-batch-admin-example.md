@@ -23,7 +23,7 @@ Let's dive right in.
 
 ## What is Spring Batch Admin?
 
-Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. However, the project is **end-of-life since December 31, 2017**.
+Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project however, is **end-of-life since December 31, 2017**.
 
 [Spring Cloud Data Flow](https://cloud.spring.io/spring-cloud-dataflow/){:target="_blank"} is now the [recommended replacement](https://github.com/spring-projects/spring-batch-admin#note-this-project-is-being-moved-to-the-spring-attic-and-is-not-recommended-for-new-projects--spring-cloud-data-flow-is-the-recommended-replacement-for-managing-and-monitoring-spring-batch-jobs-going-forward--you-can-read-more-about-migrating-to-spring-cloud-data-flow-here){:target="_blank"} for managing and monitoring Spring Batch jobs. It is one of the [main Spring Projects](https://spring.io/projects){:target="_blank"}.
 
@@ -359,9 +359,9 @@ Click on <var>Register one or more applications</var>.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-dashboard-add-application-register.png" alt="spring cloud data flow dashboard add application register">
 
-Enter <kbd>capitalize-names-app</kbd> as <var>name</var> and select <kbd>Task</kbd> as <var>type</var>.
+Enter <kbd>capitalize-names-app</kbd> as <var>name</var> of our application and select <kbd>Task</kbd> as <var>type</var>.
 
-For the <var>URI</var> we enter the location of our Spring Boot Task JAR file: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
+For the <var>URI</var> we enter the location of our Spring Boot Task JAR: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
 
 Once done click on <var>Register the application(s)</var>.
 
@@ -371,11 +371,11 @@ Our application is now registered.
 
 Now click on the <var>Task</var> menu to create a new task that we can execute.
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-applications.png" alt="spring cloud data flow applications">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-applications-tasks.png" alt="spring cloud data flow applications tasks">
 
 Click on the <var>Create task(s)</var> button.
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-create-task.png" alt="spring cloud data flow create task">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-create-task.png" alt="spring cloud data flow tasks create task">
 
 Drag the <var>Spring-Batch-Task</var> task on the canvas and connect the <var>START</var> and <var>END</var> nodes as shown below.
 
