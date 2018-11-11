@@ -244,7 +244,7 @@ Let's go ahead and configure our Hello World Spring Batch job.
 
 Create a `HelloWorldJobConfig` configuration class and annotate it with `@Configuration`.
 
-In the `helloWorlJob` Bean we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be run.
+In the `helloWorlJob` Bean, we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be run.
 
 > Note that [Spring will automatically wire](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation){:target="_blank"} the `jobBuilders` and `stepBuilders` Beans in the `helloWorlJob()` Bean.
 
@@ -254,7 +254,7 @@ First, we pass the name of the step. Using `chunk()` we specify the number of it
 
 To read the person CSV file we use the [FlatFileItemReader](https://docs.spring.io/spring-batch/4.1.x/reference/html/readersAndWriters.html#flatFileItemReader){:target="_blank"}. This is a class that provides basic functionality to read and parse flat files.
 
-There is a `FlatFileItemReaderBuilder` builder implementation that allows us to create a `FlatFileItemReader`. We start by specifying that the result of reading each line in the file is a `Person` object. We then add a name for the reader and the specify the resource (in this case the <var>persons.csv</var> file) that needs to be read.
+There is a `FlatFileItemReaderBuilder` builder implementation that allows us to create a `FlatFileItemReader`. We start by specifying that the result of reading each line in the file is a `Person` object. We then add a name to the reader and the specify the resource (in this case the <var>persons.csv</var> file) that needs to be read.
 
 In order for the `FlatFileItemReader` to process our file, we need to specify some extra information. First, we define that the data in the file is delimited (defaults to comma as its delimiter).
 

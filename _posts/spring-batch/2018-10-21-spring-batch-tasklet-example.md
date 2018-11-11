@@ -29,7 +29,7 @@ In Spring batch, a `Tasklet` is an interface that performs a single task within 
 
 In fact, Spring Batch offers two different ways for **implementing a step of a batch job**: using [Chunks](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#chunkOrientedProcessing){:target="_blank"} or using a [Tasklet](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#taskletStep){:target="_blank"}.
 
-In the [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-example.html) we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
+In the [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-example.html), we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
 
 The `Tasklet` interface has one method: [execute()](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html#execute-org.springframework.batch.core.StepContribution-org.springframework.batch.core.scope.context.ChunkContext-){:target="_blank"}. A `Step` calls this method repeatedly until it either finishes or throws an exception.
 
