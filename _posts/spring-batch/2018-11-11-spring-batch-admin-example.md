@@ -8,7 +8,7 @@ header:
   teaser: "assets/images/spring-batch/spring-batch-admin.png"
 categories: [Spring Batch]
 tags: [Admin, Example, Maven, Spring Batch, Spring Boot, Tutorial, UI]
-published: true
+published: false
 ---
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-admin.png" alt="spring batch admin" class="align-right title-image">
@@ -23,7 +23,7 @@ Let's dive right in.
 
 ## What is Spring Batch Admin?
 
-Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project however is _end of life since December 31, 2017_.
+Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project however is **end of life since December 31, 2017**.
 
 [Spring Cloud Data Flow](https://cloud.spring.io/spring-cloud-dataflow/){:target="_blank"} is now the [recommended replacement](https://github.com/spring-projects/spring-batch-admin#note-this-project-is-being-moved-to-the-spring-attic-and-is-not-recommended-for-new-projects--spring-cloud-data-flow-is-the-recommended-replacement-for-managing-and-monitoring-spring-batch-jobs-going-forward--you-can-read-more-about-migrating-to-spring-cloud-data-flow-here){:target="_blank"} for managing and monitoring Spring Batch jobs. It is one of the [main Spring Projects](https://spring.io/projects){:target="_blank"}.
 
@@ -174,7 +174,7 @@ We also declare a dependency on `h2`. Spring Boot will take care of the [auto-co
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-hello-world){:target="_blank"}.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-admin){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
