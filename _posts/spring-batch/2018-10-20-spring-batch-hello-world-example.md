@@ -37,7 +37,7 @@ And finally the `JobRepository` stores metadata about configured and executed `J
 
 To show how Spring Batch works let's build a simple HelloWorld batch job.
 
-In the example, we read a persons first and last name from a <var>person.csv</var> CSV file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> text file.
+In the example, we read a person's first and last name from a <var>person.csv</var> CSV file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> text file.
 
 ## General Project Setup
 
@@ -136,7 +136,7 @@ Spring Batch by default uses a database to store metadata on the configured batc
 
 In this example, we will **run Spring Batch without a database**. Instead, an in-memory `Map` based repository is used.
 
-> The `spring-boot-starter-batch` starter has a dependency on `spring-boot-starter-jdbc` and will try to instantiate a datasource. Specify <var>exclude = {DataSourceAutoConfiguration.class}</var>. This prevents Spring Boot from auto-configuring a `DataSource` connection to a database.
+> The `spring-boot-starter-batch` starter has a dependency on `spring-boot-starter-jdbc` and will try to instantiate a datasource. Add <var>exclude = {DataSourceAutoConfiguration.class}</var> to the `@SpringBootApplication` annotation. This prevents Spring Boot from auto-configuring a `DataSource` for database connections.
 
 {% highlight java %}
 package com.codenotfound.batch;
@@ -207,7 +207,7 @@ public class Person {
 
 We start by creating a `BatchConfig` class that will configure Spring Batch. The [@Configuration](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} annotation at the top of the class indicates that Spring can use this class as a source of bean definitions.
 
-We add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which auto-enables all needed Spring Batch features. It also provides a base configuration for setting up batch jobs.
+We add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which enables all needed Spring Batch features. It also provides a base configuration for setting up batch jobs.
 
 > By adding this annotation a lot happens. Here is an overview of what `@EnableBatchProcessing` creates:
 
