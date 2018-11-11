@@ -1,7 +1,7 @@
 ---
 title: "Spring Batch Scheduler Example"
 permalink: /spring-batch-scheduler-example.html
-excerpt: "A detailed step-by-step tutorial on how to use a scheduler to run Spring Batch jobs."
+excerpt: "A detailed step-by-step tutorial on how to use a scheduler to run Spring Batch jobs using Spring Boot and Maven."
 date: 2018-11-11
 last_modified_at: 2018-11-11
 header:

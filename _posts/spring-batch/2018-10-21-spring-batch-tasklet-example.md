@@ -46,7 +46,7 @@ _So let's recap the above:_
 
 To show you how a Spring Batch Tasklet works let's create a simple example.
 
-We start from a basic [Spring Batch capitalize names](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} project that converts person names from lower case into upper case.
+We start from a basic [Spring Batch capitalize names](https://github.com/code-not-found/spring-batch/tree/master/spring-batch-capitalize-names){:target="_blank"} project that converts person names from lower into upper case.
 
 We then change the batch job so that it reads multiple CSV files. When the `Job` finishes we clean up the input files using a `Tasklet`.
 

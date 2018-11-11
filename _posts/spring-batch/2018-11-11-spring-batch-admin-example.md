@@ -403,7 +403,7 @@ We can see that there is one execution instance for our <var>capitalize-names-ta
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-show-details.png" alt="spring cloud data flow tasks executions show details">
 
-To see information on the batch job that was executed click on the <var>Job Execution Ids</var> identifier.
+Click on the <var>Job Execution Ids</var> identifier to see detailed information on the batch job that was executed.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-details.png" alt="spring cloud data flow tasks executions details">
 
