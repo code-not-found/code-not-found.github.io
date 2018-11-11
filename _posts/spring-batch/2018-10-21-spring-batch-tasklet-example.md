@@ -17,11 +17,11 @@ Want to know what a [Spring Batch Tasklet](https://docs.spring.io/spring-batch/t
 
 And more important: **when to use it?**
 
-Then you’re in the right place.
+Then you're in the right place.
 
-Because today I’m going to show you a detailed example.
+Because today I'm going to show you a detailed example.
 
-Let’s do this!
+Let's do this!
 
 ## What is a Spring Batch Tasklet?
 
