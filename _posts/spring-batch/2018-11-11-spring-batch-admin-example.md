@@ -347,9 +347,28 @@ Using default security password: c99c3621-2859-4028-9173-d93b6697ea5a
 2018-11-11 11:39:02.412  INFO 7516 --- [           main] c.c.b.SpringDataFlowServerApplication    : Started SpringDataFlowServerApplication in 14.471 seconds (JVM running for 19.197)
 {% endhighlight %}
 
-Open a web browser and navigate to [http://localhost:9393/dashboard](http://localhost:9393/dashboard){:target="_blank"}. This will open the Spring Cloud Data Flow dashboard as shown below.
+Open a web browser and navigate to [http://localhost:9393/dashboard](http://localhost:9393/dashboard){:target="_blank"}.
+
+This will open the Spring Cloud Data Flow dashboard as shown below.
+
+Now it's time to add our Spring Batch Task. Click on the <var>Add Application(s)</var> button.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-dashboard.png" alt="spring cloud data flow dashboard">
+
+Click on <var>Register one or more applications</var>.
+
+Enter a <var>name</var> and select <kbd>Task</kbd> as the <var>type</var>. As <var>URI</var> we enter the location of our Spring Boot Task JAR file: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
+
+Once done click on <var>Register the application(s)</var>.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-register-application.png" alt="spring cloud data flow register application">
+
+Our application is now registered.
+
+Click on <var>Task</var> menu to setup a new task.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-applications.png" alt="spring cloud data flow applications">
+
 
 
 ---
