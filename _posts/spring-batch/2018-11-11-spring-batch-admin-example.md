@@ -357,9 +357,9 @@ Now it's time to add our Spring Batch Task. Click on the <var>Add Application(s)
 
 Click on <var>Register one or more applications</var>.
 
-Enter <kbd>spring-batch-task</kbd> as <var>name</var> and select <kbd>Task</kbd> as the <var>type</var>.
+Enter <kbd>spring-batch-task-application</kbd> as <var>name</var> and select <kbd>Task</kbd> as <var>type</var>.
 
-As <var>URI</var> we enter the location of our Spring Boot Task JAR file: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
+For the <var>URI</var> we enter the location of our Spring Boot Task JAR file: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
 
 Once done click on <var>Register the application(s)</var>.
 
@@ -375,11 +375,27 @@ Click on the <var>Create task(s)</var> button.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-create-task.png" alt="spring cloud data flow create task">
 
-Drag the <var>Spring-Batch-Task</var> task on the canvas and connect the <var>START<var> and <var>END<var> nodes as shown below.
+Drag the <var>Spring-Batch-Task</var> task on the canvas and connect the <var>START</var> and <var>END</var> nodes as shown below.
 
 Click on <var>Create Task</var>.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-task-visual-editor.png" alt="spring cloud data flow task visual editor">
+
+Enter <kbd>spring-batch-task</kbd> as task name and click on <var>Create the task</var>.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-task-creation-confirmation.png" alt="spring cloud data flow task creation confirmation">
+
+Our capitalize-names-task is now ready to used used. Click on the play icon to start an instance.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-definitions.png" alt="spring cloud data flow tasks definitions">
+
+Click on the <var>Launch the task</var> button.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-launch-task.png" alt="spring cloud data flow tasks launch task">
+
+A new <var>Executions</var> tab now appears under the <var>Task</var> section. Click on it to consult the status of the tasks that were started.
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-tab.png" alt="spring cloud data flow tasks executions tab">
 
 ---
 
