@@ -403,17 +403,17 @@ We can see that there is one execution instance for our <var>capitalize-names-ta
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-show-details.png" alt="spring cloud data flow tasks executions show details">
 
-Information on the task that was executed is shown. To see information on the batch job that was run click on the <var>Job Execution Ids</var> identifier.
+To see information on the batch job that was run click on the <var>Job Execution Ids</var> identifier.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-details.png" alt="spring cloud data flow tasks executions details">
 
-A new page opens that shows us the details on the Spring Batch <var>capitalizeNamesJob</var> job. We can see the status and information on the step that was executed.
+A new page opens that shows us the details on the Spring Batch <var>capitalizeNamesJob</var> job. We can even see the status and information on the step that was executed.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-batch-job-details.png" alt="spring cloud data flow tasks executions batch job details">
 
-In other words we successfully used a Spring Batch Admin UI to launch a Spring Batch job!
+So in other words we successfully used a Spring Batch Admin UI to launch a Spring Batch job!
 
-Note that you can also consult the log files of the executed batch job. Just check the console output of the Spring Cloud Server for the location of the log files.
+> Note that you can also consult the log files of the executed batch job. Just check the console output of the Spring Cloud Server for the location of the log files.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-console-log-location.png" alt="spring cloud data flow console log location">
 
@@ -425,7 +425,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this tutorial we illustrated an end-to-end scenario in which we used a admin UI to execute a Spring Batch job.
+In this tutorial we illustrated an end-to-end scenario in which we used an admin UI to launch and monitor a Spring Batch job.
 
 Hope you enjoyed this post.
 
