@@ -383,7 +383,7 @@ Click on <var>Create Task</var>.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-task-visual-editor.png" alt="spring cloud data flow task visual editor">
 
-Enter <kbd>spring-batch-task</kbd> as task name and click on <var>Create the task</var>.
+Enter <kbd>capitalize-names-task</kbd> as task name and click on <var>Create the task</var>.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-task-creation-confirmation.png" alt="spring cloud data flow task creation confirmation">
 
@@ -395,7 +395,7 @@ Click on the <var>Launch the task</var> button.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-launch-task.png" alt="spring cloud data flow tasks launch task">
 
-A new <var>Executions</var> tab now appears under the <var>Task</var> section. Click on it to consult the status of the tasks that were started.
+A new <var>Executions</var> tab now appears under the <var>Task</var> section. Click on it to consult the status of the task that we just started.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-executions.png" alt="spring cloud data flow tasks executions">
 
