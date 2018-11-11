@@ -271,7 +271,7 @@ Fire up a command prompt in the <var>spring-cloud-data-flow-server</var> project
 mvn spring-boot:run
 {% endhighlight %}
 
-The application will boot up as shown below.
+The application will boot up.
 
 {% highlight plaintext %}
 ____                              ____ _                __
@@ -351,7 +351,7 @@ Open a web browser and navigate to [http://localhost:9393/dashboard](http://loca
 
 This will open the Spring Cloud Data Flow dashboard as shown below.
 
-Now it's time to add our Spring Batch Task. Click on the <var>Add Application(s)</var> button.
+Now it's time to add our Spring Batch Task application. Click on the <var>Add Application(s)</var> button.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-dashboard-add-application.png" alt="spring cloud data flow dashboard add application">
 
@@ -377,7 +377,7 @@ Click on the <var>Create task(s)</var> button.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-tasks-create-task.png" alt="spring cloud data flow tasks create task">
 
-Drag the <var>Capitalize-Names-App</var> task on the canvas and connect the <var>START</var> and <var>END</var> nodes as shown below.
+Drag the <var>Capitalize-Names-App</var> application on the canvas and connect the <var>START</var> and <var>END</var> nodes as shown below.
 
 Click on <var>Create Task</var>.
 
@@ -403,7 +403,7 @@ We can see that there is one execution instance for our <var>capitalize-names-ta
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-show-details.png" alt="spring cloud data flow tasks executions show details">
 
-To see information on the batch job that was run click on the <var>Job Execution Ids</var> identifier.
+To see information on the batch job that was executed click on the <var>Job Execution Ids</var> identifier.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-details.png" alt="spring cloud data flow tasks executions details">
 
@@ -411,7 +411,7 @@ A new page opens that shows us the details on the Spring Batch <var>capitalizeNa
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-launch-tasks-executions-batch-job-details.png" alt="spring cloud data flow tasks executions batch job details">
 
-So, in other words, we successfully used a Spring Batch Admin UI to launch a Spring Batch job!
+That's it, we successfully used a Spring Batch Admin UI to launch a Spring Batch job!
 
 > Note that you can also consult the log files of the executed batch job. Check the console output of the Spring Cloud Server for the location of the log files.
 
@@ -425,9 +425,9 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this tutorial, we illustrated an end-to-end scenario in which we used an admin UI to launch and monitor a Spring Batch job.
+In this tutorial, we illustrated an end-to-end scenario in which we used the Spring Cloud Data Flow user interface to launch and monitor a Spring Batch job.
 
-Hope you enjoyed this post.
+I hope you enjoyed this post.
 
 Leave a comment if you did.
 
