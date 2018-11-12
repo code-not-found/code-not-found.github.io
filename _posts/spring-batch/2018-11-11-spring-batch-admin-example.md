@@ -44,7 +44,9 @@ We will use the following tools/frameworks:
 
 We will create two Maven projects (one for the batch job and one for Spring Cloud Data Flow) that have the following structure:
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-admin-maven-projects.png" alt="spring batch admin maven projects">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-task-maven-project.png" alt="spring batch task maven project">
+
+<img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-server-maven-project.png" alt="spring cloud data flow server maven project">
 
 ## Creating a Spring Batch Task
 
