@@ -29,7 +29,7 @@ Before we dive into the code let's look at the Spring Batch framework. It contai
 
 A batch process consists out of a `Job`. This is an entity that encapsulates the entire batch process.
 
-A `Job` can consist out of one or more `Step`s. In most cases, a step will read data (`ItemReader`), process it (`ItemProcessor`) and then write it (`ItemWriter`).
+A `Job` can consist out of one or more `Step`s. In most cases, a step will read data (via an `ItemReader`), process it (using an `ItemProcessor`) and then write it (via an `ItemWriter`).
 
 The `JobLauncher` handles launching a `Job`.
 
@@ -37,7 +37,7 @@ And finally the `JobRepository` stores metadata about configured and executed `J
 
 To show how Spring Batch works let's build a simple HelloWorld batch job.
 
-In the example, we read a person's first and last name from a <var>person.csv</var> CSV file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> text file.
+In the example, we read a person's first and last name from a <var>person.csv</var> file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> file.
 
 ## General Project Setup
 
@@ -326,7 +326,7 @@ public class HelloWorldJobConfig {
 
 In most cases, you will want to apply some data processing during a batch job. An [ItemProcessor](https://docs.spring.io/spring-batch/4.1.x/reference/html/readersAndWriters.html#itemProcessor){:target="_blank"} allows you to do just that.
 
-In our example, we convert a `Person` object to a simple greeting `String`.
+In our example, we convert a `Person` object into a simple greeting `String`.
 
 To do so, we create a `PersonItemProcessor` that implements the `ItemProcessor` interface. We implement the `process()` method which adds the first and last name of a person to a string.
 
@@ -356,13 +356,13 @@ public class PersonItemProcessor implements ItemProcessor<Person, String> {
 
 ## Testing the Spring Batch Example
 
-To wrap up our example we will create a basic unit test case. It will run our batch job and check if it finishes successfully.
+To wrap up our example we create a basic unit test case. It will run our batch job and check if it finishes successfully.
 
 We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications){:target="_blank"} to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
 
 Spring Batch ships with a `JobLauncherTestUtils` utility class for testing batch jobs.
 
-We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean. We then use the `launchJob()` method of this bean to run the batch job. If the job ran without any errors, the value of the exit code is <var>COMPLETED</var>.
+We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean. We then use the `launchJob()` method of this bean to run the batch job. If the job executed without any errors, the value of the exit code is <var>COMPLETED</var>.
 
 {% highlight java %}
 package com.codenotfound.batch;
@@ -414,7 +414,7 @@ public class SpringBatchApplicationTests {
 }
 {% endhighlight %}
 
-To run above test case, open a command prompt in the projects root folder and execute following Maven command:
+To trigger above test case, open a command prompt in the projects root folder and execute following Maven command:
 
 {% highlight plaintext %}
 mvn test
