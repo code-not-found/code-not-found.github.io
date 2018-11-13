@@ -39,7 +39,7 @@ gRPC services are defined using [protocol buffers](https://developers.google.com
 
 You specify how you want the information you're serializing to be structured by defining protocol buffer message types in <var>.proto</var> files. Each protocol buffer message is a small logical record of information, containing a series of name-value pairs.
 
-For this example we define a first message containing information about a <var>Person</var> and a second message containing a <var>Greeting</var>. Both are then used in a <var>sayHello()</var> RPC method that takes the person message from the client and returns a greeting from the server.
+For this example, we define a first message containing information about a <var>Person</var> and a second message containing a <var>Greeting</var>. Both are then used in a <var>sayHello()</var> RPC method that takes the person message from the client and returns a greeting from the server.
 
 We also define the version of the protocol buffers language that is used (proto3) in addition to package name and an option that enables the generation of separate files for different classes.
 
@@ -96,7 +96,7 @@ The [Spring boot starter for gRPC framework](https://github.com/LogNet/grpc-spri
 
 Protocol buffers support generated code in a number of [programming languages](https://developers.google.com/protocol-buffers/docs/tutorials){:target="_blank"}. This tutorial focuses on Java.
 
-There are multiple ways to generate the protobuf-based code and for this example we will use the [protobuf-maven-plugin](https://github.com/xolstice/protobuf-maven-plugin){:target="_blank"} as documented on the [grpc-java](https://github.com/grpc/grpc-java){:target="_blank"} GitHub page.
+There are multiple ways to generate the protobuf-based code and in this example we will use the [protobuf-maven-plugin](https://github.com/xolstice/protobuf-maven-plugin){:target="_blank"} as documented on the [grpc-java](https://github.com/grpc/grpc-java){:target="_blank"} GitHub page.
 
 We also include the [os-maven-plugin](https://github.com/trustin/os-maven-plugin){:target="_blank"} extension that generates various useful platform-dependent project properties. This information is needed as the Protocol Buffer compiler is native code. In other words, the `protobuf-maven-plugin` needs to fetch the correct compiler for the platform it is running on.
 
@@ -292,13 +292,13 @@ There are two types of stubs available:
 * A **blocking/synchronous stub** that will wait for the server to respond
 * A **non-blocking/asynchronous stub** that makes non-blocking calls to the server, where the response is returned asynchronously.
 
-In this example we will implement a blocking stub.
+In this example, we will implement a blocking stub.
 
 In order to transport messages, gRPC uses http/2 and some abstraction layers in between. This complexity is hidden behind a `MessageChannel` that handles the connectivity. The general recommendation is to use one channel per application and share it among service stubs.
 
 We use an `init()` method annotated with `@PostConstruct` in order to build a new `MessageChannel` right after the after the bean has been initialized. The channel is then used to create the `helloWorldServiceBlockingStub` stub.
 
-> gRPC by default uses a secure connection mechanism such as TLS. As this is a simple development test will use `usePlaintext()` in order to avoid having to setup the different security artifacts such as key/trust stores.
+> gRPC by default uses a secure connection mechanism such as TLS. As this is a simple development test will use `usePlaintext()` in order to avoid having to configure the different security artifacts such as key/trust stores.
 
  The `sayHello()` method creates a Person object using the Builder pattern on which we set the <var>'firstname'</var> and <var>'lastname'</var> input parameters.
 
@@ -358,7 +358,9 @@ Let's wrap up by creating a basic unit test case in which the above client is us
 
 The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced with Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications){:target="_blank"}, are used to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
 
-The `HelloWorldClient` Bean is autowired so we can use it in the test case. The service itself is automatically started by the `@SpringBootTest` annotation. All that is left to do is to compare the received result to the expected greeting message using an assert statement.
+The `HelloWorldClient` Bean is auto-wired so we can use it in the test case. The service itself is automatically started by the `@SpringBootTest` annotation.
+
+All that is left to do is to compare the received result to the expected greeting message using an assert statement.
 
 {% highlight java %}
 package com.codenotfound.grpc;
@@ -453,7 +455,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes our tutorial on how to implement a gRPC Java service and the corresponding client using a Spring Boot starter and Maven.
+In this tutorial you learned how to implement a gRPC Java service and corresponding client using Spring Boot and Maven.
 
 If you liked this example or have a question you would like to ask, leave a comment below.
 
