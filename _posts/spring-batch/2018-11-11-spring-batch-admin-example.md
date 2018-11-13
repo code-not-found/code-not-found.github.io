@@ -13,7 +13,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-admin.png" alt="spring batch admin" class="align-right title-image">
 
-Looking for a [Spring Batch Admin](https://docs.spring.io/spring-batch-admin/trunk/){:target="_blank"} UI tutorial?
+Looking for a [Spring Batch Admin UI](https://docs.spring.io/spring-batch-admin/trunk/){:target="_blank"} tutorial?
 
 You might be surprised to learn it is no longer supported.
 
