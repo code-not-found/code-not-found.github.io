@@ -19,13 +19,13 @@ I'm going to show you how to create a [gRPC Java](https://github.com/grpc/grpc-j
 
 (Step-by-step)
 
-So if you're a gRPC beginner, **you'll love this guide**.
+So if you're new to gRPC, **you'll love this guide**.
 
 Let's dive right in.
 
 ## What Is gRPC?
 
-[gRPC](https://grpc.io/){:target="_blank"} is a high performance, open-source universal [RPC](https://en.wikipedia.org/wiki/Remote_procedure_call){:target="_blank"} framework. It uses [Protocol Buffers](https://developers.google.com/protocol-buffers/){:target="_blank"} to define the service.
+[gRPC](https://grpc.io/){:target="_blank"} is a high performance, open-source universal [RPC](https://en.wikipedia.org/wiki/Remote_procedure_call){:target="_blank"} framework. By default it uses Protocol Buffers to define exposed services.
 
 The framework provides features such as bidirectional streaming and has support for many [different programming languages](https://grpc.io/faq/){:target="_blank"}.
 
@@ -33,7 +33,7 @@ gRPC [was initially developed at Google](https://en.wikipedia.org/wiki/GRPC){:ta
 
 To show how gRPC works let's build a client and corresponding server that exposes a simple Hello World gRPC service.
 
-# Defining the Service Using Protocol Buffers
+# Defining a Service Using Protocol Buffers
 
 gRPC services are defined using [protocol buffers](https://developers.google.com/protocol-buffers/){:target="_blank"}. These are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.
 
