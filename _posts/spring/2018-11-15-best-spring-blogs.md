@@ -20,7 +20,7 @@ Then look no further.
 
 ## 1. [The Spring Blog](https://spring.io/blog){:target="_blank"}
 
-<img src="{{ site.url }}/assets/images/spring/baeldung-Spring.png" alt="baeldung spring">
+<img src="{{ site.url }}/assets/images/spring/spring-blog.png" alt="spring blog">
 
 This one might be an obvious pick but the Spring Team maintains a blog.
 
@@ -30,7 +30,7 @@ Our favorite post(s): The This week in Spring posts by [Josh Long](https://sprin
 
 ## 2. [Baeldung Spring](https://www.baeldung.com/category/spring/){:target="_blank"}
 
-<img src="{{ site.url }}/assets/images/spring/baeldung-Spring.png" alt="baeldung spring">
+<img src="{{ site.url }}/assets/images/spring/baeldung-blog.png" alt="baeldung blog">
 
 Eugen Paraschiv started the Baeldung blog back in September 2011. Chances are you have already visited his site as it has a ton of tutorials on Spring.
 
