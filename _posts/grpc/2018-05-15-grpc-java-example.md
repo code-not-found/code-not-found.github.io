@@ -33,7 +33,7 @@ gRPC [was initially developed at Google](https://en.wikipedia.org/wiki/GRPC){:ta
 
 To show how gRPC works let's build a client and corresponding server that exposes a simple Hello World gRPC service.
 
-# Defining a Service Using Protocol Buffers
+## Defining a Service Using Protocol Buffers
 
 gRPC services are defined using [protocol buffers](https://developers.google.com/protocol-buffers/){:target="_blank"}. These are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.
 
@@ -280,7 +280,7 @@ public class HelloWorldServiceImpl
 }
 {% endhighlight %}
 
-# Creating the Client
+## Creating the Client
 
 The client code is specified in the `HelloWorldClient` class.
 
@@ -352,7 +352,7 @@ public class HelloWorldClient {
 }
 {% endhighlight %}
 
-# gRPC Java Testing
+## gRPC Java Testing
 
 Let's wrap up by creating a basic unit test case in which the above client is used to send a request to the gRPC Hello World service endpoint. We then verify if the response is equal to the expected greeting.
 
