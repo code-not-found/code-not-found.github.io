@@ -29,7 +29,7 @@ In Spring batch, a `Tasklet` is an interface that performs a single task within 
 
 In fact, Spring Batch offers two different ways for **implementing a step of a batch job**: using [Chunks](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#chunkOrientedProcessing){:target="_blank"} or using a [Tasklet](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#taskletStep){:target="_blank"}.
 
-In the [Spring Batch Job example]({{ site.url }}/spring-batch-hello-world-example.html), we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
+In the [Spring Batch Job example]({{ site.url }}/spring-batch-example.html), we saw that a batch job consists out of one or more `Step`s. And a `Tasklet` represents the work that is done in a `Step`.
 
 The `Tasklet` interface has one method: [execute()](https://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/core/step/tasklet/Tasklet.html#execute-org.springframework.batch.core.StepContribution-org.springframework.batch.core.scope.context.ChunkContext-){:target="_blank"}. A `Step` calls this method repeatedly until it either finishes or throws an exception.
 
@@ -61,7 +61,7 @@ Our Maven project has the following structure:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-tasklet-maven-project.png" alt="spring batch tasklet maven project">
 
-The Maven and Spring Boot setup are identical to a previous [Spring Batch example]({{ site.url }}/spring-batch-hello-world-example.html) so we will not cover them in this post.
+The Maven and Spring Boot setup are identical to a previous [Spring Batch example]({{ site.url }}/spring-batch-example.html) so we will not cover them in this post.
 
 ## Creating a Spring Batch Tasklet
 
