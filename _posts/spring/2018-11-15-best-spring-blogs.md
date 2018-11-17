@@ -1,17 +1,17 @@
 ---
-title: "19 Awesome Spring Blogs to Follow in 2018"
+title: "6 Awesome Spring Blogs You'll Want to Bookmark"
 permalink: /best-spring-blogs.html
-excerpt: "19 of the best Java Spring blogs on the internet today."
-date: 2018-11-15
-last_modified_at: 2018-11-15
+excerpt: "6 of the best Java Spring blogs on the internet today."
+date: 2018-11-17
+last_modified_at: 2018-11-17
 header:
-  teaser: "assets/images/spring/spring-blogs.png"
+  teaser: "assets/images/spring/best-spring-blogs.png"
 categories: [Spring]
 tags: [Blogs, Example, Java, Spring, Tutorials]
 published: false
 ---
 
-<img src="{{ site.url }}/assets/images/spring/spring-blogs.png" alt="spring blogs" class="align-right title-image">
+<img src="{{ site.url }}/assets/images/spring/best-spring-blogs.png" alt="best-spring blogs" class="align-right title-image">
 
 Looking for a list of the best [Spring](https://spring.io/){:target="_blank"} blogs to read in 2018?
 
@@ -28,7 +28,11 @@ It contains the newest releases of the different Spring frameworks. You'll also 
 
 Our favorite post(s): The This week in Spring posts by [Josh Long](https://spring.io/team/jlong){:target="_blank"}.
 
-## 2. [Baeldung Spring](https://www.baeldung.com/category/spring/){:target="_blank"}
+## 2. [CodeNotFound](https://www.baeldung.com/category/spring/){:target="_blank"}
+
+
+
+## 3. [Baeldung Spring](https://www.baeldung.com/category/spring/){:target="_blank"}
 
 <img src="{{ site.url }}/assets/images/spring/baeldung-blog.png" alt="baeldung blog">
 
