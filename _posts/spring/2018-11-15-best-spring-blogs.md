@@ -1,7 +1,7 @@
 ---
 title: "6 Awesome Spring Blogs You'll Want to Bookmark"
 permalink: /best-spring-blogs.html
-excerpt: "6 of the best Java Spring blogs on the internet today."
+excerpt: "The best Java Spring blogs on the internet today."
 date: 2018-11-17
 last_modified_at: 2018-11-17
 header:
@@ -35,7 +35,7 @@ Favorite post(s): [This week in Spring posts by Josh Long](https://spring.io/tea
 
 <img src="{{ site.url }}/assets/images/spring/codenotfound-blog.png" alt="codenotfound blog">
 
-Good news. You're already know this one, as you're reading it right now. :-)
+Good news. You're already know this one, as you're reading it right now :-)
 
 For those that haven't read my posts, I typically focus on Spring tutorials. I try to focus on quality over quantity.
 
@@ -77,6 +77,8 @@ Favorite post: [Spring Batch Tutorial: Creating a Custom ItemReader](https://www
 
 This concludes our roundup of Spring blogs.
 
+Have fun reading!
+
 Don't see your favorite blog on the list? Then suggest it in the comments below.
 
 In order for a blog to be listed, I use following criteria:
@@ -86,5 +88,3 @@ In order for a blog to be listed, I use following criteria:
 * Has recent activity (at least 10 relevant – Spring – articles in the last 3 months)
 * More text than Ads on the page
 * Useful (in my view)
-
-Have fun reading!
