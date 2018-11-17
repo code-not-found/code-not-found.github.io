@@ -37,7 +37,7 @@ Favorite post(s): [This week in Spring posts by Josh Long](https://spring.io/tea
 
 Good news. You already know this one, as you're reading it right now :-)
 
-For those that haven't read my posts, I focus on Spring tutorials. I try to go for quality over quantity.
+For those that haven't read my posts, I focus on Spring tutorials.
 
 Favorite post: [Spring Kafka - Consumer Producer Example](https://www.codenotfound.com/spring-kafka-consumer-producer-example.html){:target="_blank"}
 
