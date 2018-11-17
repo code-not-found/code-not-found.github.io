@@ -35,7 +35,7 @@ Favorite post(s): [This week in Spring posts by Josh Long](https://spring.io/tea
 
 <img src="{{ site.url }}/assets/images/spring/codenotfound-blog.png" alt="codenotfound blog">
 
-Good news. You're already know this one, as you're reading it right now :-)
+Good news. You already know this one, as you're reading it right now :-)
 
 For those that haven't read my posts, I typically focus on Spring tutorials. I try to focus on quality over quantity.
 
@@ -53,7 +53,7 @@ Favorite post: [Spring Security for a REST API](https://www.baeldung.com/securin
 
 <img src="{{ site.url }}/assets/images/spring/mkyong-blog.png" alt="mkyong blog">
 
-Mkyong has been around for almost 10 years. Yong Mook Kim, aka Mkyong is the author of the site. The blog has a huge amount of articles. Even though some articles are a bit dated they still provide a good starting point to learn.
+Mkyong has been around for almost 10 years. Yong Mook Kim, aka Mkyong, is the author of the site. The blog has a huge amount of articles. Even though some articles are a bit dated they still provide a good starting point to learn.
 
 Favorite post: [Spring Boot + Hibernate Search example](http://www.mkyong.com/spring-boot/spring-boot-hibernate-search-example/){:target="_blank"}
 
@@ -69,7 +69,7 @@ Favorite post: [Using Logback With Spring Boot](https://springframework.guru/usi
 
 <img src="{{ site.url }}/assets/images/spring/petrikainulainen-blog.png" alt="petrikainulainen blog">
 
-Petri Kainulainen is a software developer who lives in Tampere, Finland. Lately he focusses on Java testing although there are still a lot of Spring guides on his site.
+Petri Kainulainen is a software developer who lives in Tampere, Finland. Lately, he focusses on Java testing although there are still a lot of Spring guides on his site.
 
 Favorite post: [Spring Batch Tutorial: Creating a Custom ItemReader](https://www.petrikainulainen.net/programming/spring-framework/spring-batch-tutorial-creating-a-custom-itemreader/){:target="_blank"}
 
@@ -81,7 +81,7 @@ Have fun reading!
 
 Don't see your favorite blog on the list? Then suggest it in the comments below.
 
-In order for a blog to be listed, I use following criteria:
+In order for a blog to be listed, I use the following criteria:
 * The blog is mostly about Java/Spring
 * Domain Authority > 25 (using the [Link Explorer](https://analytics.moz.com/pro/link-explorer/home){:target="_blank"} from Moz)
 * [Alexa Rank](https://www.alexa.com/siteinfo){:target="_blank"} < 1.000.000
