@@ -1,17 +1,19 @@
 ---
-title: "Spring Batch Hello World Example"
-permalink: /spring-batch-hello-world-example.html
+title: "Spring Batch Example"
+permalink: /spring-batch-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement a Hello World Spring Batch job using Spring Boot and Maven."
 date: 2018-10-20
 last_modified_at: 2018-11-05
 header:
-  teaser: "assets/images/spring-batch/spring-batch-hello-world-example.png"
+  teaser: "assets/images/spring-batch/spring-batch-example.png"
 categories: [Spring Batch]
-tags: [Example, Maven, Spring Batch, Spring Boot, Tutorial]
+tags: [Example, Hello World, Maven, Spring Batch, Spring Boot, Tutorial]
+redirect_from:
+  - /spring-batch-hello-world-example.html
 published: true
 ---
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-example.png" alt="spring batch hello world example" class="align-right title-image">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-example.png" alt="spring batch hello world example" class="align-right title-image">
 
 I'm going to show you exactly how to create a [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} _Hello World_ example that uses [Maven](https://maven.apache.org/){:target="_blank"} and [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}.
 
@@ -35,7 +37,7 @@ The `JobLauncher` handles launching a `Job`.
 
 And finally the `JobRepository` stores metadata about configured and executed `Job`s.
 
-To show how Spring Batch works let's build a simple HelloWorld batch job.
+To show how Spring Batch works let's build a simple Hello World batch job.
 
 In the example, we read a person's first and last name from a <var>person.csv</var> file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> file.
 
