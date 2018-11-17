@@ -3,7 +3,7 @@ title: "Spring Batch Example"
 permalink: /spring-batch-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement a Hello World Spring Batch job using Spring Boot and Maven."
 date: 2018-10-20
-last_modified_at: 2018-11-05
+last_modified_at: 2018-11-17
 header:
   teaser: "assets/images/spring-batch/spring-batch-example.png"
 categories: [Spring Batch]
