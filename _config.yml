@@ -254,8 +254,8 @@ defaults:
       author_profile: true
       read_time: true
       comments: true
-      share: true
-      related: true
+      share: false
+      related: false
       header:
         overlay_color: "#00b294"
   # _pages
@@ -267,5 +267,5 @@ defaults:
       author_profile: true
       read_time: false
       comments: true
-      share: true
+      share: false
       related: false
