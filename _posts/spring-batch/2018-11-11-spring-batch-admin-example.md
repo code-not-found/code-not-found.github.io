@@ -21,7 +21,7 @@ But don't worry as in this post **I'll show you the recommended replacement**. A
 
 Let's dive right in.
 
-## What is Spring Batch Admin?
+## 1. What is Spring Batch Admin?
 
 Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project, however, is **end-of-life since December 31, 2017**.
 
@@ -33,7 +33,7 @@ We re-use the [Spring Batch capitalize names](https://github.com/code-not-found/
 
 We then start a Spring Cloud Data Flow server and configure the batch job. Using the web-based UI we launch the job and check the status.
 
-## General Project Setup
+## 2. General Project Setup
 
 We will use the following tools/frameworks:
 * _Spring Batch 3.0_
@@ -48,7 +48,7 @@ We will create two Maven projects (one for the batch job and one for Spring Clou
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-server-maven-project.png" alt="spring cloud data flow server maven project">
 
-## Creating a Spring Batch Task
+## 3. Creating a Spring Batch Task
 
 Spring Cloud Data Flow is **a toolkit for building data processing pipelines**. The pipelines consist of Spring Boot applications. This means we can run a Spring Boot batch job using a Data Flow server.
 
@@ -179,7 +179,7 @@ The result is a <var>spring-batch-task-0.0.1-SNAPSHOT.jar</var> JAR file in the 
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-task-jar.png" alt="spring batch task jar">
 
-## Running a Spring Cloud Data Flow Server
+## 4. Running a Spring Cloud Data Flow Server
 
 In this example, we will run Spring Cloud Data Flow on a local server.
 

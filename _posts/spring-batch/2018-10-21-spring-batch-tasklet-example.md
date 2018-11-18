@@ -23,7 +23,7 @@ Because today I'm going to show you a detailed example.
 
 Let's do this!
 
-## What is a Spring Batch Tasklet?
+## 1. What is a Spring Batch Tasklet?
 
 In Spring batch, a `Tasklet` is an interface that performs a single task within a `Step`. A typical use case for implementing a `Tasklet` is the setup up or cleaning of resources before or after the execution of a `Step`.
 
@@ -50,7 +50,7 @@ We start from a basic [Spring Batch capitalize names](https://github.com/code-no
 
 We then change the batch job so that it reads multiple CSV files. When the `Job` finishes we clean up the input files using a `Tasklet`.
 
-## General Project Setup
+## 2. General Project Setup
 
 We will use the following tools/frameworks:
 * _Spring Batch 4.1_
@@ -63,7 +63,7 @@ Our Maven project has the following structure:
 
 The Maven and Spring Boot setup are identical to a previous [Spring Batch example]({{ site.url }}/spring-batch-example.html) so we will not cover them in this post.
 
-## Creating a Spring Batch Tasklet
+## 3. Creating a Spring Batch Tasklet
 
 To create a Spring Batch Tasklet you need to implement the `Tasklet` interface.
 
@@ -210,7 +210,7 @@ public class CapitalizeNamesJobConfig {
 }
 {% endhighlight %}
 
-## Unit Test the Spring Batch Tasklet
+## 4. Unit Test the Spring Batch Tasklet
 
 Let's update the existing unit test case so that we can check if our file deleting Tasklet works.
 

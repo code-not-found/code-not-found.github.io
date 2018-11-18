@@ -23,7 +23,7 @@ So if you're a Spring Batch beginner, **you'll love this guide**.
 
 Ready?
 
-## How Does the Spring Batch Framework Work?
+## 1. How Does the Spring Batch Framework Work?
 
 Before we dive into the code let's look at the Spring Batch framework. It contains following key building blocks:
 
@@ -41,7 +41,7 @@ To show how Spring Batch works let's build a simple Hello World batch job.
 
 In the example, we read a person's first and last name from a <var>person.csv</var> file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> file.
 
-## General Project Setup
+## 2. General Project Setup
 
 We will use the following tools/frameworks:
 * _Spring Batch 4.1_
@@ -52,7 +52,7 @@ Our project has the following directory structure:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-maven-project.png" alt="spring batch hello world maven project">
 
-## Maven Setup
+## 3. Maven Setup
 
 We build and run our example using **Maven**. If not already the case make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
@@ -126,7 +126,7 @@ In the plugins section, we define the [Spring Boot Maven Plugin](https://docs.sp
 </project>
 {% endhighlight %}
 
-## Spring Boot Setup
+## 4. Spring Boot Setup
 
 We use Spring Boot so that we have a Spring Batch application that you can "just run". Start by creating a `SpringBatchApplication` class. It contains the `main()` method that uses Spring Boot's `SpringApplication.run()` to launch the application.
 
@@ -156,7 +156,7 @@ public class SpringBatchApplication {
 }
 {% endhighlight %}
 
-## Creating the Model
+## 5. Creating the Model
 
 Before you process data it is generally expected that you map it to a domain object.
 
@@ -205,7 +205,7 @@ public class Person {
 }
 {% endhighlight %}
 
-## Configuring the Spring Batch Job
+## 6. Configuring the Spring Batch Job
 
 We start by creating a `BatchConfig` class that will configure Spring Batch. The [@Configuration](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} annotation at the top of the class indicates that Spring can use this class as a source of bean definitions.
 
@@ -324,7 +324,7 @@ public class HelloWorldJobConfig {
 }
 {% endhighlight %}
 
-## Processing the Data
+## 7. Processing the Data
 
 In most cases, you will want to apply some data processing during a batch job. An [ItemProcessor](https://docs.spring.io/spring-batch/4.1.x/reference/html/readersAndWriters.html#itemProcessor){:target="_blank"} allows you to do just that.
 
@@ -356,7 +356,7 @@ public class PersonItemProcessor implements ItemProcessor<Person, String> {
 }
 {% endhighlight %}
 
-## Testing the Spring Batch Example
+## 8. Testing the Spring Batch Example
 
 To wrap up our example we create a basic unit test case. It will run our batch job and check if it finishes successfully.
 
