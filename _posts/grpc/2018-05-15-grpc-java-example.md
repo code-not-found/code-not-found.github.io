@@ -23,7 +23,7 @@ So if you're new to gRPC, **you'll love this guide**.
 
 Let's dive right in.
 
-## What Is gRPC?
+## 1. What Is gRPC?
 
 [gRPC](https://grpc.io/){:target="_blank"} is a high performance, open-source universal [RPC](https://en.wikipedia.org/wiki/Remote_procedure_call){:target="_blank"} framework. By default it uses Protocol Buffers to define exposed services.
 
@@ -33,7 +33,7 @@ gRPC [was initially developed at Google](https://en.wikipedia.org/wiki/GRPC){:ta
 
 To show how gRPC works let's build a client and corresponding server that exposes a simple Hello World gRPC service.
 
-## Defining a Service Using Protocol Buffers
+## 2. Defining a Service Using Protocol Buffers
 
 gRPC services are defined using [protocol buffers](https://developers.google.com/protocol-buffers/){:target="_blank"}. These are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.
 
@@ -69,7 +69,7 @@ service HelloWorldService {
 
 Now that we have defined how the data is structured we need to generate source code that allows us to easily write and read protobuf messages using Java. We will do this using a Maven plugin.
 
-## General Project Setup
+## 3. General Project Setup
 
 We will use the following tools/frameworks:
 * gRPC 1.16
@@ -80,7 +80,7 @@ Our project has the following directory structure:
 
 <img src="{{ site.url }}/assets/images/grpc-java/grpc-java-hello-world-maven-project.png" alt="grpc java hello world maven project">
 
-## Maven Setup
+## 4. Maven Setup
 
 We build and run our example using **Maven**. If not already the case make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
@@ -208,7 +208,7 @@ Execute following Maven command, and the different message and service classes s
 mvn compile
 {% endhighlight %}
 
-## Spring Boot Setup
+## 5. Spring Boot Setup
 
 We also create a `SpringGRPCApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap the application, starting Spring.
 
@@ -231,7 +231,7 @@ public class SpringGRPCApplication {
 }
 {% endhighlight %}
 
-## Creating the Server
+## 6. Creating the Server
 
 The service implementation is defined in the `HelloWorldServiceImpl` POJO that implements the `HelloWorldServiceImplBase` class that was generated from the <var>HelloWorld.proto</var> file.
 
@@ -280,7 +280,7 @@ public class HelloWorldServiceImpl
 }
 {% endhighlight %}
 
-## Creating the Client
+## 7. Creating the Client
 
 The client code is specified in the `HelloWorldClient` class.
 
@@ -352,7 +352,7 @@ public class HelloWorldClient {
 }
 {% endhighlight %}
 
-## gRPC Java Testing
+## 8. gRPC Java Testing
 
 Let's wrap up by creating a basic unit test case in which the above client is used to send a request to the gRPC Hello World service endpoint. We then verify if the response is equal to the expected greeting.
 
