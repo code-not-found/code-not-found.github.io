@@ -60,7 +60,7 @@ Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to gen
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-initializr.png" alt="spring batch hello world initializr">
 
-Click <var>Generate Project</var> to generate and download the Spring Boot project template. At the root of the project you'll find a <var>pom.xml</var> file which is the XML representation of the Maven project.
+Click <var>Generate Project</var> to generate and download the Spring Boot project template. At the root of the project, you'll find a <var>pom.xml</var> file which is the XML representation of the Maven project.
 
 The generated project contains [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} that manage the different Spring dependencies.
 
