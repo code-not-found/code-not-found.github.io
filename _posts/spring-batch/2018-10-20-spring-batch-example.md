@@ -56,17 +56,21 @@ Our project has the following directory structure:
 
 We build and run our example using **Maven**. If not already the case make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
-Shown below is the XML representation of our Maven project. We define it in a <var>pom.xml</var> file. It contains the needed dependencies to compile and run the example.
+Let's use to [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>Batch</var> as a dependency.
 
-To run the batch job, we will use **Spring Boot**. We also use [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} so that we do not have to manage the different Spring dependencies.
+<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-initializr.png" alt="spring batch hello world initializr">
+
+Click <var>Generate Project</var> to generate and download a Spring Boot project template. At the root of the project you'll find a <var>pom.xml</var> file which is the XML representation of the Maven project.
+
+The generated project contains [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} that manage the different Spring dependencies.
 
 The `spring-boot-starter-batch` starter imports the Spring Boot and Spring Batch dependencies.
 
 The `spring-boot-starter-test` starter includes the dependencies for testing Spring Boot applications. It imports libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](https://site.mockito.org/){:target="_blank"}.
 
-We also declare a dependency on `spring-batch-test`. This library contains some helper classes that will help test our batch job.
+There is also a dependency on `spring-batch-test`. This library contains some helper classes that will help test our batch job.
 
-In the plugins section, we define the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. This allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport our code. Also, the plugin allows us to start the example via a Maven command.
+In the plugins section, you find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. This allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport our code. Also, the plugin allows us to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -81,7 +85,7 @@ In the plugins section, we define the [Spring Boot Maven Plugin](https://docs.sp
 
   <name>spring-batch-hello-world</name>
   <description>Spring Batch Hello World Example</description>
-  <url>https://www.codenotfound.com/spring-batch-hello-world-example.html</url>
+  <url>https://www.codenotfound.com/spring-batch-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -275,7 +279,6 @@ package com.codenotfound.batch.job;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -293,21 +296,26 @@ import com.codenotfound.model.Person;
 public class HelloWorldJobConfig {
 
   @Bean
-  public Job helloWorlJob(JobBuilderFactory jobBuilders, StepBuilderFactory stepBuilders) {
-    return jobBuilders.get("helloWorldJob").start(helloWorldStep(stepBuilders)).build();
+  public Job helloWorlJob(JobBuilderFactory jobBuilders,
+      StepBuilderFactory stepBuilders) {
+    return jobBuilders.get("helloWorldJob")
+        .start(helloWorldStep(stepBuilders)).build();
   }
 
   @Bean
   public Step helloWorldStep(StepBuilderFactory stepBuilders) {
-    return stepBuilders.get("helloWorldStep").<Person, String>chunk(10).reader(reader())
+    return stepBuilders.get("helloWorldStep")
+        .<Person, String>chunk(10).reader(reader())
         .processor(processor()).writer(writer()).build();
   }
 
   @Bean
   public FlatFileItemReader<Person> reader() {
-    return new FlatFileItemReaderBuilder<Person>().name("personItemReader")
-        .resource(new ClassPathResource("csv/persons.csv")).delimited()
-        .names(new String[] {"firstName", "lastName"}).targetType(Person.class).build();
+    return new FlatFileItemReaderBuilder<Person>()
+        .name("personItemReader")
+        .resource(new ClassPathResource("csv/persons.csv"))
+        .delimited().names(new String[] {"firstName", "lastName"})
+        .targetType(Person.class).build();
   }
 
   @Bean
@@ -317,8 +325,10 @@ public class HelloWorldJobConfig {
 
   @Bean
   public FlatFileItemWriter<String> writer() {
-    return new FlatFileItemWriterBuilder<String>().name("greetingItemWriter")
-        .resource(new FileSystemResource("target/test-outputs/greetings.txt"))
+    return new FlatFileItemWriterBuilder<String>()
+        .name("greetingItemWriter")
+        .resource(new FileSystemResource(
+            "target/test-outputs/greetings.txt"))
         .lineAggregator(new PassThroughLineAggregator<>()).build();
   }
 }
@@ -342,13 +352,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 import com.codenotfound.model.Person;
 
-public class PersonItemProcessor implements ItemProcessor<Person, String> {
+public class PersonItemProcessor
+    implements ItemProcessor<Person, String> {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(PersonItemProcessor.class);
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(PersonItemProcessor.class);
 
   @Override
   public String process(Person person) throws Exception {
-    String greeting = "Hello " + person.getFirstName() + " " + person.getLastName() + "!";
+    String greeting = "Hello " + person.getFirstName() + " "
+        + person.getLastName() + "!";
 
     LOGGER.info("converting '{}' into '{}'", person, greeting);
     return greeting;
@@ -386,7 +399,8 @@ import com.codenotfound.batch.job.BatchConfig;
 import com.codenotfound.batch.job.HelloWorldJobConfig;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {SpringBatchApplicationTests.BatchTestConfig.class})
+@SpringBootTest(
+    classes = {SpringBatchApplicationTests.BatchTestConfig.class})
 public class SpringBatchApplicationTests {
 
   @Autowired
@@ -395,7 +409,8 @@ public class SpringBatchApplicationTests {
   @Test
   public void testHelloWorldJob() throws Exception {
     JobExecution jobExecution = jobLauncherTestUtils.launchJob();
-    assertThat(jobExecution.getExitStatus().getExitCode()).isEqualTo("COMPLETED");
+    assertThat(jobExecution.getExitStatus().getExitCode())
+        .isEqualTo("COMPLETED");
   }
 
   @Configuration
@@ -406,8 +421,10 @@ public class SpringBatchApplicationTests {
     private Job helloWorlJob;
 
     @Bean
-    JobLauncherTestUtils jobLauncherTestUtils() throws NoSuchJobException {
-      JobLauncherTestUtils jobLauncherTestUtils = new JobLauncherTestUtils();
+    JobLauncherTestUtils jobLauncherTestUtils()
+        throws NoSuchJobException {
+      JobLauncherTestUtils jobLauncherTestUtils =
+          new JobLauncherTestUtils();
       jobLauncherTestUtils.setJob(helloWorlJob);
 
       return jobLauncherTestUtils;
