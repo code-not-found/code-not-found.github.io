@@ -8,15 +8,12 @@ feature_row:
   - url: /spring-kafka-tutorials
     image_path: /assets/images/spring-kafka/spring-kafka-tutorials.png
     alt: "spring kafka tutorials"
-    title: "Spring Kafka Tutorials"
   - url: /spring-jms-tutorials
     image_path: /assets/images/spring-jms/spring-jms-tutorials.png
     alt: "spring jms tutorials"
-    title: "Spring JMS Tutorials"
   - url: /spring-batch-tutorials
     image_path: /assets/images/spring-batch/spring-batch-tutorials.png
     alt: "spring batch tutorials"
-    title: "Spring Batch Tutorials"
 ---
 
 {% include feature_row %}
