@@ -42,7 +42,9 @@ We will use the following tools/frameworks:
 
 > [Spring Cloud Data Flow](https://github.com/spring-cloud/spring-cloud-dataflow){:target="_blank"} does not yet support Spring Boot 2.0. That is why this example uses Spring Boot 1.5 and Spring Batch 3.0.
 
-We will create two Maven projects. One for the batch job:
+We will create two Maven projects.
+
+One for the batch job:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-task-maven-project.png" alt="spring batch task maven project">
 
@@ -51,6 +53,8 @@ And one for Spring Cloud Data Flow:
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-server-maven-project.png" alt="spring cloud data flow server maven project">
 
 ## 3. Creating a Spring Batch Task
+
+The basic Maven and Spring Boot setup of this project are identical to a previous [Spring Batch example]({{ site.url }}/spring-batch-example.html). As such we will not cover them in this post.
 
 Spring Cloud Data Flow is **a toolkit for building data processing pipelines**. The pipelines consist of Spring Boot applications. This means we can run a Spring Boot batch job using a Data Flow server.
 
@@ -429,7 +433,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this tutorial, we illustrated an end-to-end scenario in which we used the Spring Cloud Data Flow user interface to launch and monitor a Spring Batch job.
+In this tutorial, we illustrated an end-to-end scenario in which the Spring Cloud Data Flow user interface was used to launch and monitor a Spring Batch job.
 
 I hope you enjoyed this post.
 

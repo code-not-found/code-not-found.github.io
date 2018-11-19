@@ -50,7 +50,7 @@ We start from a basic [Spring Batch capitalize names](https://github.com/code-no
 
 We then change the batch job so that it reads multiple CSV files. When the `Job` finishes we clean up the input files using a `Tasklet`.
 
-## 2. General Project Setup
+## 2. General Project Overview
 
 We will use the following tools/frameworks:
 * _Spring Batch 4.1_
@@ -93,7 +93,8 @@ import org.springframework.core.io.Resource;
 
 public class FileDeletingTasklet implements Tasklet {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(FileDeletingTasklet.class);
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(FileDeletingTasklet.class);
 
   private Resource directory;
 
@@ -102,12 +103,16 @@ public class FileDeletingTasklet implements Tasklet {
   }
 
   @Override
-  public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) {
-    try (Stream<Path> walk = Files.walk(Paths.get(directory.getFile().getPath()))) {
-      walk.filter(Files::isRegularFile).map(Path::toFile).forEach(File::delete);
+  public RepeatStatus execute(StepContribution stepContribution,
+      ChunkContext chunkContext) {
+    try (Stream<Path> walk =
+        Files.walk(Paths.get(directory.getFile().getPath()))) {
+      walk.filter(Files::isRegularFile).map(Path::toFile)
+          .forEach(File::delete);
     } catch (IOException e) {
       LOGGER.error("error deleting files", e);
-      throw new UnexpectedJobExecutionException("unable to delete files");
+      throw new UnexpectedJobExecutionException(
+          "unable to delete files");
     }
 
     return RepeatStatus.FINISHED;
@@ -131,7 +136,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -149,46 +153,55 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import com.codenotfound.model.Person;
 
 @Configuration
-@EnableBatchProcessing
 public class CapitalizeNamesJobConfig {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(CapitalizeNamesJobConfig.class);
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(CapitalizeNamesJobConfig.class);
 
   @Bean
-  public Job capitalizeNamesJob(JobBuilderFactory jobBuilders, StepBuilderFactory stepBuilders) {
-    return jobBuilders.get("capitalizeNamesJob").start(capitalizeNamesStep(stepBuilders))
+  public Job capitalizeNamesJob(JobBuilderFactory jobBuilders,
+      StepBuilderFactory stepBuilders) {
+    return jobBuilders.get("capitalizeNamesJob")
+        .start(capitalizeNamesStep(stepBuilders))
         .next(deleteFilesStep(stepBuilders)).build();
   }
 
   @Bean
   public Step capitalizeNamesStep(StepBuilderFactory stepBuilders) {
-    return stepBuilders.get("capitalizeNamesStep").<Person, Person>chunk(10)
-        .reader(multiItemReader()).processor(itemProcessor()).writer(itemWriter()).build();
+    return stepBuilders.get("capitalizeNamesStep")
+        .<Person, Person>chunk(10).reader(multiItemReader())
+        .processor(itemProcessor()).writer(itemWriter()).build();
   }
 
   @Bean
   public Step deleteFilesStep(StepBuilderFactory stepBuilders) {
-    return stepBuilders.get("deleteFilesStep").tasklet(fileDeletingTasklet()).build();
+    return stepBuilders.get("deleteFilesStep")
+        .tasklet(fileDeletingTasklet()).build();
   }
 
   @Bean
   public MultiResourceItemReader<Person> multiItemReader() {
-    ResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
+    ResourcePatternResolver patternResolver =
+        new PathMatchingResourcePatternResolver();
     Resource[] resources = null;
     try {
-      resources = patternResolver.getResources("file:target/test-inputs/*.csv");
+      resources = patternResolver
+          .getResources("file:target/test-inputs/*.csv");
     } catch (IOException e) {
       LOGGER.error("error reading files", e);
     }
 
-    return new MultiResourceItemReaderBuilder<Person>().name("multiPersonItemReader")
-        .delegate(itemReader()).resources(resources).setStrict(true).build();
+    return new MultiResourceItemReaderBuilder<Person>()
+        .name("multiPersonItemReader").delegate(itemReader())
+        .resources(resources).setStrict(true).build();
   }
 
   @Bean
   public FlatFileItemReader<Person> itemReader() {
-    return new FlatFileItemReaderBuilder<Person>().name("personItemReader").delimited()
-        .names(new String[] {"firstName", "lastName"}).targetType(Person.class).build();
+    return new FlatFileItemReaderBuilder<Person>()
+        .name("personItemReader").delimited()
+        .names(new String[] {"firstName", "lastName"})
+        .targetType(Person.class).build();
   }
 
   @Bean
@@ -198,14 +211,18 @@ public class CapitalizeNamesJobConfig {
 
   @Bean
   public FlatFileItemWriter<Person> itemWriter() {
-    return new FlatFileItemWriterBuilder<Person>().name("personItemWriter")
-        .resource(new FileSystemResource("target/test-outputs/persons.txt")).delimited()
-        .delimiter(", ").names(new String[] {"firstName", "lastName"}).build();
+    return new FlatFileItemWriterBuilder<Person>()
+        .name("personItemWriter")
+        .resource(new FileSystemResource(
+            "target/test-outputs/persons.txt"))
+        .delimited().delimiter(", ")
+        .names(new String[] {"firstName", "lastName"}).build();
   }
 
   @Bean
   public FileDeletingTasklet fileDeletingTasklet() {
-    return new FileDeletingTasklet(new FileSystemResource("target/test-inputs"));
+    return new FileDeletingTasklet(
+        new FileSystemResource("target/test-inputs"));
   }
 }
 {% endhighlight %}
@@ -247,7 +264,8 @@ import com.codenotfound.batch.job.BatchConfig;
 import com.codenotfound.batch.job.CapitalizeNamesJobConfig;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {SpringBatchApplicationTests.BatchTestConfig.class})
+@SpringBootTest(
+    classes = {SpringBatchApplicationTests.BatchTestConfig.class})
 public class SpringBatchApplicationTests {
 
   private static Path csvFilesPath, testInputsPath;
@@ -256,7 +274,8 @@ public class SpringBatchApplicationTests {
   private JobLauncherTestUtils jobLauncherTestUtils;
 
   @BeforeClass
-  public static void copyFiles() throws URISyntaxException, IOException {
+  public static void copyFiles()
+      throws URISyntaxException, IOException {
     csvFilesPath = Paths.get(new ClassPathResource("csv").getURI());
     testInputsPath = Paths.get("target/test-inputs");
     try {
@@ -271,7 +290,8 @@ public class SpringBatchApplicationTests {
   @Test
   public void testHelloWorldJob() throws Exception {
     JobExecution jobExecution = jobLauncherTestUtils.launchJob();
-    assertThat(jobExecution.getExitStatus().getExitCode()).isEqualTo("COMPLETED");
+    assertThat(jobExecution.getExitStatus().getExitCode())
+        .isEqualTo("COMPLETED");
 
     // check that all files are deleted
     File testInput = testInputsPath.toFile();
@@ -286,8 +306,10 @@ public class SpringBatchApplicationTests {
     private Job capitalizeNamesJob;
 
     @Bean
-    JobLauncherTestUtils jobLauncherTestUtils() throws NoSuchJobException {
-      JobLauncherTestUtils jobLauncherTestUtils = new JobLauncherTestUtils();
+    JobLauncherTestUtils jobLauncherTestUtils()
+        throws NoSuchJobException {
+      JobLauncherTestUtils jobLauncherTestUtils =
+          new JobLauncherTestUtils();
       jobLauncherTestUtils.setJob(capitalizeNamesJob);
 
       return jobLauncherTestUtils;
