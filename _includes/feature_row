@@ -18,10 +18,6 @@
       <div class="archive__item">
         {% if f.image_path %}
           <div class="archive__item-teaser">
-
-            {% if f.url %}
-              <a href="{{ f_url }}">
-
             <img src=
               {% if f.image_path contains "://" %}
                 "{{ f.image_path }}"
@@ -29,10 +25,6 @@
                 "{{ f.image_path | absolute_url }}"
               {% endif %}
             alt="{% if f.alt %}{{ f.alt }}{% endif %}">
-
-              </a>
-            {% endif %}
-
           </div>
         {% endif %}
 
