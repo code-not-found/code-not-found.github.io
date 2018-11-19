@@ -1,0 +1,44 @@
+{% if include.id %}
+  {% assign feature_row_no_button = page[include.id] %}
+{% else %}
+  {% assign feature_row_no_button = page.feature_row_no_button %}
+{% endif %}
+
+<div class="feature__wrapper">
+
+  {% for f in feature_row_no_button %}
+
+    {% if f.url contains "://" %}
+      {% capture f_url %}{{ f.url }}{% endcapture %}
+    {% else %}
+      {% capture f_url %}{{ f.url | absolute_url }}{% endcapture %}
+    {% endif %}
+
+    <div class="feature__item{% if include.type %}--{{ include.type }}{% endif %}">
+      <div class="archive__item">
+        {% if f.image_path %}
+          <div class="archive__item-teaser">
+
+          {% if f.url %}
+            <a href="{{ f_url }}">
+
+            <img src=
+              {% if f.image_path contains "://" %}
+                "{{ f.image_path }}"
+              {% else %}
+                "{{ f.image_path | absolute_url }}"
+              {% endif %}
+            alt="{% if f.alt %}{{ f.alt }}{% endif %}">
+
+            </a>
+          {% endif %}
+
+          </div>
+        {% endif %}
+
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+</div>
