@@ -33,7 +33,7 @@ We re-use the [Spring Batch capitalize names](https://github.com/code-not-found/
 
 We then start a Spring Cloud Data Flow server and configure the batch job. Using the web-based UI we launch the job and check the status.
 
-## 2. General Project Setup
+## 2. General Project Overview
 
 We will use the following tools/frameworks:
 * _Spring Batch 3.0_
@@ -42,9 +42,11 @@ We will use the following tools/frameworks:
 
 > [Spring Cloud Data Flow](https://github.com/spring-cloud/spring-cloud-dataflow){:target="_blank"} does not yet support Spring Boot 2.0. That is why this example uses Spring Boot 1.5 and Spring Batch 3.0.
 
-We will create two Maven projects (one for the batch job and one for Spring Cloud Data Flow) that have the following structure:
+We will create two Maven projects. One for the batch job:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-task-maven-project.png" alt="spring batch task maven project">
+
+And one for Spring Cloud Data Flow:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-cloud-data-flow-server-maven-project.png" alt="spring cloud data flow server maven project">
 
@@ -54,13 +56,13 @@ Spring Cloud Data Flow is **a toolkit for building data processing pipelines**. 
 
 All we need to do is annotate our existing `SpringBatchApplication` with `@EnableTask` as shown below.
 
-This class-level annotation tells Spring Cloud Task to bootstrap its functionality. It enables a `TaskConfigurer` that registers the application in a `TaskRepository`.
+This class-level annotation tells [Spring Cloud Task](https://spring.io/projects/spring-cloud-task){:target="_blank"} to bootstrap its functionality. It enables a `TaskConfigurer` that registers the application in a `TaskRepository`.
 
 Spring Cloud Task will also [associate the execution of a batch job with a task's execution](https://docs.spring.io/spring-cloud-task/docs/1.3.0.RELEASE/reference/htmlsingle/#batch-association){:target="_blank"} so that one can be traced back to the other. This association is by default in any context that has both a Spring Batch Job configured and the `spring-cloud-task-batch` JAR available within the classpath.
 
-We can now define a [Spring Cloud Task](https://spring.io/projects/spring-cloud-task){:target="_blank"} as we will see in the next section.
+We can now define a Spring Cloud Task as we will see in the next section.
 
-{% highlight xml %}
+{% highlight java %}
 package com.codenotfound.batch;
 
 import org.springframework.boot.SpringApplication;
@@ -248,7 +250,7 @@ The `spring-boot-starter` starter in the <var>pom.xml</var> will import the need
 
 Add the `@EnableDataFlowServer` annotation to the Spring Boot main class. This activates a Spring Cloud Data Flow Server implementation.
 
-{% highlight xml %}
+{% highlight java %}
 package com.codenotfound.batch;
 
 import org.springframework.boot.SpringApplication;
@@ -363,7 +365,7 @@ Click on <var>Register one or more applications</var>.
 
 Enter <kbd>capitalize-names-app</kbd> as <var>name</var> of our application and select <kbd>Task</kbd> as <var>type</var>.
 
-For the <var>URI</var> we enter the location of our Spring Boot Task JAR: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
+For the <var>URI</var> we enter the location of our Spring Boot Task JAR. In this example the JAR file is located at: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
 
 Once done click on <var>Register the application(s)</var>.
 
