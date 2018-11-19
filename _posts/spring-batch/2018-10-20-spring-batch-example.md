@@ -15,7 +15,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-example.png" alt="spring batch hello world example" class="align-right title-image">
 
-I'm going to show you exactly how to create a [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} _Hello World_ example that uses [Maven](https://maven.apache.org/){:target="_blank"} and [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}.
+I'm going to show you exactly how to create a [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} and [Maven](https://maven.apache.org/){:target="_blank"}.
 
 (Step-by-step)
 
@@ -41,7 +41,7 @@ To show how Spring Batch works let's build a simple Hello World batch job.
 
 In the example, we read a person's first and last name from a <var>person.csv</var> file. From this data, a greeting is generated. This greeting is then written to a <var>greetings.txt</var> file.
 
-## 2. General Project Setup
+## 2. General Project Overview
 
 We will use the following tools/frameworks:
 * _Spring Batch 4.1_
@@ -56,11 +56,11 @@ Our project has the following directory structure:
 
 We build and run our example using **Maven**. If not already the case make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
-Let's use to [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>Batch</var> as a dependency.
+Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>Batch</var> as a dependency.
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-hello-world-initializr.png" alt="spring batch hello world initializr">
 
-Click <var>Generate Project</var> to generate and download a Spring Boot project template. At the root of the project you'll find a <var>pom.xml</var> file which is the XML representation of the Maven project.
+Click <var>Generate Project</var> to generate and download the Spring Boot project template. At the root of the project you'll find a <var>pom.xml</var> file which is the XML representation of the Maven project.
 
 The generated project contains [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} that manage the different Spring dependencies.
 
@@ -68,9 +68,9 @@ The `spring-boot-starter-batch` starter imports the Spring Boot and Spring Batch
 
 The `spring-boot-starter-test` starter includes the dependencies for testing Spring Boot applications. It imports libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](https://site.mockito.org/){:target="_blank"}.
 
-There is also a dependency on `spring-batch-test`. This library contains some helper classes that will help test our batch job.
+There is also a dependency on `spring-batch-test`. This library contains some helper classes that will help test the batch job.
 
-In the plugins section, you find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. This allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport our code. Also, the plugin allows us to start the example via a Maven command.
+In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. It allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code. Also, the plugin allows you to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -225,7 +225,7 @@ We add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1.x/ap
 * a `JobBuilderFactory` (bean name "jobBuilders") as a convenience to prevent you from having to inject the job repository into every job
 * a `StepBuilderFactory` (bean name "stepBuilders") as a convenience to prevent you from having to inject the job repository and transaction manager into every step
 
-For Spring Batch to use a Map based `JobRepository` we need to extend the `DefaultBatchConfigurer`. We override the `setDataSource()` method to not set a `DataSource`. This will cause the auto-configuration to [use a Map based JobRepository](https://github.com/spring-projects/spring-batch/blob/342d27bc1ed83312bdcd9c0cb30510f4c469e47d/spring-batch-core/src/main/java/org/springframework/batch/core/configuration/annotation/DefaultBatchConfigurer.java#L84){:target="_blank"}.
+For Spring Batch to use a Map based `JobRepository` we need to extend the `DefaultBatchConfigurer`. Override the `setDataSource()` method to not set a `DataSource`. This will cause the auto-configuration to [use a Map based JobRepository](https://github.com/spring-projects/spring-batch/blob/342d27bc1ed83312bdcd9c0cb30510f4c469e47d/spring-batch-core/src/main/java/org/springframework/batch/core/configuration/annotation/DefaultBatchConfigurer.java#L84){:target="_blank"}.
 
 {% highlight java %}
 package com.codenotfound.batch.job;
@@ -246,7 +246,7 @@ public class BatchConfig extends DefaultBatchConfigurer {
 }
 {% endhighlight %}
 
-Let's go ahead and configure our Hello World Spring Batch job.
+Now let's go ahead and configure our Hello World Spring Batch job.
 
 Create a `HelloWorldJobConfig` configuration class and annotate it with `@Configuration`.
 
@@ -371,13 +371,13 @@ public class PersonItemProcessor
 
 ## 8. Testing the Spring Batch Example
 
-To wrap up our example we create a basic unit test case. It will run our batch job and check if it finishes successfully.
+To wrap up our example we create a basic unit test case. It will run the batch job and check if it finishes successfully.
 
 We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications){:target="_blank"} to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
 
 Spring Batch ships with a `JobLauncherTestUtils` utility class for testing batch jobs.
 
-We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean. We then use the `launchJob()` method of this bean to run the batch job. If the job executed without any errors, the value of the exit code is <var>COMPLETED</var>.
+We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean. Then use the `launchJob()` method of this bean to run the batch job. If the job executed without any errors, the value of the exit code is <var>COMPLETED</var>.
 
 {% highlight java %}
 package com.codenotfound.batch;
