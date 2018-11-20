@@ -36,8 +36,10 @@ ins.adsbygoogle {
 .masthead, .greedy-nav {
   background: $blue !important;
 }
+
 $masthead-link-color: $text-white !default;
 $masthead-link-color-hover: $text-white !default;
+
 .greedy-nav .visible-links a:before {
   background-color: transparent !important;
 }
@@ -56,8 +58,9 @@ $masthead-link-color-hover: $text-white !default;
 
 /* Footer */
 $footer-background-color: $blue !default;
+
 .page__footer-follow {
-  color: $text-white;
+  color: $text-white !important;
 }
 .page__footer-copyright {
   color: $text-light-blue;
