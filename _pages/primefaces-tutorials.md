@@ -4,6 +4,8 @@ permalink: /primefaces-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use PrimeFaces."
 date: 2017-12-30
 last_modified_at: 2018-11-20
+redirect_from:
+  - /jsf-primefaces/
 ---
 
 <figure>

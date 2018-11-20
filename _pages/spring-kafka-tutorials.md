@@ -4,6 +4,8 @@ permalink: /spring-kafka-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use Spring for Apache Kafka."
 date: 2017-04-15
 last_modified_at: 2017-07-15
+redirect_from:
+  - /spring-kafka/
 ---
 
 <figure>

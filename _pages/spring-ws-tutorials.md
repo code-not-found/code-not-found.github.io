@@ -4,6 +4,8 @@ permalink: /spring-ws-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use Spring Web Services."
 date: 2017-04-18
 last_modified_at: 2017-04-18
+redirect_from:
+  - /spring-ws/
 ---
 
 <figure>

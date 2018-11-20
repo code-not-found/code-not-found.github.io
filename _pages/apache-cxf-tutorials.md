@@ -4,6 +4,8 @@ permalink: /apache-cxf-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use Apache CXF."
 date: 2017-07-21
 last_modified_at: 2018-11-20
+redirect_from:
+  - /cxf-jaxws/
 ---
 
 <figure>
