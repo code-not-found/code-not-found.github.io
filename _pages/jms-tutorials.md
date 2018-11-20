@@ -25,9 +25,9 @@ The [Java Message Service (JMS) API](http://docs.oracle.com/javaee/6/tutorial/do
 
 It is a Java API that allows applications to create, send, receive, and read messages. The JMS API enables communication that is loosely coupled, asynchronous and reliable.
 
-> The current version of the JMS specification is version 1.1.
-
 ## Tutorials
+
+_If you would like to request a new tutorial, leave a comment below._
 
 * [JMS - Hello World using ActiveMQ]({{ site.url }}/jms-hello-world-activemq-maven.html)
 * [JMS - Point-to-Point messaging example using ActiveMQ and Maven]({{ site.url }}/jms-point-to-point-messaging-example-activemq-maven.html)
@@ -40,5 +40,5 @@ It is a Java API that allows applications to create, send, receive, and read mes
 
 ## References
 
-* [The Java EE 6 Tutorial - Java Message Service Concepts](http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html)
+* [The Java EE 6 Tutorial - Java Message Service Concepts](http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html){:target="_blank"}
 * [Stack Overflow - JMS Questions](https://stackoverflow.com/questions/tagged/jms){:target="_blank"}

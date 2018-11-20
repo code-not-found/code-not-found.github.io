@@ -28,6 +28,8 @@ Spring-WS is a [Spring main project](https://spring.io/projects){:target="_blank
 
 ## Tutorials
 
+_If you would like to request a new tutorial, leave a comment below._
+
 * [Spring WS - SOAP Web Service Consumer Provider WSDL Example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html)
 * [Spring WS - SOAPAction Header Example]({{ site.url }}/spring-ws-soapaction-header-example.html)
 * [Spring WS - SOAP Header Example]({{ site.url }}/spring-ws-soap-header-example.html)
