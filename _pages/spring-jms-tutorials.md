@@ -20,7 +20,7 @@ So let's get busy.
 
 ## What is Spring JMS?
 
-Spring provides a JMS integration framework that simplifies the use of the JMS API.
+Spring provides a JMS integration framework that simplifies the use of the [JMS](https://en.wikipedia.org/wiki/Java_Message_Service){:target="_blank"} API.
 
 It provides a 'template' as a high-level abstraction for sending messages. It also contains support for Message-driven POJOs with `@JmsListener` annotations and a listener container.
 
@@ -36,6 +36,6 @@ _If you would like to request a new tutorial, leave a comment below._
 ## References
 
 * [Spring Framework - Projects](https://spring.io/projects/spring-framework){:target="_blank"}
-* [JMS (Java Message Service) - Reference Documentation](https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"}
+* [JMS (Java Message Service) - Reference Documentation](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#jms){:target="_blank"}
 * [GitHub - spring-projects/spring-framework/spring-jms](https://github.com/spring-projects/spring-framework/tree/master/spring-jms){:target="_blank"}
 * [Stack Overflow - Spring-JMS Questions](http://stackoverflow.com/questions/tagged/spring-jms){:target="_blank"}

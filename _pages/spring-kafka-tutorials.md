@@ -43,6 +43,6 @@ _If you would like to request a new tutorial, leave a comment below._
 ## References
 
 * [Spring for Apache Kafka - Project](https://spring.io/projects/spring-kafka){:target="_blank"}
-* [Spring for Apache Kafka - Reference Documentation](https://docs.spring.io/spring-kafka/docs/current/reference/html/){:target="_blank"}
+* [Spring for Apache Kafka - Reference Documentation](https://spring.io/projects/spring-kafka#learn){:target="_blank"}
 * [GitHub - spring-projects/spring-kafka](https://github.com/spring-projects/spring-kafka){:target="_blank"}
 * [Stack Overflow - Spring-Kafka Questions](http://stackoverflow.com/questions/tagged/spring-kafka){:target="_blank"}
