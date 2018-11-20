@@ -17,7 +17,9 @@ Looking for a [Spring Batch Admin UI](https://docs.spring.io/spring-batch-admin/
 
 You might be surprised to learn it is no longer supported.
 
-But don't worry as in this post **I'll show you the recommended replacement**. And how to set it up.
+But don't worry as in this post **I'll show you the recommended replacement**.
+
+And how to set it up.
 
 Let's dive right in.
 
