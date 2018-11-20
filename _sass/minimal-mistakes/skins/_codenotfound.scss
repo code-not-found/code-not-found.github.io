@@ -81,8 +81,8 @@ $link-color-visited: $dark-blue !default;
 /* Post */
 .page__title {
   color: #222222;
-  font-size: 1.7em;
-  margin-top: 20px;
+  font-size: 1.7em !important;
+  margin-top: 20px !important;
 }
 .page__meta {
   color: $text-grey !important;
@@ -115,7 +115,7 @@ blockquote {
 .page__content {
   .notice--primary {
     color: #fff;
-    background-color: $dark-blue;
+    background-color: $orange;
     font-size: 1em !important;
   }
   .notice--primary a:link, .notice--primary a:visited, .notice--primary a:hover, .notice--primary a:active {
@@ -124,7 +124,7 @@ blockquote {
   }
   .notice--info {
     color: #fff;
-    background-color: $orange;
+    background-color: $dark-blue;
     min-height: 80px;
   }
   .notice--info p {
