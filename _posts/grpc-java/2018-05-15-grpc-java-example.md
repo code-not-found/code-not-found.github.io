@@ -47,7 +47,7 @@ For more information check the [protocol buffers language guide](https://develop
 
 The below protocol buffer file is stored in <var>src/main/proto/HelloWorld.proto</var>.
 
-{% highlight json %}
+{% highlight protobuf %}
 syntax = "proto3";
 
 option java_multiple_files = true;
@@ -441,7 +441,7 @@ last_name: "Doe"
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
-If you just want to start Spring Boot so that the service endpoint is up and running, execute following Maven command.
+If you just want to start Spring Boot so that the service endpoint is up and running, execute following Maven command:
 
 {% highlight plaintext %}
 mvn spring-boot:run
