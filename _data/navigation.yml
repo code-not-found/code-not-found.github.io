@@ -2,17 +2,9 @@
 main:
   - title: "Blog"
     url: https://www.codenotfound.com/blog/
-  - title: "Spring-Kafka"
-    url: https://www.codenotfound.com/spring-kafka/
-  - title: "Spring-WS"
-    url: https://www.codenotfound.com/spring-ws/
-  - title: "Spring-JMS"
-    url: https://www.codenotfound.com/spring-jms/
-  - title: "Apache CXF JAX-WS"
-    url: https://www.codenotfound.com/cxf-jaxws/
-  - title: "JSF PrimeFaces"
-    url: https://www.codenotfound.com/jsf-primefaces/
-  - title: "JMS"
-    url: https://www.codenotfound.com/jms/
-  - title: "Terms and Privacy Policy"
-    url: https://www.codenotfound.com/terms/
+  - title: "Spring Tutorials"
+    url: https://www.codenotfound.com/spring-tutorials
+  - title: "Contact"
+    url: https://www.codenotfound.com/contact
+  - title: "Terms and Privacy"
+    url: https://www.codenotfound.com/terms
