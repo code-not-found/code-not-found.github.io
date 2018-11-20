@@ -6,7 +6,7 @@ date: 2017-04-19
 last_modified_at: 2017-04-19
 redirect_from:
   - /p/jms.html
-  - /jms.html
+  - /jms/
 ---
 
 <figure>
