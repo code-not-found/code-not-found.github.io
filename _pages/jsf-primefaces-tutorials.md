@@ -18,7 +18,7 @@ They all come with **detailed explanations**, source code, and accompanying test
 
 So let's get to work.
 
-## What is PrimeFaces?
+## What is PrimeFaces for JSF?
 
 [PrimeFaces](http://primefaces.org/){:target="_blank"} is an open source component library for JavaServer Faces (JSF).
 
