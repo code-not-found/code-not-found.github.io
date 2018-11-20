@@ -26,6 +26,8 @@ Spring Batch is a [Spring main project](https://spring.io/projects){:target="_bl
 
 ## Tutorials
 
+If you would like to request a new tutorial, leave a comment below.
+
 * [Spring Batch Hello World Example]({{ site.url }}/spring-batch-example.html)
 * [Spring Batch Admin Example]({{ site.url }}/spring-batch-admin-example.html)
 * [Spring Batch Tasklet Example]({{ site.url }}/spring-batch-tasklet-example.html)
