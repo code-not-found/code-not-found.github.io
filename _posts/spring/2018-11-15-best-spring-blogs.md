@@ -75,9 +75,9 @@ Favorite post: [Spring Batch Tutorial: Creating a Custom ItemReader](https://www
 
 This concludes our roundup of Spring blogs.
 
-Have fun reading!
+_Have fun reading!_
 
-Don't see your favorite blog on the list? Then suggest it in the comments below.
+Don't see your favorite blog on the list? Then **suggest it in the comments below**.
 
 In order for a blog to be listed, I use the following criteria:
 * The blog is mostly about Java/Spring
