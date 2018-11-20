@@ -292,8 +292,6 @@ defaults:
       comments: true
       share: false
       related: false
-      header:
-        overlay_color: "#00b294"
   # _pages
   - scope:
       path: ""
