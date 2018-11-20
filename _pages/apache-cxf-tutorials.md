@@ -1,9 +1,9 @@
 ---
-title: "Apache CXF - JAX-WS"
-permalink: /cxf-jaxws/
-excerpt: "Step-by-step tutorials on Apache CXF and JAX-WS"
+title: "Apache CXF Tutorials"
+permalink: /apache-cxf-tutorials
+excerpt: "Detailed step-by-step tutorials on how to use Apache CXF."
 date: 2017-07-21
-last_modified_at: 2018-01-06
+last_modified_at: 2018-11-20
 ---
 
 <figure>

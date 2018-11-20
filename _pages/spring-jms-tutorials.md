@@ -1,7 +1,7 @@
 ---
 title: "Spring JMS Tutorials"
 permalink: /spring-jms-tutorials
-excerpt: "Step-by-step tutorials on Spring JMS"
+excerpt: "Detailed step-by-step tutorials on how to use Spring JMS."
 date: 2017-05-01
 last_modified_at: 2017-12-13
 ---

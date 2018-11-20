@@ -1,9 +1,9 @@
 ---
-title: "Spring Web Services"
-permalink: /spring-ws/
-excerpt: "Step-by-step tutorials on Spring-WS"
+title: "Spring WS Tutorials"
+permalink: /spring-ws-tutorials
+excerpt: "Detailed step-by-step tutorials on how to use Spring Web Services."
 date: 2017-04-18
-modified: 2017-04-18
+last_modified_at: 2017-04-18
 ---
 
 <figure>

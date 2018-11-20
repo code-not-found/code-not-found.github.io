@@ -1,7 +1,7 @@
 ---
-title: "Spring for Apache Kafka Tutorials"
+title: "Spring Kafka Tutorials"
 permalink: /spring-kafka-tutorials
-excerpt: "Step-by-step tutorials on Spring Kafka"
+excerpt: "Detailed step-by-step tutorials on how to use Spring for Apache Kafka."
 date: 2017-04-15
 last_modified_at: 2017-07-15
 ---
