@@ -59,9 +59,6 @@ $masthead-link-color-hover: $text-white !default;
 /* Footer */
 $footer-background-color: $blue !default;
 
-.page__footer-follow .social-icons{
-  color: $text-white !important;
-}
 .page__footer-copyright {
   color: $text-light-blue;
 }
@@ -140,7 +137,7 @@ blockquote {
 
 
 }
-
+/* TODO */
 nav.pagination a.pagination--pager:hover, nav.pagination a.pagination--pager:active {
   text-decoration: underline
 }
@@ -154,12 +151,13 @@ div .highlighter-rouge {
 
 /* Archives */
 .archive__item-title {
-  color: $text-black;
+  color: $text-black !important;
 }
 .archive__subtitle {
   color: $text-grey;
 }
 
+/* TODO */
 /*splash*/
 .feature__item .btn {
   color: #fff;
