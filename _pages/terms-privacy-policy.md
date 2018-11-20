@@ -1,9 +1,10 @@
 ---
-permalink: /terms
 title: "Terms and Privacy Policy"
+permalink: /terms-privacy-policy
+excerpt: "Terms and Privacy Policy of CodeNotFound."
 date: 2017-02-26
-modified: 2017-05-03
-share: false
+last_modified_at: 2018-11-20
+comments: false
 ---
 
 ## Privacy Policy

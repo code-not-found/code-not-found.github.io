@@ -2,6 +2,7 @@
 title: "Contact"
 permalink: /contact
 excerpt: "Contact page of CodeNotFound."
+comments: false
 ---
 
 You can get in touch with us using the form below.

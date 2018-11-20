@@ -4,6 +4,7 @@ permalink: /spring-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use the Spring framework."
 date: 2018-11-19
 last_modified_at: 2018-11-19
+comments: false
 feature_row_no_button:
   - url: /spring-kafka-tutorials
     image_path: /assets/images/spring-kafka/spring-kafka-tutorials.png

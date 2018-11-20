@@ -1,10 +1,10 @@
 # main links
 main:
   - title: "Blog"
-    url: https://www.codenotfound.com/blog/
+    url: https://codenotfound.com/blog/
   - title: "Spring Tutorials"
-    url: https://www.codenotfound.com/spring-tutorials
+    url: https://codenotfound.com/spring-tutorials
   - title: "Contact"
     url: https://www.codenotfound.com/contact
   - title: "Terms and Privacy"
-    url: https://www.codenotfound.com/terms
+    url: https://codenotfound.com/terms-privacy-policy
