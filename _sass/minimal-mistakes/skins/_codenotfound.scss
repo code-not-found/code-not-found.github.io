@@ -59,6 +59,9 @@ $masthead-link-color-hover: $text-white !default;
 /* Footer */
 $footer-background-color: $blue !default;
 
+.page__footer-follow {
+  color: $text-white;
+}
 .page__footer-copyright {
   color: $text-light-blue;
 }
@@ -150,7 +153,7 @@ div .highlighter-rouge {
 }
 
 /* Archives */
-.archive__item-title {
+.archive__item-title a {
   color: $text-black !important;
 }
 .archive__subtitle {
