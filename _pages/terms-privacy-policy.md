@@ -17,7 +17,6 @@ First and foremost, we will never share your email address or any other personal
 
 Like many other websites, CodeNotFound.com uses log files to help learn about when, from where, and how often traffic flows to this site. The information in these log files include:
 
-* Internet Protocol addresses (IP)
 * Types of browser
 * Internet Service Provider (ISP)
 * Date and time stamp
@@ -30,23 +29,19 @@ Third-party advertisers may also place and read cookies on your browser and/or u
 
 If you wish to disable cookies, you may do so through your web browser options. Instructions for doing so can be found on the specific web browsers' websites.
 
-#### Amazon
+#### Google Analytics
 
-Amazon, a third party affiliate marketing network, uses cookies to help make sure we get a commission when you buy a product after clicking on a link or ad banner that takes you to the site of one of their merchants. You can read [Amazon's Privacy Policy](http://www.amazon.com/gp/help/customer/display.html?nodeId=468496).
+Google Analytics is a web analytics tool we use to help understand how visitors engage with this website. It reports website trends using cookies and web beacons without identifying individual visitors. You can read [Google Analytics Privacy Policy](http://www.google.com/analytics/learn/privacy.html).
 
 #### Google Adsense
 
 Google Adsense, a third party affiliate marketing network, uses cookies to help make sure we get a commission when you buy a product after clicking on a link or ad banner that takes you to the site of one of their merchants. You can read [Google Adsense Privacy Policy](http://support.google.com/adsense/bin/answer.py?hl=en&answer=48182).
 
-#### Google Analytics
-
-Google Analytics is a web analytics tool we use to help understand how visitors engage with this website. It reports website trends using cookies and web beacons without identifying individual visitors. You can read [Google Analytics Privacy Policy](http://www.google.com/analytics/learn/privacy.html).
-
 ## Disclosure Policy
 
 We make money on this website through affiliate programs. If you click an affiliate link or ad banner and buy the product, you help support this website because we'll get a percentage of that sale.
 
-Currently, we are an affiliate for Amazon and Google Adsense.
+Currently, we are an affiliate for Google Adsense.
 
 What this means for you:
 
