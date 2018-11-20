@@ -87,6 +87,7 @@ $link-color-visited: $dark-blue !default;
 }
 .title-image {
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 h2 {
   color: #222222;
@@ -112,7 +113,7 @@ blockquote {
 .page__content {
   .notice--primary {
     color: #fff;
-    background-color: $blue;
+    background-color: $dark-blue;
     font-size: 1em !important;
   }
   .notice--primary a:link, .notice--primary a:visited, .notice--primary a:hover, .notice--primary a:active {
