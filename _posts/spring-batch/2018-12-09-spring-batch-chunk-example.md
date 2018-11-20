@@ -7,7 +7,7 @@ last_modified_at: 2018-11-20
 header:
   teaser: "assets/images/spring-batch/spring-batch-scheduler.png"
 categories: [Spring Batch]
-tags: [Example, Maven, Scheduler, Spring Batch, Spring Boot, Tutorial]
+tags: [Chunk, Example, Maven, Spring Batch, Spring Boot, Tutorial]
 published: false
 ---
 
