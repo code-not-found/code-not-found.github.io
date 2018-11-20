@@ -9,9 +9,9 @@ feature_row_no_button_1:
 - url: /apache-cxf-tutorials
   image_path: /assets/images/apache-cxf/apache-cxf-tutorials.png
   alt: "apache cxf tutorials"
-- url: /primefaces-tutorials
-  image_path: /assets/images/primefaces/primefaces-tutorials.png
-  alt: "primefaces tutorials"
+- url: /jsf-primefaces-tutorials
+  image_path: /assets/images/jsf-primefaces/jsf-primefaces-tutorials.png
+  alt: "jsf primefaces tutorials"
 - url: /jms-tutorials
   image_path: /assets/images/jms/jms-tutorials.png
   alt: "jms tutorials"
