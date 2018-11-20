@@ -23,6 +23,9 @@ So if you're a Spring Batch beginner, **you'll love this guide**.
 
 Ready?
 
+If you want to learn more about Spring Batch - head on over to the [Spring Batch tutorials page]({{ site.url }}/spring-batch-tutorials).
+{: .notice--primary}
+
 ## 1. How Does the Spring Batch Framework Work?
 
 Before we dive into the code let's look at the Spring Batch framework. It contains following key building blocks:
