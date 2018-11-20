@@ -20,9 +20,9 @@ So let's take a closer look.
 
 ## What is Spring WS?
 
-[Spring Web Services](http://projects.spring.io/spring-ws/){:target="_blank"} (Spring-WS) is a product of the Spring community focused on creating document-driven Web services.
+Spring Web Services (Spring-WS) is a product of the Spring community focused on creating document-driven [Web services](https://en.wikipedia.org/wiki/Web_service){:target="_blank"}.
 
-It facilitates contract-first SOAP service development, allowing for a number of ways to manipulate XML payloads.
+It facilitates contract-first [SOAP](https://en.wikipedia.org/wiki/SOAP){:target="_blank"} service development, allowing for a number of ways to manipulate [XML](https://en.wikipedia.org/wiki/XML){:target="_blank"} payloads.
 
 Spring-WS is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
