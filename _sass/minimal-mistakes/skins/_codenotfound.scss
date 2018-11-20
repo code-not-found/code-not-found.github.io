@@ -64,7 +64,7 @@ $footer-background-color: $blue !default;
 
 /* Body */
 $text-color: $text-black !default;
-$link-color: $orange !default;
+$link-color: $blue !default;
 $link-color-hover: $orange !default;
 $link-color-visited: $orange !default;
 
@@ -106,7 +106,7 @@ kbd {
   color: $dark-blue;
 }
 blockquote {
-  border-left-color: $orange !important;
+  border-left-color: $blue !important;
 }
 .page__content {
   .notice--primary {
