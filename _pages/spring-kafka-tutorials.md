@@ -1,6 +1,6 @@
 ---
 title: "Spring for Apache Kafka"
-permalink: /spring-kafka/
+permalink: /spring-kafka-tutorials
 excerpt: "Step-by-step tutorials on Spring Kafka"
 date: 2017-04-15
 modified: 2017-07-15
