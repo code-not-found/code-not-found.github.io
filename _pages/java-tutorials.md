@@ -14,4 +14,6 @@ feature_row_no_button:
     alt: "primefaces tutorials"
 ---
 
+Check out below Java learning resources. They will help you to develop your application by example.
+
 {% include feature_row_no_button %}

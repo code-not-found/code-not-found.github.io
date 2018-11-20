@@ -17,4 +17,6 @@ feature_row_no_button:
     alt: "spring batch tutorials"
 ---
 
+Check out below Spring learning resources. They will help you to develop your application by example.
+
 {% include feature_row_no_button %}
