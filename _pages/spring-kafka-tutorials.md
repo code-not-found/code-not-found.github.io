@@ -8,7 +8,7 @@ redirect_from:
   - /spring-kafka/
 ---
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-kafka-tutorials.png" alt="spring kafka tutorials" class="align-right title-image">
+<img src="{{ site.url }}/assets/images/spring-kafka/spring-kafka-tutorials.png" alt="spring kafka tutorials" class="align-right title-image">
 
 Below tutorials will help you get up and running with [Spring Batch](https://spring.io/projects/spring-kafka){:target="_blank"} in record time.
 
