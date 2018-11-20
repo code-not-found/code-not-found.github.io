@@ -21,6 +21,7 @@ $background-color: $background-white !default;
 
 /* Layout */
 .header-ads {
+  margin-top: 20px;
   margin-bottom: 40px;
 }
 ins.adsbygoogle {
@@ -64,9 +65,9 @@ $footer-background-color: $blue !default;
 
 /* Body */
 $text-color: $text-black !default;
-$link-color: $blue !default;
-$link-color-hover: $blue !default;
-$link-color-visited: $blue !default;
+$link-color: $dark-blue !default;
+$link-color-hover: $dark-blue !default;
+$link-color-visited: $dark-blue !default;
 
 .archive__subtitle {
   border-bottom-color: $divider-grey;
@@ -103,7 +104,7 @@ p var, li var {
   font-style: normal;
 }
 kbd {
-  color: $dark-blue;
+  color: $orange;
 }
 blockquote {
   border-left-color: $blue !important;
