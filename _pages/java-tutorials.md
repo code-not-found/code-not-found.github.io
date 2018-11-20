@@ -17,6 +17,6 @@ feature_row_no_button_1:
   alt: "jms tutorials"
 ---
 
-Check out below [Java](https://en.wikipedia.org/wiki/Java_(programming_language)){:target="_blank"} learning resources. They will help you to develop your application by example.
+Check out below [Java](https://en.wikipedia.org/wiki/Java_(programming_language)){:target="_blank"} learning resources. They contain detailed examples that will help you to develop your application.
 
 {% include feature_row_no_button id="feature_row_no_button_1" %}

@@ -21,7 +21,7 @@ feature_row_no_button_2:
   alt: "spring kafka tutorials"
 ---
 
-Check out below [Spring](https://spring.io/projects){:target="_blank"} learning resources. They will help you to develop your application by example.
+Check out below [Spring](https://spring.io/projects){:target="_blank"} learning resources. They contain detailed examples that will help you to develop your application.
 
 {% include feature_row_no_button id="feature_row_no_button_1" %}
 
