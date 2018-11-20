@@ -10,7 +10,7 @@ redirect_from:
 
 <img src="{{ site.url }}/assets/images/spring-kafka/spring-kafka-tutorials.png" alt="spring kafka tutorials" class="align-right title-image">
 
-Below tutorials will help you get up and running with [Spring Batch](https://spring.io/projects/spring-kafka){:target="_blank"} in record time.
+Below tutorials will help you get up and running with [Spring Kafka](https://spring.io/projects/spring-kafka){:target="_blank"} in record time.
 
 The best part?
 
@@ -20,7 +20,7 @@ So here we go.
 
 ## What is Spring Kafka?
 
-The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/spring-kafka/){:target="_blank"} applies core Spring concepts to the development of Kafka-based messaging solutions.
+The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of [Kafka](https://kafka.apache.org/){:target="_blank"}-based messaging solutions.
 
 It provides a 'template' as a high-level abstraction for sending messages. It also contains support for Message-driven POJOs with `@KafkaListener` annotations and a listener container.
 
