@@ -23,7 +23,7 @@ A web service exposed on HTTPS provides **authentication** of the associated web
 
 The following example shows how to configure both client and server in order to consume and respectively expose a web service over HTTPS using Spring-WS, Spring Boot, and Maven.
 
-If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
+If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws-tutorials).
 {: .notice--primary}
 
 # General Project Setup
@@ -199,14 +199,14 @@ javax.net.ssl.SSLHandshakeException: java.security.cert.CertificateException: No
 
 The reason for this is that when the HTTPS client connects to a server, it's not enough for a certificate to be trusted, it also has to match the server you want to talk to. In other words, the client verifies that the hostname in the certificate matches the hostname of the server. For more detailed information check [this answer on Stack Overflow](http://stackoverflow.com/a/3093650/4201470){:target="_blank"}.
 
-In order to fix this problem, we could regenerate the server keypair so it contains <var>'localhost'</var>. You can find the needed keytool command in the [Spring WS mutual authentication tutorial]({{ site.url }}/spring-ws-mutual-authentication-example.html). 
+In order to fix this problem, we could regenerate the server keypair so it contains <var>'localhost'</var>. You can find the needed keytool command in the [Spring WS mutual authentication tutorial]({{ site.url }}/spring-ws-mutual-authentication-example.html).
 
 Another option, which we will use in this example, is to turn hostname verification off. Apache ships a `NoopHostnameVerifier` that can be used for this. Simply pass an instance to the `SSLConnectionSocketFactory` constructor. Note that this is not something you would want to do in production!
 
-There is one last problem we need to take care of. The `HttpComponentsMessageSender` has [two constructors](https://github.com/spring-projects/spring-ws/blob/master/spring-ws-core/src/main/java/org/springframework/ws/transport/http/HttpComponentsMessageSender.java){:target="_blank"}, with and without `HttpClient`, and the one with `HttpClient` omits adding a `SoapRemoveHeaderInterceptor`. The `HttpClient` throws an exception if <var>Content-Length</var> or <var>Transfer-Encoding</var> headers have been set. 
+There is one last problem we need to take care of. The `HttpComponentsMessageSender` has [two constructors](https://github.com/spring-projects/spring-ws/blob/master/spring-ws-core/src/main/java/org/springframework/ws/transport/http/HttpComponentsMessageSender.java){:target="_blank"}, with and without `HttpClient`, and the one with `HttpClient` omits adding a `SoapRemoveHeaderInterceptor`. The `HttpClient` throws an exception if <var>Content-Length</var> or <var>Transfer-Encoding</var> headers have been set.
 
 So in order to make sure those headers are not present we add the `SoapRemoveHeaderInterceptor` by using the `addInterceptorFirst()` method on the `HttpClientBuilder`.
- 
+
 
 ``` java
 package com.codenotfound.ws.client;

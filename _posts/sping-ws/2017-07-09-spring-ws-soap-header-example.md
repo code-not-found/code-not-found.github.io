@@ -21,7 +21,7 @@ The [SOAP header](https://www.w3.org/TR/2000/NOTE-SOAP-20000508/#_Toc478383497){
 
 The below example details how a web service client can set a SOAP header on an outgoing request. It also illustrates how a server endpoint can then get the SOAP header from an incoming request. Both client and server are realized using Spring-WS, Spring Boot, and Maven.
 
-If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
+If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws-tutorials).
 {: .notice--primary}
 
 # General Project Setup

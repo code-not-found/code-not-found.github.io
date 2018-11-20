@@ -24,7 +24,7 @@ The following step by step tutorial illustrates a basic example in which we will
 
 The tutorial code is organized in such a way that you can choose to only run the [client]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html#creating-the-endpoint-provider) (provider) part. In the below example we will setup both parts and then make an end-to-end test in which the client calls the endpoint.
 
-If you want to learn more about Spring WS - head on over to the [Spring-WS tutorials page]({{ site.url }}/spring-ws/).
+If you want to learn more about Spring WS - head on over to the [Spring-WS tutorials page]({{ site.url }}/spring-ws-tutorials).
 {: .notice--primary}
 
 # General Project Setup

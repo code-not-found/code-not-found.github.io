@@ -42,7 +42,7 @@ The credentials are provided as a HTTP header field called <var>'Authorization'<
 
 Instead of writing custom code to create and check the HTTP authorization header we will configure Spring WS and Spring Boot to do the work for us. The below example illustrates how a client and server can be configured to apply basic access authentication using Spring-WS, Spring Boot, and Maven.
 
-If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
+If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws-tutorials).
 {: .notice--primary}
 
 # General Project Setup

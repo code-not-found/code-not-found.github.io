@@ -21,7 +21,7 @@ According to the SOAP 1.1 specification, the [SOAPAction HTTP header field](http
 
 The below example illustrates how a client can set the SOAPAction header and how a server endpoint can leverage the `@SoapAction` annotation to receive the request using Spring-WS, Spring Boot, and Maven.
 
-If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
+If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws-tutorials).
 {: .notice--primary}
 
 # General Project Setup
@@ -313,7 +313,7 @@ public class SoapActionMatcher implements RequestMatcher {
 }
 ```
 
-In the test case, we add the `SoapActionMatcher` as expected match to the `MockWebServiceServer` and check the result by calling the `verify()` method. 
+In the test case, we add the `SoapActionMatcher` as expected match to the `MockWebServiceServer` and check the result by calling the `verify()` method.
 
 ``` java
 package com.codenotfound.ws.client;

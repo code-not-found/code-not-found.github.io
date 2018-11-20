@@ -27,7 +27,7 @@ Fowler highlights three main points when working with XML:
 
 The following example will apply the tolerant reader design pattern to both the consumer and provider of a SOAP web service implemented using Spring-WS, Spring Boot, and Maven.
 
-If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
+If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws-tutorials).
 {: .notice--primary}
 
 # General Project Setup

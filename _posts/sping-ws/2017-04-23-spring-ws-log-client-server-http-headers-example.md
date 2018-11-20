@@ -24,7 +24,7 @@ It is however still possible to log the client and server HTTP headers by creati
 
 The following example shows how to log the HTTP headers of messages that are being sent/received using Spring-WS, Spring Boot, and Maven.
 
-If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
+If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws-tutorials).
 {: .notice--primary}
 
 # General Project Setup
@@ -204,7 +204,7 @@ public class ClientConfig {
 
 For the server-side we create an `LogHttpHeaderEndpointInterceptor` which implements the `EndpointInterceptor` interface. We add the `logMessage()` method to the request and response processing flows respectively.
 
-> Note that `true` needs to be returned on each handle method otherwise the processing is interrupted. 
+> Note that `true` needs to be returned on each handle method otherwise the processing is interrupted.
 
 ``` java
 package com.codenotfound.ws.interceptor;

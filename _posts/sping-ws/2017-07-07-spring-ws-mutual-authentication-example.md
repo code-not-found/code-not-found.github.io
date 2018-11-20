@@ -22,7 +22,7 @@ published: true
 
 This example shows how to configure both client and server so that mutual authentication using certificates is enabled on a web service using Spring-WS, Spring Boot, and Maven.
 
-If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws/).
+If you want to learn more about Spring WS - head on over to the [Spring WS tutorials page]({{ site.url }}/spring-ws-tutorials).
 {: .notice--primary}
 
 # General Project Setup
@@ -247,6 +247,6 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this tutorial, we covered setting up mutual certificate authentication using Spring WS and Spring Boot. 
+In this tutorial, we covered setting up mutual certificate authentication using Spring WS and Spring Boot.
 
 Drop a line below if you encounter some problems or just to say thanks.

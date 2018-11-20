@@ -21,7 +21,7 @@ When implementing a web service client, it is a good practice to take into accou
 
 The following step by step tutorial illustrates an example in which we will configure a Spring-WS timeout at client side. In addition, we will show how to handle the timeout exception. The example will use Spring Boot and Maven in order to configure, build and run.
 
-If you want to learn more about Spring WS - head on over to the [Spring-WS tutorials page]({{ site.url }}/spring-ws/).
+If you want to learn more about Spring WS - head on over to the [Spring-WS tutorials page]({{ site.url }}/spring-ws-tutorials).
 {: .notice--primary}
 
 # General Project Setup
@@ -187,7 +187,7 @@ public class ClientConfig {
 
 The `WebServiceTemplate` will now throw an exception in case a timeout occurs. As such we need to handle this in our `TicketAgentClient` implementation.
 
-We add a try/catch block around the `marshalSendAndReceive()` method in order to catch the timeout exception. If the exception occurs we log it and create an empty flight list to be returned. 
+We add a try/catch block around the `marshalSendAndReceive()` method in order to catch the timeout exception. If the exception occurs we log it and create an empty flight list to be returned.
 
 ``` java
 package com.codenotfound.ws.client;
