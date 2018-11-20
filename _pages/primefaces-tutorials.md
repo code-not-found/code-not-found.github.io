@@ -1,16 +1,16 @@
 ---
-title: "PrimeFaces Tutorials"
-permalink: /primefaces-tutorials
-excerpt: "Detailed step-by-step tutorials on how to use PrimeFaces."
+title: "JSF PrimeFaces Tutorials"
+permalink: /jsf-primefaces-tutorials
+excerpt: "Detailed step-by-step tutorials on how to use PrimeFaces for JSF."
 date: 2017-12-30
 last_modified_at: 2018-11-20
 redirect_from:
   - /jsf-primefaces/
 ---
 
-<img src="{{ site.url }}/assets/images/primefaces/primefaces-tutorials.png" alt="primefaces tutorials" class="align-right title-image">
+<img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-tutorials.png" alt="jsf primefaces tutorials" class="align-right title-image">
 
-Following tutorials will help you learn how to use [PrimeFaces](https://en.wikipedia.org/wiki/PrimeFaces){:target="_blank"} in no time.
+Following tutorials will help you learn how to use [PrimeFaces](https://en.wikipedia.org/wiki/PrimeFaces){:target="_blank"} for [JSF](https://en.wikipedia.org/wiki/JavaServer_Faces){:target="_blank"} in no time.
 
 The best part?
 
