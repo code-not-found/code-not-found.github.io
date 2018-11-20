@@ -44,7 +44,6 @@ _If you would like to request a new tutorial, leave a comment below._
 
 ## References
 
-* [PrimeFaces](http://primefaces.org/){:target="_blank"}
 * [PrimeFaces - Showcase](https://www.primefaces.org/showcase/){:target="_blank"}
 * [PrimeFaces - Documentation](https://www.primefaces.org/documentation/){:target="_blank"}
 * [GitHub - primefaces/primefaces](https://github.com/primefaces/primefaces){:target="_blank"}

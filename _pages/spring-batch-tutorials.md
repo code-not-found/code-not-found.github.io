@@ -14,7 +14,7 @@ The best part?
 
 They all come with **detailed explanations**, source code, and accompanying test cases.
 
-Let’s get started…
+Let's get started…
 
 ## What is Spring Batch?
 

@@ -17,7 +17,7 @@ The best part?
 
 They all come with **detailed explanations**, source code, and accompanying test cases.
 
-Let’s get this show on the road.
+Let's get this show on the road.
 
 ## What is JMS?
 
