@@ -369,7 +369,7 @@ Click on <var>Register one or more applications</var>.
 
 Enter <kbd>capitalize-names-app</kbd> as <var>name</var> of our application and select <kbd>Task</kbd> as <var>type</var>.
 
-For the <var>URI</var> we enter the location of our Spring Boot Task JAR. In this example the JAR file is located at: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
+For the <var>URI</var> we enter the location of our Spring Boot Task JAR. In this example, the JAR file is located at: <kbd>file://C:/Users/Codenotfound/repos/spring-batch/spring-batch-admin/spring-batch-task/target/spring-batch-task-0.0.1-SNAPSHOT.jar</kbd>
 
 Once done click on <var>Register the application(s)</var>.
 
