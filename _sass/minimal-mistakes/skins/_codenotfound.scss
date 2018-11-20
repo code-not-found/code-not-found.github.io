@@ -22,7 +22,7 @@ $background-color: $background-white !default;
 /* Layout */
 .header-ads {
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 ins.adsbygoogle {
   border-bottom: none !important;
@@ -124,7 +124,7 @@ blockquote {
   }
   .notice--info {
     color: #fff;
-    background-color: $dark-blue;
+    background-color: $blue;
     min-height: 80px;
   }
   .notice--info p {

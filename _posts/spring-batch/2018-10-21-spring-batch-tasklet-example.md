@@ -23,6 +23,9 @@ Because today I'm going to show you a detailed example.
 
 Let's do this!
 
+If you want to learn more about Spring Batch - head on over to the [Spring Batch tutorials page]({{ site.url }}/spring-batch-tutorials).
+{: .notice--primary}
+
 ## 1. What is a Spring Batch Tasklet?
 
 In Spring batch, a `Tasklet` is an interface that performs a single task within a `Step`. A typical use case for implementing a `Tasklet` is the setup up or cleaning of resources before or after the execution of a `Step`.

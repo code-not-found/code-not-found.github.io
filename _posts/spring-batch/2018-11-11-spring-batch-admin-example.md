@@ -23,6 +23,9 @@ And how to set it up.
 
 Let's dive right in.
 
+If you want to learn more about Spring Batch - head on over to the [Spring Batch tutorials page]({{ site.url }}/spring-batch-tutorials).
+{: .notice--primary}
+
 ## 1. What is Spring Batch Admin?
 
 Spring Batch Admin provides a web-based user interface (UI) that allows you to manage [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} jobs. The project, however, is **end-of-life since December 31, 2017**.
