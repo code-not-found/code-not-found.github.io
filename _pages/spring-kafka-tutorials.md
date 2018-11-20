@@ -1,9 +1,9 @@
 ---
-title: "Spring for Apache Kafka"
+title: "Spring for Apache Kafka Tutorials"
 permalink: /spring-kafka-tutorials
 excerpt: "Step-by-step tutorials on Spring Kafka"
 date: 2017-04-15
-modified: 2017-07-15
+last_modified_at: 2017-07-15
 ---
 
 <figure>

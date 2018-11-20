@@ -1,9 +1,9 @@
 ---
-title: "Spring JMS"
-permalink: /spring-jms/
+title: "Spring JMS Tutorials"
+permalink: /spring-jms-tutorials
 excerpt: "Step-by-step tutorials on Spring JMS"
 date: 2017-05-01
-modified: 2017-12-13
+last_modified_at: 2017-12-13
 ---
 
 <figure>
