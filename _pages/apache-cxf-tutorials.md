@@ -36,7 +36,6 @@ _If you would like to request a new tutorial, leave a comment below._
 
 ## References
 
-* [Apache CXF](http://cxf.apache.org/){:target="_blank"}
 * [Apache CXF User's Guide](http://cxf.apache.org/docs/index.html){:target="_blank"}
 * [GitHub - apache/cxf](https://github.com/apache/cxf){:target="_blank"}
 * [Stack Overflow - Apache CXF Questions](https://stackoverflow.com/questions/tagged/cxf){:target="_blank"}
