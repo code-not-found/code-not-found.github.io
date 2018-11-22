@@ -31,11 +31,11 @@ If you want to learn more about PrimeFaces for JSF - head on over to the [JSF Pr
 
 [PrimeFaces](https://en.wikipedia.org/wiki/PrimeFaces){:target="_blank"} is an open source component library for [JavaServer Faces](http://www.oracle.com/technetwork/java/javaee/javaserverfaces-139869.html){:target="_blank"} (JSF).
 
-It provides a collection of mostly visual components (widgets) that can be used by JSF programmers to build the UI for a web application.
+It provides a collection of **mostly visual components (widgets)** that can be used by JSF programmers to build the UI for a web application.
 
 An overview of these widgets can be found at the [PrimeFaces showcase](http://www.primefaces.org/showcase/){:target="_blank"}.
 
-In the following tutorial, we will build and run a Hello World example using PrimeFaces, Spring Boot, and Maven.
+To show PrimeFaces in action, we will build and run a Hello World example using Spring Boot, and Maven.
 
 The example consists out of a basic web page that contains two input fields and a submit button. When you click on the button a greeting popup is displayed that uses the values from the input fields.
 
@@ -63,7 +63,7 @@ It can auto-configure PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces
 
 JoinFaces imports its dependency versions using [dependency management](https://github.com/spring-projects/spring-boot/wiki/Building-On-Spring-Boot#dependency-management){:target="_blank"}.
 
-To facilitate the management of the different Spring JSF dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-3.x){:target="_blank"} can be used. These are a set of convenient dependency descriptors that you can include in your application. There are several JoinFaces Starters available: basic starters, utility starters, meta starter, component starters, theme starters and extra starters.
+To facilitate the management of the different Spring JSF dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-3.x){:target="_blank"} can be used. These are a set of convenient dependency descriptors that you can include in your application. There are several JoinFaces Starters available: basic starters, utility starters, meta starter, component starters, theme starters, and extra starters.
 
 In this example, we will use the `primefaces-spring-boot-starter` which imports the needed dependencies for PrimeFaces and Spring Boot.
 
@@ -192,11 +192,11 @@ public class HelloWorld {
 }
 {% endhighlight %}
 
-The web page that will be shown is a standard JSF page as defined below. It contains a number of PrimeFaces components which include two <var>&lt;p:inputText&gt;</var> fields. These are used to enter a first and last name.
+The web page that will be shown is a standard JSF page as defined below. It contains some PrimeFaces components which include two <var>&lt;p:inputText&gt;</var> fields. These are used to enter a first and last name.
 
 There is also a <var>&lt;p:dialog&gt;</var> component that shows a greeting message. The dialog is triggered by a <var>&lt;p:commandButton&gt;</var>.
 
-In order to use the PrimeFaces components, the following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
+TSo use the PrimeFaces components, the following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
 
 > Note that JSF artifiacts like <var>.xhtml</var> and <var>.jsf</var> files need to be placed under the <var>src/main/resources/META-INF/resources</var> folder.
 
@@ -283,7 +283,7 @@ Maven will download the needed dependencies, compile the code and start an Apach
 2018-11-21 20:12:22.662  INFO 12892 --- [           main] c.c.p.SpringPrimeFacesApplication        : Started SpringPrimeFacesApplication in 4.874 seconds (JVM running for 11.745)
 {% endhighlight %}
 
-Open a web browser and enter following URL: [http://localhost:8080/helloworld.xhtml](http://localhost:8080/helloworld.xhtml){:target="_blank"}. The below web page should now be displayed.
+Open a web browser and enter the following URL: [http://localhost:8080/helloworld.xhtml](http://localhost:8080/helloworld.xhtml){:target="_blank"}. The below web page should now be displayed.
 
 <img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-hello-world-example.png" alt="jsf primefaces hello world example">
 
