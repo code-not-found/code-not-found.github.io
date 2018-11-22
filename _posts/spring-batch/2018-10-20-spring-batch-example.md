@@ -13,7 +13,7 @@ redirect_from:
 published: true
 ---
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-example.png" alt="spring batch hello world example" class="align-right title-image">
+<img src="{{ site.url }}/assets/images/spring-batch/spring-batch-example.png" alt="spring batch example" class="align-right title-image">
 
 I'm going to show you exactly how to create a [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} and [Maven](https://maven.apache.org/){:target="_blank"}.
 
@@ -436,7 +436,7 @@ public class SpringBatchApplicationTests {
 }
 {% endhighlight %}
 
-To trigger above test case, open a command prompt in the projects root folder and execute following Maven command:
+To trigger above test case, open a command prompt in the project root folder and execute following Maven command:
 
 {% highlight plaintext %}
 mvn test
