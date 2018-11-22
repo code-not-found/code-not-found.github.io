@@ -63,7 +63,7 @@ It can auto-configure PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces
 
 JoinFaces imports its dependency versions using [dependency management](https://github.com/spring-projects/spring-boot/wiki/Building-On-Spring-Boot#dependency-management){:target="_blank"}.
 
-To facilitate the management of the different Spring JSF dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-3.x){:target="_blank"} can be used. These are a set of convenient dependency descriptors that you can include in your application. There are several JoinFaces Starters available: basic starters, utility starters, meta starter, component starters, theme starters, and extra starters.
+To facilitate the management of the different Spring JSF dependencies, [JoinFaces Spring Boot Starters](https://github.com/joinfaces/joinfaces/wiki/JoinFaces-Starters-3.x){:target="_blank"} can be used. These are a set of **convenient dependency descriptors** that you can include in your application. There are several JoinFaces Starters available: basic starters, utility starters, meta starter, component starters, theme starters, and extra starters.
 
 In this example, we will use the `primefaces-spring-boot-starter` which imports the needed dependencies for PrimeFaces and Spring Boot.
 
