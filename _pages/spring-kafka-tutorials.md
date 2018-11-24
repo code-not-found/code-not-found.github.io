@@ -30,7 +30,7 @@ Spring Kafka is a [Spring main project](https://spring.io/projects){:target="_bl
 
 _If you would like to request a new tutorial, leave a comment below._
 
-* [Spring Kafka - Consumer Producer Example]({{ site.url }}/spring-kafka-consumer-producer-example.html)
+* [Spring Kafka Consumer Producer Example]({{ site.url }}/spring-kafka-consumer-producer-example.html)
 * [Spring Kafka - Spring Boot Example]({{ site.url }}/spring-kafka-boot-example.html)
 * [Spring Kafka - Batch Listener Example]({{ site.url }}/spring-kafka-batch-listener-example.html)
 * [Spring Kafka - JSON Serializer Deserializer Example]({{ site.url }}/spring-kafka-json-serializer-deserializer-example.html)
