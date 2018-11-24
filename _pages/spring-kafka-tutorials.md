@@ -20,9 +20,9 @@ So here we go.
 
 ## What is Spring Kafka?
 
-The Spring for Apache Kafka (spring-kafka) project applies core Spring concepts to the development of [Kafka](https://kafka.apache.org/){:target="_blank"}-based messaging solutions.
+The Spring for Apache Kafka (spring-kafka) project applies **core Spring concepts** to the development of [Kafka](https://kafka.apache.org/){:target="_blank"}-based messaging solutions.
 
-It provides a 'template' as a high-level abstraction for sending messages. It also contains support for Message-driven POJOs with `@KafkaListener` annotations and a listener container.
+It provides a _'template'_ as a high-level abstraction for sending messages. It also contains support for Message-driven POJOs with `@KafkaListener` annotations and a listener container.
 
 Spring Kafka is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
