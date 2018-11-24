@@ -57,7 +57,7 @@ Our project has the following directory structure:
 
 ## 3. Maven Setup
 
-We build and run our example using **Maven**. If not already the case make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
+We build and run our example using **Maven**. If not already the case, [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
 Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>Batch</var> as a dependency.
 
