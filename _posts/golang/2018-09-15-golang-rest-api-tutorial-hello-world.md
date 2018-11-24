@@ -15,15 +15,15 @@ published: false
 
 Want to learn **how to build a REST API using Go**?
 
-Then you’re in the right place.
+Then you're in the right place.
 
-Because in this tutorial I’m going to show you a basic Golang REST API example.
+Because in this tutorial I'm going to show you a basic Golang REST API example.
 
 The best part?
 
 I'll detail every step so you can follow along.
 
-Let’s get started!
+Let's get started!
 
 ## Introducing golang
 
