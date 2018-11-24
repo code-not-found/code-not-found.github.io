@@ -57,6 +57,8 @@ We build and run our example using **Maven**. If not already the case make sure 
 
 Shown below is the XML representation of our Maven project in a <var>pom.xml</var> file. It contains the needed dependencies to compile and run our example.
 
+To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
+
 The [JoinFaces](https://github.com/joinfaces/joinfaces#joinfaces){:target="_blank"} project enables JSF usage inside a JAR packaged [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} application.
 
 It can auto-configure PrimeFaces, PrimeFaces Extensions, BootsFaces, ButterFaces, RichFaces, OmniFaces, AngularFaces, Mojarra and MyFaces libraries to run on embedded Tomcat, Jetty or Undertow servlet containers.

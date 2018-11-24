@@ -65,6 +65,8 @@ Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to gen
 
 Click <var>Generate Project</var> to generate and download the Spring Boot project template. At the root of the project, you'll find a <var>pom.xml</var> file which is the XML representation of the Maven project.
 
+To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
+
 The generated project contains [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} that manage the different Spring dependencies.
 
 The `spring-boot-starter-batch` starter imports the Spring Boot and Spring Batch dependencies.
