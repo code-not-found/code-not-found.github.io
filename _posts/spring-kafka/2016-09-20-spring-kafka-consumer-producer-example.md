@@ -17,7 +17,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-kafka/spring-kafka-example.png" alt="spring kafka example" class="align-right title-image">
 
-In this post you're going to learn how to create a [Spring Kafka](https://spring.io/projects/spring-kafka){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} and [Maven](https://maven.apache.org/){:target="_blank"}.
+In this post, you're going to learn how to create a [Spring Kafka](https://spring.io/projects/spring-kafka){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} and [Maven](https://maven.apache.org/){:target="_blank"}.
 
 (Step-by-step)
 
@@ -36,7 +36,7 @@ It provides a _'template'_ as a high-level abstraction for sending messages. It 
 
 Spring Kafka is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
-To show how Spring Kafka works let's create simple Hello World example. We will create a sender to produce the message and a receiver to consume the message.
+To show how Spring Kafka works let's create a simple Hello World example. We will create a sender to produce the message and a receiver to consume the message.
 
 ## 2. General Project Overview
 
@@ -65,7 +65,7 @@ The generated project contains [Spring Boot Starters](https://github.com/spring-
 
 The `spring-boot-starter` dependency is the core starter, it includes auto-configuration, logging, and YAML support. The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
-A dependency to `spring-kafka` is added. We also include `spring-kafka-test` in order to have access to an embedded Kafka broker when running our unit test.
+A dependency on `spring-kafka` is added. We also include `spring-kafka-test` to have access to an embedded Kafka broker when running our unit test.
 
 > Note that the **version of Spring Kafka is linked to the version of the Apache Kafka client** that is used. You need to align the version of Spring Kafka to the version of the Kafka broker you connect to. For more information consult [the complete Kafka client compatibility list](https://spring.io/projects/spring-kafka#kafka-client-compatibility){:target="_blank"}.
 
@@ -173,7 +173,7 @@ For sending messages we will be using the `KafkaTemplate` which wraps a `Produce
 
 In the `Sender` class, the `KafkaTemplate` is auto-wired as the creation will be done further below in a separate `SenderConfig` class.
 
-For this example we will use the `send()` method that takes as input a `String` payload that needs to be sent.
+For this example, we will use the `send()` method that takes as input a `String` payload that needs to be sent.
 
 > Note that the Kafka broker default settings cause it to auto-create a topic when a request for an unknown topic is received.
 
@@ -204,7 +204,7 @@ The creation of the `KafkaTemplate` and `Sender` is handled in the `SenderConfig
 
 In order to be able to use the Spring Kafka template, we need to configure a `ProducerFactory` and provide it in the template's constructor.
 
-The producer factory needs to be set with a number of mandatory properties amongst which the <var>'BOOTSTRAP_SERVERS_CONFIG'</var> property that specifies a list of _host:port_ pairs used for establishing the initial connections to the Kafka cluster. Note that this value is configurable as it is fetched from the <var>application.yml</var> configuration file.
+The producer factory needs to be set with some mandatory properties amongst which the <var>'BOOTSTRAP_SERVERS_CONFIG'</var> property that specifies a list of _host:port_ pairs used for establishing the initial connections to the Kafka cluster. Note that this value is configurable as it is fetched from the <var>application.yml</var> configuration file.
 
 A message in Kafka is a key-value pair with a small amount of associated metadata. As Kafka stores and transports `Byte` arrays, we need to specify the format from which the key and value will be serialized. In this example we are sending a `String` as payload, as such we specify the `StringSerializer` class which will take care of the needed transformation.
 
@@ -265,7 +265,7 @@ public class SenderConfig {
 
 Like with any messaging-based application, you need to create a receiver that will handle the published messages. The `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In the below example we named the method `receive()`, but you can name it anything you like.
 
-The `@KafkaListener` annotation creates a `ConcurrentMessageListenerContainer` message listener container behind the scenes for each annotated method. In order to do so, a factory bean with name `kafkaListenerContainerFactory` is expected that we will configure in the next section.
+The `@KafkaListener` annotation creates a `ConcurrentMessageListenerContainer` message listener container behind the scenes for each annotated method. To do so, a factory bean with name `kafkaListenerContainerFactory` is expected that we will configure in the next section.
 
 Using the `topics` element, we specify the topics for this listener.
 
@@ -304,13 +304,13 @@ The creation and configuration of the different Spring Beans needed for the `Rec
 
 > Note the `@EnableKafka` annotation which enables the detection of the `@KafkaListener` annotation that was used on the previous `Receiver` class.
 
-The `kafkaListenerContainerFactory()` is used by the `@KafkaListener` annotation from the `Receiver` in order to configure a `MessageListenerContainer`. In order to create it, a `ConsumerFactory` and accompanying configuration `Map` is needed.
+The `kafkaListenerContainerFactory()` is used by the `@KafkaListener` annotation from the `Receiver` in order to configure a `MessageListenerContainer`. To create it, a `ConsumerFactory` and accompanying configuration `Map` is needed.
 
 In this example, a number of mandatory properties are set amongst which the initial connection and deserializer parameters.
 
-We also specify a <var>'GROUP_ID_CONFIG'</var> which allows to [identify the group](https://stackoverflow.com/a/41377616/4201470){:target="_blank"} this consumer belongs to. Messages will effectively be load balanced over consumer instances that have the same group id.
+We also specify a <var>'GROUP_ID_CONFIG'</var> which allows to [identify the group](https://stackoverflow.com/a/41377616/4201470){:target="_blank"} this consumer belongs to. Messages will be load balanced over consumer instances that have the same group id.
 
-On top of that we also set <var>'AUTO_OFFSET_RESET_CONFIG'</var> to <kbd>"earliest"</kbd>. This ensures that our consumer reads from the beginning of the topic even if some messages were already sent before it was able to startup.
+On top of that, we also set <var>'AUTO_OFFSET_RESET_CONFIG'</var> to <kbd>"earliest"</kbd>. This ensures that our consumer reads from the beginning of the topic even if some messages were already sent before it was able to startup.
 
 For a complete list of the other configuration parameters, you can consult the [Kafka ConsumerConfig API](https://kafka.apache.org/20/javadoc/index.html?org/apache/kafka/clients/consumer/ConsumerConfig.html){:target="_blank"}.
 
@@ -379,11 +379,11 @@ public class ReceiverConfig {
 
 ## 7. Testing the Spring Kafka Template & Listener
 
-A basic `SpringKafkaApplicationTest` is provided in order to verify that we are able to send and receive a message to and from Apache Kafka. It contains a `testReceiver()` unit test case that uses the `Sender` bean to send a message to the <var>'helloworld.t'</var> topic on the Kafka bus.
+A basic `SpringKafkaApplicationTest` is provided to verify that we are able to send and receive a message to and from Apache Kafka. It contains a `testReceiver()` unit test case that uses the `Sender` bean to send a message to the <var>'helloworld.t'</var> topic on the Kafka bus.
 
 We then check if the `CountDownLatch` from the `Receiver` was lowered from 1 to 0 as this indicates a message was processed by the `receive()` method.
 
-An embedded Kafka broker is automatically started by using the `@EmbeddedKafka` annotation.
+An embedded Kafka broker is started by using the `@EmbeddedKafka` annotation.
 
 As the embedded server is started on a random port, we provide a dedicated <var>src/test/resources/apppication.yml</var> properties file for testing which uses the `spring.embedded.kafka.brokers` system property to set the correct address of the broker(s).
 
@@ -440,7 +440,7 @@ In order to run above test case, open a command prompt in the project root folde
 mvn test
 {% endhighlight %}
 
-The result is a successful build during which a Hello World message is send and received using Kafka.
+The result is a successful build during which a Hello World message is sent and received using Kafka.
 
 {% highlight plaintext %}
 .   ____          _            __ _ _
