@@ -51,7 +51,7 @@ Our project has the following directory structure:
 
 ## 3. Maven Setup
 
-We build and run our example using **Maven**. If not already done make sure to [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
+We build and run our example using **Maven**. If not already done, [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
 Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>Kafka</var> as a dependency.
 
@@ -67,9 +67,9 @@ The `spring-boot-starter` dependency is the core starter, it includes auto-confi
 
 A dependency to `spring-kafka` is added. We also include `spring-kafka-test` in order to have access to an embedded Kafka broker when running our unit test.
 
-> Note that the version of Spring Kafka is linked to the version of the Apache Kafka client that is used. You need to align the version of Spring Kafka to the version of the Kafka broker you connect to. For more information consult [the complete Kafka client compatibility list](https://spring.io/projects/spring-kafka#kafka-client-compatibility){:target="_blank"}.
+> Note that the **version of Spring Kafka is linked to the version of the Apache Kafka client** that is used. You need to align the version of Spring Kafka to the version of the Kafka broker you connect to. For more information consult [the complete Kafka client compatibility list](https://spring.io/projects/spring-kafka#kafka-client-compatibility){:target="_blank"}.
 
-In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. It allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code. Also, the plugin allows you to start the example via a Maven command.
+In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. It allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code. Also, the plugin allows you to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -135,7 +135,7 @@ In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.
 
 ## 4. Spring Boot Setup
 
-We use Spring Boot so that we have a Spring Batch application that you can "just run". Start by creating a `SpringBatchApplication` class. It contains the `main()` method that uses Spring Boot's `SpringApplication.run()` to launch the application.
+We use Spring Boot so that we have a Spring Kafka application that you can "just run". Start by creating a `SpringKafkaApplication` class. It contains the `main()` method that uses Spring Boot's `SpringApplication.run()` to launch the application.
 
 > Note that `@SpringBootApplication` is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan`.
 
