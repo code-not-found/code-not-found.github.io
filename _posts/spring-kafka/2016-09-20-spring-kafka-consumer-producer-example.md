@@ -17,7 +17,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-kafka/spring-kafka-example.png" alt="spring kafka example" class="align-right title-image">
 
-In this post you're going to learn how to create a [Spring Kafka](https://spring.io/projects/spring-batch){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} and [Maven](https://maven.apache.org/){:target="_blank"}.
+In this post you're going to learn how to create a [Spring Kafka](https://spring.io/projects/spring-kafka){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} and [Maven](https://maven.apache.org/){:target="_blank"}.
 
 (Step-by-step)
 
@@ -30,15 +30,13 @@ If you want to learn more about Spring Kafka - head on over to the [Spring Kafka
 
 ## 1. What is Spring Kafka?
 
-The [Spring for Apache Kafka (spring-kafka) project](https://projects.spring.io/spring-kafka/){:target="_blank"} applies core Spring concepts to the development of Kafka-based messaging solutions.
+The Spring for Apache Kafka (spring-kafka) project **applies core Spring concepts** to the development of Kafka-based messaging solutions.
 
-It provides a 'template' as a high-level abstraction for sending messages. It also contains support for Message-driven POJOs with `@KafkaListener` annotations and a listener container.
+It provides a _'template'_ as a high-level abstraction for sending messages. It also contains support for Message-driven POJOs with `@KafkaListener` annotations and a listener container.
 
 Spring Kafka is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
-To show how Spring Kafka works let's create simple Hello World example.
-
-In the example, we create a sender to produce the message and a receiver to consume the message.
+To show how Spring Kafka works let's create simple Hello World example. We will create a sender to produce the message and a receiver to consume the message.
 
 ## 2. General Project Overview
 
@@ -49,7 +47,7 @@ Tools used:
 
 Our project has the following directory structure:
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-kafka-hello-world-maven-project.png" alt="spring kafka hello world maven project">
+<img src="{{ site.url }}/assets/images/spring-kafka/spring-kafka-hello-world-maven-project.png" alt="spring kafka hello world maven project">
 
 ## 3. Maven Setup
 
@@ -57,7 +55,7 @@ We build and run our example using **Maven**. If not already done make sure to [
 
 Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>Kafka</var> as a dependency.
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-kafka-hello-world-initializr.png" alt="spring kafka hello world initializr">
+<img src="{{ site.url }}/assets/images/spring-kafka/spring-kafka-hello-world-initializr.png" alt="spring kafka hello world initializr">
 
 Click <var>Generate Project</var> to generate and download the Spring Boot project template. At the root of the project, you'll find a <var>pom.xml</var> file which is the XML representation of the Maven project.
 
