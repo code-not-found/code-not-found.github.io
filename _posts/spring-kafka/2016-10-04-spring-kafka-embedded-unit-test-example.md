@@ -23,6 +23,8 @@ How to test a consumer.
 
 And how to test a producer.
 
+Using an embedded Kafka broker.
+
 Let's get started…
 
 If you want to learn more about Spring Kafka - head on over to the [Spring Kafka tutorials page]({{ site.url }}/spring-kafka-tutorials).
@@ -142,15 +144,15 @@ kafka:
     receiver: receiver.t
 {% endhighlight %}
 
-> In order to have the correct broker address set on the `Sender` and `Receiver` beans during each test case we need to use the `@DirtiesContext` on all test classes. The reason for this is that each test case contains its own embedded Kafka broker that will each be created on a new random port. By [rebuilding the application context](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/integration-testing.html#__dirtiescontext){:target="_blank"}, the beans will always be set with the current broker address.
+> To have the correct broker address set on the `Sender` and `Receiver` beans during each test case, we need to use the `@DirtiesContext` on all test classes. The reason for this is that each test case contains its own embedded Kafka broker that will each be created on a new random port. By [rebuilding the application context](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/integration-testing.html#__dirtiescontext){:target="_blank"}, the beans will always be set with the current broker address.
 
 ## 5. Testing the Producer
 
-In the `SpringKafkaSenderTest` test case we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify whether the sending works by setting up a _test-listener_ on the topic. All of the setup will be done before the test case runs using the `@Before` annotation.
+In the `SpringKafkaSenderTest` test case, we will be testing the `Sender` by sending a message to a <var>'sender.t'</var> topic. We will verify whether the sending works by setting up a _test-listener_ on the topic. All the setup will be done before the test case runs using the `@Before` annotation.
 
 For creating the needed consumer properties a static `consumerProps()` method provided by `KafkaUtils` is used. We then create a `DefaultKafkaConsumerFactory` and `ContainerProperties` which contains runtime properties (in this case the topic name) for the listener container. Both are then passed to the `KafkaMessageListenerContainer` constructor.
 
-Received messages need to be stored somewhere. In this example, a thread safe `BlockingQueue` is used. We create a new `MessageListener` and in the `onMessage()` method we add the received message to the `BlockingQueue`.
+Received messages need to be stored somewhere. In this example, a thread-safe `BlockingQueue` is used. We create a new `MessageListener` and in the `onMessage()` method we add the received message to the `BlockingQueue`.
 
 > The listener is started by starting the container.
 
@@ -158,7 +160,7 @@ In order to avoid that we send a message before the container has required the n
 
 The actual unit test itself consists out of sending a greeting and asserting that the received value is the same as the one that was sent.
 
-The Spring Kafka Test JAR ships with a number of [Hamcrest Matchers](http://docs.spring.io/spring-kafka/docs/2.2.0.RELEASE/reference/html/_reference.html#_hamcrest_matchers){:target="_blank"} that allow checking if the key, value or partition of a received message matches with an expected value. In the below unit test we use a `Matcher` to check the value of the received message.
+The Spring Kafka Test JAR ships with some [Hamcrest Matchers](http://docs.spring.io/spring-kafka/docs/2.2.0.RELEASE/reference/html/_reference.html#_hamcrest_matchers){:target="_blank"} that allow checking if the key, value or partition of a received message matches with an expected value. In the below unit test we use a `Matcher` to check the value of the received message.
 
 The JAR also includes some [AssertJ conditions](http://docs.spring.io/spring-kafka/docs/2.2.0.RELEASE/reference/html/_reference.html#_assertj_conditions){:target="_blank"} that allow asserting if a received message contains a specific key, value or partition. We illustrate the usage of such a condition by asserting that the key of the received message is `null`.
 
@@ -288,7 +290,7 @@ public class SpringKafkaSenderTest {
 
 The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> properties file. In order to check the correct working, we use a _test-template_ to send a message to this topic. All of the setup will be done before the test case runs using the `@Before` annotation.
 
-The producer properties are created using the static `senderProps()` method provided by `KafkaUtils`. These properties are then used to create a `DefaultKafkaProducerFactory` which is in turn used to create a `KafkaTemplate`. Finally we set the default topic that the template uses to <var>'receiver.t'</var>.
+The producer properties are created using the static `senderProps()` method provided by `KafkaUtils`. These properties are then used to create a `DefaultKafkaProducerFactory` which is in turn used to create a `KafkaTemplate`. Finally, we set the default topic that the template uses to <var>'receiver.t'</var>.
 
 We need to ensure that the `Receiver` is initialized before sending the test message. For this we use the `waitForAssignment()` method of `ContainerTestUtils`. The link to the message listener container is acquired by auto-wiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually.
 
