@@ -31,13 +31,13 @@ Spring Kafka is a [Spring main project](https://spring.io/projects){:target="_bl
 _If you would like to request a new tutorial, leave a comment below._
 
 * [Spring Kafka Consumer Producer Example]({{ site.url }}/spring-kafka-consumer-producer-example.html)
+* [Spring Kafka Embedded Unit Test Example]({{ site.url }}/spring-kafka-embedded-unit-test-example.html)
 * [Spring Kafka - Spring Boot Example]({{ site.url }}/spring-kafka-boot-example.html)
 * [Spring Kafka - Batch Listener Example]({{ site.url }}/spring-kafka-batch-listener-example.html)
 * [Spring Kafka - JSON Serializer Deserializer Example]({{ site.url }}/spring-kafka-json-serializer-deserializer-example.html)
 * [Spring Kafka - Apache Avro Serializer Deserializer Example]({{ site.url }}/spring-kafka-apache-avro-serializer-deserializer-example.html)
 * [Spring Kafka - Avro Bijection Example]({{ site.url }}/spring-kafka-avro-bijection-example.html)
 * [Spring Kafka - Spring Integration Example]({{ site.url }}/spring-kafka-spring-integration-example.html)
-* [Spring Kafka - Embedded Unit Test Example]({{ site.url }}/spring-kafka-embedded-unit-test-example.html)
 * [Apache Kafka - Download &amp; Installation]({{ site.url }}/apache-kafka-download-installation.html)
 
 ## References
