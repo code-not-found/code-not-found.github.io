@@ -1,5 +1,5 @@
 ---
-title: "Spring Kafka - Consumer Producer Example"
+title: "Spring Kafka Consumer Producer Example"
 permalink: /spring-kafka-consumer-producer-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement an Apache Kafka Consumer and Producer using Spring Kafka and Spring Boot."
 date: 2016-09-20
@@ -36,7 +36,7 @@ It provides a _'template'_ as a high-level abstraction for sending messages. It 
 
 Spring Kafka is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
-To show how Spring Kafka works let's create a simple Hello World example. We will create a sender to produce the message and a receiver to consume the message.
+To show how Spring Kafka works let's create a simple Hello World example. We will build a sender to produce the message and a receiver to consume the message.
 
 ## 2. General Project Overview
 
@@ -84,7 +84,6 @@ In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.
   <name>spring-kafka-hello-world</name>
   <description>Spring Kafka - Consumer Producer Example</description>
   <url>https://www.codenotfound.com/spring-kafka-consumer-producer-example.html</url>
-
 
   <parent>
     <groupId>org.springframework.boot</groupId>
