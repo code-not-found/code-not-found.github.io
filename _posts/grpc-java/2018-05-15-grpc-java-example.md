@@ -29,7 +29,7 @@ Let's dive right in.
 
 The framework provides features such as bidirectional streaming and has support for many [different programming languages](https://grpc.io/faq/){:target="_blank"}.
 
-gRPC [was initially developed at Google](https://en.wikipedia.org/wiki/GRPC){:target="_blank"} and is now licensed under [Apache 2.0](https://github.com/grpc/grpc/blob/master/LICENSE){:target="_blank"}.
+gRPC [was initially developed at Google](https://en.wikipedia.org/wiki/GRPC){:target="_blank"} and is now licensed under Apache 2.0.
 
 To show how gRPC works let's build a client and corresponding server that exposes a simple Hello World gRPC service.
 
@@ -451,7 +451,7 @@ mvn spring-boot:run
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/grpc-java/tree/master/grpc-spring-boot-helloworld){:target="_blank"}.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/grpc-java/tree/master/grpc-java-hello-world){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
