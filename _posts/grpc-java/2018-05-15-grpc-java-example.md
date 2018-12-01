@@ -37,7 +37,7 @@ To show how gRPC works let's build a client and corresponding server that expose
 
 gRPC services are defined using [protocol buffers](https://developers.google.com/protocol-buffers/){:target="_blank"}. These are Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.
 
-You specify how you want the information you're serializing to be structured by defining protocol buffer message types in <var>.proto</var> files. Each protocol buffer message is a small logical record of information, containing a series of name-value pairs.
+You specify how you want the information you're serializing to be structured by defining protocol buffer message types in <var>.proto</var> files. Each protocol buffer message is a small logical record of information, containing **a series of name-value pairs**.
 
 For this example, we define a first message containing information about a <var>Person</var> and a second message containing a <var>Greeting</var>. Both are then used in a <var>sayHello()</var> RPC method that takes the person message from the client and returns a greeting from the server.
 
@@ -67,7 +67,7 @@ service HelloWorldService {
 }
 {% endhighlight %}
 
-Now that we have defined how the data is structured we need to generate source code that allows us to easily write and read protobuf messages using Java. We will do this using a Maven plugin.
+Now that we have defined how the data is structured we need to generate source code that allows us to easily write and read protobuf messages using Java. We will do this in the next section using a Maven plugin.
 
 ## 3. General Project Setup
 
@@ -86,13 +86,15 @@ We build and run our example using **Maven**. If not already the case make sure 
 
 Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running the example.
 
-In order to configure and expose the Hello World gRPC service endpoint, we will use the [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} project.
+In order to configure and expose the Hello World gRPC service endpoint, we will use the [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} project.
 
-To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application. We include the `spring-boot-starter-web` dependency which automatically sets up an embedded Apache Tomcat that will host our gRPC service endpoint.
+To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} are used. These are a set of convenient dependency descriptors that you can include in your application.
+
+We include the `spring-boot-starter-web` dependency which automatically sets up an embedded Apache Tomcat that will host our gRPC service endpoint.
 
  The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
-The [Spring boot starter for gRPC framework](https://github.com/LogNet/grpc-spring-boot-starter){:target="_blank"} auto-configures and runs an embedded gRPC server with `@GRpcService` enabled Beans as part of a Spring Boot application. The starter supports both Spring Boot version 1.5.X and 2.X.X applications. We enable it by including the `grpc-spring-boot-starter` dependency.
+The [Spring boot starter for gRPC framework](https://github.com/LogNet/grpc-spring-boot-starter){:target="_blank"} auto-configures and runs an embedded gRPC server with `@GRpcService` enabled Beans as part of a Spring Boot application. The starter supports both Spring Boot version 1.5.X and 2.X.X. We enable it by including the `grpc-spring-boot-starter` dependency.
 
 Protocol buffers support generated code in a number of [programming languages](https://developers.google.com/protocol-buffers/docs/tutorials){:target="_blank"}. This tutorial focuses on Java.
 
@@ -100,7 +102,7 @@ There are multiple ways to generate the protobuf-based code and in this example 
 
 We also include the [os-maven-plugin](https://github.com/trustin/os-maven-plugin){:target="_blank"} extension that generates various useful platform-dependent project properties. This information is needed as the Protocol Buffer compiler is native code. In other words, the `protobuf-maven-plugin` needs to fetch the correct compiler for the platform it is running on.
 
-Finally, the plugins section includes the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. This allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport our code. Also, the plugin allows us to start the example via a Maven command.
+Finally, the plugins section includes the `spring-boot-maven-plugin`. This allows us [to build a single, runnable uber-jar](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}. This is a convenient way to execute and transport our code. Also, the plugin allows us to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -115,7 +117,7 @@ Finally, the plugins section includes the [Spring Boot Maven Plugin](https://doc
 
   <name>grpc-java-hello-world</name>
   <description>gRPC Java Example</description>
-  <url>https://www.codenotfound.com/grpc-java-example.html</url>
+  <url>https://codenotfound.com/grpc-java-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -128,19 +130,10 @@ Finally, the plugins section includes the [Spring Boot Maven Plugin](https://doc
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-
-    <grpc-spring-boot-starter.version>2.4.3</grpc-spring-boot-starter.version>
-
+    <grpc-spring-boot-starter.version>3.0.0</grpc-spring-boot-starter.version>
     <os-maven-plugin.version>1.6.1</os-maven-plugin.version>
     <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
   </properties>
-
-  <repositories>
-    <repository>
-      <id>jcenter</id>
-      <url>https://jcenter.bintray.com/</url>
-    </repository>
-  </repositories>
 
   <dependencies>
     <dependency>
@@ -148,11 +141,10 @@ Finally, the plugins section includes the [Spring Boot Maven Plugin](https://doc
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.lognet</groupId>
+      <groupId>io.github.lognet</groupId>
       <artifactId>grpc-spring-boot-starter</artifactId>
       <version>${grpc-spring-boot-starter.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -162,20 +154,17 @@ Finally, the plugins section includes the [Spring Boot Maven Plugin](https://doc
 
   <build>
     <extensions>
-      <!-- os-maven-plugin -->
       <extension>
         <groupId>kr.motd.maven</groupId>
         <artifactId>os-maven-plugin</artifactId>
         <version>${os-maven-plugin.version}</version>
       </extension>
     </extensions>
-
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-      <!-- protobuf-maven-plugin -->
       <plugin>
         <groupId>org.xolstice.maven.plugins</groupId>
         <artifactId>protobuf-maven-plugin</artifactId>
@@ -210,23 +199,23 @@ mvn compile
 
 ## 5. Spring Boot Setup
 
-We also create a `SpringGRPCApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap the application, starting Spring.
+Create a `SpringGrpcApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap the application, starting Spring.
 
 > Note that `@SpringBootApplication` is a convenience annotation that adds: `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan`.
 
 For more information on Spring Boot, we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
 
 {% highlight java %}
-package com.codenotfound.grpc;
+package com.codenotfound;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringGRPCApplication {
+public class SpringGrpcApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringGRPCApplication.class, args);
+    SpringApplication.run(SpringGrpcApplication.class, args);
   }
 }
 {% endhighlight %}
@@ -244,16 +233,14 @@ We use the response observer's `onNext()` method to return the `Greeting` and th
 The `HelloWorldServiceImpl` POJO is annotated with `@GRpcService` which auto-configures the specified gRPC service to be exposed on port <var>6565</var>.
 
 {% highlight java %}
-package com.codenotfound.grpc.server;
+package com.codenotfound.grpc;
 
 import org.lognet.springboot.grpc.GRpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.codenotfound.grpc.helloworld.Greeting;
 import com.codenotfound.grpc.helloworld.HelloWorldServiceGrpc;
 import com.codenotfound.grpc.helloworld.Person;
-
 import io.grpc.stub.StreamObserver;
 
 @GRpcService
@@ -284,7 +271,7 @@ public class HelloWorldServiceImpl
 
 The client code is specified in the `HelloWorldClient` class.
 
-We annotate the client with `@Component` which will cause Spring to automatically create and import below bean into the container if automatic component scanning is enabled (adding the `@SpringBootApplication` annotation to the main `SpringWsApplication` class [is equivalent](https://docs.spring.io/autorepo/docs/spring-boot/2.0.1.RELEASE/reference/html/using-boot-using-springbootapplication-annotation.html){:target="_blank"} to using `@ComponentScan`).
+We annotate the client with `@Component` which will cause Spring to automatically create and import below bean into the container if automatic component scanning is enabled (adding the `@SpringBootApplication` annotation to the main `SpringWsApplication` class [is equivalent](https://docs.spring.io/autorepo/docs/spring-boot/2.1.0.RELEASE/reference/html/using-boot-using-springbootapplication-annotation.html){:target="_blank"} to using `@ComponentScan`).
 
 To call gRPC service methods, we first need to create a stub.
 
@@ -305,18 +292,15 @@ We use an `init()` method annotated with `@PostConstruct` in order to build a ne
 The `helloWorldServiceBlockingStub` is then used to send the request towards the Hello World gRPC service. The result is a `Greeting` object from which we return the containing message.
 
 {% highlight java %}
-package com.codenotfound.grpc.client;
+package com.codenotfound.grpc;
 
 import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 import com.codenotfound.grpc.helloworld.Greeting;
 import com.codenotfound.grpc.helloworld.HelloWorldServiceGrpc;
 import com.codenotfound.grpc.helloworld.Person;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
@@ -348,7 +332,6 @@ public class HelloWorldClient {
 
     return greeting.getMessage();
   }
-
 }
 {% endhighlight %}
 
@@ -363,21 +346,19 @@ The `HelloWorldClient` Bean is auto-wired so we can use it in the test case. The
 All that is left to do is to compare the received result to the expected greeting message using an assert statement.
 
 {% highlight java %}
-package com.codenotfound.grpc;
+package com.codenotfound;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.codenotfound.grpc.client.HelloWorldClient;
+import com.codenotfound.grpc.HelloWorldClient;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringGRPCApplicationTests {
+public class SpringGrpcApplicationTests {
 
   @Autowired
   private HelloWorldClient helloWorldClient;
@@ -390,7 +371,7 @@ public class SpringGRPCApplicationTests {
 }
 {% endhighlight %}
 
-Run the above test case by opening a command prompt in the projects root folder and executing following Maven command:
+Run the above test case. Open a command prompt in the projects root folder and execute following Maven command:
 
 {% highlight plaintext %}
 mvn test
@@ -457,6 +438,8 @@ If you would like to run the above code sample you can get the full source code 
 
 In this tutorial you learned how to implement a gRPC Java service and corresponding client using Spring Boot and Maven.
 
-If you liked this example or have a question you would like to ask, leave a comment below.
+If you liked this example or have a question you would like to ask:
+
+Leave a comment below.
 
 Thanks!
