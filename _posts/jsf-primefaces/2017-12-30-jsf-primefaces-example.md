@@ -24,7 +24,7 @@ So if you're a PrimeFaces for JSF beginner, **you'll love this guide**.
 
 Ready?
 
-If you want to learn more about PrimeFaces for JSF - head on over to the [JSF PrimeFaces tutorials page]({{ site.url }}/jsf-primefaces-tutorials).
+If you want to learn more about PrimeFaces for JSF - head on over to the [JSF PrimeFaces tutorials]({{ site.url }}/jsf-primefaces-tutorials) page.
 {: .notice--primary}
 
 ## 1. What is PrimeFaces for JSF?
