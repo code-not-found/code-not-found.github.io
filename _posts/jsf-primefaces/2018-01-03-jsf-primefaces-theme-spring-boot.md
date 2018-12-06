@@ -21,6 +21,9 @@ Today you’re going to learn how to setup a [PrimeFaces](https://www.primefaces
 
 Let’s jump right in…
 
+If you want to learn more about PrimeFaces for JSF - head on over to the [JSF PrimeFaces tutorials]({{ site.url }}/jsf-primefaces-tutorials) page.
+{: .notice--primary}
+
 ## 1. What are PrimeFaces Themes?
 
 PrimeFaces is integrated with the **ThemeRoller CSS Framework** in order to support different themes. There are three types of themes you can configure:
