@@ -8,6 +8,8 @@ header:
   teaser: "assets/images/jsf-primefaces/jsf-primefaces-themes-example.png"
 categories: [PrimeFaces]
 tags: [Bootstrap, Code Sample, Example, JavaServer Faces, JSF, Maven, PrimeFaces, Spring Boot, Theme, PrimeFaces Theme]
+redirect_from:
+  - /jsf-primefaces-theme-spring-boot.html
 published: true
 ---
 
