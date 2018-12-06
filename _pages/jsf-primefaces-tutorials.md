@@ -32,13 +32,13 @@ _If you would like to request a new tutorial, leave a comment below._
 
 * [JSF PrimeFaces Example]({{ site.url }}/jsf-primefaces-example.html)
 * [JSF Primefaces DataTable Example]({{ site.url }}/jsf-primefaces-datatable-example.html)
+* [JSF Primefaces Themes Example]({{ site.url }}/jsf-primefaces-themes-example.html)
 
 * [JSF - PrimeFaces Hello World Example using Jetty and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-jetty-maven.html)
 * [JSF - PrimeFaces Hello World Example using WildFly and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-wildfly-maven.html)
 * [JSF - PrimeFaces Hello World Example using Apache Tomcat and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-apache-tomcat.html)
 * [JSF - PrimeFaces Hello World Example using WebSphere Application Server and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-websphere-application-server-maven.html)
 * [JSF - Welcome Page Redirect Example using Spring Boot]({{ site.url }}/jsf-welcome-page-redirect-example-spring-boot.html)
-* [JSF - Primefaces Theme using Spring Boot]({{ site.url }}/jsf-primefaces-theme-spring-boot.html)
 * [JSF - Login Servlet Filter Example]({{ site.url }}/jsf-login-servlet-filter-example.html)
 * [JSF - Primefaces Spring Security Example]({{ site.url }}/jsf-primefaces-spring-security-example.html)
 * [JSF - Primefaces Automated Unit Testing using Selenium]({{ site.url }}/jsf-primefaces-automated-unit-testing-selenium.html)
