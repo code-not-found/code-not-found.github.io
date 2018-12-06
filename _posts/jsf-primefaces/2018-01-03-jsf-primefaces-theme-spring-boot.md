@@ -25,11 +25,11 @@ Let’s jump right in…
 
 PrimeFaces is integrated with the **ThemeRoller CSS Framework** in order to support different themes. There are three types of themes you can configure:
 
-1. You can [purchase premium themes](https://www.primefaces.org/themes/){:target="_blank"}
-2. You can choose from the [free community themes](https://www.primefaces.org/themes/){:target="_blank"}
+1. You can [purchase premium themes](https://www.primefaces.org/themes/){:target="_blank"}.
+2. You can choose from the [free community themes](https://www.primefaces.org/themes/){:target="_blank"} (click the Community tab).
 3. You can create your own theme using the online theme generator tool of [ThemeRoller](http://jqueryui.com/themeroller/){:target="_blank"}.
 
-The following example shows how to setup a PrimeFaces theme using Spring Boot and Maven.
+The following example shows how to set up the Bootstrap PrimeFaces theme using Spring Boot and Maven.
 
 ## 2. General Project Overview
 
@@ -45,9 +45,11 @@ Our project has the following directory structure:
 
 ## 3. Maven Setup
 
-As the PrimeFaces community themes are not available in the [Maven central repository](http://repo1.maven.org/){:target="_blank"} we need to specify the [PrimeFaces Maven Repository](http://repository.primefaces.org){:target="_blank"} in our Maven POM file as shown below.
+As the PrimeFaces community themes are not available in the Maven central repository we need to specify the [PrimeFaces Maven Repository](http://repository.primefaces.org){:target="_blank"} in our Maven POM file as shown below.
 
-Once this is done we need to include the [dependency to the specific PrimeFaces theme](https://repository.primefaces.org/org/primefaces/themes/){:target="_blank"} we want to use. Alternatively, we can include all available themes by specifying the `all-themes` dependency. We will do the later in this example.
+Once this is done we need to include the [dependency to the specific PrimeFaces theme](https://repository.primefaces.org/org/primefaces/themes/){:target="_blank"} we want to use.
+
+Alternatively, we can include all available themes by specifying the `all-themes` dependency. We will do the later in this example.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -131,7 +133,7 @@ We will start from a previous [JSF Spring Boot Example]({{ site.url }}/jsf-prime
 
 As we are using [JoinFaces](https://github.com/joinfaces/joinfaces#joinfaces){:target="_blank"} to setup Spring Boot we can use an [application property](https://github.com/joinfaces/joinfaces#jsf-properties-configuration-via-applicationproperties-or-applicationyml){:target="_blank"} in order to configure a PrimeFaces theme.
 
-We set the <var>'Bootstrap'</var> theme by specifying the <var>jsf:primefaces:theme</var> property in <var>src/main/resources/application.yml</var> as shown below.
+We set the <var>Bootstrap</var> theme by specifying the <var>jsf:primefaces:theme</var> property in <var>src/main/resources/application.yml</var> as shown below.
 
 {% highlight yaml %}
 jsf:
@@ -139,7 +141,7 @@ jsf:
     theme: bootstrap
 {% endhighlight %}
 
-Let's checkout the new look of our web application by running following Maven command:
+Let's check the new look of our web application. Execute following Maven command:
 
 {% highlight plaintext %}
 mvn spring-boot:run
@@ -147,7 +149,7 @@ mvn spring-boot:run
 
 Once Spring Boot has started, open a web browser and enter the following URL: [http://localhost:8080/helloworld.xhtml](http://localhost:8080/helloworld.xhtml){:target="_blank"}.
 
-The below web page should now be displayed in the newly configured theme.
+The web page should now be displayed in the newly configured theme.
 
 <img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-bootstrap-theme.png" alt="jsf primefaces bootstrap theme">
 
