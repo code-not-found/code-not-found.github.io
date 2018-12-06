@@ -19,6 +19,9 @@ So if you want to display data in a table using PrimeFaces, then you'll love thi
 
 Let's dive right in…
 
+If you want to learn more about PrimeFaces for JSF - head on over to the [JSF PrimeFaces tutorials page]({{ site.url }}/jsf-primefaces-tutorials).
+{: .notice--primary}
+
 ## 1. What is PrimeFaces dataTable?
 
 PrimeFaces ships with a DataTable component that **displays data in tabular format**.
