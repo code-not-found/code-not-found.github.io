@@ -15,17 +15,17 @@ published: true
 
 In this post I'm going to show you EXACTLY how to use the [PrimeFaces](https://www.primefaces.org/){:target="_blank"} <var>DataTable</var> component.
 
-So if you want to display data in a table using PrimeFaces, then you'll love this new tutorial.
+So if you want to display data in a table using PrimeFaces, then you'll love this tutorial.
 
 Let's dive right in…
 
 ## 1. What is PrimeFaces dataTable?
 
-PrimeFaces ships with a DataTable component that displays data in tabular format.
+PrimeFaces ships with a DataTable component that **displays data in tabular format**.
 
-It also supports more advanced features such as pagination, sorting and filtering.
+It also supports more advanced features such as pagination, sorting, and filtering.
 
-To demonstrate how the DataTable widget works we will create a table that displays some information on a list of cars.
+To show how the DataTable widget works we will create a table that displays some information on a list of cars.
 
 ## 2. General Project Overview
 
@@ -46,7 +46,7 @@ The example builds on a previous [Hello World Primefaces Tutorial]({{ site.url }
 
 Instead of hard coding the data that will be displayed in the DataTable, we will fetch it from a [H2 database](http://www.h2database.com/html/main.html){:target="_blank"}. By adding the `h2` Maven dependency to the POM file, [Spring Boot will auto-configure an embedded H2 database](https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/html/boot-features-sql.html#boot-features-embedded-database-support){:target="_blank"} that we can use.
 
-In addition the [Spring Data JPA](https://projects.spring.io/spring-data-jpa/){:target="_blank"} project is used in order to reduce the amount of boilerplate code required to implement the data access layer for the persistence store (in this case H2). The `spring-boot-starter-data-jpa` includes `spring-data-jpa` and other needed dependencies.
+In addition the [Spring Data JPA](https://spring.io/projects/spring-data-jpa){:target="_blank"} project is used to reduce the amount of boilerplate code required to implement the data access layer for the persistence store (in this case H2). The `spring-boot-starter-data-jpa` includes `spring-data-jpa` and other needed dependencies.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -121,7 +121,7 @@ In addition the [Spring Data JPA](https://projects.spring.io/spring-data-jpa/){:
 
 ## 4. Prepare the Database
 
-Similar to the [PrimeFaces DataTable Showcase example](https://www.primefaces.org/showcase/ui/data/datatable/basic.xhtml){:target="_blank"} we will be displaying different cars. The below class represents a car with a basic structure.
+Like the [PrimeFaces DataTable Showcase example](https://www.primefaces.org/showcase/ui/data/datatable/basic.xhtml){:target="_blank"} we will be displaying different cars. The below class represents a car with a basic structure.
 
 We will use the [Java Persistence API](http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html){:target="_blank"} to define how the `Car` class maps to a relational database table.
 
@@ -276,7 +276,7 @@ For example in the first column we specify <var>#{car.id}</var> so that the `id`
 </html>
 {% endhighlight %}
 
-The only thing left to do is to create a Bean that can be used by the above JSF page in order to access to the `JpaRepository` so that data can be fetched from the database.
+The only thing left to do is to create a Bean that can be used by the above JSF page in order to access the `JpaRepository` so that data can be fetched from the database.
 
 We create a `CarsView` class in which we auto-wire the `CarRepository`. The `cars` field is then initialized using the `findAll()` method on the repository which retrieves all available cars.
 
@@ -316,11 +316,13 @@ public class CarsView implements Serializable {
 
 ## 6. Testing the PrimeFaces DataTable Example
 
-Let's test our PrimeFaces DataTable example by running following Maven command:
+Let's test our PrimeFaces DataTable example. Use following Maven command to start the application:
 
 {% highlight plaintext %}
 mvn spring-boot:run
 {% endhighlight %}
+
+Spring Boot starts up as shown below.
 
 {% highlight plaintext %}
 .   ____          _            __ _ _
