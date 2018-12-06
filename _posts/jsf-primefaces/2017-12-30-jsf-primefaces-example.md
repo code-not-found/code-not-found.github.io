@@ -119,7 +119,6 @@ In the plugins section, we include the `spring-boot-maven-plugin` Maven plugin s
       <groupId>org.joinfaces</groupId>
       <artifactId>primefaces-spring-boot-starter</artifactId>
     </dependency>
-
     <dependency>
       <groupId>javax.enterprise</groupId>
       <artifactId>cdi-api</artifactId>
@@ -134,14 +133,13 @@ In the plugins section, we include the `spring-boot-maven-plugin` Maven plugin s
       </plugin>
     </plugins>
   </build>
-
 </project>
 {% endhighlight %}
 
 We create a `SpringPrimeFacesApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap Spring to the application. For more information on Spring Boot, we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
 
 {% highlight java %}
-package com.codenotfound.primefaces;
+package com.codenotfound;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -162,7 +160,7 @@ Define a `HelloWorld` class which is a simple POJO (Plain Old Java Object) that 
 We annotated the Bean with `@Named` so that it becomes a [CDI managed bean](https://stackoverflow.com/a/12012663/4201470){:target="_blank"} with an [EL](https://docs.oracle.com/javaee/6/tutorial/doc/gjddd.html){:target="_blank"} name that is accessible by the JSF framework.
 
 {% highlight java %}
-package com.codenotfound.primefaces.model;
+package com.codenotfound.primefaces;
 
 import javax.inject.Named;
 
