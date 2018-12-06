@@ -17,6 +17,8 @@ published: true
 
 Today you’re going to learn how to setup a [PrimeFaces](https://www.primefaces.org/){:target="_blank"} Theme.
 
+More specifically we'll configure the [Bootstrap](https://www.primefaces.org/twitter-bootstrap-theme/){:target="_blank"} community theme.
+
 (FAST)
 
 Let’s jump right in…
