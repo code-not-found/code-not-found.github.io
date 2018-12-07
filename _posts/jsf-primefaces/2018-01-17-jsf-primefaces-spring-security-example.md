@@ -49,6 +49,8 @@ Our project has the following directory structure:
 
 The example is based on a previous [Hello World Primefaces Tutorial]({{ site.url }}/jsf-primefaces-example.html) in which we created a greeting dialog based on a first and last name input form.
 
+We also include the setup of a welcome page using the [PrimeFaces redirect example]({{ site.url }}/jsf-welcome-page-redirect-example-spring-boot.html).
+
 In order to use Spring Security we add `spring-boot-starter-security` to the existing [Maven](https://maven.apache.org/){:target="_blank"} POM file. This will include the core security dependencies that are needed for securing our JSF application.
 
 {% highlight xml %}
@@ -126,7 +128,9 @@ In order to use Spring Security we add `spring-boot-starter-security` to the exi
 
 Spring Security ships with a [default login page generator](https://github.com/spring-projects/spring-security/blob/master/web/src/main/java/org/springframework/security/web/authentication/ui/DefaultLoginPageGeneratingFilter.java){:target="_blank"} however in this example we will configure a custom login page using [PrimeFaces](https://www.primefaces.org/){:target="_blank"} components.
 
-The <var>login.xhtml</var> page is located under <var>src/main/resources/META-INF/resources</var> and consists out of an <var>&lt;p:inputText&gt;</var> for the user name and a <var>&lt;p:password&gt;</var> for the password. A <var>&lt;p:commandButton&gt;</var> is used to submit the form.
+The <var>login.xhtml</var> page is located under <var>src/main/resources/META-INF/resources</var> and consists out of an <var>&lt;p:inputText&gt;</var> for the user name and a <var>&lt;p:password&gt;</var> for the password.
+
+A <var>&lt;p:commandButton&gt;</var> is used to submit the form.
 
 > Note that the IDs of the input fields need to be <var>'username'</var> and <var>'password'</var> respectively as by default Spring Security will look for parameters with these names.
 
@@ -170,7 +174,7 @@ If Spring Security is on the classpath Spring Boot automatically [configures a n
 
 We will customize the web application security configuration by creating a `SecurityConfig` class that extends `WebSecurityConfigurerAdapter` which is a convenient base class that provides a default security configuration. The class is annotated with `@EnableWebSecurity` to enable Spring Security's web security support.
 
-In the below `SecurityConfig` configuration class we override the `configure(HttpSecurity http)` method in order to define when and how users need to be authenticated.
+Override the `configure(HttpSecurity http)` method in order to define when and how users need to be authenticated.
 
 Specifying `authorizeRequests().anyRequest().authenticated()` ensures that any request to our application requires the user to be authenticated.
 
@@ -184,7 +188,11 @@ Using `WebSecurityConfigurerAdapter`, logout capabilities are automatically appl
 
 Spring Security automatically applies measures to prevents [CSRF attacks](https://en.wikipedia.org/wiki/Cross-site_request_forgery){:target="_blank"} by requiring a [randomly generated token](https://docs.spring.io/spring-security/site/docs/5.1.1.RELEASE/reference/html/csrf.html#synchronizer-token-pattern){:target="_blank"} as an HTTP parameter. However as JSF 2.2 already contains an [explicit protection against CSRF attacks](http://arjan-tijms.omnifaces.org/p/jsf-22.html#869){:target="_blank"} we disable the Spring Security protection by specifying `http.csrf().disable()`.
 
-We will override the default single user `AuthenticationManager` that Spring Boot sets by auto-wiring an `AuthenticationManagerBuilder` into the `configureGlobal()` of our `SecurityConfig` `@Configuration` class. For this example we use in-memory authentication in which two users (<var>'john.doe'</var> and <var>'jane.doe'</var>) with different roles (<var>'USER'</var> and <var>'ADMIN'</var>) are defined.
+We will override the default single user `AuthenticationManager` that Spring Boot sets by auto-wiring an `AuthenticationManagerBuilder` into the `configureGlobal()` of our `SecurityConfig` `@Configuration` class.
+
+For this example we use in-memory authentication in which two users (<var>'john.doe'</var> and <var>'jane.doe'</var>) with different roles (<var>'USER'</var> and <var>'ADMIN'</var>) are defined.
+
+Password storage with Spring Security has undergone a [major overhaul since version 5](https://spring.io/blog/2017/11/01/spring-security-5-0-0-rc1-released#password-storage-updated){:target="_blank"}. Because of these changes we prefix <var>{noop}</var> to the passwords in order for the `DelegatingPasswordEncoder` to use the `NoOpPasswordEncoder` [to validate them](https://stackoverflow.com/a/47150363/4201470){:target="_blank"}.
 
 {% highlight java %}
 package com.codenotfound.primefaces;
@@ -344,27 +352,19 @@ Once Spring Boot has started, open a web browser and enter the following URL: [h
 
 As we are not authenticated, Spring Security will redirect us to the login page.
 
-<figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-login-page.png" alt="jsf primefaces login page">
-</figure>
+<img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-login-page.png" alt="jsf primefaces login page">
 
 Go ahead and enter the following user name=<kbd>john.doe</kbd> and password=<kbd>1234</kbd> and click the <var>Login</var> button. We now see the Hello World page and the role of the user is displayed up top as shown below.
 
-<figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-user-role.png" alt="jsf primefaces user role">
-</figure>
+<img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-user-role.png" alt="jsf primefaces user role">
 
 If we click on <var>Submit</var> then the user name that was used to log in will be displayed.
 
-<figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-authentication-user-name.png" alt="jsf primefaces authentication user name">
-</figure>
+<img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-authentication-user-name.png" alt="jsf primefaces authentication user name">
 
 Press the <var>Logout</var> button in order to be redirected to the login page. If we now enter the same user but with an incorrect password an error message will be displayed.
 
-<figure>
-  <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-primefaces-login-error.png" alt="jsf primefaces login error">
-</figure>
+<img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-login-error.png" alt="jsf primefaces login error">
 
 ---
 
