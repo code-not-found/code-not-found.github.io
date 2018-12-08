@@ -15,7 +15,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-welcome-page-redirect-example.png" alt="jsf primefaces welcome page redirect example" class="align-right title-image">
 
-When it comes to web application navigation, I'm sure at one point you would like to setup a home page redirect.
+When it comes to web application navigation, I'm sure at one point you would like to set up a home page redirect.
 
 If you're looking for a practical example using [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}, then you'll love this code sample.
 
@@ -48,13 +48,13 @@ We start from a previous [JSF Spring Boot Tutorial ]({{ site.url }}/jsf-primefac
 
 As we are running on Spring Boot we no longer have a <var>web.xml</var> in which we can specify a <var>&lt;welcome-file-list&gt;</var>.
 
-A way to solve this is to [extend the WebMvcConfigurerAdapter](https://stackoverflow.com/a/29054676/4201470){:target="_blank"}. However, as of Spring 5 the [WebMvcConfigurerAdapter is deprecated](https://www.baeldung.com/web-mvc-configurer-adapter-deprecated){:target="_blank"}. A solution for this is to use the `WebMvcConfigurer` interface directly.
+A way to solve this is to [extend the WebMvcConfigurerAdapter](https://stackoverflow.com/a/29054676/4201470){:target="_blank"}. Yet, as of Spring 5, the [WebMvcConfigurerAdapter is deprecated](https://www.baeldung.com/web-mvc-configurer-adapter-deprecated){:target="_blank"}. A solution for this is to use the `WebMvcConfigurer` interface directly.
 
 Create a `WelcomePageRedirect` class that implements `WebMvcConfigurer`.
 
-Annotate it with `@Configuration`. This [indicates](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/html/beans.html#beans-java-basic-concepts){:target="_blank"} that the class can be used by the Spring IoC container as a source of bean definitions. In other words, we can specify the page redirect using Java-configuration instead of XML.
+Annotate it with `@Configuration`. This [indicates](https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} that the class can be used by the Spring IoC container as a source of bean definitions. In other words, we can specify the page redirect using Java-configuration instead of XML.
 
-Override the `addViewControllers()` method and forward the default mapping to the target web page. In this example we will forward to <var>helloworld.xhtml</var> as shown below.
+Override the `addViewControllers()` method and forward the default mapping to the target web page. In this example, we will forward to <var>helloworld.xhtml</var> as shown below.
 
 {% highlight java %}
 package com.codenotfound.primefaces;
@@ -76,7 +76,7 @@ public class WelcomePageRedirect implements WebMvcConfigurer {
 }
 {% endhighlight %}
 
-To test above configuration, open a command prompt. Execute following Maven command in order to start the JSF Hello World web application.
+To test the above configuration, open a command prompt. Execute following Maven command to start the JSF Hello World web application.
 
 {% highlight plaintext %}
 mvn spring-boot:run
@@ -121,7 +121,7 @@ The resulting console log should mention <var>'Started SpringPrimeFacesApplicati
 2018-12-07 14:53:55.160  INFO 19904 --- [           main] c.c.SpringPrimeFacesApplication          : Started SpringPrimeFacesApplication in 6.156 seconds (JVM running for 10.557)
 {% endhighlight %}
 
-Open a web browser and enter following URL: [http://localhost:8080/](http://localhost:8080/){:target="_blank"}. The below web page should now be displayed.
+Open a web browser and enter the following URL: [http://localhost:8080/](http://localhost:8080/){:target="_blank"}. The below web page should now be displayed.
 
 <img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-welcome-page-redirect.png" alt="jsf welcome page redirect">
 
@@ -137,7 +137,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes the short code sample on how to setup a JSF welcome file XHTML using Spring Boot.
+This concludes the short code sample on how to set up a JSF welcome file XHTML using Spring Boot.
 
 Let me know if this example was helpful.
 
