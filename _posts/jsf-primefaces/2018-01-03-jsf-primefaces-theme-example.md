@@ -17,7 +17,7 @@ published: true
 
 Today you’re going to learn how to setup a [PrimeFaces](https://www.primefaces.org/){:target="_blank"} Theme.
 
-More specifically we'll configure the [Bootstrap](https://www.primefaces.org/twitter-bootstrap-theme/){:target="_blank"} community theme.
+More specifically we'll configure the free [Bootstrap](https://www.primefaces.org/twitter-bootstrap-theme/){:target="_blank"} community theme.
 
 (FAST)
 
@@ -49,6 +49,8 @@ Our project has the following directory structure:
 <img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-themes-maven-project.png" alt="jsf primefaces themes maven project">
 
 ## 3. Maven Setup
+
+We start from a previous [JSF Spring Boot Example]({{ site.url }}/jsf-primefaces-example.html) in which we created a greeting dialog based on a first and last name input field.
 
 As the PrimeFaces community themes are not available in the Maven central repository we need to specify the [PrimeFaces Maven Repository](http://repository.primefaces.org){:target="_blank"} in our Maven POM file as shown below.
 
@@ -131,8 +133,6 @@ Alternatively, we can include all available themes by specifying the `all-themes
   </build>
 </project>
 {% endhighlight %}
-
-We will start from a previous [JSF Spring Boot Example]({{ site.url }}/jsf-primefaces-example.html) in which we created a greeting dialog based on a first and last name input field.
 
 ## 4. PrimeFaces Bootstrap Theme Setup
 

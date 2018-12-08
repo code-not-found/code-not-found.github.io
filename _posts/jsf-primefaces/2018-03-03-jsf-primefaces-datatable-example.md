@@ -15,7 +15,7 @@ published: true
 
 In this post I'm going to show you EXACTLY how to use the [PrimeFaces](https://www.primefaces.org/){:target="_blank"} <var>DataTable</var> component.
 
-So if you want to display data in a table using PrimeFaces, then you'll love this tutorial.
+So if you want to **display data in a table** using PrimeFaces, then you'll love this tutorial.
 
 Let's dive right in…
 

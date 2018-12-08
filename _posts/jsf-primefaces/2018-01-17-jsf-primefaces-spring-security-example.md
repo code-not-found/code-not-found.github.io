@@ -49,7 +49,7 @@ Our project has the following directory structure:
 
 The example is based on a previous [Hello World Primefaces Tutorial]({{ site.url }}/jsf-primefaces-example.html) in which we created a greeting dialog based on a first and last name input form.
 
-We also include the setup of a welcome page using the [PrimeFaces redirect example]({{ site.url }}/jsf-welcome-page-redirect-example-spring-boot.html).
+We also include the setup of a welcome page using the [PrimeFaces redirect example]({{ site.url }}/jsf-primefaces-welcome-page-redirect-example.html).
 
 To use Spring Security we add `spring-boot-starter-security` to the existing [Maven](https://maven.apache.org/){:target="_blank"} POM file. This will include the core security dependencies that are needed for securing our JSF application.
 
