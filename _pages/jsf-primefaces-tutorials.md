@@ -3,7 +3,7 @@ title: "JSF PrimeFaces Tutorials"
 permalink: /jsf-primefaces-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use PrimeFaces for JSF."
 date: 2017-12-30
-last_modified_at: 2018-12-06
+last_modified_at: 2018-12-09
 redirect_from:
   - /jsf-primefaces/
 ---
@@ -35,13 +35,13 @@ _If you would like to request a new tutorial, leave a comment below._
 * [JSF PrimeFaces Themes Example]({{ site.url }}/jsf-primefaces-themes-example.html)
 * [JSF PrimeFaces Spring Security Example]({{ site.url }}/jsf-primefaces-spring-security-example.html)
 * [JSF PrimeFaces Welcome Page Redirect Example]({{ site.url }}/jsf-primefaces-welcome-page-redirect-example.html)
+* [JSF Primefaces Automated Unit Testing using Selenium]({{ site.url }}/jsf-primefaces-automated-unit-testing-selenium.html)
 
 * [JSF - PrimeFaces Hello World Example using Jetty and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-jetty-maven.html)
 * [JSF - PrimeFaces Hello World Example using WildFly and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-wildfly-maven.html)
 * [JSF - PrimeFaces Hello World Example using Apache Tomcat and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-apache-tomcat.html)
 * [JSF - PrimeFaces Hello World Example using WebSphere Application Server and Maven]({{ site.url }}/jsf-primefaces-hello-world-example-websphere-application-server-maven.html)
 * [JSF - Login Servlet Filter Example]({{ site.url }}/jsf-login-servlet-filter-example.html)
-* [JSF - Primefaces Automated Unit Testing using Selenium]({{ site.url }}/jsf-primefaces-automated-unit-testing-selenium.html)
 
 ## References
 
