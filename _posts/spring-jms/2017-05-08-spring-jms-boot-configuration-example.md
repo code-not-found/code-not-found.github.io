@@ -121,7 +121,7 @@ public class SpringJmsApplication {
 
 The setup and creation of the `JmsTemplate` and `ConnectionFactory` beans are automatically done by Spring Boot. We just need to autowire the `JmsTemplate` and use it in the `send()` method.
 
-> By annotating the `Sender` class with `@Component`, Spring will instantiate this class as a bean that we will use in a below test case. In order for this to work, we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringKafkaApplication` by using the `@SpringBootApplication` annotation.
+> By annotating the `Sender` class with `@Component`, Spring will instantiate this class as a bean that we will use in a below test case. In order for this to work, we also need the `@EnableAutoConfiguration` which was indirectly specified on `SpringJmsApplication` by using the `@SpringBootApplication` annotation.
 
 {% highlight java %}
 package com.codenotfound.jms;
