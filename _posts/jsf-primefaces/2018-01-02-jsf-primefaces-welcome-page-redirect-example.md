@@ -42,7 +42,7 @@ Our project has the following directory structure:
 
 <img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-welcome-page-redirect-maven-project.png" alt="jsf primefaces welcome page redirect maven project">
 
-## 3. Maven Setup
+## 3. Changing the Default Welcome-Page for Spring Boot
 
 We start from a previous [JSF Spring Boot Tutorial ]({{ site.url }}/jsf-primefaces-example.html) in which we created a greeting dialog using a first and last name input form.
 
