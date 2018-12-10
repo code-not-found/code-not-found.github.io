@@ -32,11 +32,6 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 
 To show this behavior we will start from a previous [Spring JMS tutorial]({{ site.url }}/spring-jms-activemq-consumer-producer-example.html) in which we send/receive messages to/from ActiveMQ using Spring JMS. The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration capabilities.
 
-# 2. General Project Setup
-
-If you want to learn more about Spring JMS - head on over to the [Spring JMS tutorials page]({{ site.url }}/spring-jms/).
-{: .notice--primary}
-
 ## 2. General Project Overview
 
 We will use the following tools/frameworks:
@@ -122,7 +117,7 @@ public class SpringJmsApplication {
 }
 {% endhighlight %}
 
-# Autoconfigure the Spring JMS Message Producer
+## 5. Autoconfigure the Spring JMS Message Producer
 
 The setup and creation of the `JmsTemplate` and `ConnectionFactory` beans are automatically done by Spring Boot. We just need to autowire the `JmsTemplate` and use it in the `send()` method.
 
@@ -154,7 +149,7 @@ public class Sender {
 }
 {% endhighlight %}
 
-# Autoconfigure the Spring Kafka Message Consumer
+## 6. Autoconfigure the Spring Kafka Message Consumer
 
 Similar to the `Sender`, the setup and creation of the `ConnectionFactory` and `JmsListenerContainerFactory` bean is automatically done by Spring Boot. The `@JmsListener` annotation creates a message listener container for the annotated `receive()` method.
 
@@ -202,7 +197,7 @@ queue:
   boot: boot.q
 {% endhighlight %}
 
-# Testing the Sender and Receiver
+## 7. Testing the Sender and Receiver
 
 In order to verify that our code works, a simple `SpringJmsApplicationTest` test case is used. It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'boot.q'</var> queue on the ActiveMQ broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was successfully received.
 
