@@ -149,7 +149,7 @@ public class Sender {
 }
 {% endhighlight %}
 
-## 6. Autoconfigure the Spring Kafka Message Consumer
+## 6. Autoconfigure the Spring JMS Message Consumer
 
 Similar to the `Sender`, the setup and creation of the `ConnectionFactory` and `JmsListenerContainerFactory` bean is automatically done by Spring Boot. The `@JmsListener` annotation creates a message listener container for the annotated `receive()` method.
 
