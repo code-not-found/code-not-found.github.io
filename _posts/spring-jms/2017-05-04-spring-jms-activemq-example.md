@@ -52,9 +52,9 @@ Our project has the following directory structure:
 
 We build and run our example using **Maven**. If not already the case, [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
-Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>Batch</var> as a dependency.
+Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>JMS</var> as a dependency.
 
-<img src="{{ site.url }}/assets/images/spring-batch/spring-jms-activemq-hello-world-initializr.png" alt="spring batch hello world initializr">
+<img src="{{ site.url }}/assets/images/spring-jms/spring-jms-activemq-hello-world-initializr.png" alt="spring jms activemq hello world initializr">
 
 Click <var>Generate Project</var> to generate and download the Spring Boot project template. At the root of the project, you'll find a <var>pom.xml</var> file which is the XML representation of the Maven project.
 
