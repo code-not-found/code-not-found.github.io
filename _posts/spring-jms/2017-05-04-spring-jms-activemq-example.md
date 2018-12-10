@@ -34,7 +34,7 @@ Spring provides a [JMS integration framework](https://docs.spring.io/spring/docs
 
 The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html){:target="_blank"}.
 
-In this tutorial we will create a Hello World example in which we will send/receive a message to/from Apache ActiveMQ using Spring JMS, Spring Boot, and Maven.
+In this tutorial, we will create a Hello World example in which we will send/receive a message to/from Apache ActiveMQ using Spring JMS, Spring Boot, and Maven.
 
 ## 2. General Project Overview
 
@@ -155,7 +155,7 @@ For sending messages we will be using the `JmsTemplate` which requires a referen
 
 > Note that instances of the JmsTemplate class are thread-safe once configured.
 
-In the below `Sender` class, the `JmsTemplate` is autowired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class.
+In the below `Sender` class, the `JmsTemplate` is auto-wired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class.
 
 In this example we will use the `convertAndSend()` method which sends the given object to the specified destination, converting the object to a JMS message.
 
@@ -244,7 +244,7 @@ public class SenderConfig {
 
 Like with any messaging-based application, you need to create a receiver that will handle the messages that have been sent. The below `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In this example we named the method `receive()`, but you can name it anything you like.
 
-The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name <var>'jmsListenerContainerFactory'</var> is expected that we will setup in the next section.
+The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name <var>'jmsListenerContainerFactory'</var> is expected that we will set up in the next section.
 
 Using the `destination` element, we specify the destination for this listener. In the below example we set the destination to <var>helloworld.q</var>.
 
@@ -279,7 +279,7 @@ public class Receiver {
 
 The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class. Note that we need to add the `@EnableJms` annotation to enable support for the `@JmsListener` annotation that was used on the `Receiver`.
 
-The `jmsListenerContainerFactory()` is expected by the `@JmsListener` annotation from the `Receiver`. We set the concurrency between 3 and 10. This means that listener container will always hold on to the minimum number of consumers and will slowly scale up to the maximum number of consumers in case of increasing load.
+The `jmsListenerContainerFactory()` is expected by the `@JmsListener` annotation from the `Receiver`. We set the concurrency between 3 and 10. This means that listener container will always hold on to the minimum number of consumers and will slowly scale up to the maximum number of consumers in case of an increasing load.
 
 Contrary to the `JmsTemplate` [ideally don't use Spring's CachingConnectionFactory with a message listener container at all](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html){:target="_blank"}. Reason for this is that it is generally preferable to let the listener container itself handle appropriate caching within its lifecycle.
 
@@ -335,7 +335,7 @@ In order to verify that we are able to send and receive a message to and from Ac
 
 An embedded ActiveMQ broker is automatically started by using an [EmbeddedActiveMQBroker JUnit Rule](http://activemq.apache.org/how-to-unit-test-jms-code.html#HowToUnitTestJMSCode-UsingTheEmbeddedActiveMQBrokerJUnitRule(ActiveMQ5.13)){:target="_blank"}. We have added a dedicated <var>application.yml</var> properties file for testing under <var>src/test/resources</var> that contains the VM URI to connect with the embedded broker.
 
-> Note that as the embedded broker gets shutdown once the unit test cases are finished, we need to stop our `Sender` and `Receiver` before this happens in order to avoid connection errors. This achieved by using the `@DirtiesContext` annotation which closes the `ApplicationContext` after each test.
+> Note that as the embedded broker gets shut down once the unit test cases are finished, we need to stop our `Sender` and `Receiver` before this happens in order to avoid connection errors. This achieved by using the `@DirtiesContext` annotation which closes the `ApplicationContext` after each test.
 
 Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/2014/01/jms-apache-activemq-installation.html) on your local system. You need to comment out the lines annotated with `@ClassRule` to avoid the embedded broker gets created. In addition you need to change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL value.
 
@@ -380,7 +380,7 @@ public class SpringJmsApplicationTest {
 }
 {% endhighlight %}
 
-In order to execute above example open a command prompt and run following Maven command:
+In order to execute the above example open a command prompt and run following Maven command:
 
 {% highlight plaintext %}
 mvn test
