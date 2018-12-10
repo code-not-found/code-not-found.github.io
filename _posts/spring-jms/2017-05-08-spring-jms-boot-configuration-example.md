@@ -17,8 +17,11 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-boot-configuration.png" alt="spring jms boot configuration" class="align-right title-image">
 
+In this post I'm going to show you EXACTLY how to auto-configure [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"} using [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}.
 
+So if you want to get up and running with a minimum amount of coding, then you'll love this guide.
 
+Let's jump right in…
 
 If you want to learn more about Spring JMS - head on over to the [Spring JMS tutorials]({{ site.url }}/spring-jms-tutorials) page.
 {: .notice--primary}
