@@ -50,23 +50,27 @@ Our project has the following directory structure:
 
 ## 3. Maven Setup
 
-We build and run our example using **Apache Maven**. Shown below is the XML representation of our Maven project in a POM file. It contains the needed dependencies for compiling and running our example.
+We build and run our example using **Maven**. If not already the case, [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
-In order to run the example we will use the [Spring Boot](https://projects.spring.io/spring-boot/){:target="_blank"} project that makes it easy to create stand-alone, production-grade Spring based Applications.
+Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>Batch</var> as a dependency.
 
-To facilitate the management of the different Spring dependencies, [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} are used which are a set of convenient dependency descriptors that you can include in your application.
+<img src="{{ site.url }}/assets/images/spring-batch/spring-jms-activemq-hello-world-initializr.png" alt="spring batch hello world initializr">
+
+Click <var>Generate Project</var> to generate and download the Spring Boot project template. At the root of the project, you'll find a <var>pom.xml</var> file which is the XML representation of the Maven project.
+
+To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
+
+The generated project contains [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} that manage the different Spring dependencies.
 
 The `spring-boot-starter-activemq` dependency includes the needed dependencies for using Spring JMS in combination with ActiveMQ.
 
 The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
-To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
-
 A dependency to `activemq-junit` is also added as we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker.
 
-> You can find back the Spring Boot dependency version in Appendix F of the reference documentation. For [Spring Boot 2.1.1 the ActiveMQ dependency was version '5.15.8'](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
+> You can find back the Spring Boot dependency versions in Appendix F of the reference documentation. For [Spring Boot 2.1.1 the ActiveMQ dependency is version '5.15.8'](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
 
-In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the example via a Maven command.
+In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. It allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code. Also, the plugin allows you to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
