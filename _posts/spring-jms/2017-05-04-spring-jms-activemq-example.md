@@ -30,11 +30,11 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 
 ## 1. What is Spring JMS?
 
-Spring provides a **JMS integration framework** that simplifies the use of the JMS API much like Spring's integration does for the JDBC API.
+Spring provides a **JMS integration framework** that simplifies the use of the JMS API. Much like Spring's integration does for the JDBC API.
 
 The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html){:target="_blank"}.
 
-In this tutorial, we will create a Hello World example in which we will send/receive a message to/from Apache ActiveMQ using Spring JMS, Spring Boot, and Maven.
+In this tutorial, we create a Hello World example in which we will send/receive a message to/from Apache ActiveMQ using Spring JMS, Spring Boot, and Maven.
 
 ## 2. General Project Overview
 
@@ -66,11 +66,13 @@ The `spring-boot-starter-activemq` dependency includes the needed dependencies f
 
 The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
-A dependency to `activemq-junit` is also added as we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker.
+> You can find back the Spring Boot dependency versions in Appendix F of the reference documentation. For Spring Boot 2.1.1 the [ActiveMQ dependency is version 5.15.8](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
 
-> You can find back the Spring Boot dependency versions in Appendix F of the reference documentation. For [Spring Boot 2.1.1 the ActiveMQ dependency is version '5.15.8'](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
+We also add a dependency to `activemq-junit` we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker.
 
-In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. It allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code. Also, the plugin allows you to start the example via a Maven command.
+In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}. `spring-boot-maven-plugin` allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code.
+
+Also, the plugin allows you to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -151,17 +153,17 @@ public class SpringJmsApplication {
 }
 {% endhighlight %}
 
-> The below sections will detail how to create a sender and receiver together with their respective configurations. Note that it is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/spring-jms-activemq-boot-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
+> The below sections will detail how to create a sender and receiver together with their respective configurations. It is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/spring-jms-boot-configuration-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
 # 5. Create a Spring JMS Message Producer
 
-For sending messages we will be using the `JmsTemplate` which requires a reference to a `ConnectionFactory` and provides convenience methods which handle the creation and release of resources when sending or synchronously receiving messages.
+For sending messages we will be using the `JmsTemplate` which requires a reference to a `ConnectionFactory`. It provides convenience methods which handle the creation and release of resources when sending or synchronously receiving messages.
 
 > Note that instances of the JmsTemplate class are thread-safe once configured.
 
 In the below `Sender` class, the `JmsTemplate` is auto-wired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class.
 
-In this example we will use the `convertAndSend()` method which sends the given object to the specified destination, converting the object to a JMS message.
+In this example we will use the `convertAndSend()` method which sends the given object to the <var>helloworld.q</var> destination, converting the object to a JMS message.
 
 The [type of JMS message]({{ site.url }}/jms-message-types-properties-overview.html#jms-message-body) depends on the type of the object being passed. In the case of a `String`, a JMS `TextMessage` will be created.
 
@@ -188,9 +190,11 @@ public class Sender {
 }
 {% endhighlight %}
 
-The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. This class is annotated with `@Configuration` which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. This class is annotated with [@Configuration](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
-In order to be able to use the Spring JMS template, we need to provide a reference to a `ConnectionFactory` which is used to [create connections with the JMS provider](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html){:target="_blank"}. In addition, it encapsulates various configuration parameters, many of which are vendor specific. In the case of ActiveMQ, we use the `ActiveMQConnectionFactory`.
+In order to be able to use the Spring JMS template, we need to provide a reference to a `ConnectionFactory` which is used to [create connections with the JMS provider](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html){:target="_blank"}. In addition, it encapsulates various configuration parameters, many of which are vendor specific.
+
+In the case of ActiveMQ, we use the `ActiveMQConnectionFactory`.
 
 On the `ActiveMQConnectionFactory` we set the broker URL which is fetched from the <var>application.yml</var> properties file using the `@Value` annotation.
 
@@ -199,7 +203,9 @@ activemq:
   broker-url: tcp://localhost:61616
 {% endhighlight %}
 
-The `JmsTemplate` was originally designed to be used in combination with a J2EE container where the container would provide the necessary pooling of the JMS resources. As we are running this example on Spring Boot, we will wrap `ActiveMQConnectionFactory` using Spring's `CachingConnectionFactory` in order to still have the benefit of caching of sessions, connections, and producers as well as automatic connection recovery.
+The `JmsTemplate` was originally designed to be used in combination with a J2EE container where the container would provide the necessary pooling of the JMS resources.
+
+As we are running this example on Spring Boot, we will wrap `ActiveMQConnectionFactory` using Spring's `CachingConnectionFactory` in order to still have the benefit of caching of sessions, connections, and producers as well as automatic connection recovery.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -248,7 +254,7 @@ public class SenderConfig {
 
 Like with any messaging-based application, you need to create a receiver that will handle the messages that have been sent. The below `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In this example we named the method `receive()`, but you can name it anything you like.
 
-The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name <var>'jmsListenerContainerFactory'</var> is expected that we will set up in the next section.
+The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name <var>jmsListenerContainerFactory</var> is expected that we will set up in the next section.
 
 Using the `destination` element, we specify the destination for this listener. In the below example we set the destination to <var>helloworld.q</var>.
 
@@ -285,7 +291,7 @@ The creation and configuration of the different Spring Beans needed for the `Rec
 
 The `jmsListenerContainerFactory()` is expected by the `@JmsListener` annotation from the `Receiver`. We set the concurrency between 3 and 10. This means that listener container will always hold on to the minimum number of consumers and will slowly scale up to the maximum number of consumers in case of an increasing load.
 
-Contrary to the `JmsTemplate` [ideally don't use Spring's CachingConnectionFactory with a message listener container at all](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html){:target="_blank"}. Reason for this is that it is generally preferable to let the listener container itself handle appropriate caching within its lifecycle.
+Contrary to the `JmsTemplate` ideally [don't use Spring's CachingConnectionFactory with a message listener container](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html){:target="_blank"} at all. Reason for this is that it is generally preferable to let the listener container itself handle appropriate caching within its lifecycle.
 
 As we are connecting to ActiveMQ, an `ActiveMQConnectionFactory` is created and passed in the constructor of the `DefaultJmsListenerContainerFactory`.
 
@@ -340,6 +346,11 @@ In order to verify that we are able to send and receive a message to and from Ac
 It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.q'</var> queue on the ActiveMQ message broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
 An embedded ActiveMQ broker is automatically started by using an [EmbeddedActiveMQBroker JUnit Rule](http://activemq.apache.org/how-to-unit-test-jms-code.html#HowToUnitTestJMSCode-UsingTheEmbeddedActiveMQBrokerJUnitRule(ActiveMQ5.13)){:target="_blank"}. We have added a dedicated <var>application.yml</var> properties file for testing under <var>src/test/resources</var> that contains the VM URI to connect with the embedded broker.
+
+{% highlight yaml %}
+activemq:
+  broker-url: vm://embedded-broker?create=false
+{% endhighlight %}
 
 > Note that as the embedded broker gets shut down once the unit test cases are finished, we need to stop our `Sender` and `Receiver` before this happens in order to avoid connection errors. This achieved by using the `@DirtiesContext` annotation which closes the `ApplicationContext` after each test.
 
