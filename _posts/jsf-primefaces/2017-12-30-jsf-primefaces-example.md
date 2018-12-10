@@ -136,6 +136,8 @@ In the plugins section, we include the `spring-boot-maven-plugin` Maven plugin s
 </project>
 {% endhighlight %}
 
+## 4. Spring Boot Setup
+
 We create a `SpringPrimeFacesApplication` that contains a `main()` method that uses Spring Boot's `SpringApplication.run()` method to bootstrap Spring to the application. For more information on Spring Boot, we refer to the [Spring Boot getting started guide](https://spring.io/guides/gs/spring-boot/){:target="_blank"}.
 
 {% highlight java %}
@@ -153,7 +155,7 @@ public class SpringPrimeFacesApplication {
 }
 {% endhighlight %}
 
-## Creating the PrimeFaces Hello World Example
+## 5. Creating the PrimeFaces Hello World Example
 
 Define a `HelloWorld` class which is a simple POJO (Plain Old Java Object) that will provide data for the PrimeFaces (JSF) components. The class contains the getters and setters for first and last name fields as well as a method to show a greeting.
 
@@ -196,7 +198,7 @@ The web page that will be shown is a standard JSF page as defined below. It cont
 
 There is also a <var>&lt;p:dialog&gt;</var> component that shows a greeting message. The dialog is triggered by a <var>&lt;p:commandButton&gt;</var>.
 
-TSo use the PrimeFaces components, the following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
+To use the PrimeFaces components, the following namespace needs to be declared: `xmlns:p="http://primefaces.org/ui`.
 
 > Note that JSF artifiacts like <var>.xhtml</var> and <var>.jsf</var> files need to be placed under the <var>src/main/resources/META-INF/resources</var> folder.
 
@@ -240,7 +242,7 @@ TSo use the PrimeFaces components, the following namespace needs to be declared:
 </html>
 {% endhighlight %}
 
-## Running the PrimeFaces Hello World Example
+## 6. Running the PrimeFaces Hello World Example
 
 In order to run the above example open a command prompt in the project root folder and execute following Maven command:
 
