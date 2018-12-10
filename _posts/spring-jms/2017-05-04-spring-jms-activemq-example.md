@@ -30,7 +30,7 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 
 ## 1. What is Spring JMS?
 
-Spring provides a [JMS integration framework](https://docs.spring.io/spring/docs/4.3.13.RELEASE/spring-framework-reference/html/jms.html){:target="_blank"} that simplifies the use of the JMS API much like Spring's integration does for the JDBC API.
+Spring provides a **JMS integration framework** that simplifies the use of the JMS API much like Spring's integration does for the JDBC API.
 
 The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html){:target="_blank"}.
 
@@ -64,7 +64,7 @@ To avoid having to manage the version compatibility of the different Spring depe
 
 A dependency to `activemq-junit` is also added as we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker.
 
-> You can find back the Spring Boot dependency version in Appendix F of the reference documentation. For [Spring Boot 2.1.1 the ActiveMQ dependency was version '5.15.8'](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
+> You can find back the Spring Boot dependency version in Appendix F of the reference documentation. For [Spring Boot 2.1.1 the ActiveMQ dependency was version '5.15.8'](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
 
 In the plugins section, we included the `spring-boot-maven-plugin` Maven plugin so that we can build a single, runnable "uber-jar". This will also allow us to start the example via a Maven command.
 
@@ -331,13 +331,15 @@ public class ReceiverConfig {
 
 # 7. Testing the Spring JMS Template & Listener
 
-In order to verify that we are able to send and receive a message to and from ActiveMQ, a basic `SpringJmsApplicationTest` test case is used. It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.q'</var> queue on the ActiveMQ message broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
+In order to verify that we are able to send and receive a message to and from ActiveMQ, a basic `SpringJmsApplicationTest` test case is used.
+
+It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.q'</var> queue on the ActiveMQ message broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
 An embedded ActiveMQ broker is automatically started by using an [EmbeddedActiveMQBroker JUnit Rule](http://activemq.apache.org/how-to-unit-test-jms-code.html#HowToUnitTestJMSCode-UsingTheEmbeddedActiveMQBrokerJUnitRule(ActiveMQ5.13)){:target="_blank"}. We have added a dedicated <var>application.yml</var> properties file for testing under <var>src/test/resources</var> that contains the VM URI to connect with the embedded broker.
 
 > Note that as the embedded broker gets shut down once the unit test cases are finished, we need to stop our `Sender` and `Receiver` before this happens in order to avoid connection errors. This achieved by using the `@DirtiesContext` annotation which closes the `ApplicationContext` after each test.
 
-Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/2014/01/jms-apache-activemq-installation.html) on your local system. You need to comment out the lines annotated with `@ClassRule` to avoid the embedded broker gets created. In addition you need to change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL value.
+Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/jms-apache-activemq-installation.html) on your local system. You need to comment out the lines annotated with `@ClassRule` to avoid the embedded broker gets created. In addition you need to change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL value.
 
 {% highlight java %}
 package com.codenotfound;
