@@ -26,7 +26,7 @@ Let's jump right in…
 If you want to learn more about Spring JMS - head on over to the [Spring JMS tutorials]({{ site.url }}/spring-jms-tutorials) page.
 {: .notice--primary}
 
-## 1. What is Spring Boot Auto-Configuration
+## 1. What is Spring Boot Auto-Configuration?
 
 [Spring Boot auto-configuration](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/using-boot-auto-configuration.html){:target="_blank"} will try to automatically configure your Spring application based on the JAR dependencies that are available.
 

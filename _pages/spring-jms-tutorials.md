@@ -3,7 +3,7 @@ title: "Spring JMS Tutorials"
 permalink: /spring-jms-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use Spring JMS."
 date: 2017-05-01
-last_modified_at: 2018-12-10
+last_modified_at: 2018-12-11
 redirect_from:
   - /spring-jms/
 ---
@@ -32,6 +32,7 @@ _If you would like to request a new tutorial, leave a comment below._
 
 * [Spring JMS ActiveMQ Example]({{ site.url }}/spring-jms-activemq-example.html)
 * [Spring JMS Boot Configuration Example]({{ site.url }}/spring-jms-boot-configuration-example.html)
+* [Spring JMS Message Converter Example]({{ site.url }}/spring-jms-message-converter-example.html)
 
 ## References
 
