@@ -3,7 +3,7 @@ title: "Spring JMS Boot Configuration Example"
 permalink: /spring-jms-boot-configuration-example.html
 excerpt: "A detailed step-by-step tutorial on how to autoconfigure ActiveMQ and Spring JMS using Spring Boot."
 date: 2017-05-08
-modified: 2018-12-11
+last_modified_at: 2018-12-11
 header:
   teaser: "assets/images/spring-jms/spring-jms-boot-configuration.png"
 categories: [Spring JMS]
