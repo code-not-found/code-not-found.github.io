@@ -31,7 +31,7 @@ Spring JMS is developed and maintained by [Pivotal Software](https://pivotal.io/
 _If you would like to request a new tutorial, leave a comment below._
 
 * [Spring JMS ActiveMQ Example]({{ site.url }}/spring-jms-activemq-example.html)
-* [Spring JMS - Boot Configuration Example]({{ site.url }}/spring-jms-boot-configuration-example.html)
+* [Spring JMS Boot Configuration Example]({{ site.url }}/spring-jms-boot-configuration-example.html)
 
 ## References
 

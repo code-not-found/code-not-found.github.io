@@ -50,7 +50,9 @@ Our project has the following directory structure:
 
 ## 3. Maven Setup
 
-The example project is managed using [Maven](https://maven.apache.org/){:target="_blank"}. Needed dependencies like Spring Boot and Spring JMS are included by declaring the `spring-boot-starter-activemq` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} in the POM file as shown below.
+The example project is managed using [Maven](https://maven.apache.org/){:target="_blank"}.
+
+Needed dependencies like Spring Boot and Spring JMS are included by declaring the `spring-boot-starter-activemq` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} in the POM file as shown below.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
