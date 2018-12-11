@@ -28,11 +28,11 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 
 A `MessageConverter` specifies how to convert between Java objects and JMS messages.
 
-Spring JMS comes with a number of implementations that are ready to use. By default the `SimpleMessageConverter` is used by the framework. It is able to handle TextMessages, BytesMessages, MapMessages, and ObjectMessages.   
+Spring JMS comes with a number of implementations that are ready to use. By default, the `SimpleMessageConverter` is used by the framework. It is able to handle TextMessages, BytesMessages, MapMessages, and ObjectMessages.   
 
-Let's build and example to show how you can use a message converter with Spring JMS. We start from a previous [Spring with JMS example]({{ site.url }}/spring-jms-boot-configuration-example.html). We will adapt it so that we can send a `Person` object that gets converted to/from JSON.
+Let's build an example to show how you can use a message converter with Spring JMS. We start from a previous [Spring with JMS example]({{ site.url }}/spring-jms-boot-configuration-example.html). We will adapt it so that we can send a `Person` object that gets converted to/from JSON.
 
-> Note that Spring JMS ships with a `MappingJackson2MessageConverter` that converts messages to and from JSON.
+> Note that Spring JMS ships with a `MappingJackson2MessageConverter` that converts messages to and from JSON. We will not use it and create our own custom implementation instead.
 
 ## 2. General Project Overview
 
@@ -48,7 +48,7 @@ Our project has the following directory structure:
 
 ## 3. Create a Custom JSON Message Converter
 
-First we define a simple `Person` class that contains a name and age. It is a simple POJO with the needed constructors and getters/setters.
+First, we define a simple `Person` class that contains a name and age. It is a simple POJO with the needed constructors and getters/setters.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -96,7 +96,7 @@ Next, create a `PersonMessageConverter` class that implements the `MessageConver
 
 You need to implement two methods: `toMessage()` and `fromMessage()`. These specify how the conversion between the `Person` object and JMS message is done.
 
-In the `toMessage()` method we create a `TextMessage`. As payload we set the JSON String representation of a `Person`.
+In the `toMessage()` method we create a `TextMessage`. As payload, we set the JSON String representation of a `Person`.
 
 The `fromMessage()` method converts the JSON String from a JMS message into a `Person`.
 
@@ -214,7 +214,7 @@ Open a command prompt in the root directory of the project. Execute following Ma
 mvn test
 {% endhighlight %}
 
-The log output shows that the message is converted to/from JSON.
+The log output shows that the message is converted to/from a JSON representation.
 
 {% highlight plaintext %}
   .   ____          _            __ _ _
@@ -256,7 +256,6 @@ The log output shows that the message is converted to/from JSON.
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
-
 ---
 
 {% capture notice-github %}
@@ -264,3 +263,9 @@ The log output shows that the message is converted to/from JSON.
 If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-message-converter){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
+
+In this tutorial, you learned how to create a custom Spring JMS message converter.
+
+Let me know if you found this example useful.
+
+Thanks!
