@@ -165,8 +165,9 @@ public class SpringJmsApplicationTest {
 
   @Test
   public void testReceive() throws Exception {
-    sender.send("selector.q", "High priority!", true);
-    sender.send("selector.q", "Low priority!", false);
+    sender.send("selector.q", "High priority 1!", true);
+    sender.send("selector.q", "Low priority 1!", false);
+    sender.send("selector.q", "High priority 2!", true);
 
     receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
     assertThat(receiver.getLatch().getCount()).isEqualTo(0);
@@ -174,7 +175,7 @@ public class SpringJmsApplicationTest {
 }
 {% endhighlight %}
 
-Open a command prompt in the rott directory and start the test case.
+Open a command prompt in the root directory and start the test case.
 
 {% highlight plaintext %}
 mvn test
