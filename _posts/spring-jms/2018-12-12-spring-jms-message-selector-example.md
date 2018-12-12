@@ -30,7 +30,7 @@ A selector is a String that contains an expression. The syntax of the expression
 
 Let's create an example to show how all of this works. We start from a previous [Spring JMS configuration]({{ site.url }}/spring-jms-boot-configuration-example.html) example.
 
-We then modify the `Receiver` so that it receives high and low priority messages with different listeners. In the `Sender` we add a [JMS property]({{ site.url }}/jms-message-types-properties-overview.html) on which we can filter.
+We then modify the `Receiver` so that it receives high and low priority messages with different listeners. In the `Sender` we add a [JMS property]({{ site.url }}/jms-message-types-properties-overview.html#jms-message-properties) on which we can filter.
 
 ## 2. General Project Overview
 
@@ -50,7 +50,7 @@ On the `@JmsListener` there is an optional message <var>selector</var> property 
 
 We create two listeners in the `Receiver`: one for high priority messages and one for low priority messages. Selection is done based on a <var>priority</var> JMS property that we will set in the `Sender`.
 
-> Note that a message consumer receives only messages whose headers and properties match the selector. A message selector cannot select messages on the basis of the content of the message body.
+> Note that a message consumer receives only messages whose headers and properties match the selector. A message selector **cannot select messages on the basis of the content of the message body**.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -89,9 +89,9 @@ public class Receiver {
 }
 {% endhighlight %}
 
-The `JmsTemplate` by default converts a String into a `TextMessage` using the `SimpleMessageConverter`. For more information on this you can check the [Spring JMS Message Converter example]({{ site.url }}/spring-jms-message-converter-example.html).
+The `JmsTemplate` by default converts a String into a `TextMessage` using the `SimpleMessageConverter`. For more information on this you can check the [Spring JMS MessageConverter example]({{ site.url }}/spring-jms-message-converter-example.html).
 
-We need to use a [MessagePostProcessor](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jms/core/MessagePostProcessor.html){:target="_blank"} to add a JMS property to a message after it has been processed by the converter.
+We can use a [MessagePostProcessor](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jms/core/MessagePostProcessor.html){:target="_blank"} to add a JMS property to a message after it has been processed by the converter.
 
 Modify the `Sender` to check an `isHighPriority` parameter. If the value equals `true` a <var>priority</var> property with the value <var>high</var> is set. Otherwise the property is set to  <var>low</var>.
 
