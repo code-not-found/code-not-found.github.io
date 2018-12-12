@@ -19,6 +19,9 @@ You'll also see how to add information to a message so that you can select it.
 
 So here we go.
 
+If you want to learn more about Spring JMS - head on over to the [Spring JMS tutorials]({{ site.url }}/spring-jms-tutorials) page.
+{: .notice--primary}
+
 ## 1. What is a JMS Message Selector?
 
 If your messaging application needs to **filter the messages it receives**, you can use a JMS message selector. It allows a message consumer to specify the messages it is interested in.
