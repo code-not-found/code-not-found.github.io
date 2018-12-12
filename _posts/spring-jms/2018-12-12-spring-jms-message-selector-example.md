@@ -180,7 +180,7 @@ Open a command prompt in the rott directory and start the test case.
 mvn test
 {% endhighlight %}
 
-In the output logs we can see that the messages are received in the respective JMS Listeners.
+In the output logs, we can see that the messages are received in the respective JMS Listeners.
 
 {% highlight plaintext %}
 .   ____          _            __ _ _
@@ -232,7 +232,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-Setting up a JMS message selector is straight forward when you use Spring JMS.
+Setting up a JMS message selector is straightforward when you use Spring JMS.
 
 Make sure to leave a comment if the example was helpful.
 
