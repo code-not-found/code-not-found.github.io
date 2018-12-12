@@ -93,7 +93,7 @@ The `JmsTemplate` by default converts a String into a `TextMessage` using the `S
 
 We can use a [MessagePostProcessor](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/jms/core/MessagePostProcessor.html){:target="_blank"} to add a JMS property to a message after it has been processed by the converter.
 
-Modify the `Sender` to check an `isHighPriority` parameter. If the value equals `true` a <var>priority</var> property with the value <var>high</var> is set. Otherwise the property is set to  <var>low</var>.
+Modify the `Sender` to check an `isHighPriority` parameter. If the value equals true, a <var>priority</var> property with the value <var>high</var> is set. Otherwise the property is set to  <var>low</var>.
 
 {% highlight java %}
 package com.codenotfound.jms;
