@@ -44,7 +44,7 @@ We will use the following tools/frameworks:
 
 Our project has the following directory structure:
 
-<img src="{{ site.url }}/assets/images/spring-jms/spring-jms-message-converter-maven-project.png" alt="spring jms activemq converter converter maven project">
+<img src="{{ site.url }}/assets/images/spring-jms/spring-jms-message-converter-maven-project.png" alt="spring jms message converter maven project">
 
 ## 3. Create a Custom JSON Message Converter
 
