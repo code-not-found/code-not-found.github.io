@@ -50,7 +50,9 @@ On the `@JmsListener` there is an optional message <var>selector</var> property 
 
 We create two listeners in the `Receiver`: one for high priority messages and one for low priority messages. Selection is done based on a <var>priority</var> JMS property that we will set in the `Sender`.
 
-> Note that a message consumer receives only messages whose headers and properties match the selector. A message selector **cannot select messages on the basis of the content of the message body**.
+Note that a message consumer receives only messages whose headers and properties match the selector.
+
+> A message selector cannot select messages on the basis of the content of the message body.
 
 {% highlight java %}
 package com.codenotfound.jms;
