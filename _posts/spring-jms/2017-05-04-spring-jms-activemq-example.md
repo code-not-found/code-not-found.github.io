@@ -163,7 +163,7 @@ For sending messages we will be using the `JmsTemplate` which requires a referen
 
 In the below `Sender` class, the `JmsTemplate` is auto-wired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class.
 
-In this example we will use the `convertAndSend()` method which sends the given object to the <var>helloworld.q</var> destination, converting the object to a JMS message.
+In this tutorial we will use the `convertAndSend()` method which sends the given object to the <var>helloworld.q</var> destination, converting the object to a JMS message.
 
 The [type of JMS message]({{ site.url }}/jms-message-types-properties-overview.html#jms-message-body) depends on the type of the object being passed. In the case of a `String`, a JMS `TextMessage` will be created.
 
@@ -252,7 +252,7 @@ public class SenderConfig {
 
 # 6. Create a Spring JMS Message Consumer
 
-Like with any messaging-based application, you need to create a receiver that will handle the messages that have been sent. The below `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In this example we named the method `receive()`, but you can name it anything you like.
+Like with any messaging-based application, you need to create a receiver that will handle the messages that have been sent. The below `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In this guide we named the method `receive()`, but you can name it anything you like.
 
 The `@JmsListener` annotation creates a message listener container behind the scenes for each annotated method, using a `JmsListenerContainerFactory`. By default, a bean with name <var>jmsListenerContainerFactory</var> is expected that we will set up in the next section.
 
@@ -397,7 +397,7 @@ public class SpringJmsApplicationTest {
 }
 {% endhighlight %}
 
-In order to execute the above example open a command prompt and run following Maven command:
+In order to execute the above test, open a command prompt and run following Maven command:
 
 {% highlight plaintext %}
 mvn test
