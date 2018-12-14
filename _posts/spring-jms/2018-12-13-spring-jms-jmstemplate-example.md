@@ -28,7 +28,7 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 
 The [JmsTemplate](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms-jmstemplate){:target="_blank"} is a central class from the Spring core package.
 
-It simplifies the use of [JMS](https://en.wikipedia.org/wiki/Java_Message_Service){:target="_blank"} and gets rid of boilerplate code. It handles the creation and release of JMS resources when sending or synchronously receiving messages.
+It simplifies the use of [JMS](https://en.wikipedia.org/wiki/Java_Message_Service){:target="_blank"} and gets rid of boilerplate code. It handles the creation and release of JMS resources when sending or receiving messages.
 
 Let's create a code sample that shows how to configure the Spring `JmsTemplate`. We will send an order message to an <var>order</var> queue and then synchronously receive a status message from a <var>status</var> queue.
 
@@ -52,13 +52,13 @@ The `JmsTemplate` was [originally designed](https://bsnyderblog.blogspot.com/201
 
 With the development of frameworks like [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} a different solution was needed. As caching of JMS resources was no longer handled by the container.
 
-This is where the [CachingConnectionFactory](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/connection/CachingConnectionFactory.html){:target="_blank"} comes into play. It wraps a JMS provider's connection to provide caching of sessions, connections and producers. It also handles automatic connection recovery.
+This is where the [CachingConnectionFactory](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/connection/CachingConnectionFactory.html){:target="_blank"} comes into play. It wraps a JMS provider's connection to provide caching of sessions, connections, and producers. It also handles automatic connection recovery.
 
 By default, it uses a single session to create many connections. If you need to scale further, you can also specify the number of sessions to cache using the `sessionCacheSize` property.
 
 Configuring a `CachingConnectionFactory` is quite simple. Pass a `ConnectionFactory` and don't forget to set the `sessionCacheSize` if you need to scale.
 
-The `JmsTemplate` requires a reference to a ConnectionFactory. In this example we pass the `CachingConnectionFactory`.
+The `JmsTemplate` requires a reference to a ConnectionFactory. In this example, we pass the `CachingConnectionFactory`.
 
 > If you run on a [J2EE runtime](https://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition#Certified_referencing_runtimes){:target="_blank"} obtain the `ConnectionFactory` from the application's environment naming context via JNDI.
 
@@ -67,7 +67,7 @@ There are a number of items that are set by default:
 * JMS Sessions are "not transacted" and "auto-acknowledged".
 * The template uses a `DynamicDestinationResolver` and a [SimpleMessageConverter](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/support/converter/SimpleMessageConverter.html){:target="_blank"}.
 
-In addition we set the `defaultDestination` to which messages should be send. And as we will also receive messages using the `JmsTemplate` we also set the `receiveTimeout`.
+In addition, we set the `defaultDestination` to which messages should be sent. And as we will also receive messages using the `JmsTemplate` we also set the `receiveTimeout`.
 
 For more information check the [JmsTemplate documentation](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/core/JmsTemplate.html){:target="_blank"}.
 
@@ -140,10 +140,10 @@ public class SenderConfig {
 ## 4. Using JmsTemplate to Send and Receive Messages
 
 Sending messages using the `JmsTemplate` can be done in two ways:
-1. **Using `send(messageCreator)`**: The `MessageCreator` callback interface creates the JMS message.
-2. **Using `convertAndSend(message, messagePostProcessor)`**: The `MessageConverter` assigned to the `JmsTemplate` creates the JMS message. The `MessagePostProcessor` allows for further modification of the message after it has been processed by the converter.
+1. _Using `send(messageCreator)`_: The `MessageCreator` callback interface creates the JMS message.
+2. _Using `convertAndSend(message, messagePostProcessor)`_: The `MessageConverter` assigned to the `JmsTemplate` creates the JMS message. The `MessagePostProcessor` allows for further modification of the message after it has been processed by the converter.
 
-We will use the second approach for sending a simple order message.
+We will use the second approach to send a simple order message.
 
 Create a `Sender` class and auto-wire the `JmsTemplate`.
 
@@ -266,7 +266,7 @@ public class Receiver {
 
 To test the setup we adapt the existing test case.
 
-We use the `Sender` to send out an order message. We then receive the status message and check that is contains the <var>Accepted</var> state.
+We use the `Sender` to send out an order message. We then receive the status message and check that it contains the <var>Accepted</var> state.
 
 {% highlight java %}
 package com.codenotfound;
@@ -310,7 +310,7 @@ Open a command prompt in the root directory and run the test case.
 mvn test
 {% endhighlight %}
 
-In the output logs we can see that the order and status messages are received.
+In the output logs, we can see that the order and status messages are received.
 
 {% highlight plaintext %}
 .   ____          _            __ _ _
@@ -355,7 +355,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this tutorial you learned how to configure the `JmsTemplate` to send and receive JMS messages.
+In this tutorial, you learned how to configure the `JmsTemplate` to send and receive JMS messages.
 
 If you have any questions.
 
