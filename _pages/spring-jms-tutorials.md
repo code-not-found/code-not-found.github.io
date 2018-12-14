@@ -22,7 +22,7 @@ So let's get busy.
 
 Spring provides a JMS integration framework that simplifies the use of the [JMS](https://en.wikipedia.org/wiki/Java_Message_Service){:target="_blank"} API.
 
-It provides a <var>template</var> as a high-level abstraction for sending messages. It also contains support for Message-driven POJOs with `@JmsListener` annotations and a listener container.
+It provides a `JmsTemplate` as a high-level abstraction for sending messages. It also contains support for Message-driven POJOs with `@JmsListener` annotations and a listener container.
 
 Spring JMS is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
@@ -34,6 +34,7 @@ _If you would like to request a new tutorial, leave a comment below._
 * [Spring JMS Boot Configuration Example]({{ site.url }}/spring-jms-boot-configuration-example.html)
 * [Spring JMS Message Converter Example]({{ site.url }}/spring-jms-message-converter-example.html)
 * [Spring JMS Message Selector Example]({{ site.url }}/spring-jms-message-selector-example.html)
+* [Spring JMS JmsTemplate Example]({{ site.url }}/spring-jms-jmstemplate-example.html)
 
 ## References
 
