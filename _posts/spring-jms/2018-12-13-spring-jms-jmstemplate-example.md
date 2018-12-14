@@ -140,8 +140,8 @@ public class SenderConfig {
 ## 4. Using JmsTemplate to Send and Receive Messages
 
 Sending messages using the `JmsTemplate` can be done in two ways:
-1. _Using `send(messageCreator)`_: The `MessageCreator` callback interface creates the JMS message.
-2. _Using `convertAndSend(message, messagePostProcessor)`_: The `MessageConverter` assigned to the `JmsTemplate` creates the JMS message. The `MessagePostProcessor` allows for further modification of the message after it has been processed by the converter.
+1. _Using send(messageCreator)_: The `MessageCreator` callback interface creates the JMS message.
+2. _Using convertAndSend(message, messagePostProcessor)_: The `MessageConverter` assigned to the `JmsTemplate` creates the JMS message. The `MessagePostProcessor` allows for further modification of the message after it has been processed by the converter.
 
 We will use the second approach to send a simple order message.
 
