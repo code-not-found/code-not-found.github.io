@@ -31,10 +31,10 @@ Spring JMS is developed and maintained by [Pivotal Software](https://pivotal.io/
 _If you would like to request a new tutorial, leave a comment below._
 
 * [Spring JMS ActiveMQ Example]({{ site.url }}/spring-jms-activemq-example.html)
+* [Spring JMS JmsTemplate Example]({{ site.url }}/spring-jms-jmstemplate-example.html)
 * [Spring JMS Boot Configuration Example]({{ site.url }}/spring-jms-boot-configuration-example.html)
 * [Spring JMS Message Converter Example]({{ site.url }}/spring-jms-message-converter-example.html)
 * [Spring JMS Message Selector Example]({{ site.url }}/spring-jms-message-selector-example.html)
-* [Spring JMS JmsTemplate Example]({{ site.url }}/spring-jms-jmstemplate-example.html)
 
 ## References
 

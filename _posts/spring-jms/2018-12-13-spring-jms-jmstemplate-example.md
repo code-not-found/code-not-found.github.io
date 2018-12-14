@@ -28,9 +28,9 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 
 The [JmsTemplate](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms-jmstemplate){:target="_blank"} is a central class from the Spring core package.
 
-It simplifies the use of [JMS](https://en.wikipedia.org/wiki/Java_Message_Service){:target="_blank"} and gets rid of the boilerplate code. It handles the creation and release of JMS resources when sending or synchronously receiving messages.
+It simplifies the use of [JMS](https://en.wikipedia.org/wiki/Java_Message_Service){:target="_blank"} and gets rid of boilerplate code. It handles the creation and release of JMS resources when sending or synchronously receiving messages.
 
-Let's create a code sample that shows how to configure the Spring `JmsTemplate`. We send a message to an <var>order</var> queue and then receive another message on a <var>status</var> queue.
+Let's create a code sample that shows how to configure the Spring `JmsTemplate`. We will send an order message to an <var>order</var> queue and then synchronously receive a status message from a <var>status</var> queue.
 
 We start from a previous [Spring Jms example with ActiveMQ]({{ site.url }}/spring-jms-activemq-example.html).
 
@@ -50,11 +50,11 @@ Our project has the following directory structure:
 
 The `JmsTemplate` was [originally designed](https://bsnyderblog.blogspot.com/2010/02/using-spring-jmstemplate-to-send-jms.html){:target="_blank"} to be used with a [J2EE container](https://docs.oracle.com/cd/E17802_01/j2ee/j2ee/1.4/docs/tutorial-update6/doc/Overview3.html){:target="_blank"}. It was the responsibility of the container to provide the necessary pooling of the JMS resources (connections, sessions, consumers and producers).
 
-With the development of frameworks like [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} a different solution was necessary. As caching of JMS resources was no longer handled by the container.
+With the development of frameworks like [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} a different solution was needed. As caching of JMS resources was no longer handled by the container.
 
 This is where the [CachingConnectionFactory](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/connection/CachingConnectionFactory.html){:target="_blank"} comes into play. It wraps a JMS provider's connection to provide caching of sessions, connections and producers. It also handles automatic connection recovery.
 
-By default, it uses a single session to create many connections. If you need to scale further, you can also specify the number of sessions to cache using the sessionCacheSize property.
+By default, it uses a single session to create many connections. If you need to scale further, you can also specify the number of sessions to cache using the `sessionCacheSize` property.
 
 Configuring a `CachingConnectionFactory` is quite simple. Pass a `ConnectionFactory` and don't forget to set the `sessionCacheSize` if you need to scale.
 
@@ -63,15 +63,15 @@ The `JmsTemplate` requires a reference to a ConnectionFactory. In this example w
 > If you run on a [J2EE runtime](https://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition#Certified_referencing_runtimes){:target="_blank"} obtain the `ConnectionFactory` from the application's environment naming context via JNDI.
 
 There are a number of items that are set by default:
-* Dynamic destination creation is set to <var>queues</var>
+* Dynamic destination creation is set to <var>queues</var>.
 * JMS Sessions are "not transacted" and "auto-acknowledged".
 * The template uses a `DynamicDestinationResolver` and a [SimpleMessageConverter](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/support/converter/SimpleMessageConverter.html){:target="_blank"}.
 
-We set the `defaultDestination` to which messages should be send. And as we will also receive messages using the `JmsTemplate` we also set the `receiveTimeout`.
+In addition we set the `defaultDestination` to which messages should be send. And as we will also receive messages using the `JmsTemplate` we also set the `receiveTimeout`.
 
 For more information check the [JmsTemplate documentation](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/core/JmsTemplate.html){:target="_blank"}.
 
-> If you use [Spring JMS autoconfiguration]({{ site.url }}/spring-jms-boot-configuration-example.html) you can use the [Spring Boot JMS application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} to set the above options.
+> If you use [Spring JMS autoconfiguration]({{ site.url }}/spring-jms-boot-configuration-example.html) you can use the [Spring Boot JMS application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} (# JMS section) to set the above options.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -140,8 +140,8 @@ public class SenderConfig {
 ## 4. Using JmsTemplate to Send and Receive Messages
 
 Sending messages using the `JmsTemplate` can be done in two ways:
-* Using `send(messageCreator)`: The `MessageCreator` callback interface creates the JMS message.
-* Using `convertAndSend(message, messagePostProcessor)`: The `MessageConverter` assigned to the `JmsTemplate` creates the JMS message. The `MessagePostProcessor` allows for further modification of the message after it has been processed by the converter.
+1. **Using `send(messageCreator)`**: The `MessageCreator` callback interface creates the JMS message.
+2. **Using `convertAndSend(message, messagePostProcessor)`**: The `MessageConverter` assigned to the `JmsTemplate` creates the JMS message. The `MessagePostProcessor` allows for further modification of the message after it has been processed by the converter.
 
 We will use the second approach for sending a simple order message.
 
@@ -209,7 +209,7 @@ public class Sender {
 
 In the `Receiver` class we configure a `JmsListener` to receive the order message.
 
-We the create a status message on which we apply the [JMS Message ID Pattern](https://docs.oracle.com/cd/E13171_01/alsb/docs25/interopjms/MsgIDPatternforJMS.html#wp1047503){:target="_blank"}. We copy the message ID from the request to the correlation ID of the response.
+We then create a status message on which we apply the [JMS Message ID Pattern](https://docs.oracle.com/cd/E13171_01/alsb/docs25/interopjms/MsgIDPatternforJMS.html#wp1047503){:target="_blank"}. We copy the message ID from the request to the correlation ID of the response.
 
 This time we use the `send()` method on the `JmsTemplate` to send back the status message. In the `MessageCreator` we create a `TextMessage` and set a simple <var>Accepted</var> String as response.
 
@@ -266,7 +266,7 @@ public class Receiver {
 
 To test the setup we adapt the existing test case.
 
-We use the Sender to send out an order message. We then receive the status message and check that is contains the <var>Accepted</var> state.
+We use the `Sender` to send out an order message. We then receive the status message and check that is contains the <var>Accepted</var> state.
 
 {% highlight java %}
 package com.codenotfound;
@@ -357,6 +357,8 @@ If you would like to run the above code sample you can get the full source code 
 
 In this tutorial you learned how to configure the `JmsTemplate` to send and receive JMS messages.
 
-If you have any questions. Or if you enjoyed reading.
+If you have any questions.
+
+Or if you enjoyed reading.
 
 Drop a line below!
