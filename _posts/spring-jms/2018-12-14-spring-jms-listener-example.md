@@ -13,7 +13,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-listener.png" alt="spring jms listener" class="align-right title-image">
 
-In this post I will show you how to receive messages using a [Spring JMS Listener](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms-receiving){:target="_blank"}.
+In this post, I will show you how to receive messages using a [Spring JMS Listener](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms-receiving){:target="_blank"}.
 
 First, I'll explain the different options available.
 
@@ -34,9 +34,11 @@ The one restriction on an MDP is that it must implement the [MessageListener](ht
 
 > Note that you can also [synchronously receive JMS messages using the JmsTemplate]({{ site.url }}/spring-jms-jmstemplate-example.html).
 
-Let's show how above concepts work.
+Let's show how the above concepts work.
 
-We start from a previous [Spring JMS Example using ActiveMQ]({{ site.url }}/spring-jms-activemq-example.html). We adapt it so that an order message is sent to an order queue. A JMS listener will pickup the message and send a status message to two different status queues. On each queue a different message listener container will read the status.
+We start from a previous [Spring JMS Example using ActiveMQ]({{ site.url }}/spring-jms-activemq-example.html).
+
+We adapt it so that an order message is sent to an order queue. A JMS listener will pick up the message and send a status message to two different status queues. On each queue, a different message listener container will read the status.
 
 ## 2. General Project Overview
 
@@ -50,7 +52,7 @@ Our project has the following directory structure:
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-listener-maven-project.png" alt="spring jms listener maven project">
 
-## 3. Configure the Spring JMS Listener Container
+## 3. Configure a Spring JMS Listener Container
 
 A message listener container handles all the **complexity of receiving JMS messages**.
 
@@ -68,13 +70,13 @@ Alternatively, consider using `SimpleMessageListenerContainer`, but only for nat
 
 Let's create both types of listener containers in the `ReceiverConfig` class.
 
-Create a `DefaultJmsListenerContainerFactory` and a `SimpleJmsListenerContainerFactory`. They both require a `ConnectionFactory`.
+Create a `DefaultJmsListenerContainerFactory` and a `SimpleJmsListenerContainerFactory`. Note that they both require a `ConnectionFactory`.
 
-We use the `setConcurrency()` method to set the "lower-upper" limits. This listener container created will always hold on to the minimum number of consumers and will slowly scale up to the maximum number of consumers in case of increasing load.
+We use the `setConcurrency()` method on the DMLC to set the "lower-upper" limits. The listener container created will always hold on to the minimum number of consumers and will slowly scale up to the maximum number of consumers in case of an increasing load.
 
 We then use the factories to create a `DefaultMessageListenerContainer` and a `SimpleMessageListenerContainer`.
 
-The `SimpleJmsListenerEndpoint` defines `Destination` and the `MessageListener` to invoke to process an incoming message. For testing purposes we reuse the `StatusMessageListener` for both containers but give them a different identifier.
+The `SimpleJmsListenerEndpoint` defines `Destination` and the `MessageListener` to invoke to process an incoming message. For testing purposes, we reuse the `StatusMessageListener` for both containers but give them a different identifier.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -161,7 +163,7 @@ public class ReceiverConfig {
 
 To create a JMS listener you need to implement the `MessageListener` interface. It has an `onMessage()` method that is triggered for each message that is received.
 
-The below `StatusMessageListener` tries to cast the received message to a `TextMessage`. If succesfull it logs the content and lowers a `CountDownLatch` that we will use for testing purposes.
+The below `StatusMessageListener` tries to cast the received message to a `TextMessage`. If successful it logs the content and lowers a `CountDownLatch` that we will use for testing purposes.
 
 As we set a `StatusMessageListener` instance on both the DMLC and SMLC containers we add an `id`. This allows us to log in which container a message is received.
 
@@ -261,7 +263,7 @@ public class OrderReceiver {
 
 ## 5. Testing the JMS listener
 
-We change the existing test case to check if our different message listeners works.
+We change the existing test case to check if our different message listeners work.
 
 Send an order message to the order destination. Then check if the `CountDownLatch` was lowered in both the DMLC and SMLC message listeners.
 
@@ -369,7 +371,7 @@ In the output logs, we can see that the order message is received by the annotat
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-message-selector){:target="_blank"}.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-listener){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
