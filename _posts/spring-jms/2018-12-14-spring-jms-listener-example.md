@@ -263,7 +263,7 @@ public class OrderReceiver {
 
 We change the existing test case to check if our different message listeners works.
 
-
+Send an order message to the order destination. Then check if the `CountDownLatch` was lowered in both the DMLC and SMLC message listeners.
 
 {% highlight java %}
 package com.codenotfound;
