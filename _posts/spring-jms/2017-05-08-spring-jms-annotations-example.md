@@ -1,21 +1,22 @@
 ---
-title: "Spring JMS Boot Configuration Example"
-permalink: /spring-jms-boot-configuration-example.html
-excerpt: "A detailed step-by-step tutorial on how to autoconfigure ActiveMQ and Spring JMS using Spring Boot."
+title: "Spring JMS Annotations Example"
+permalink: /spring-jms-annotations-example.html
+excerpt: "A detailed step-by-step tutorial on how to autoconfigure Spring JMS using annotations in combination with Spring Boot."
 date: 2017-05-08
-last_modified_at: 2018-12-11
+last_modified_at: 2018-12-17
 header:
-  teaser: "assets/images/spring-jms/spring-jms-boot-configuration.png"
+  teaser: "assets/images/spring-jms/spring-jms-annotations.png"
 categories: [Spring JMS]
-tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Configuration, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
+tags: [Annotations, Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Configuration, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
 redirect_from:
   - /2017/04/spring-jms-boot-example.html
   - /2017/05/spring-jms-activemq-boot-example.html
   - /spring-jms-activemq-boot-example.html
+  - /spring-jms-boot-configuration-example.html
 published: true
 ---
 
-<img src="{{ site.url }}/assets/images/spring-jms/spring-jms-boot-configuration.png" alt="spring jms boot configuration" class="align-right title-image">
+<img src="{{ site.url }}/assets/images/spring-jms/spring-jms-annotations.png" alt="spring jms annotations" class="align-right title-image">
 
 In this post I'm going to show you EXACTLY how to auto-configure [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"} using [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}.
 
@@ -36,6 +37,8 @@ To show this behavior we will start from a previous [Spring JMS tutorial]({{ sit
 
 The original code will be reduced to a bare minimum in order to demonstrate Spring Boot's autoconfiguration capabilities.
 
+We will also use Spring JMS annotations to ease the JMS implementation.
+
 ## 2. General Project Overview
 
 We will use the following tools/frameworks:
@@ -46,7 +49,7 @@ We will use the following tools/frameworks:
 
 Our project has the following directory structure:
 
-<img src="{{ site.url }}/assets/images/spring-jms/spring-jms-activemq-boot-maven-project.png" alt="spring jms activemq boot maven project">
+<img src="{{ site.url }}/assets/images/spring-jms/spring-jms-annotations-maven-project.png" alt="spring jms annotations maven project">
 
 ## 3. Maven Setup
 

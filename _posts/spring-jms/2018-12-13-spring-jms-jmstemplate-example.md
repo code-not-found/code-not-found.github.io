@@ -126,7 +126,7 @@ public class SenderConfig {
   }
 
   @Bean
-  public JmsTemplate jmsTemplate() {
+  public JmsTemplate orderJmsTemplate() {
     JmsTemplate jmsTemplate =
         new JmsTemplate(cachingConnectionFactory());
     jmsTemplate.setDefaultDestination(orderDestination());
