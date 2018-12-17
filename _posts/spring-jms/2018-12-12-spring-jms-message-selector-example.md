@@ -28,7 +28,7 @@ If your messaging application needs to **filter the messages it receives**, you 
 
 A selector is a String that contains an expression. The syntax of the expression is based on a subset of the [SQL92](https://en.wikipedia.org/wiki/SQL-92){:target="_blank"} conditional expression syntax.
 
-Let's create an example to show how all of this works. We start from a previous [Spring JMS configuration]({{ site.url }}/spring-jms-boot-configuration-example.html) example.
+Let's create an example to show how all of this works. We start from a previous [Spring JMS configuration]({{ site.url }}/spring-jms-annotations-example.html) example.
 
 We then modify the `Receiver` so that it receives high and low priority messages with different listeners. In the `Sender` we add a [JMS property]({{ site.url }}/jms-message-types-properties-overview.html#jms-message-properties) on which we can filter.
 

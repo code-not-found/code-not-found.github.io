@@ -71,7 +71,7 @@ In addition, we set the `defaultDestination` to which messages should be sent. A
 
 For more information check the [JmsTemplate documentation](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/core/JmsTemplate.html){:target="_blank"}.
 
-> If you use [Spring JMS autoconfiguration]({{ site.url }}/spring-jms-boot-configuration-example.html) you can use the [Spring Boot JMS application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} (# JMS section) to set the above options.
+> If you use [Spring JMS autoconfiguration]({{ site.url }}/spring-jms-annotations-example.html) you can use the [Spring Boot JMS application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html){:target="_blank"} (# JMS section) to set the above options.
 
 {% highlight java %}
 package com.codenotfound.jms;

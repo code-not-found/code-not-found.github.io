@@ -30,7 +30,7 @@ A `MessageConverter` specifies how to convert between Java objects and JMS messa
 
 Spring JMS comes with a number of implementations that are ready to use. By default, the `SimpleMessageConverter` is used by the framework. It is able to handle TextMessages, BytesMessages, MapMessages, and ObjectMessages.   
 
-Let's build an example to show how you can use a message converter with Spring JMS. We start from a previous [Spring with JMS example]({{ site.url }}/spring-jms-boot-configuration-example.html). We will adapt it so that we can send a `Person` object that gets converted to/from JSON.
+Let's build an example to show how you can use a message converter with Spring JMS. We start from a previous [Spring with JMS example]({{ site.url }}/spring-jms-annotations-example.html). We will adapt it so that we can send a `Person` object that gets converted to/from JSON.
 
 > Note that Spring JMS ships with a `MappingJackson2MessageConverter` that converts messages to and from JSON. We will not use it and create our own custom implementation instead.
 

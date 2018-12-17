@@ -153,7 +153,7 @@ public class SpringJmsApplication {
 }
 {% endhighlight %}
 
-> The below sections will detail how to create a sender and receiver together with their respective configurations. It is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/spring-jms-boot-configuration-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
+> The below sections will detail how to create a sender and receiver together with their respective configurations. It is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/spring-jms-annotations-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
 ## 5. Create a Spring JMS Message Producer
 

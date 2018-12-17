@@ -64,12 +64,12 @@ Needed dependencies like Spring Boot and Spring JMS are included by declaring th
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.codenotfound</groupId>
-  <artifactId>spring-jms-activemq-boot</artifactId>
+  <artifactId>spring-jms-annotations</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>spring-jms-activemq-boot</name>
-  <description>Spring JMS Boot Configuration Example</description>
-  <url>https://codenotfound.com/spring-jms-boot-configuration-example.html</url>
+  <name>spring-jms-annotations</name>
+  <description>Spring JMS Annotations Example</description>
+  <url>https://codenotfound.com/spring-jms-annotations-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -303,11 +303,11 @@ The test case will be triggered resulting in following log statements:
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-activemq-boot){:target="_blank"}.
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/spring-jms/tree/master/spring-jms-annotations){:target="_blank"}.
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In above example, we were able to autoconfigure a JMS connection to ActiveMQ using Spring Boot and a couple of lines of code.
+In above example, we were able to autoconfigure a JMS connection to ActiveMQ using Spring annotations and a couple of lines of code.
 
 Drop a comment in case you thought the example was helpful or if you found something was missing.
 
