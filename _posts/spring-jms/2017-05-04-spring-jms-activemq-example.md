@@ -30,7 +30,7 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 
 ## 1. What is Spring JMS?
 
-Spring provides a **JMS integration framework** that simplifies the use of the JMS API. Much like Spring's integration does for the JDBC API.
+Spring provides a JMS integration framework that **simplifies the use of the JMS API**. Much like Spring's integration does for the JDBC API.
 
 The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html){:target="_blank"}.
 
@@ -155,7 +155,7 @@ public class SpringJmsApplication {
 
 > The below sections will detail how to create a sender and receiver together with their respective configurations. It is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/spring-jms-boot-configuration-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
-# 5. Create a Spring JMS Message Producer
+## 5. Create a Spring JMS Message Producer
 
 For sending messages we will be using the `JmsTemplate` which requires a reference to a `ConnectionFactory`. It provides convenience methods which handle the creation and release of resources when sending or synchronously receiving messages.
 
@@ -250,7 +250,7 @@ public class SenderConfig {
 }
 {% endhighlight %}
 
-# 6. Create a Spring JMS Message Consumer
+## 6. Create a Spring JMS Message Consumer
 
 Like with any messaging-based application, you need to create a receiver that will handle the messages that have been sent. The below `Receiver` is nothing more than a simple POJO that defines a method for receiving messages. In this guide we named the method `receive()`, but you can name it anything you like.
 
@@ -339,7 +339,7 @@ public class ReceiverConfig {
 }
 {% endhighlight %}
 
-# 7. Testing the Spring JMS Template & Listener
+## 7. Testing the Spring JMS Template & Listener
 
 In order to verify that we are able to send and receive a message to and from ActiveMQ, a basic `SpringJmsApplicationTest` test case is used.
 

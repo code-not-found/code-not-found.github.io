@@ -262,7 +262,7 @@ public class Receiver {
 }
 {% endhighlight %}
 
-## 4. Testing the JmsTemplate
+## 5. Testing the JmsTemplate
 
 To test the setup we adapt the existing test case.
 
