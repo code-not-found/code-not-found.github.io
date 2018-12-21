@@ -159,7 +159,7 @@ In this tutorial we will use the `convertAndSend()` method which sends the given
 
 The [type of JMS message]({{ site.url }}/jms-message-types-properties-overview.html#jms-message-body) depends on the type of the object being passed. In the case of a `String`, a JMS `TextMessage` will be created.
 
-> For more detailed information on how to send JMS messages check the [Spring JmsTemplate Example]({{ site.url }}/spring-jms-jmstemplate-example.html).
+> For more detailed information on how to send JMS messages, check the [Spring JmsTemplate Example]({{ site.url }}/spring-jms-jmstemplate-example.html).
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -336,7 +336,7 @@ public class ReceiverConfig {
 }
 {% endhighlight %}
 
-## 7. Testing the Spring JMS Template & Listener
+## 7. Testing the Spring JMS Example
 
 Spring Boot will automatically start an embedded broker if following conditions are met:
 * ActiveMQ is on the classpath.

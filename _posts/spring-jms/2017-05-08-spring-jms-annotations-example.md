@@ -18,7 +18,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-annotations.png" alt="spring jms annotations" class="align-right title-image">
 
-In this post I'm going to show you EXACTLY how to auto-configure [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"} using [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}.
+In this post I'm going to show you EXACTLY how to auto-configure [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"} using annotations and [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}.
 
 So if you want to get up and running with a minimum amount of coding, then you'll love this guide.
 
