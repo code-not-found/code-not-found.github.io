@@ -351,8 +351,6 @@ activemq:
   broker-url: vm://embedded-broker?broker.persistent=false
 {% endhighlight %}
 
-> Note that as the embedded broker gets shut down once the unit test cases are finished, we need to stop our `Sender` and `Receiver` before this happens in order to avoid connection errors. This achieved by using the `@DirtiesContext` annotation which closes the `ApplicationContext` after each test.
-
 Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/jms-apache-activemq-installation.html) on your local system. Simply change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL.
 
 {% highlight java %}
