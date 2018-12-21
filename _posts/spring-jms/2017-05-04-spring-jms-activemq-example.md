@@ -351,8 +351,6 @@ activemq:
   broker-url: vm://embedded-broker?broker.persistent=false
 {% endhighlight %}
 
-Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/jms-apache-activemq-installation.html) on your local system. Simply change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL.
-
 {% highlight java %}
 package com.codenotfound;
 
@@ -426,6 +424,8 @@ Maven will download the dependencies, compile the code and run the unit test cas
 [INFO] Finished at: 2018-12-10T13:12:56+01:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
+
+Above test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/jms-apache-activemq-installation.html) on your local system. Simply change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL.
 
 ---
 
