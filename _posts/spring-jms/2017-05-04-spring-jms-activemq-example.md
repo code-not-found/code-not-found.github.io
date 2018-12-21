@@ -338,18 +338,20 @@ public class ReceiverConfig {
 
 ## 7. Testing the Spring JMS Template & Listener
 
-We create a basic `SpringJmsApplicationTest` class to verify that we are able to send and receive a message to and from ActiveMQ.
+Spring Boot will automatically start an embedded broker if following conditions are met:
+* ActiveMQ is on the classpath.
+* No broker URL is specified through <var>spring.activemq.broker-url</var>.
 
-It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.q'</var> queue on the ActiveMQ message broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
-
-Spring Boot will automatically start an embedded broker if it detects that ActiveMQ is on the classpath. And as long as no broker URL is specified through the <var>spring.activemq.broker-url</var> configuration property.
-
-To use the embedded broker for our test we add a dedicated <var>application.yml</var> properties file under <var>src/test/resources</var> that contains the VM URI to connect with the embedded broker.
+Let's use the embedded broker for testing. We add a dedicated <var>application.yml</var> properties file under <var>src/test/resources</var>. Inside we specify the VM URI as broker connection URL.
 
 {% highlight yaml %}
 activemq:
   broker-url: vm://embedded-broker?broker.persistent=false
 {% endhighlight %}
+
+Next, we create a basic `SpringJmsApplicationTest` class to verify that we are able to send and receive a message to and from ActiveMQ.
+
+It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.q'</var> queue on the ActiveMQ message broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
 {% highlight java %}
 package com.codenotfound;
