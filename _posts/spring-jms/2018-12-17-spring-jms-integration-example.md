@@ -17,7 +17,7 @@ In this post you're going to learn how to use [Spring Integration](https://sprin
 
 In fact:
 
-We will build an example that covers both sending and receiving of JMS messages.
+We will build an example that covers both the sending and receiving of JMS messages.
 
 Let's dive right in.
 
@@ -26,9 +26,9 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 
 ## 1. What is Spring Integration?
 
-[Spring Integration](https://spring.io/projects/spring-integration){:target="_blank"} extends the Spring programming model to support the well-known [Enterprise Integration Patterns](http://www.enterpriseintegrationpatterns.com/){:target="_blank"}.
+Spring Integration extends the Spring programming model to support the well-known [Enterprise Integration Patterns](http://www.enterpriseintegrationpatterns.com/){:target="_blank"}.
 
-It **enables lightweight messaging** within Spring-based applications. It also **supports integration** with external systems via declarative adapters. Some of the supported integrations are: FTP, HTTP, JMS and email.
+It **enables lightweight messaging** within Spring-based applications. It also **supports integration** with external systems via declarative adapters. Some of the supported integrations are FTP, HTTP, JMS, and email.
 
 Spring Integration is a main Spring project. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
@@ -46,7 +46,9 @@ There are two JMS-based inbound Channel Adapters. The first uses Springs `JmsTem
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-integration-example-overview.png" alt="spring jms integration example overview">
 
-Let's build a Spring JMS integration with ActiveMQ example. It consists out of two channels as shown in above diagram. The first _ProducingChannel_ will have a `JmsSendingMessageHandler` that subscribes to the channel and writes all received messages to an <var>'integration.q'</var> queue.
+Let's build a Spring JMS integration example using ActiveMQ. It consists out of two channels as shown in the above diagram.
+
+The first _ProducingChannel_ will have a `JmsSendingMessageHandler` that subscribes to the channel and writes all received messages to an <var>integration.q</var> queue.
 
 A second _ConsumingChannel_ will connect to the same queue using a `JmsMessageDrivenEndpoint`. A custom `CountDownLatchHandler` subscribes to this second channel and lowers a `CountDownLatch`.
 
@@ -123,13 +125,15 @@ To use the different Spring Integration JMS components we need to add the `sprin
 
 ## 5. Create a JmsSendingMessageHandler
 
-We start by defining the _ProducingChannel_ as a `DirectChannel` bean. This is the default channel provided by the framework, but you can use any of the [message channels Spring Integration provides](https://docs.spring.io/spring-integration/docs/5.1.1.RELEASE/reference/html/messaging-channels-section.html){:target="_blank"}.
+Create a `ProducingChannelConfig` class and annotate it with `@Configuration`.
+
+Define a _ProducingChannel_ as a `DirectChannel` bean. This is the default channel provided by the framework, but you can use any of the [message channels Spring Integration provides](https://docs.spring.io/spring-integration/docs/5.1.1.RELEASE/reference/html/messaging-channels-section.html){:target="_blank"}.
 
 Next, we create the `JmsSendingMessageHandler` that will send messages received from the _ProducingChannel_ towards a destination. The constructor requires a `JmsTemplate` to be passed as a parameter. We simply inject the template that is auto-configured by Spring Boot.
 
 Using the `@Value` annotation we load the name of the destination from the <var>application.yml</var> properties file under <var>src/main/resources</var>. We then set it using `setDestinationName()`.
 
-The `JmsSendingMessageHandler` is attached to the _ProducingChannel_ using the `@ServiceActivator` annotation. As `inputChannel` we need to specify the _ProducingChannel_ as a key/value pair in order to make the link.
+The `JmsSendingMessageHandler` is attached to the _ProducingChannel_ using the `@ServiceActivator` annotation. As `inputChannel` we need to specify the <var>producingChannel</var> as a key/value pair in order to make the link.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -178,7 +182,7 @@ The `ChannelPublishingJmsMessageListener` creates a listener that converts a JMS
 
 We connect the endpoint to the _ConsumingChannel_ by using the `setOutputChannel()` method.
 
-In order to test our setup, a `CountDownLatchHandler` bean is defined that is linked to the _ConsumingChannel_ using the `@ServiceActivator` annotation.
+In order to test our setup, a `CountDownLatchHandler` bean is specified that is linked to the _ConsumingChannel_ using the `@ServiceActivator` annotation.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -272,17 +276,17 @@ public class CountDownLatchHandler implements MessageHandler {
 }
 {% endhighlight %}
 
-## 7. Testing the JMS listener
+## 7. Testing Spring JMS Integration Example
 
 We change the existing test case to check if different Spring Integration JMS components work.
 
 To get hold of the _ProducingChannel_, we auto-wire the `ApplicationContext` and use the `getBean()` method.
 
-We then create a for loop in which we sent 10 messages to the <var>'integration.q'</var> queue using the channel's `send()` method. Note that we set the destination by adding a message header `Map` which contains the `JmsHeaders.DESTINATION` value which corresponds to the destination name.
+We then create a for loop in which we sent 10 messages to the <var>integration.q</var> queue using the channel's `send()` method. Set the destination by adding a message header `Map` which contains the `JmsHeaders.DESTINATION` value which corresponds to the destination name.
 
 The messages should arrive via the _ConsumingChannel_ in the `CountDownLatchHandler` where the `CountDownLatch` is lowered from its initial value of <var>10</var>.
 
-We check if the 10 messages have been receive by asserting that the `CountDownLatch` value is equals to <var>0</var>.
+We check if all the messages have been received by asserting that the `CountDownLatch` value equals to <var>0</var>.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -346,7 +350,7 @@ public class SpringJmsApplicationTest {
 }
 {% endhighlight %}
 
-Now it's time to run the test case. Open a command prompt in the root directory and enter following command:
+Now it's time to run the test case. Open a command prompt in the root directory and enter the following command:
 
 {% highlight plaintext %}
 mvn test
