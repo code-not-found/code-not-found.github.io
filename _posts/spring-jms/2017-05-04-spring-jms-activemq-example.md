@@ -66,9 +66,7 @@ The `spring-boot-starter-activemq` dependency includes the needed dependencies f
 
 The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
-> You can find back the Spring Boot dependency versions in Appendix F of the reference documentation. For Spring Boot 2.1.1 the [ActiveMQ dependency is version 5.15.8](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
-
-We also add a dependency to `activemq-junit` we will include a basic unit test case that verifies our setup using an embedded ActiveMQ broker.
+> You can find back the exact dependency versions in Appendix F of the reference documentation. For Spring Boot 2.1.1 the [ActiveMQ dependency is version 5.15.8](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
 
 In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}. `spring-boot-maven-plugin` allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code.
 
@@ -109,12 +107,6 @@ Also, the plugin allows you to start the example via a Maven command.
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.apache.activemq.tooling</groupId>
-      <artifactId>activemq-junit</artifactId>
-      <version>${activemq.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
@@ -153,19 +145,21 @@ public class SpringJmsApplication {
 }
 {% endhighlight %}
 
-> The below sections will detail how to create a sender and receiver together with their respective configurations. It is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/spring-jms-annotations-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
+The below sections will detail how to create a sender and receiver together with their respective configurations.
+
+> It is also possible to have [Spring Boot autoconfigure Spring JMS]({{ site.url }}/spring-jms-annotations-example.html) using default values so that actual code that needs to be written is reduced to a bare minimum.
 
 ## 5. Create a Spring JMS Message Producer
 
-For sending messages we will be using the `JmsTemplate` which requires a reference to a `ConnectionFactory`. It provides convenience methods which handle the creation and release of resources when sending or synchronously receiving messages.
-
-> Note that instances of the JmsTemplate class are thread-safe once configured.
+For sending messages we will be using the `JmsTemplate` which requires a reference to a `ConnectionFactory`. The template provides convenience methods which handle the creation and release of resources when sending or synchronously receiving messages.
 
 In the below `Sender` class, the `JmsTemplate` is auto-wired as the actual creation of the `Bean` will be done in a separate `SenderConfig` class.
 
 In this tutorial we will use the `convertAndSend()` method which sends the given object to the <var>helloworld.q</var> destination, converting the object to a JMS message.
 
 The [type of JMS message]({{ site.url }}/jms-message-types-properties-overview.html#jms-message-body) depends on the type of the object being passed. In the case of a `String`, a JMS `TextMessage` will be created.
+
+> For more detailed information on how to send JMS messages check the [Spring JmsTemplate Example]({{ site.url }}/spring-jms-jmstemplate-example.html).
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -287,13 +281,17 @@ public class Receiver {
 }
 {% endhighlight %}
 
-The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class. Note that we need to add the `@EnableJms` annotation to enable support for the `@JmsListener` annotation that was used on the `Receiver`.
+The creation and configuration of the different Spring Beans needed for the `Receiver` POJO are grouped in the `ReceiverConfig` class.
 
-The `jmsListenerContainerFactory()` is expected by the `@JmsListener` annotation from the `Receiver`. We set the concurrency between 3 and 10. This means that listener container will always hold on to the minimum number of consumers and will slowly scale up to the maximum number of consumers in case of an increasing load.
+> Note that we need to add the `@EnableJms` annotation to enable support for the `@JmsListener` annotation that was used on the `Receiver`.
+
+The `jmsListenerContainerFactory()` is expected by the `@JmsListener` annotation from the `Receiver`.
 
 Contrary to the `JmsTemplate` ideally [don't use Spring's CachingConnectionFactory with a message listener container](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html){:target="_blank"} at all. Reason for this is that it is generally preferable to let the listener container itself handle appropriate caching within its lifecycle.
 
 As we are connecting to ActiveMQ, an `ActiveMQConnectionFactory` is created and passed in the constructor of the `DefaultJmsListenerContainerFactory`.
+
+> More details on how to receive JMS messages can be found in the [Spring Jms Listener Example]({{ site.url }}/spring-jms-listener-example.html).
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -327,7 +325,6 @@ public class ReceiverConfig {
         new DefaultJmsListenerContainerFactory();
     factory
         .setConnectionFactory(receiverActiveMQConnectionFactory());
-    factory.setConcurrency("3-10");
 
     return factory;
   }
@@ -341,45 +338,39 @@ public class ReceiverConfig {
 
 ## 7. Testing the Spring JMS Template & Listener
 
-In order to verify that we are able to send and receive a message to and from ActiveMQ, a basic `SpringJmsApplicationTest` test case is used.
+We create a basic `SpringJmsApplicationTest` class to verify that we are able to send and receive a message to and from ActiveMQ.
 
 It contains a `testReceive()` unit test case that uses the `Sender` to send a message to the <var>'helloworld.q'</var> queue on the ActiveMQ message broker. We then use the `CountDownLatch` from the `Receiver` to verify that a message was received.
 
-An embedded ActiveMQ broker is automatically started by using an [EmbeddedActiveMQBroker JUnit Rule](http://activemq.apache.org/how-to-unit-test-jms-code.html#HowToUnitTestJMSCode-UsingTheEmbeddedActiveMQBrokerJUnitRule(ActiveMQ5.13)){:target="_blank"}. We have added a dedicated <var>application.yml</var> properties file for testing under <var>src/test/resources</var> that contains the VM URI to connect with the embedded broker.
+Spring Boot will automatically start an embedded broker if it detects that ActiveMQ is on the classpath. And as long as no broker URL is specified through the <var>spring.activemq.broker-url</var> configuration property.
+
+To use the embedded broker for our test we add a dedicated <var>application.yml</var> properties file under <var>src/test/resources</var> that contains the VM URI to connect with the embedded broker.
 
 {% highlight yaml %}
 activemq:
-  broker-url: vm://embedded-broker?create=false
+  broker-url: vm://embedded-broker?broker.persistent=false
 {% endhighlight %}
 
 > Note that as the embedded broker gets shut down once the unit test cases are finished, we need to stop our `Sender` and `Receiver` before this happens in order to avoid connection errors. This achieved by using the `@DirtiesContext` annotation which closes the `ApplicationContext` after each test.
 
-Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/jms-apache-activemq-installation.html) on your local system. You need to comment out the lines annotated with `@ClassRule` to avoid the embedded broker gets created. In addition you need to change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL value.
+Below test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/jms-apache-activemq-installation.html) on your local system. Simply change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL.
 
 {% highlight java %}
 package com.codenotfound;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.concurrent.TimeUnit;
-import org.apache.activemq.junit.EmbeddedActiveMQBroker;
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.codenotfound.jms.Receiver;
 import com.codenotfound.jms.Sender;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@DirtiesContext
 public class SpringJmsApplicationTest {
-
-  @ClassRule
-  public static EmbeddedActiveMQBroker broker =
-      new EmbeddedActiveMQBroker();
 
   @Autowired
   private Sender sender;
@@ -397,7 +388,7 @@ public class SpringJmsApplicationTest {
 }
 {% endhighlight %}
 
-In order to execute the above test, open a command prompt and run following Maven command:
+In order to execute the above test, open a command prompt in the project root directory and run following Maven command:
 
 {% highlight plaintext %}
 mvn test
@@ -446,7 +437,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-This concludes our example in which we used a Spring JMS and Spring Boot in order to connect to ActiveMQ.
+This concludes our example in which we used Spring JMS and Spring Boot in order to connect to ActiveMQ.
 
 If you found this sample useful or have a question you would like to ask.
 

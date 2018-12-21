@@ -304,7 +304,7 @@ public class SpringJmsApplicationTest {
 }
 {% endhighlight %}
 
-Open a command prompt in the root directory and run the test case.
+Open a command prompt in the project root directory and run the test case.
 
 {% highlight plaintext %}
 mvn test
