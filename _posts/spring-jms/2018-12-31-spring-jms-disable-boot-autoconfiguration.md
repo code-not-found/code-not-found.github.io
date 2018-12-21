@@ -1,11 +1,11 @@
 ---
-title: "Spring JMS - ActiveMQ Boot Example"
-permalink: /2017/05/spring-jms-activemq-boot-example.html
+title: "Spring JMS Disable Boot Autoconfiguration Example"
+permalink: /spring-jms-disable-boot-example.html
 excerpt: "A detailed step-by-step tutorial on how to autoconfigure ActiveMQ and Spring JMS using Spring Boot."
-date: 2017-05-08
-modified: 2017-05-08
+date: 2018-12-31
+last_modified_at: 2018-12-31
 header:
-  teaser: "assets/images/teaser/spring-jms-teaser.jpg"
+  teaser: "assets/images/spring-jms/spring-jms-disable-boot.png"
 categories: [Spring JMS]
 tags: [Autoconfig, Autoconfiguration, ActiveMQ, Apache ActiveMQ, Example, Maven, Spring, Spring Boot, Spring JMS, Tutorial]
 published: false
