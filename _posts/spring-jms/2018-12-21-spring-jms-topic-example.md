@@ -26,7 +26,7 @@ If you want to learn more about Spring JMS - head on over to the [Spring JMS tut
 
 A [JMS topic](http://activemq.apache.org/how-does-a-queue-compare-to-a-topic.html){:target="_blank"} is a destination that delivers messages to multiple subscribers.
 
-It implements publish and subscribe semantics. When you publish a message it goes to all the subscribers who are interested.
+It implements publish and subscribe semantics. When you publish a message **it goes to all the subscribers** who are interested.
 
 Let's build an example where we send a JMS message to a topic using Spring JMS. On the topic, we will register two subscribers who will each receive the message.
 
@@ -50,9 +50,9 @@ Spring JMS components distinguish between [two types of JMS domains](https://doc
 1. A point-to-point domain that uses queues
 2. A publish-subscribe domain that uses topics
 
-This means that when you [use the JmsTemplate to send JMS messages]({{ site.url }}/spring-jms-jmstemplate-example.html) it can send to queues or topics but not both at the same time!
+This means that when you [use the JmsTemplate to send JMS messages]({{ site.url }}/spring-jms-jmstemplate-example.html), it can send to queues or topics but not both at the same time!
 
-The boolean property `pubSubDomain` is used to configure the JmsTemplate with knowledge of what JMS domain is being used. By default, the value of this property is false. This indicates that <var>queues</var> are used.
+The boolean property `pubSubDomain` is used to configure the `JmsTemplate` with knowledge of what JMS domain is being used. By default, the value of this property is <var>false</var>. This indicates that <var>queues</var> are used.
 
 As we want to send a message to a topic we need to update our `SenderConfig` configuration. Use the `setPubSubDomain()` method on the `JmsTemplate` to set `pubSubDomain` to <var>true</var>.
 
@@ -145,9 +145,9 @@ public class ReceiverConfig {
 }
 {% endhighlight %}
 
-In the `Receiver` class we add an extra `receive()` method to demonstrate that we will receive the same message in each listener.
+In the `Receiver` class we add an extra `receive()` method to demonstrate that we can receive the same message on different listeners.
 
-Annotate the method with @JmsListener and specify the same destination. Once this is done Spring will create a subscription for each listener.
+Annotate the additional method with `@JmsListener` and specify the same destination. Spring will now create a dedicated subscription for each listener.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -186,7 +186,7 @@ public class Receiver {
 
 ## 5. Testing the JMS Topic
 
-We reuse the same test case.
+To test the setup we simply reuse the same test case.
 
 In the `Receiver` we increased the value of the `CountDownLatch` to <var>2</var>. This means that if we send one message it should be received in both our subscribers.
 
@@ -229,7 +229,7 @@ Open a command prompt in the root directory and fire up the test case.
 mvn test
 {% endhighlight %}
 
-In the logs, we see that the same message is indeed received by both subscribers.
+In the logs, we see that the same message is received by both subscribers.
 
 {% highlight plaintext %}
 .   ____          _            __ _ _
@@ -273,10 +273,10 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this topic subscriber example, you learned how to configure Spring JMS so it sends/receives a message to/from a topic.
+In this topic subscriber example, you learned how to configure Spring JMS so it send/receive a message to/from a topic.
 
 Drop a line if you have any questions.
 
 Or just to let me know you found this post useful.
 
-Thanks.
+Thanks!
