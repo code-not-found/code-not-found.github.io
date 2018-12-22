@@ -15,13 +15,13 @@ published: true
 
 <img src="{{ site.url }}/assets/images/jsf-primefaces/jsf-primefaces-themes-example.png" alt="jsf primefaces themes example" class="align-right title-image">
 
-Today you’re going to learn how to setup a [PrimeFaces](https://www.primefaces.org/){:target="_blank"} Theme.
+Today you're going to learn how to setup a [PrimeFaces](https://www.primefaces.org/){:target="_blank"} Theme.
 
 More specifically we'll configure the free [Bootstrap](https://www.primefaces.org/twitter-bootstrap-theme/){:target="_blank"} community theme.
 
 (FAST)
 
-Let’s jump right in…
+Let's jump right in…
 
 If you want to learn more about PrimeFaces for JSF - head on over to the [JSF PrimeFaces tutorials]({{ site.url }}/jsf-primefaces-tutorials) page.
 {: .notice--primary}
