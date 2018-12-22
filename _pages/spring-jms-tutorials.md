@@ -37,6 +37,7 @@ _If you would like to request a new tutorial, leave a comment below._
 * [Spring JMS Integration Example]({{ site.url }}/spring-jms-integration-example.html)
 * [Spring JMS Message Converter Example]({{ site.url }}/spring-jms-message-converter-example.html)
 * [Spring JMS Message Selector Example]({{ site.url }}/spring-jms-message-selector-example.html)
+* [Spring JMS Topic Example]({{ site.url }}/spring-jms-topic-example.html)
 
 ## References
 
