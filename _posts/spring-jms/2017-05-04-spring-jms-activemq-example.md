@@ -1,7 +1,7 @@
 ---
 title: "Spring JMS ActiveMQ Example"
 permalink: /spring-jms-activemq-example.html
-excerpt: "A detailed step-by-step tutorial on how to connect to ActiveMQ using Spring JMS and Spring Boot."
+excerpt: "A detailed step-by-step tutorial on how to connect to Apache ActiveMQ using Spring JMS and Spring Boot."
 date: 2017-05-04
 last_modified_at: 2018-12-12
 header:
@@ -17,7 +17,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-activemq.png" alt="spring jms activemq" class="align-right title-image">
 
-I'm going to show you exactly how to create a [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}, [ActiveMQ](http://activemq.apache.org/){:target="_blank"}, and [Maven](https://maven.apache.org/){:target="_blank"}.
+I'm going to show you EXACTLY how to create a [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}, [ActiveMQ](http://activemq.apache.org/){:target="_blank"}, and [Maven](https://maven.apache.org/){:target="_blank"}.
 
 (Step-by-step)
 
@@ -34,7 +34,7 @@ Spring provides a JMS integration framework that **simplifies the use of the JMS
 
 The Spring Framework will take care of some low-level details when working with the [JMS API](http://docs.oracle.com/javaee/6/tutorial/doc/bncdr.html){:target="_blank"}.
 
-In this tutorial, we create a Hello World example in which we will send/receive a message to/from Apache ActiveMQ using Spring JMS, Spring Boot, and Maven.
+In this tutorial, we will create a Hello World example in which we will send/receive a message to/from Apache ActiveMQ using Spring JMS, Spring Boot, and Maven.
 
 ## 2. General Project Overview
 
@@ -52,7 +52,7 @@ Our project has the following directory structure:
 
 We build and run our example using **Maven**. If not already the case, [download and install Apache Maven](https://downlinko.com/download-install-apache-maven-windows.html){:target="_blank"}.
 
-Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>JMS</var> as a dependency.
+Let's use [Spring Initializr](https://start.spring.io/){:target="_blank"} to generate our Maven project. Make sure to select <var>JMS (ActiveMQ)</var> as a dependency.
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-activemq-hello-world-initializr.png" alt="spring jms activemq hello world initializr">
 
