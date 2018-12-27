@@ -32,9 +32,9 @@ Apache ActiveMQ Artemis a JMS Broker that is based on the [HornetQ](https://en.w
 
 Artemis is a separate product to [ActiveMQ](http://activemq.apache.org/){:target="_blank"}. At the moment of writing the development team is working toward feature parity between ActiveMQ 5.x and Artemis.
 
-The goal is that Artemis eventually becomes ActiveMQ 6.x.
+The goal is that **Artemis eventually becomes ActiveMQ 6.x**.
 
-In this guide, we will create a Hello World example that receives a greeting message from an Artemis JMS broker using Spring JMS, Spring Boot, and Maven.
+In this guide, we will create a _Hello World_ example that receives a greeting message from an Artemis JMS broker using Spring JMS, Spring Boot, and Maven.
 
 ## 2. General Project Overview
 
@@ -219,11 +219,11 @@ public class ReceiverConfig {
 }
 {% endhighlight %}
 
-And that's it we can now test our connection to an Artemis JMS broker.
+And that's it! We can now test our connection to an Artemis JMS broker.
 
 ## 6. Testing the JMS listener
 
-The package [artemis-junit](https://activemq.apache.org/artemis/docs/latest/unit-testing.html){:target="_blank"} package provides some JUnit "rules". These make it easy to start a server for your tests.
+The [artemis-junit](https://activemq.apache.org/artemis/docs/latest/unit-testing.html){:target="_blank"} package provides some JUnit rules. These make it easy to start a server for our tests.
 
 Use the `@Rule` annotation to create an `EmbeddedJMSResource` that will run an Artemis server.
 
