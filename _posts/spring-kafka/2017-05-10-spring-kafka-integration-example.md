@@ -35,7 +35,7 @@ Tools used:
 * Spring Boot 1.5
 * Maven 3.5
 
-The building of this project will be automated using [Maven](https://maven.apache.org/){:target="_blank"}. We include the needed Spring Integration dependencies using the `spring-boot-starter-integration` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters){:target="_blank"}. For testing support, we also include the `spring-boot-starter-test` starter.
+The building of this project will be automated using [Maven](https://maven.apache.org/){:target="_blank"}. We include the needed Spring Integration dependencies using the `spring-boot-starter-integration` [Spring Boot starter](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"}. For testing support, we also include the `spring-boot-starter-test` starter.
 
 As we will be using the Spring Integration Kafka extension, we add the corresponding `spring-integration-kafka` dependency. Starting from version 2.0 this project is a complete rewrite based on the [Spring for Apache Kafka](https://projects.spring.io/spring-kafka/){:target="_blank"} project which uses the pure java `Producer` and `Consumer` clients provided by Kafka. As such we also add the `spring-kafka` dependency for core functionality as well as `spring-kafka-test` in order to have access to an embedded Kafka broker when running our unit test.
 
@@ -134,7 +134,7 @@ Spring Integration uses the concept of a **Message Channel** to pass along infor
 
 A **Message Endpoint** represents the "filter" of a [pipes-and-filters architecture](http://www.enterpriseintegrationpatterns.com/patterns/messaging/PipesAndFilters.html){:target="_blank"}. Spring Integration has a number of endpoint types that are supported. In this example, we will look at the endpoint types that allow us to connect to Kafka.
 
-The first one is a [Service Activator](http://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingAdapter.html){:target="_blank"} which simply connects any existing Spring-managed bean to a channel. Spring Integration Kafka provides a `KafkaProducerMessageHandler` which handles a given message by using a `KafkaTemplate` to send data to Kafka topics. By connecting a channel as input to this Message Handler we can send messages to the Kafka bus. 
+The first one is a [Service Activator](http://www.enterpriseintegrationpatterns.com/patterns/messaging/MessagingAdapter.html){:target="_blank"} which simply connects any existing Spring-managed bean to a channel. Spring Integration Kafka provides a `KafkaProducerMessageHandler` which handles a given message by using a `KafkaTemplate` to send data to Kafka topics. By connecting a channel as input to this Message Handler we can send messages to the Kafka bus.
 
 The second one is a [Channel Adapter](http://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html){:target="_blank"} endpoint that connects a Message Channel to some other system or transport. Channel Adapters may be either inbound (towards a channel) or outbound (from a channel). Spring Integration Kafka ships with an inbound `KafkaMessageDrivenChannelAdapter` which uses a spring-kafka `KafkaMessageListenerContainer` or `ConcurrentListenerContainer` to receive messages from Kafka topics.
 

@@ -35,7 +35,7 @@ Tools used:
 
 The example will be built and run using [Apache Maven](https://maven.apache.org/){:target="_blank"}. In order to use the Crnk framework, we need to include the `crnk-core` dependency. As Spring Boot will be used for running the server part we also need to include `crnk-spring`. For implementing the client part the `crnk-client` dependency is needed.
 
-Crnk aims to have as little dependencies as possible, as such a HTTP client library is not included by default. It needs to be [provided on the classpath where it will be automatically picked up](http://www.crnk.io/documentation/#_client){:target="_blank"} by the framework. Both [OkHttp](https://square.github.io/okhttp){:target="_blank"} and [Apache Http Client](https://hc.apache.org/httpcomponents-client-ga/index.html){:target="_blank"} are supported. For this example we will use the `okhttp` library.
+Crnk aims to have as little dependencies as possible, as such a HTTP client library is not included by default. It needs to be [provided on the classpath where it will be automatically picked up](http://www.crnk.io/releases/stable/documentation/#_client){:target="_blank"} by the framework. Both [OkHttp](https://square.github.io/okhttp){:target="_blank"} and [Apache Http Client](https://hc.apache.org/httpcomponents-client-ga/index.html){:target="_blank"} are supported. For this example we will use the `okhttp` library.
 
 Running and testing of the example is based on the `spring-boot-starter-web` and `spring-boot-starter-test` [Spring Boot starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"}. The former is needed as we will be exposing the Hello World API using the `@RestController` annotation.
 
@@ -137,11 +137,11 @@ public class SpringCrnkApplication {
 
 We start by defining a simple model that will represent a `Greeting` resource. It contains an `id` in addition to the actual greeting `content`. We also need to define the constructors and getters/setters for the two fields.
 
-The `@JsonApiResource` annotation [defines a resource](http://www.crnk.io/documentation/#_jsonapiresource){:target="_blank"}. It requires the type parameter to be set which will be used to form the URI and populate the [type field](http://jsonapi.org/format/#document-resource-objects) which is passed as part of the resource object.
+The `@JsonApiResource` annotation [defines a resource](http://www.crnk.io/releases/stable/documentation/#_jsonapiresource){:target="_blank"}. It requires the type parameter to be set which will be used to form the URI and populate the [type field](http://jsonapi.org/format/#document-resource-objects) which is passed as part of the resource object.
 
 > According to JSON API standard, the name defined in type can be either plural or singular. However, the same value should be used consistently throughout an implementation.
 
-The `@JsonApiId` [defines a field which will be used as an identifier](http://www.crnk.io/documentation/#_jsonapiid){:target="_blank"} of the Greeting resource. Each resource requires this annotation to be present on a field which is of primitive type or a type that implements the `Serializable` interface.
+The `@JsonApiId` [defines a field which will be used as an identifier](http://www.crnk.io/releases/stable/documentation/#_jsonapiid){:target="_blank"} of the Greeting resource. Each resource requires this annotation to be present on a field which is of primitive type or a type that implements the `Serializable` interface.
 
 ``` java
 package com.codenotfound.crnk.domain.model;
@@ -191,9 +191,9 @@ public class Greeting {
 
 # Creating the Repository
 
-To allow Crnk to operate on defined resources, a special type of class called [repository](http://www.crnk.io/documentation/#_repositories){:target="_blank"} needs to be created. Crnk will scan for these classes and using annotations it will discover the available methods.
+To allow Crnk to operate on defined resources, a special type of class called [repository](http://www.crnk.io/releases/stable/documentation/#_repositories){:target="_blank"} needs to be created. Crnk will scan for these classes and using annotations it will discover the available methods.
 
-For our `Greeting` resource we will create a `GreetingRepositoryImpl` which extends the `ResourceRepositoryBase` implementation of the `ResourceRepositoryV2` repository interface. 
+For our `Greeting` resource we will create a `GreetingRepositoryImpl` which extends the `ResourceRepositoryBase` implementation of the `ResourceRepositoryV2` repository interface.
 The [ResourceRepositoryBase](https://github.com/crnk-project/crnk-framework/blob/master/crnk-core/src/main/java/io/crnk/core/repository/ResourceRepositoryBase.java){:target="_blank"} is a base class that takes care of some boiler-plate code like for example implementing `findOne()` and `findAll()`.
 
 > Note that when extending the `ResourceRepositoryBase` only `findAll()` needs to be implemented to have a working read-only repository.
@@ -238,7 +238,7 @@ public class GreetingRepositoryImpl extends ResourceRepositoryBase<Greeting, Lon
 
 # Setting up the Server
 
-Crnk comes with [out-of-the-box support for Spring Boot](http://www.crnk.io/documentation/#_integration_with_spring_and_string_boot){:target="_blank"}. The entry point is a `CrnkConfig` class which configures Crnk using Spring properties. Additionally, we have to make sure that each repository is annotated with `@Component` (as we did with the above `GreetingRepositoryImpl`).
+Crnk comes with [out-of-the-box support for Spring Boot](http://www.crnk.io/releases/stable/documentation/#_integration_with_spring_and_string_boot){:target="_blank"}. The entry point is a `CrnkConfig` class which configures Crnk using Spring properties. Additionally, we have to make sure that each repository is annotated with `@Component` (as we did with the above `GreetingRepositoryImpl`).
 
 Spring's `@RestController` annotation is used to mark the `CrnkController` class as a controller for handling HTTP requests. The `CrnkConfigV3` import will setup and expose the resource endpoints based on auto-scanning for specific annotations in addition to some properties which we will see further below.
 
@@ -299,7 +299,7 @@ server:
 
 # Setting up the Client
 
-Crnk includes a [Java client](http://www.crnk.io/documentation/#_client){:target="_blank"} which allows to communicate with JSON-API compliant servers. To start using the client just create an instance of `CrnkClient` and pass the service URL. Then use the client to create a repository that gives access to the different resource CRUD operations.
+Crnk includes a [Java client](http://www.crnk.io/releases/stable/documentation/#_client){:target="_blank"} which allows to communicate with JSON-API compliant servers. To start using the client just create an instance of `CrnkClient` and pass the service URL. Then use the client to create a repository that gives access to the different resource CRUD operations.
 
 In below `GreetingClient` we have created a `findOne()` method that returns a single `Greeting` based on the identifier.
 

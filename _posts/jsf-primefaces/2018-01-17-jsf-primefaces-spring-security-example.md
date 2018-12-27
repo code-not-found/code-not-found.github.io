@@ -186,7 +186,7 @@ If the login fails we redirect to the same login page with a <var>error=true</va
 
 Using `WebSecurityConfigurerAdapter`, logout capabilities are automatically applied. The default is that accessing the URL <var>/logout</var> will [log the user out](https://docs.spring.io/spring-security/site/docs/5.1.1.RELEASE/reference/html/jc.html#jc-logout){:target="_blank"}. By specifying `logout().logoutSuccessUrl("/login.xhtml")` we redirect the user to the login page once he/she is successfully logged out.
 
-Spring Security applies measures to prevents [CSRF attacks](https://en.wikipedia.org/wiki/Cross-site_request_forgery){:target="_blank"} by requiring a [randomly generated token](https://docs.spring.io/spring-security/site/docs/5.1.1.RELEASE/reference/html/csrf.html#synchronizer-token-pattern){:target="_blank"} as an HTTP parameter. However as JSF 2.2 already contains an [explicit protection against CSRF attacks](http://arjan-tijms.omnifaces.org/p/jsf-22.html#869){:target="_blank"} we disable the Spring Security protection by specifying `http.csrf().disable()`.
+Spring Security applies measures to prevents [CSRF attacks](https://en.wikipedia.org/wiki/Cross-site_request_forgery){:target="_blank"} by requiring a [randomly generated token](https://docs.spring.io/spring-security/site/docs/5.1.1.RELEASE/reference/html/web-app-security.html#synchronizer-token-pattern){:target="_blank"} as an HTTP parameter. However as JSF 2.2 already contains an [explicit protection against CSRF attacks](http://arjan-tijms.omnifaces.org/p/jsf-22.html#869){:target="_blank"} we disable the Spring Security protection by specifying `http.csrf().disable()`.
 
 We will override the default single user `AuthenticationManager` that Spring Boot sets by auto-wiring an `AuthenticationManagerBuilder` into the `configureGlobal()` of our `SecurityConfig` `@Configuration` class.
 
@@ -236,7 +236,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 Now that access to our application is secured we will adapt the Hello World example to illustrate role-based access control.
 
-Spring Security has its own [taglib](https://docs.spring.io/spring-security/site/docs/5.1.1.RELEASE/reference/html/taglibs.html){:target="_blank"} which provides basic support for accessing security information and applying security constraints in JSPs.
+Spring Security has its own [taglib](https://docs.spring.io/spring-security/site/docs/5.1.1.RELEASE/reference/html/servlet-webclient.html#taglibs){:target="_blank"} which provides basic support for accessing security information and applying security constraints in JSPs.
 
 On the <var>helloworld.xhtml</var> page we add a <var>&lt;div&gt;</var> element in which we use the authorize tag in order to display a message in case the user has the <var>'USER'</var> or <var>'ADMIN'</var> role.
 

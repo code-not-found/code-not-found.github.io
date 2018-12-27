@@ -169,7 +169,7 @@ A `logout()` method will invalidate the session and the redirect to the logout p
 
 The `isLoggedIn()` method will be used by the `LoginFilter` to check if a user is logged in. It checks the value of the `currentUser` which is only set after a successful login. The `isLoggedInForwardHome()` method will return a redirect to the home page in case a user is already logged in.
 
-> Do not provide a setter for the `currentUser` variable, as this potentially allows a way to circumvent the `login()` method! 
+> Do not provide a setter for the `currentUser` variable, as this potentially allows a way to circumvent the `login()` method!
 
 ``` java
 package com.codenotfound.primefaces.controller;
@@ -385,7 +385,7 @@ The first panel is shown in case a user is not logged in and contains a confirma
 
 The <var>home.xhtml</var> page is located in a <var>/secured</var> folder, to which access will be protected by the `LoginFilter`. The page contains a basic welcome message returning the full name of the user using the `getName()` method.
 
-In addition, a Logout button is available which allows a user to invalidate the session. 
+In addition, a Logout button is available which allows a user to invalidate the session.
 
 ``` html
 <?xml version="1.0" encoding="UTF-8"?>
@@ -526,7 +526,7 @@ public class FilterConfig {
 }
 ```
 
-# Running the JSF Login Page Example 
+# Running the JSF Login Page Example
 
 In order to run the above example open a command prompt and execute following Maven command:
 
@@ -542,13 +542,13 @@ Open a web browser and enter the following URL: [http://localhost:9090/codenotfo
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-login-page.png" alt="jsf login page">
 </figure>
 
-Enter following credentials: User name="<kbd>john.doe</kbd>" and Password="<kbd>1234</kbd>" and a welcome page will be displayed as shown below. 
+Enter following credentials: User name="<kbd>john.doe</kbd>" and Password="<kbd>1234</kbd>" and a welcome page will be displayed as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-home-page.png" alt="jsf home page">
 </figure>
 
-Click the <var>Logout</var> button and a redirect to the logout page should happen as shown below. 
+Click the <var>Logout</var> button and a redirect to the logout page should happen as shown below.
 
 <figure>
     <img src="{{ site.url }}/assets/images/posts/jsf-primefaces/jsf-logout-page.png" alt="jsf logout page">
@@ -558,7 +558,7 @@ Click the <var>Logout</var> button and a redirect to the logout page should happ
 
 {% capture notice-github %}
 ![github mark](/assets/images/logos/github-mark.png){: .align-left}
-If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-primefaces-login-servlet-filter).
+If you would like to run the above code sample you can get the full source code [here](https://github.com/code-not-found/jsf-primefaces/tree/master/jsf-login-servlet-filter).
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
