@@ -13,7 +13,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-jmstemplate.png" alt="spring jms jmstemplate" class="align-right title-image">
 
-Today I'm going to show you **exactly** how to use the [Spring JmsTemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/core/JmsTemplate.html){:target="_blank"}.
+Today I'm going to show you how to use the [Spring JmsTemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jms/core/JmsTemplate.html){:target="_blank"}.
 
 The best part?
 

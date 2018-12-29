@@ -62,11 +62,11 @@ To avoid having to manage the version compatibility of the different Spring depe
 
 The generated project contains [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} that manage the different Spring dependencies.
 
+> You can find back the exact dependency versions in Appendix F of the reference documentation. For Spring Boot 2.1.1 the [ActiveMQ dependency is version 5.15.8](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
+
 The `spring-boot-starter-activemq` dependency includes the needed dependencies for using Spring JMS in combination with ActiveMQ.
 
 The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
-
-> You can find back the exact dependency versions in Appendix F of the reference documentation. For Spring Boot 2.1.1 the [ActiveMQ dependency is version 5.15.8](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
 
 In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}. `spring-boot-maven-plugin` allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code.
 
