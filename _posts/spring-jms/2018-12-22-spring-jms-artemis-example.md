@@ -134,7 +134,7 @@ The project is for a large part identical to a previous [Spring JMS ActiveMQ exa
 
 We still use an `ActiveMQConnectionFactory` but this time it is part of the `org.apache.activemq.artemis.jms.client` package.
 
-We pass a <var>brokerUrl</var> to the constructor as shown below.
+We pass a <var>brokerUrl</var> to the constructor as shown below. The value is specified in the <var>application.yml</var> properties file located under <var>src/main/resources</var>.
 
 {% highlight java %}
 package com.codenotfound.jms;
