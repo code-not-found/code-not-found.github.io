@@ -40,9 +40,13 @@ However this time we will build a request/reply flow where the gateway also hand
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-integration-gateway-example-overview.png" alt="spring jms integration gateway example overview">
 
-There are two outbound channels that connect to the `JmsOutboundGateway`. The _OutboundRequestChannel_ sends messages to the outbound gateway. This gateway creates JMS messages from Spring Integration messages and sends them to a JMS destination (in this case the request queue). It then handles the JMS reply message and sends it to the _OutboundResponseChannel_.
+There are two outbound channels that connect to the `JmsOutboundGateway`.
 
-The `JmsInboundGateway` connects to two inbound channels. The inbound gateway receives from a JMS destination, and sends to the _InboundRequestChannel_. It also handles the reply on the _InboundResponseChannel_ and sends it to the JMS reply destination (in this case the response queue).
+The _OutboundRequestChannel_ sends messages to the outbound gateway. This gateway creates JMS messages from Spring Integration messages and sends them to a JMS destination (in this case the request queue). It then handles the JMS reply message and sends it to the _OutboundResponseChannel_.
+
+The `JmsInboundGateway` connects to two inbound channels.
+
+The inbound gateway receives from a JMS destination and sends to the _InboundRequestChannel_. It also handles the reply on the _InboundResponseChannel_ and sends it to the JMS reply destination (in this case the response queue).
 
 The `OrderService` implements a basic request/reply behavior. It listens on the _InboundRequestChannel_ and replies on the _InboundResponseChannel_.
 
@@ -63,7 +67,7 @@ Our project has the following directory structure:
 
 First, we create a `OutboundGatewayConfig` class and annotate it with `@Configuration`.
 
-Define a _OutboundOrderRequestChannel_ as a `DirectChannel` bean. This is the default channel provided by the framework, but you can use any of the [message channels Spring Integration provides](https://docs.spring.io/spring-integration/docs/5.1.1.RELEASE/reference/html/messaging-channels-section.html){:target="_blank"}.
+Define an _OutboundOrderRequestChannel_ as a `DirectChannel` bean. This is the default channel provided by the framework, but you can use any of the [message channels Spring Integration provides](https://docs.spring.io/spring-integration/docs/5.1.1.RELEASE/reference/html/messaging-channels-section.html){:target="_blank"}.
 
 The _OutboundOrderResponseChannel_ is defined as a `QueueChannel`. This allows us to receive the response messages using the `receive()` method.
 
@@ -71,7 +75,7 @@ The <var>jmsOutboundGateway</var> [outbound gateway](https://docs.spring.io/spri
 
 Use `setRequestDestinationName()` to set the destination to which the request JMS messages needs to be sent (<var>request.q</var>). The `setReplyDestinationName()` method is used to specify the JMS destination to which the response JMS messages need to be sent (<var>response.q</var>).
 
-The gateway receives the requests messages from the _OutboundOrderRequestChannel_. The link between the two is made via the `@ServiceActivator`. This annotation allows to connect any Spring-managed Object to an input channel.
+The gateway receives the requests messages from the _OutboundOrderRequestChannel_. The link between the two is made via the `@ServiceActivator`. This annotation allows connecting any Spring-managed Object to an input channel.
 
 The _OutboundOrderResponseChannel_ is specified using `setReplyChannel()`.
 
@@ -132,13 +136,13 @@ Next, we create the `OrderService` Bean that will handle the incoming request me
 
 The <var>jmsInboundGateway</var> constructor [requires](https://docs.spring.io/spring-integration/api/org/springframework/integration/jms/JmsInboundGateway.html){:target="_blank"} a `MessageListenerContainer` and a `ChannelPublishingJmsMessageListener`.
 
-On the gateway we specify the request (_InboundOrderRequestChannel_) message channel.
+On the gateway, we specify the _InboundOrderRequestChannel_ as the request message channel.
 
-> Note we do not specify a reply-channel. The Gateway auto-creates a temporary, anonymous reply channel, where it listens for the reply.
+> We do not specify a reply-channel. The Gateway auto-creates a temporary, anonymous reply channel, where it listens for the reply.
 
-We create `SimpleMessageListenerContainer` that allows us to receive messages from the request destination (<var>request.q</var>). For more details check out the [Spring JMS listener example]({{ site.url }}/spring-jms-listener-example.html).
+We create `SimpleMessageListenerContainer` that allows us to receive messages from the request destination (<var>request.q</var>). For more details on the setup check out the [Spring JMS listener example]({{ site.url }}/spring-jms-listener-example.html).
 
-The [ChannelPublishingJmsMessageListener](https://docs.spring.io/spring-integration/api/org/springframework/integration/jms/ChannelPublishingJmsMessageListener.html){:target="_blank"} converts a JMS Message into a Spring Integration Message and then sends that Message to a channel. If the `expectReply` value is true, it will also wait for a Spring Integration reply Message and convert that into a JMS reply Message.
+The [ChannelPublishingJmsMessageListener](https://docs.spring.io/spring-integration/api/org/springframework/integration/jms/ChannelPublishingJmsMessageListener.html){:target="_blank"} converts a JMS Message into a Spring Integration Message and then sends that message to a channel. If the `expectReply` value is true, it will also wait for a Spring Integration reply Message and convert that into a JMS reply Message.
 
 
 
@@ -216,7 +220,7 @@ public class InboundGatewayConfig {
 
 To wrap up the example we need to create the `OrderService`.
 
-This class receives an order message. It logs the content and the creates a simple status message using a [MessageBuilder](https://docs.spring.io/spring-integration/api/org/springframework/integration/support/MessageBuilder.html){:target="_blank"}.
+This class receives an order message. It then logs the content and the creates a simple status message using a [MessageBuilder](https://docs.spring.io/spring-integration/api/org/springframework/integration/support/MessageBuilder.html){:target="_blank"}.
 
 In order for the <var>jmsOutboundGateway</var> to be able to [correlate a response to a previous request](https://docs.spring.io/spring-integration/docs/5.1.1.RELEASE/reference/html/jms.html#_gateway_reply_correlation){:target="_blank"} we set the <var>jms_correlationId</var> property.
 
@@ -255,7 +259,7 @@ Now that we have configured both gateways it is time to test them.
 
 Create a `SpringJmsApplicationTest` unit test case. Then, use the `ApplicationContext` to get a reference to the _OutboundOrderRequestChannel_.
 
-Send in a Spring Integration message and then wait on the _OutboundOrderResponseChannel_ if a response arrives.
+Send in a Spring Integration message and then wait on the _OutboundOrderResponseChannel_ for the response to arrive.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -413,7 +417,7 @@ If you would like to run the above code sample you can get the full source code 
 {% endcapture %}
 <div class="notice--info">{{ notice-github | markdownify }}</div>
 
-In this tutorial, we build an end-to-end messaging example which uses an outbound and inbound Spring JMS Integration gateway.
+In this tutorial, we build an end-to-end messaging example that uses an outbound and inbound Spring JMS Integration gateway.
 
 Drop a line below in case of any questions.
 
