@@ -30,7 +30,7 @@ Spring-WS is developed and maintained by [Pivotal Software](https://pivotal.io/)
 
 _If you would like to request a new tutorial, leave a comment below._
 
-* [Spring WS - SOAP Web Service Consumer Provider WSDL Example]({{ site.url }}/spring-ws-soap-web-service-consumer-provider-wsdl-example.html)
+* [Spring WS Example]({{ site.url }}/spring-ws-example.html)
 * [Spring WS - SOAPAction Header Example]({{ site.url }}/spring-ws-soapaction-header-example.html)
 * [Spring WS - SOAP Header Example]({{ site.url }}/spring-ws-soap-header-example.html)
 * [Spring WS - Basic Authentication Example]({{ site.url }}/spring-ws-basic-authentication-example.html)
