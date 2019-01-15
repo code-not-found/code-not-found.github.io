@@ -3,7 +3,7 @@ title: "Spring WS Tutorials"
 permalink: /spring-ws-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use Spring Web Services."
 date: 2017-04-18
-last_modified_at: 2018-11-20
+last_modified_at: 2019-01-15
 redirect_from:
   - /spring-ws/
 ---
@@ -24,7 +24,7 @@ Spring Web Services (Spring-WS) is a product of the Spring community focused on 
 
 It facilitates contract-first [SOAP](https://en.wikipedia.org/wiki/SOAP){:target="_blank"} service development, allowing for a number of ways to manipulate [XML](https://en.wikipedia.org/wiki/XML){:target="_blank"} payloads.
 
-Spring-WS is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
+Spring-WS is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
 ## Tutorials
 
