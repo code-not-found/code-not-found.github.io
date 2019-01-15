@@ -460,7 +460,7 @@ public class HelloWorldClient {
 }
 {% endhighlight %}
 
-## 7. Testing the Web Service Client & Endpoint
+## 7. Testing the Web Service
 
 Let's create a basic unit test case in which the above client is used to send a request to the Hello World endpoint. We then verify if the response is equal to the expected Hello World greeting.
 
@@ -469,17 +469,15 @@ The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced 
 By setting the <var>DEFINED_PORT</var> web environment variable, a HTTP server is started on the port in the defined application properties. As we did not define a custom port the default value of <var>8080</var> is used.
 
 {% highlight java %}
-package com.codenotfound.ws;
+package com.codenotfound;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import com.codenotfound.ws.client.HelloWorldClient;
 
 @RunWith(SpringRunner.class)
@@ -491,7 +489,8 @@ public class SpringWsApplicationTests {
 
   @Test
   public void testSayHello() {
-    assertThat(helloWorldClient.sayHello("John", "Doe")).isEqualTo("Hello John Doe!");
+    assertThat(helloWorldClient.sayHello("John", "Doe"))
+        .isEqualTo("Hello John Doe!");
   }
 }
 {% endhighlight %}
@@ -557,7 +556,9 @@ If you just want to start Spring Boot so that the endpoint is up and running, ex
 mvn spring-boot:run
 {% endhighlight %}
 
-As mentioned earlier, the service WSDL is exposed on the following endpoint: [http://localhost:8080/codenotfound/ws/helloworld.wsdl](http://localhost:8080/codenotfound/ws/helloworld.wsdl).
+As mentioned earlier, the service WSDL is exposed on the following endpoint:
+
+[http://localhost:8080/codenotfound/ws/helloworld.wsdl](http://localhost:8080/codenotfound/ws/helloworld.wsdl).
 
 This can be verified by opening the URL in a browser as shown below.
 
@@ -575,8 +576,6 @@ In this guide, we showed how to create a web service client and endpoint from a 
 
 We explained Spring WS core concepts and created an end-to-end example.
 
-If you found this sample useful.
-
-Or have a question you would like to ask, please drop a line below.
+If you found this sample useful or have a question you would like to ask, please drop a line below.
 
 Thanks!
