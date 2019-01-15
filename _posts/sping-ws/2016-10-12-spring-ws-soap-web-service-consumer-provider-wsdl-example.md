@@ -30,17 +30,17 @@ If you want to learn more about Spring WS - head on over to the [Spring WS tutor
 
 ## 1. What is Spring WS?
 
-Spring Web Services (Spring-WS) is framework that focusses on creating document-driven Web services.
+**Spring Web Services** (Spring-WS) is framework that focusses on creating document-driven Web services.
 
 Spring-WS facilitates contract-first [SOAP](https://en.wikipedia.org/wiki/SOAP){:target="_blank"} service development, allowing for a number of ways to manipulate [XML](https://en.wikipedia.org/wiki/XML){:target="_blank"} payloads.
 
 In this tutorial, we will create a Hello World web service. We start from a WSDL and build both consumer and provider using Spring WS, Spring Boot, and Maven.
 
-The code is organized in such a way that you can choose to only run the [client]({{ site.url }}/spring-ws-example.html#creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/spring-ws-example.html#creating-the-endpoint-provider) (provider) part.
+The code is organized in such a way that you can choose to only run the [client]({{ site.url }}/spring-ws-example.html#6-creating-the-client-consumer) (consumer) or [endpoint]({{ site.url }}/spring-ws-example.html#5-creating-the-endpoint-provider) (provider) part.
 
 ## 2. Building a Contract First SOAP Web Service
 
-Spring Web Services is **contract first only**. This means that you need to start from a contract definition (XSD or WSDL).
+Spring WS is **contract-first only**. This means that you need to start from a contract definition (XSD or WSDL).
 
 In this example we start from a <var>helloworld.wsdl</var> WSDL file. It defines a Hello World service that takes as input a person's first and last name and returns a greeting.
 
@@ -214,19 +214,21 @@ We want to be able to directly use the <var>person</var> and <var>greeting</var>
 
 The [maven-jaxb2-plugin](https://github.com/highsource/maven-jaxb2-plugin){:target="_blank"}, configured in above POM file, will handle the generation.
 
-The plugin looks into the defined <var>&lt;schemaDirectory&gt;</var> in order to find any WSDL files for which it needs to generate the Java classes. Make sure you copy the <var>helloworld.wsdl</var> under <var>/src/main/resources</var>.
+The plugin looks into the defined <var>&lt;schemaDirectory&gt;</var> in order to find any WSDL files for which it needs to generate the Java classes.
 
-Trigger the generation via Maven, execute the following command:
+> Make sure that the <var>helloworld.wsdl</var> file is available under <var>/src/main/resources</var>.
+
+Execute the following Maven command to trigger the code generation:
 
 {% highlight plaintext %}
 mvn generate-sources
 {% endhighlight %}
 
-This results in a number of generated classes under <var>/target/generated-sources/xjc</var> amongst which `Person` and `Greeting`. We will use these classes when we implement the client and provider of the service.
+This results in a number of generated Java classes under <var>/target/generated-sources/xjc</var>. You should find `Person` and `Greeting`. We will use these classes when we implement the client and provider of the SOAP service.
 
 ## 4. Spring Boot Setup
 
-Spring Boot is used in order to make a Spring JMS example application that you can "just run".
+Spring Boot is used in order to make a Spring WS example application that you can "just run".
 
 We start by creating a `SpringWsApplication` which contains the `main()` method that uses Spring Boot's `SpringApplication.run()` method to launch the application.
 
@@ -269,7 +271,7 @@ The `DefaultWsdl11Definition` exposes a standard WSDL 1.1 using the specified He
 
 For the example below this is: [host]="<kbd>http://localhost:8080</kbd>"+[servlet mapping uri]="<kbd>/codenotfound/ws/</kbd>"+[WsdlDefinition bean name]="<kbd>helloworld</kbd>"+[WSDL postfix]="<kbd>.wsdl</kbd>".
 
-Or [http://localhost:8080/codenotfound/ws/helloworld.wsdl](http://localhost:8080/codenotfound/ws/helloworld.wsdl){:target="_blank"}.
+Or: [http://localhost:8080/codenotfound/ws/helloworld.wsdl](http://localhost:8080/codenotfound/ws/helloworld.wsdl){:target="_blank"}.
 
 > To enable the support for the `@Endpoint` annotation that we will use in the next section we need to annotate our configuration class with `@EnableWs`.
 
@@ -419,7 +421,7 @@ The client code is specified in the `HelloWorldClient` class. The `sayHello()` m
 
 The auto-wired `WebServiceTemplate` is used to marshal and send a person XML request towards the Hello World service. The result is unmarshalled to a `Greeting` object which is logged.
 
-The `@Component` annotation will cause Spring to automatically import this bean into the container if automatic component scanning is enabled (adding the `@SpringBootApplication` annotation to the main `SpringWsApplication` class [is equivalent](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html){:target="_blank"} to using `@ComponentScan`).
+The `@Component` annotation will cause Spring to automatically import this bean into the container if automatic component scanning is enabled (adding the `@SpringBootApplication` annotation to the main `SpringWsApplication` class [is equivalent](https://docs.spring.io/autorepo/docs/spring-boot/2.1.2.RELEASE/reference/html/using-boot-using-springbootapplication-annotation.html){:target="_blank"} to using `@ComponentScan`).
 
 {% highlight java %}
 package com.codenotfound.ws.client;
@@ -462,7 +464,7 @@ public class HelloWorldClient {
 
 ## 7. Testing the Web Service
 
-Let's create a basic unit test case in which the above client is used to send a request to the Hello World endpoint. We then verify if the response is equal to the expected Hello World greeting.
+Let's create a basic unit test case in which the above client is used to send a request to the Hello World web service endpoint. We then verify if the response is equal to the expected greeting.
 
 The `@RunWith` and `@SpringBootTest` testing annotations, [that were introduced with Spring Boot 1.4](https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4#spring-boot-1-4-simplifications){:target="_blank"}, are used to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
 
@@ -560,7 +562,7 @@ As mentioned earlier, the service WSDL is exposed on the following endpoint:
 
 [http://localhost:8080/codenotfound/ws/helloworld.wsdl](http://localhost:8080/codenotfound/ws/helloworld.wsdl).
 
-This can be verified by opening the URL in a browser as shown below.
+To verify this, open the URL in a browser as shown below.
 
 <img src="{{ site.url }}/assets/images/spring-ws/spring-ws-soap-wsdl.png" alt="spring ws soap wsdl">
 
@@ -576,6 +578,6 @@ In this guide, we showed how to create a web service client and endpoint from a 
 
 We explained Spring WS core concepts and created an end-to-end example.
 
-If you found this sample useful or have a question you would like to ask, please drop a line below.
+If you have a question you would like to ask, or if you liked this post: drop a line below.
 
 Thanks!
