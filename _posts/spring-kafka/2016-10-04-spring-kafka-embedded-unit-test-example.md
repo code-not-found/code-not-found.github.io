@@ -288,13 +288,13 @@ public class SpringKafkaSenderTest {
 
 ## 6. Testing the Consumer
 
-The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> properties file. In order to check the correct working, we use a _test-template_ to send a message to this topic. All of the setup will be done before the test case runs using the `@Before` annotation.
+The second `SpringKafkaReceiverTest` test class focuses on the `Receiver` which listens to a <var>'receiver.t'</var> topic as defined in the <var>applications.yml</var> properties file. To check the correct working, we use a _test-template_ to send a message to this topic. All setup will be done before the test case runs using the `@Before` annotation.
 
 The producer properties are created using the static `senderProps()` method provided by `KafkaUtils`. These properties are then used to create a `DefaultKafkaProducerFactory` which is in turn used to create a `KafkaTemplate`. Finally, we set the default topic that the template uses to <var>'receiver.t'</var>.
 
 We need to ensure that the `Receiver` is initialized before sending the test message. For this we use the `waitForAssignment()` method of `ContainerTestUtils`. The link to the message listener container is acquired by auto-wiring the `KafkaListenerEndpointRegistry` which manages the lifecycle of the listener containers that are not created manually.
 
-> Note that if you do not create the topics using the `EmbeddedKafkaRule` constructor you need to manually set the partitions per topic to 1 in the `waitForAssignment()` method instead of getting the partitions from the embedded Kafka server. The reason for this is that [it looks like 1 is used as a default for the number of partitions](http://stackoverflow.com/a/38660145/4201470){:target="_blank"} in case topics are created implicitly.
+> Note that if you do not create the topics using the `EmbeddedKafkaRule` constructor you need to set the partitions per topic to 1 in the `waitForAssignment()` method instead of getting the partitions from the embedded Kafka server. The reason for this is that [it looks like 1 is used as a default for the number of partitions](http://stackoverflow.com/a/38660145/4201470){:target="_blank"} in case topics are created implicitly.
 
 In the test, we send a greeting and check that the message was received by asserting that the latch of the `Receiver` was lowered to zero.
 

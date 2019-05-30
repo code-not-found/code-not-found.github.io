@@ -3,7 +3,7 @@ title: "Spring Kafka - JSON Serializer Deserializer Example"
 permalink: /spring-kafka-json-serializer-deserializer-example.html
 excerpt: "A detailed step-by-step tutorial on how to configure a JSON Serializer &amp; Deserializer using Spring Kafka and Spring Boot."
 date: 2017-03-21
-modified: 2017-03-21
+modified: 2018-11-27
 header:
   teaser: "assets/images/header/spring-kafka-teaser.png"
 categories: [Spring Kafka]
