@@ -1,9 +1,9 @@
 ---
 title: "Spring Batch Tasklet Example"
 permalink: /spring-batch-tasklet-example.html
-excerpt: "A detailed step-by-step tutorial on how to implement a Spring Batch Tasklet using Spring Boot and Maven."
+excerpt: "A detailed step-by-step tutorial on how to implement a Spring Batch Tasklet using Spring Boot."
 date: 2018-10-21
-last_modified_at: 2018-11-08
+last_modified_at: 2019-05-30
 header:
   teaser: "assets/images/spring-batch/spring-batch-tasklet.png"
 categories: [Spring Batch]
@@ -28,7 +28,7 @@ If you want to learn more about Spring Batch - head on over to the [Spring Batch
 
 ## 1. What is a Spring Batch Tasklet?
 
-In Spring batch, a `Tasklet` is an interface that performs a single task within a `Step`. A typical use case for implementing a `Tasklet` is the setup up or cleaning of resources before or after the execution of a `Step`.
+In Spring Batch, a `Tasklet` is an interface that performs a single task within a `Step`. A typical use case for implementing a `Tasklet` is the setup up or cleaning of resources before or after the execution of a `Step`.
 
 In fact, Spring Batch offers two different ways for **implementing a step of a batch job**: using [Chunks](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#chunkOrientedProcessing){:target="_blank"} or using a [Tasklet](https://docs.spring.io/spring-batch/4.1.x/reference/html/step.html#taskletStep){:target="_blank"}.
 
@@ -56,9 +56,9 @@ We then change the batch job so that it reads multiple CSV files. When the `Job`
 ## 2. General Project Overview
 
 We will use the following tools/frameworks:
-* _Spring Batch 4.1_
-* _Spring Boot 2.1_
-* _Maven 3.5_
+* Spring Batch 4.1
+* Spring Boot 2.1
+* Maven 3.6
 
 Our Maven project has the following structure:
 
@@ -77,7 +77,7 @@ When all files are deleted we return the <var>FINISHED</var> status so that the 
 We also add a constructor that sets the directory that needs to be cleaned.
 
 {% highlight java %}
-package com.codenotfound.batch.job;
+package com.codenotfound.batch;
 
 import java.io.File;
 import java.io.IOException;
@@ -132,7 +132,7 @@ We also add a `multiItemReader` Bean that reads multiple input files.
 We finish by creating the `fileDeletingTasklet` Bean on which we specify the directory that needs to be cleaned.
 
 {% highlight java %}
-package com.codenotfound.batch.job;
+package com.codenotfound.batch;
 
 import java.io.IOException;
 import org.slf4j.Logger;
@@ -239,7 +239,7 @@ First, we copy the input files to the location from which our batch job will rea
 We then launch the batch job and check if it finishes successfully. We also check if all input files have been deleted.
 
 {% highlight java %}
-package com.codenotfound.batch;
+package com.codenotfound;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.io.File;
@@ -330,33 +330,33 @@ mvn test
 Maven will download the needed dependencies, compile the code and run the unit test case. The result should be a successful build as shown below:
 
 {% highlight plaintext %}
-.   ____          _            __ _ _
+ .   ____          _            __ _ _
 /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
 '  |____| .__|_| |_|_| |_\__, | / / / /
 =========|_|==============|___/=/_/_/_/
-:: Spring Boot ::        (v2.1.0.RELEASE)
+:: Spring Boot ::        (v2.1.5.RELEASE)
 
-2018-11-06 11:22:13.598  INFO 8840 --- [           main] c.c.batch.SpringBatchApplicationTests    : Starting SpringBatchApplicationTests on DESKTOP-2RB3C1U with PID 8840 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-tasklet)
-2018-11-06 11:22:13.598  INFO 8840 --- [           main] c.c.batch.SpringBatchApplicationTests    : No active profile set, falling back to default profiles: default
-2018-11-06 11:22:14.192  INFO 8840 --- [           main] c.c.batch.SpringBatchApplicationTests    : Started SpringBatchApplicationTests in 0.875 seconds (JVM running for 1.955)
-2018-11-06 11:22:14.379  WARN 8840 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
-2018-11-06 11:22:14.379  WARN 8840 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No transaction manager was provided, using a ResourcelessTransactionManager
-2018-11-06 11:22:14.410  INFO 8840 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
-2018-11-06 11:22:14.515  INFO 8840 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=capitalizeNamesJob]] launched with the following parameters: [{random=591022}]
-2018-11-06 11:22:14.546  INFO 8840 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [capitalizeNamesStep]
-2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jessica Doe' into 'JESSICA DOE'
-2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Julia Doe' into 'JULIA DOE'
-2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jasmin Doe' into 'JASMIN DOE'
-2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jennifer Doe' into 'JENNIFER DOE'
-2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jack Doe' into 'JACK DOE'
-2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jake Doe' into 'JAKE DOE'
-2018-11-06 11:22:14.640  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Josh Doe' into 'JOSH DOE'
-2018-11-06 11:22:14.655  INFO 8840 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Joe Doe' into 'JOE DOE'
-2018-11-06 11:22:14.702  INFO 8840 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [deleteFilesStep]
-2018-11-06 11:22:14.749  INFO 8840 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=capitalizeNamesJob]] completed with the following parameters: [{random=591022}] and the following status: [COMPLETED]
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.236 s - in com.codenotfound.batch.SpringBatchApplicationTests
+2019-05-30 21:20:22.937  INFO 8312 --- [           main] c.c.SpringBatchApplicationTests          : Starting SpringBatchApplicationTests on DESKTOP-2RB3C1U with PID 8312 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-tasklet)
+2019-05-30 21:20:22.939  INFO 8312 --- [           main] c.c.SpringBatchApplicationTests          : No active profile set, falling back to default profiles: default
+2019-05-30 21:20:23.473  WARN 8312 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
+2019-05-30 21:20:23.473  WARN 8312 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No transaction manager was provided, using a ResourcelessTransactionManager
+2019-05-30 21:20:23.496  INFO 8312 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2019-05-30 21:20:23.520  INFO 8312 --- [           main] c.c.SpringBatchApplicationTests          : Started SpringBatchApplicationTests in 0.91 seconds (JVM running for 1.753)
+2019-05-30 21:20:23.903  INFO 8312 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=capitalizeNamesJob]] launched with the following parameters: [{random=838477}]
+2019-05-30 21:20:23.927  INFO 8312 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [capitalizeNamesStep]
+2019-05-30 21:20:23.975  INFO 8312 --- [           main] c.c.batch.PersonItemProcessor            : converting 'Jessica Doe' into 'JESSICA DOE'
+2019-05-30 21:20:23.983  INFO 8312 --- [           main] c.c.batch.PersonItemProcessor            : converting 'Julia Doe' into 'JULIA DOE'
+2019-05-30 21:20:23.983  INFO 8312 --- [           main] c.c.batch.PersonItemProcessor            : converting 'Jasmin Doe' into 'JASMIN DOE'
+2019-05-30 21:20:23.984  INFO 8312 --- [           main] c.c.batch.PersonItemProcessor            : converting 'Jennifer Doe' into 'JENNIFER DOE'
+2019-05-30 21:20:23.984  INFO 8312 --- [           main] c.c.batch.PersonItemProcessor            : converting 'Jack Doe' into 'JACK DOE'
+2019-05-30 21:20:23.984  INFO 8312 --- [           main] c.c.batch.PersonItemProcessor            : converting 'Jake Doe' into 'JAKE DOE'
+2019-05-30 21:20:23.984  INFO 8312 --- [           main] c.c.batch.PersonItemProcessor            : converting 'Josh Doe' into 'JOSH DOE'
+2019-05-30 21:20:23.984  INFO 8312 --- [           main] c.c.batch.PersonItemProcessor            : converting 'Joe Doe' into 'JOE DOE'
+2019-05-30 21:20:24.033  INFO 8312 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [deleteFilesStep]
+2019-05-30 21:20:24.053  INFO 8312 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=capitalizeNamesJob]] completed with the following parameters: [{random=838477}] and the following status: [COMPLETED]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.977 s - in com.codenotfound.SpringBatchApplicationTests
 [INFO]
 [INFO] Results:
 [INFO]
@@ -365,8 +365,8 @@ Maven will download the needed dependencies, compile the code and run the unit t
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 5.474 s
-[INFO] Finished at: 2018-11-06T11:22:15+01:00
+[INFO] Total time:  7.278 s
+[INFO] Finished at: 2019-05-30T21:20:24+02:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
