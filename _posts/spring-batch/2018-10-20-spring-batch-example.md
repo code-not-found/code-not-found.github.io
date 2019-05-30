@@ -1,9 +1,9 @@
 ---
 title: "Spring Batch Example"
 permalink: /spring-batch-example.html
-excerpt: "A detailed step-by-step tutorial on how to implement a Hello World Spring Batch job using Spring Boot and Maven."
+excerpt: "A detailed step-by-step tutorial on how to implement a Hello World Spring Batch job using Spring Boot."
 date: 2018-10-20
-last_modified_at: 2018-11-17
+last_modified_at: 2019-05-30
 header:
   teaser: "assets/images/spring-batch/spring-batch-example.png"
 categories: [Spring Batch]
@@ -15,7 +15,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-example.png" alt="spring batch example" class="align-right title-image">
 
-I'm going to show you exactly how to create a [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"} and [Maven](https://maven.apache.org/){:target="_blank"}.
+I'm going to show you exactly how to create a [Spring Batch](https://spring.io/projects/spring-batch){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}.
 
 (Step-by-step)
 
@@ -28,13 +28,13 @@ If you want to learn more about Spring Batch - head on over to the [Spring Batch
 
 ## 1. How Does the Spring Batch Framework Work?
 
-Before we dive into the code let's look at the Spring Batch framework. It contains following key building blocks:
+Before we dive into the code let's look at the Spring Batch framework. It contains the following key building blocks:
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-framework.png" alt="spring batch framework">
 
-A batch process consists out of a `Job`. This is an entity that encapsulates the entire batch process.
+A batch process consists of a `Job`. This is an entity that encapsulates the entire batch process.
 
-A `Job` can consist out of one or more `Step`s. In most cases, a step will read data (via an `ItemReader`), process it (using an `ItemProcessor`) and then write it (via an `ItemWriter`).
+A `Job` can consist of one or more `Step`s. In most cases, a step will read data (via an `ItemReader`), process it (using an `ItemProcessor`) and then write it (via an `ItemWriter`).
 
 The `JobLauncher` handles launching a `Job`.
 
@@ -47,9 +47,9 @@ In the example, we read a person's first and last name from a <var>person.csv</v
 ## 2. General Project Overview
 
 We will use the following tools/frameworks:
-* _Spring Batch 4.1_
-* _Spring Boot 2.1_
-* _Maven 3.5_
+* Spring Batch 4.1
+* Spring Boot 2.1
+* Maven 3.6
 
 Our project has the following directory structure:
 
@@ -75,11 +75,12 @@ The `spring-boot-starter-test` starter includes the dependencies for testing Spr
 
 There is also a dependency on `spring-batch-test`. This library contains some helper classes that will help test the batch job.
 
-In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. It allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code. Also, the plugin allows you to start the example via a Maven command.
+In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}: `spring-boot-maven-plugin`. It allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code. Also, the plugin allows you to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -90,19 +91,17 @@ In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.
 
   <name>spring-batch-hello-world</name>
   <description>Spring Batch Hello World Example</description>
-  <url>https://www.codenotfound.com/spring-batch-example.html</url>
+  <url>https://codenotfound.com/spring-batch-example.html</url>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.0.RELEASE</version>
+    <version>2.1.5.RELEASE</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
   </properties>
 
   <dependencies>
@@ -110,7 +109,6 @@ In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-batch</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -150,7 +148,7 @@ In this example, we will **run Spring Batch without a database**. Instead, an in
 > The `spring-boot-starter-batch` starter has a dependency on `spring-boot-starter-jdbc` and will try to instantiate a datasource. Add <var>exclude = {DataSourceAutoConfiguration.class}</var> to the `@SpringBootApplication` annotation. This prevents Spring Boot from auto-configuring a `DataSource` for database connections.
 
 {% highlight java %}
-package com.codenotfound.batch;
+package com.codenotfound;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -216,7 +214,7 @@ public class Person {
 
 ## 6. Configuring the Spring Batch Job
 
-We start by creating a `BatchConfig` class that will configure Spring Batch. The [@Configuration](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} annotation at the top of the class indicates that Spring can use this class as a source of bean definitions.
+We start by creating a `BatchConfig` class that will configure Spring Batch. The [@Configuration](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} annotation at the top of the class indicates that Spring can use this class as a source of bean definitions.
 
 We add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html){:target="_blank"} annotation which enables all needed Spring Batch features. It also provides a base configuration for setting up batch jobs.
 
@@ -233,7 +231,7 @@ We add the [@EnableBatchProcessing](https://docs.spring.io/spring-batch/4.1.x/ap
 For Spring Batch to use a Map based `JobRepository` we need to extend the `DefaultBatchConfigurer`. Override the `setDataSource()` method to not set a `DataSource`. This will cause the auto-configuration to [use a Map based JobRepository](https://github.com/spring-projects/spring-batch/blob/342d27bc1ed83312bdcd9c0cb30510f4c469e47d/spring-batch-core/src/main/java/org/springframework/batch/core/configuration/annotation/DefaultBatchConfigurer.java#L84){:target="_blank"}.
 
 {% highlight java %}
-package com.codenotfound.batch.job;
+package com.codenotfound.batch;
 
 import javax.sql.DataSource;
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
@@ -257,7 +255,7 @@ Create a `HelloWorldJobConfig` configuration class and annotate it with `@Config
 
 In the `helloWorlJob` Bean, we use the `JobBuilderFactory` to create the job. We pass the name of the job and the step that needs to be run.
 
-> Note that [Spring will automatically wire](https://docs.spring.io/spring/docs/5.1.0.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation){:target="_blank"} the `jobBuilders` and `stepBuilders` Beans in the `helloWorlJob()` Bean.
+> Note that [Spring will automatically wire](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/core.html#beans-autowired-annotation){:target="_blank"} the `jobBuilders` and `stepBuilders` Beans in the `helloWorlJob()` Bean.
 
 The `helloWorldStep` Bean defines the different items our step executes. We use the `StepBuilderFactory` to create the step.
 
@@ -280,7 +278,7 @@ We use a `FlatFileItemWriterBuilder` builder implementation to create a `FlatFil
 The `FlatFileItemWriter` needs to know how to turn our generated output into a single string that can be written to a file. As in this example, our output is already a string we can use the [PassThroughLineAggregator](https://docs.spring.io/spring-batch/4.1.x/reference/html/readersAndWriters.html#PassThroughLineAggregator){:target="_blank"}. This is the most basic implementation, which assumes that the object is already a string.
 
 {% highlight java %}
-package com.codenotfound.batch.job;
+package com.codenotfound.batch;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -350,7 +348,7 @@ To do so, we create a `PersonItemProcessor` that implements the `ItemProcessor` 
 For debugging purposes, we also log the result.
 
 {% highlight java %}
-package com.codenotfound.batch.job;
+package com.codenotfound.batch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -378,14 +376,16 @@ public class PersonItemProcessor
 
 To wrap up our example we create a basic unit test case. It will run the batch job and check if it finishes successfully.
 
-We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.spring.io/spring-boot/docs/2.1.0.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications){:target="_blank"} to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
+We use the `@RunWith` and `@SpringBootTest` [testing annotations](https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications){:target="_blank"} to tell JUnit to run using Spring's testing support and bootstrap with Spring Boot's support.
 
 Spring Batch ships with a `JobLauncherTestUtils` utility class for testing batch jobs.
 
-We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean. Then use the `launchJob()` method of this bean to run the batch job. If the job executed without any errors, the value of the exit code is <var>COMPLETED</var>.
+We first create an inner `BatchTestConfig` class that adds our <var>helloWorld</var> job to a `JobLauncherTestUtils` bean. Then use the `launchJob()` method of this bean to run the batch job.
+
+If the job executed without any errors, the value of the exit code is <var>COMPLETED</var>.
 
 {% highlight java %}
-package com.codenotfound.batch;
+package com.codenotfound;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
@@ -438,7 +438,7 @@ public class SpringBatchApplicationTests {
 }
 {% endhighlight %}
 
-To trigger above test case, open a command prompt in the project root folder and execute following Maven command:
+To trigger the above test case, open a command prompt in the project root folder and execute the following Maven command:
 
 {% highlight plaintext %}
 mvn test
@@ -447,31 +447,36 @@ mvn test
 The result is a successful build during which the batch job is executed.
 
 {% highlight plaintext %}
-.   ____          _            __ _ _
+ .   ____          _            __ _ _
 /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-'  |____| .__|_| |_|_| |_\__, | / / / /
+ '  |____| .__|_| |_|_| |_\__, | / / / /
 =========|_|==============|___/=/_/_/_/
-:: Spring Boot ::        (v2.1.0.RELEASE)
+:: Spring Boot ::        (v2.1.5.RELEASE)
 
-2018-11-11 20:37:27.573  INFO 14436 --- [           main] c.c.batch.SpringBatchApplication         : Starting SpringBatchApplication on DESKTOP-2RB3C1U with PID 14436 (C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world\target\classes started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world)
-2018-11-11 20:37:27.589  INFO 14436 --- [           main] c.c.batch.SpringBatchApplication         : No active profile set, falling back to default profiles: default
-2018-11-11 20:37:28.245  WARN 14436 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
-2018-11-11 20:37:28.245  WARN 14436 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No transaction manager was provided, using a ResourcelessTransactionManager
-2018-11-11 20:37:28.276  INFO 14436 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
-2018-11-11 20:37:28.667  INFO 14436 --- [           main] c.c.batch.SpringBatchApplication         : Started SpringBatchApplication in 1.406 seconds (JVM running for 5.269)
-2018-11-11 20:37:28.667  INFO 14436 --- [           main] o.s.b.a.b.JobLauncherCommandLineRunner   : Running default command line with: []
-2018-11-11 20:37:28.729  INFO 14436 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] launched with the following parameters: [{}]
-2018-11-11 20:37:28.745  INFO 14436 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [helloWorldStep]
-2018-11-11 20:37:28.776  INFO 14436 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'John Doe' into 'Hello John Doe!'
-2018-11-11 20:37:28.776  INFO 14436 --- [           main] c.c.batch.job.PersonItemProcessor        : converting 'Jane Doe' into 'Hello Jane Doe!'
-2018-11-11 20:37:28.792  INFO 14436 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] completed with the following parameters: [{}] and the following status: [COMPLETED]
+2019-05-30 19:11:12.784  INFO 14588 --- [           main] c.c.SpringBatchApplicationTests          : Starting SpringBatchApplicationTests on DESKTOP-2RB3C1U with PID 14588 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-batch\spring-batch-hello-world)
+2019-05-30 19:11:12.785  INFO 14588 --- [           main] c.c.SpringBatchApplicationTests          : No active profile set, falling back to default profiles: default
+2019-05-30 19:11:13.305  WARN 14588 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No datasource was provided...using a Map based JobRepository
+2019-05-30 19:11:13.306  WARN 14588 --- [           main] o.s.b.c.c.a.DefaultBatchConfigurer       : No transaction manager was provided, using a ResourcelessTransactionManager
+2019-05-30 19:11:13.328  INFO 14588 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2019-05-30 19:11:13.350  INFO 14588 --- [           main] c.c.SpringBatchApplicationTests          : Started SpringBatchApplicationTests in 0.894 seconds (JVM running for 1.777)
+2019-05-30 19:11:13.732  INFO 14588 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] launched with the following parameters: [{random=459672}]
+2019-05-30 19:11:13.759  INFO 14588 --- [           main] o.s.batch.core.job.SimpleStepHandler     : Executing step: [helloWorldStep]
+2019-05-30 19:11:13.812  INFO 14588 --- [           main] c.c.batch.PersonItemProcessor            : converting 'John Doe' into 'Hello John Doe!'
+2019-05-30 19:11:13.822  INFO 14588 --- [           main] c.c.batch.PersonItemProcessor            : converting 'Jane Doe' into 'Hello Jane Doe!'
+2019-05-30 19:11:13.842  INFO 14588 --- [           main] o.s.b.c.l.support.SimpleJobLauncher      : Job: [SimpleJob: [name=helloWorldJob]] completed with the following parameters: [{random=459672}] and the following status: [COMPLETED]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.953 s - in com.codenotfound.SpringBatchApplicationTests
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 4.140 s
-[INFO] Finished at: 2018-11-11T20:37:28+01:00
+[INFO] Total time:  6.852 s
+[INFO] Finished at: 2019-05-30T19:11:14+02:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
