@@ -10,7 +10,7 @@ redirect_from:
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-tutorials.png" alt="spring jms tutorials" class="align-right title-image">
 
-These tutorials will help you get started with [Spring JMS](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#jms){:target="_blank"} in no time.
+These tutorials will help you get started with [Spring JMS](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"} in no time.
 
 The best part?
 
@@ -44,6 +44,6 @@ _If you would like to request a new tutorial, leave a comment below._
 ## References
 
 * [Spring Framework - Projects](https://spring.io/projects/spring-framework){:target="_blank"}
-* [JMS (Java Message Service) - Reference Documentation](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#jms){:target="_blank"}
+* [JMS (Java Message Service) - Reference Documentation](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"}
 * [GitHub - spring-projects/spring-framework/spring-jms](https://github.com/spring-projects/spring-framework/tree/master/spring-jms){:target="_blank"}
 * [Stack Overflow - Spring-JMS Questions](http://stackoverflow.com/questions/tagged/spring-jms){:target="_blank"}

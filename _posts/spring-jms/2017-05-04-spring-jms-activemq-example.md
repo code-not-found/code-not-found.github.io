@@ -3,7 +3,7 @@ title: "Spring JMS ActiveMQ Example"
 permalink: /spring-jms-activemq-example.html
 excerpt: "A detailed step-by-step tutorial on how to connect to Apache ActiveMQ using Spring JMS and Spring Boot."
 date: 2017-05-04
-last_modified_at: 2018-12-12
+last_modified_at: 2019-05-30
 header:
   teaser: "assets/images/spring-jms/spring-jms-activemq.png"
 categories: [Spring JMS]
@@ -17,7 +17,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-activemq.png" alt="spring jms activemq" class="align-right title-image">
 
-I'm going to show you EXACTLY how to create a [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}, [ActiveMQ](http://activemq.apache.org/){:target="_blank"}, and [Maven](https://maven.apache.org/){:target="_blank"}.
+I'm going to show you EXACTLY how to create a [Spring JMS](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"} _Hello World_ example that uses [Spring Boot](https://spring.io/projects/spring-boot){:target="_blank"}, [ActiveMQ](http://activemq.apache.org/){:target="_blank"}, and [Maven](https://maven.apache.org/){:target="_blank"}.
 
 (Step-by-step)
 
@@ -41,8 +41,8 @@ In this tutorial, we will create a Hello World example in which we will send/rec
 We will use the following tools/frameworks:
 * Spring JMS 5.1
 * Spring Boot 2.1
-* ActiveMQ 5.14
-* Maven 3.5
+* ActiveMQ 5.15
+* Maven 3.6
 
 Our project has the following directory structure:
 
@@ -62,19 +62,20 @@ To avoid having to manage the version compatibility of the different Spring depe
 
 The generated project contains [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} that manage the different Spring dependencies.
 
-> You can find back the exact dependency versions in Appendix F of the reference documentation. For Spring Boot 2.1.1 the [ActiveMQ dependency is version 5.15.8](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
+> You can find back the exact dependency versions in Appendix F of the reference documentation. For Spring Boot 2.1.5 the [ActiveMQ dependency is version 5.15.9](https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
 
 The `spring-boot-starter-activemq` dependency includes the needed dependencies for using Spring JMS in combination with ActiveMQ.
 
 The `spring-boot-starter-test` includes the dependencies for testing Spring Boot applications with libraries that include [JUnit](http://junit.org/junit4/){:target="_blank"}, [Hamcrest](http://hamcrest.org/JavaHamcrest/){:target="_blank"} and [Mockito](http://site.mockito.org/){:target="_blank"}.
 
-In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}. `spring-boot-maven-plugin` allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code.
+In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}. `spring-boot-maven-plugin` allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code.
 
 Also, the plugin allows you to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -89,12 +90,12 @@ Also, the plugin allows you to start the example via a Maven command.
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.1.RELEASE</version>
+    <version>2.1.5.RELEASE</version>
     <relativePath /><!-- lookup parent from repository -->
   </parent>
 
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
   </properties>
 
   <dependencies>
@@ -184,7 +185,7 @@ public class Sender {
 }
 {% endhighlight %}
 
-The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. This class is annotated with [@Configuration](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
+The creation of the `JmsTemplate` and `Sender` is handled in the `SenderConfig` class. This class is annotated with [@Configuration](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/core.html#beans-java-basic-concepts){:target="_blank"} which indicates that the class can be used by the Spring IoC container as a source of bean definitions.
 
 In order to be able to use the Spring JMS template, we need to provide a reference to a `ConnectionFactory` which is used to [create connections with the JMS provider](http://docs.oracle.com/javaee/6/tutorial/doc/bnceh.html){:target="_blank"}. In addition, it encapsulates various configuration parameters, many of which are vendor specific.
 
@@ -291,7 +292,7 @@ Contrary to the `JmsTemplate` ideally [don't use Spring's CachingConnectionFacto
 
 As we are connecting to ActiveMQ, an `ActiveMQConnectionFactory` is created and passed in the constructor of the `DefaultJmsListenerContainerFactory`.
 
-> More details on how to receive JMS messages can be found in the [Spring Jms Listener Example]({{ site.url }}/spring-jms-listener-example.html).
+> More details on how to receive JMS messages can be found in the [Spring JMS Listener Example]({{ site.url }}/spring-jms-listener-example.html).
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -338,9 +339,9 @@ public class ReceiverConfig {
 
 ## 7. Testing the Spring JMS Example
 
-Spring Boot will automatically start an embedded broker if following conditions are met:
-* ActiveMQ is on the classpath.
-* No broker URL is specified through <var>spring.activemq.broker-url</var>.
+Spring Boot will automatically start an embedded broker if the following conditions are met:
+* ActiveMQ is on the classpath
+* No broker URL is specified through <var>spring.activemq.broker-url</var>
 
 Let's use the embedded broker for testing. We add a dedicated <var>application.yml</var> properties file under <var>src/test/resources</var>. Inside we specify the VM URI as broker connection URL.
 
@@ -399,21 +400,26 @@ Maven will download the dependencies, compile the code and run the unit test cas
 /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
- '  |____| .__|_| |_|_| |_\__, | / / / /
+'  |____| .__|_| |_|_| |_\__, | / / / /
 =========|_|==============|___/=/_/_/_/
-:: Spring Boot ::        (v2.1.1.RELEASE)
+:: Spring Boot ::        (v2.1.5.RELEASE)
 
-2018-12-10 13:12:53.646  INFO 10208 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 10208 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-activemq-hello-world)
-2018-12-10 13:12:53.646  INFO 10208 --- [           main] c.codenotfound.SpringJmsApplicationTest  : No active profile set, falling back to default profiles: default
-2018-12-10 13:12:54.670  INFO 10208 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Started SpringJmsApplicationTest in 1.331 seconds (JVM running for 2.796)
-2018-12-10 13:12:54.883  INFO 10208 --- [           main] com.codenotfound.jms.Sender              : sending message='Hello Spring JMS ActiveMQ!'
-2018-12-10 13:12:54.911  INFO 10208 --- [enerContainer-3] com.codenotfound.jms.Receiver            : received message='Hello Spring JMS ActiveMQ!'
-2018-12-10 13:12:55.922  INFO 10208 --- [           main] o.a.a.junit.EmbeddedActiveMQBroker       : Stopping Embedded ActiveMQ Broker: embedded-broker
-2018-12-10 13:12:55.922  INFO 10208 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://embedded-broker stopped
-2018-12-10 13:12:55.922  INFO 10208 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (embedded-broker, ID:DESKTOP-2RB3C1U-60944-1544443972991-0:1) is shutting down
-2018-12-10 13:12:55.938  INFO 10208 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (embedded-broker, ID:DESKTOP-2RB3C1U-60944-1544443972991-0:1) uptime 3.047 seconds
-2018-12-10 13:12:55.938  INFO 10208 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (embedded-broker, ID:DESKTOP-2RB3C1U-60944-1544443972991-0:1) is shutdown
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.702 s - in com.codenotfound.SpringJmsApplicationTest
+2019-05-30 08:39:06.606  INFO 13060 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 13060 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-activemq-hello-world)
+2019-05-30 08:39:06.608  INFO 13060 --- [           main] c.codenotfound.SpringJmsApplicationTest  : No active profile set, falling back to default profiles: default
+2019-05-30 08:39:08.007  INFO 13060 --- [           main] o.apache.activemq.broker.BrokerService   : Using Persistence Adapter: MemoryPersistenceAdapter
+2019-05-30 08:39:08.082  INFO 13060 --- [  JMX connector] o.a.a.broker.jmx.ManagementContext       : JMX consoles can connect to service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+2019-05-30 08:39:08.154  INFO 13060 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-56942-1559198348025-0:1) is starting
+2019-05-30 08:39:08.160  INFO 13060 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-56942-1559198348025-0:1) started
+2019-05-30 08:39:08.161  INFO 13060 --- [           main] o.apache.activemq.broker.BrokerService   : For help or more information please see: http://activemq.apache.org
+2019-05-30 08:39:08.191  INFO 13060 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://embedded-broker started
+2019-05-30 08:39:08.234  INFO 13060 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Started SpringJmsApplicationTest in 1.994 seconds (JVM running for 3.161)
+2019-05-30 08:39:08.591  INFO 13060 --- [           main] com.codenotfound.jms.Sender              : sending message='Hello Spring JMS ActiveMQ!'
+2019-05-30 08:39:08.624  INFO 13060 --- [enerContainer-1] com.codenotfound.jms.Receiver            : received message='Hello Spring JMS ActiveMQ!'
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.048 s - in com.codenotfound.SpringJmsApplicationTest
+2019-05-30 08:39:08.709  INFO 13060 --- [MQ ShutdownHook] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-56942-1559198348025-0:1) is shutting down
+2019-05-30 08:39:08.721  INFO 13060 --- [MQ ShutdownHook] o.a.activemq.broker.TransportConnector   : Connector vm://embedded-broker stopped
+2019-05-30 08:39:08.731  INFO 13060 --- [MQ ShutdownHook] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-56942-1559198348025-0:1) uptime 0.965 seconds
+2019-05-30 08:39:08.731  INFO 13060 --- [MQ ShutdownHook] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-56942-1559198348025-0:1) is shutdown
 [INFO]
 [INFO] Results:
 [INFO]
@@ -422,12 +428,14 @@ Maven will download the dependencies, compile the code and run the unit test cas
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 9.689 s
-[INFO] Finished at: 2018-12-10T13:12:56+01:00
+[INFO] Total time:  13.707 s
+[INFO] Finished at: 2019-05-30T08:39:09+02:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
-Above test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/jms-apache-activemq-installation.html) on your local system. Simply change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL.
+Above test case can also be executed after you [install Apache ActiveMQ]({{ site.url }}/jms-apache-activemq-installation.html) on your local system.
+
+Simply change the <var>'activemq:broker-url'</var> property to point to <var>'tcp://localhost:61616'</var> in case the broker is running on the default URL.
 
 ---
 
