@@ -3,7 +3,7 @@ title: "Spring JMS Integration Example"
 permalink: /spring-jms-integration-example.html
 excerpt: "A detailed step-by-step tutorial on how to connect to an ActiveMQ JMS broker using Spring Integration and Spring Boot."
 date: 2018-12-17
-last_modified_at: 2018-12-21
+last_modified_at: 2019-05-30
 header:
   teaser: "assets/images/spring-jms/spring-jms-integration.png"
 categories: [Spring JMS]
@@ -38,15 +38,15 @@ Spring Integration uses the concept of a **Message Channel** to pass along infor
 
 You can use a [Channel Adapter](https://www.enterpriseintegrationpatterns.com/patterns/messaging/ChannelAdapter.html){:target="_blank"} to connect an application to a messaging system so that it can send and receive messages.
 
-An [Outbound Channel Adapter](https://docs.spring.io/spring-integration/docs/5.1.1.RELEASE/reference/html/jms.html#jms-outbound-channel-adapter){:target="_blank"} is capable of converting Spring Integration messages to JMS messages and then sending them to a JMS destination.
+An [Outbound Channel Adapter](https://docs.spring.io/spring-integration/docs/5.1.5.RELEASE/reference/html/#jms-outbound-channel-adapter){:target="_blank"} is capable of converting Spring Integration messages to JMS messages and then sending them to a JMS destination.
 
-A [Message-driven Channel Adapter](https://docs.spring.io/spring-integration/docs/5.1.1.RELEASE/reference/html/jms.html#jms-message-driven-channel-adapter) receives JMS messages from a JMS destination and converts them into Spring Integration messages.
+A [Message-driven Channel Adapter](https://docs.spring.io/spring-integration/docs/5.1.5.RELEASE/reference/html/#jms-message-driven-channel-adapter) receives JMS messages from a JMS destination and converts them into Spring Integration messages.
 
 There are two JMS-based inbound Channel Adapters. The first uses Springs `JmsTemplate` to receive based on a polling period. The second is "message-driven" and relies on a Spring `MessageListener` container. We will use the latter in this example.
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-integration-example-overview.png" alt="spring jms integration example overview">
 
-Let's build a Spring JMS integration example using ActiveMQ. It consists out of two channels as shown in the above diagram.
+Let's build a Spring JMS integration example using ActiveMQ. It consists of two channels as shown in the above diagram.
 
 The first _ProducingChannel_ will have a `JmsSendingMessageHandler` that subscribes to the channel and writes all received messages to an <var>integration.q</var> queue.
 
@@ -58,8 +58,8 @@ We will use the following tools/frameworks:
 * Spring JMS 5.1
 * Spring Integration 5.1
 * Spring Boot 2.1
-* ActiveMQ 5.14
-* Maven 3.5
+* ActiveMQ 5.15
+* Maven 3.6
 
 Our project has the following directory structure:
 
@@ -73,7 +73,8 @@ To use the different Spring Integration JMS components we need to add the `sprin
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -88,12 +89,12 @@ To use the different Spring Integration JMS components we need to add the `sprin
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.1.RELEASE</version>
+    <version>2.1.5.RELEASE</version>
     <relativePath /><!-- lookup parent from repository -->
   </parent>
 
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
   </properties>
 
   <dependencies>
@@ -127,7 +128,7 @@ To use the different Spring Integration JMS components we need to add the `sprin
 
 Create a `ProducingChannelConfig` class and annotate it with `@Configuration`.
 
-Define a _ProducingChannel_ as a `DirectChannel` bean. This is the default channel provided by the framework, but you can use any of the [message channels Spring Integration provides](https://docs.spring.io/spring-integration/docs/5.1.1.RELEASE/reference/html/messaging-channels-section.html){:target="_blank"}.
+Define a _ProducingChannel_ as a `DirectChannel` bean. This is the default channel provided by the framework, but you can use any of the [message channels Spring Integration provides](https://docs.spring.io/spring-integration/docs/5.1.5.RELEASE/reference/html/#messaging-channels-section){:target="_blank"}.
 
 Next, we create the `JmsSendingMessageHandler` that will send messages received from the _ProducingChannel_ towards a destination. The constructor requires a `JmsTemplate` to be passed as a parameter. We simply inject the template that is auto-configured by Spring Boot.
 
@@ -359,79 +360,78 @@ mvn test
 In the output logs, we see that 10 messages arrive.
 
 {% highlight plaintext %}
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+.   ____          _            __ _ _
+/\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v2.1.1.RELEASE)
+\\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+'  |____| .__|_| |_|_| |_\__, | / / / /
+=========|_|==============|___/=/_/_/_/
+:: Spring Boot ::        (v2.1.5.RELEASE)
 
-2018-12-21 14:35:31.530  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 9144 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-integration)
-2018-12-21 14:35:31.530  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : No active profile set, falling back to default profiles: default
-2018-12-21 14:35:32.165  INFO 9144 --- [           main] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
-2018-12-21 14:35:32.165  INFO 9144 --- [           main] faultConfiguringBeanFactoryPostProcessor : No bean named 'taskScheduler' has been explicitly defined. Therefore, a default ThreadPoolTaskScheduler will be created.
-2018-12-21 14:35:32.181  INFO 9144 --- [           main] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
-2018-12-21 14:35:32.259  INFO 9144 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration$$EnhancerBySpringCGLIB$$87faca68] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2018-12-21 14:35:32.337  INFO 9144 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'integrationDisposableAutoCreatedBeans' of type [org.springframework.integration.config.annotation.Disposables] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2018-12-21 14:35:32.913  INFO 9144 --- [           main] o.apache.activemq.broker.BrokerService   : Using Persistence Adapter: MemoryPersistenceAdapter
-2018-12-21 14:35:32.960  INFO 9144 --- [  JMX connector] o.a.a.broker.jmx.ManagementContext       : JMX consoles can connect to service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
-2018-12-21 14:35:33.085  INFO 9144 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-61005-1545399332929-0:1) is starting
-2018-12-21 14:35:33.085  INFO 9144 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-61005-1545399332929-0:1) started
-2018-12-21 14:35:33.085  INFO 9144 --- [           main] o.apache.activemq.broker.BrokerService   : For help or more information please see: http://activemq.apache.org
-2018-12-21 14:35:33.116  INFO 9144 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://localhost started
-2018-12-21 14:35:33.609  INFO 9144 --- [           main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.i.channel.PublishSubscribeChannel    : Channel 'application.errorChannel' has 1 subscriber(s).
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : started _org.springframework.integration.errorLogger
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:consumingChannelConfig.countDownLatchHandler.serviceActivator} as a subscriber to the 'consumingChannel' channel
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.integration.channel.DirectChannel    : Channel 'application.consumingChannel' has 1 subscriber(s).
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : started consumingChannelConfig.countDownLatchHandler.serviceActivator
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:producingChannelConfig.jmsMessageHandler.serviceActivator} as a subscriber to the 'producingChannel' channel
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.integration.channel.DirectChannel    : Channel 'application.producingChannel' has 1 subscriber(s).
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : started producingChannelConfig.jmsMessageHandler.serviceActivator
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] ishingJmsMessageListener$GatewayDelegate : started org.springframework.integration.jms.ChannelPublishingJmsMessageListener$GatewayDelegate@301aa982
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] o.s.i.jms.JmsMessageDrivenEndpoint       : started jmsMessageDrivenEndpoint
-2018-12-21 14:35:33.843  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : Started SpringJmsApplicationTest in 2.652 seconds (JVM running for 4.176)
-2018-12-21 14:35:34.082  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sending 10 messages
-2018-12-21 14:35:34.113  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 0!, headers={jms_destination=integration.q, id=affc6c4f-e9ee-9cca-56a4-9abbb1b0e0f9, timestamp=1545399334082}]'
-2018-12-21 14:35:34.113  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 1!, headers={jms_destination=integration.q, id=1b9180bc-a939-548d-900a-eefca2d7cec7, timestamp=1545399334113}]'
-2018-12-21 14:35:34.113  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 2!, headers={jms_destination=integration.q, id=6a94f1c6-e668-df69-5c27-a087ba16b366, timestamp=1545399334113}]'
-2018-12-21 14:35:34.113  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 3!, headers={jms_destination=integration.q, id=a7360080-4b3d-4d2c-4894-0296b590b0ea, timestamp=1545399334113}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 4!, headers={jms_destination=integration.q, id=db9b3de3-41c8-3dca-afec-7aeb1014244b, timestamp=1545399334113}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 5!, headers={jms_destination=integration.q, id=af759965-c82e-e65e-f639-97f6034c4b05, timestamp=1545399334129}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 0!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=54137d25-8a45-0d55-1260-46e0ad8c79ca, priority=4, jms_timestamp=1545399334113, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:1, timestamp=1545399334129}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 1!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=8fe598d4-e8bd-d82b-48f8-411040ade775, priority=4, jms_timestamp=1545399334113, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:2, timestamp=1545399334129}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 2!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=a962525e-58e5-435c-435b-ed7d58fd2f61, priority=4, jms_timestamp=1545399334113, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:3, timestamp=1545399334129}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 3!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=2750dc06-9431-b135-9b13-be71accd8557, priority=4, jms_timestamp=1545399334113, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:4, timestamp=1545399334129}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 4!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=f5011bd5-7eb6-a7a3-9446-7facc4a76606, priority=4, jms_timestamp=1545399334113, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:5, timestamp=1545399334129}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 5!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=1cdcae36-5c92-9f9d-58e4-17bb87230db1, priority=4, jms_timestamp=1545399334129, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:6, timestamp=1545399334129}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 6!, headers={jms_destination=integration.q, id=a70badde-2d5a-2d0e-4c4e-8c8191ae50ee, timestamp=1545399334129}]'
-2018-12-21 14:35:34.129  INFO 9144 --- [ Session Task-2] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 6!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=53e6645a-21e2-1127-516d-967c9c44cb4f, priority=4, jms_timestamp=1545399334129, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:7, timestamp=1545399334129}]'
-2018-12-21 14:35:34.145  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 7!, headers={jms_destination=integration.q, id=6b8ea3ca-a6aa-6316-3f86-3e9e36a26710, timestamp=1545399334129}]'
-2018-12-21 14:35:34.145  INFO 9144 --- [ Session Task-2] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 7!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=14b868b5-59a1-5dbe-598e-3ab56a79725a, priority=4, jms_timestamp=1545399334129, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:8, timestamp=1545399334145}]'
-2018-12-21 14:35:34.145  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 8!, headers={jms_destination=integration.q, id=125b144b-2c1c-a095-0865-bf53839023bb, timestamp=1545399334145}]'
-2018-12-21 14:35:34.160  INFO 9144 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 9!, headers={jms_destination=integration.q, id=9589f3c0-3fb9-4d2f-f556-a2f974c07bf3, timestamp=1545399334145}]'
-2018-12-21 14:35:34.160  INFO 9144 --- [ Session Task-2] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 8!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=8a2f3e5f-8d8d-b194-cb20-d487a2dfb1a8, priority=4, jms_timestamp=1545399334145, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:9, timestamp=1545399334160}]'
-2018-12-21 14:35:34.160  INFO 9144 --- [ Session Task-2] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 9!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=c1baeabd-62aa-e4ec-d15d-8e2a44f4290b, priority=4, jms_timestamp=1545399334145, jms_messageId=ID:DESKTOP-2RB3C1U-61005-1545399332929-4:1:2:1:10, timestamp=1545399334160}]'
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] ishingJmsMessageListener$GatewayDelegate : stopped org.springframework.integration.jms.ChannelPublishingJmsMessageListener$GatewayDelegate@301aa982
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.i.jms.JmsMessageDrivenEndpoint       : stopped jmsMessageDrivenEndpoint
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.i.channel.PublishSubscribeChannel    : Channel 'application.errorChannel' has 0 subscriber(s).
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : stopped _org.springframework.integration.errorLogger
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:consumingChannelConfig.countDownLatchHandler.serviceActivator} as a subscriber to the 'consumingChannel' channel
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.integration.channel.DirectChannel    : Channel 'application.consumingChannel' has 0 subscriber(s).
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : stopped consumingChannelConfig.countDownLatchHandler.serviceActivator
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:producingChannelConfig.jmsMessageHandler.serviceActivator} as a subscriber to the 'producingChannel' channel
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.integration.channel.DirectChannel    : Channel 'application.producingChannel' has 0 subscriber(s).
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : stopped producingChannelConfig.jmsMessageHandler.serviceActivator
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://localhost stopped
-2018-12-21 14:35:34.254  INFO 9144 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-61005-1545399332929-0:1) is shutting down
-2018-12-21 14:35:34.270  INFO 9144 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-61005-1545399332929-0:1) uptime 1.522 seconds
-2018-12-21 14:35:34.270  INFO 9144 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-61005-1545399332929-0:1) is shutdown
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.265 s - in com.codenotfound.jms.SpringJmsApplicationTest
+2019-05-30 17:00:06.652  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 12020 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-integration)
+2019-05-30 17:00:06.654  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : No active profile set, falling back to default profiles: default
+2019-05-30 17:00:07.444  INFO 12020 --- [           main] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2019-05-30 17:00:07.451  INFO 12020 --- [           main] faultConfiguringBeanFactoryPostProcessor : No bean named 'taskScheduler' has been explicitly defined. Therefore, a default ThreadPoolTaskScheduler will be created.
+2019-05-30 17:00:07.464  INFO 12020 --- [           main] faultConfiguringBeanFactoryPostProcessor : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2019-05-30 17:00:07.559  INFO 12020 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration$$EnhancerBySpringCGLIB$$730d8ffc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-30 17:00:07.607  INFO 12020 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean 'integrationDisposableAutoCreatedBeans' of type [org.springframework.integration.config.annotation.Disposables] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-05-30 17:00:08.399  INFO 12020 --- [           main] o.apache.activemq.broker.BrokerService   : Using Persistence Adapter: MemoryPersistenceAdapter
+2019-05-30 17:00:08.476  INFO 12020 --- [  JMX connector] o.a.a.broker.jmx.ManagementContext       : JMX consoles can connect to service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+2019-05-30 17:00:08.572  INFO 12020 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59524-1559228408439-0:1) is starting
+2019-05-30 17:00:08.586  INFO 12020 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59524-1559228408439-0:1) started
+2019-05-30 17:00:08.586  INFO 12020 --- [           main] o.apache.activemq.broker.BrokerService   : For help or more information please see: http://activemq.apache.org
+2019-05-30 17:00:08.616  INFO 12020 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://localhost started
+2019-05-30 17:00:09.030  INFO 12020 --- [           main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2019-05-30 17:00:09.385  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2019-05-30 17:00:09.385  INFO 12020 --- [           main] o.s.i.channel.PublishSubscribeChannel    : Channel 'application.errorChannel' has 1 subscriber(s).
+2019-05-30 17:00:09.386  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : started _org.springframework.integration.errorLogger
+2019-05-30 17:00:09.386  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:consumingChannelConfig.countDownLatchHandler.serviceActivator} as a subscriber to the 'consumingChannel' channel
+2019-05-30 17:00:09.386  INFO 12020 --- [           main] o.s.integration.channel.DirectChannel    : Channel 'application.consumingChannel' has 1 subscriber(s).
+2019-05-30 17:00:09.386  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : started consumingChannelConfig.countDownLatchHandler.serviceActivator
+2019-05-30 17:00:09.387  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Adding {message-handler:producingChannelConfig.jmsMessageHandler.serviceActivator} as a subscriber to the 'producingChannel' channel
+2019-05-30 17:00:09.387  INFO 12020 --- [           main] o.s.integration.channel.DirectChannel    : Channel 'application.producingChannel' has 1 subscriber(s).
+2019-05-30 17:00:09.388  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : started producingChannelConfig.jmsMessageHandler.serviceActivator
+2019-05-30 17:00:09.388  INFO 12020 --- [           main] ishingJmsMessageListener$GatewayDelegate : started org.springframework.integration.jms.ChannelPublishingJmsMessageListener$GatewayDelegate@5099c59b
+2019-05-30 17:00:09.389  INFO 12020 --- [           main] o.s.i.jms.JmsMessageDrivenEndpoint       : started jmsMessageDrivenEndpoint
+2019-05-30 17:00:09.403  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : Started SpringJmsApplicationTest in 3.187 seconds (JVM running for 4.311)
+2019-05-30 17:00:09.800  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sending 10 messages
+2019-05-30 17:00:09.836  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 0!, headers={jms_destination=integration.q, id=726d2ef1-bd27-ac02-138e-6adda629de4c, timestamp=1559228409801}]'
+2019-05-30 17:00:09.838  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 1!, headers={jms_destination=integration.q, id=9c0a5332-4899-241a-64c9-abc67edc199c, timestamp=1559228409836}]'
+2019-05-30 17:00:09.839  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 2!, headers={jms_destination=integration.q, id=61cfc4ba-55d5-6bab-8285-e4ae2995c50b, timestamp=1559228409838}]'
+2019-05-30 17:00:09.847  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 3!, headers={jms_destination=integration.q, id=00673fad-ec44-e555-c8f4-e924f82147e4, timestamp=1559228409840}]'
+2019-05-30 17:00:09.849  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 0!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=a2824337-13f0-a6e5-09e1-6add09ac934d, priority=4, jms_timestamp=1559228409824, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:1, timestamp=1559228409849}]'
+2019-05-30 17:00:09.853  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 4!, headers={jms_destination=integration.q, id=337d03ab-0c41-23a9-9d4c-5ba563857cb9, timestamp=1559228409848}]'
+2019-05-30 17:00:09.856  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 1!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=04ccd784-40b7-4b5d-28e7-a08a2256e6ec, priority=4, jms_timestamp=1559228409836, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:2, timestamp=1559228409856}]'
+2019-05-30 17:00:09.862  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 5!, headers={jms_destination=integration.q, id=9cc4335e-6215-f685-8ae5-e444f5fe98d2, timestamp=1559228409853}]'
+2019-05-30 17:00:09.863  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 2!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=19851b82-5cf7-a76b-bca2-2dfab84c86d0, priority=4, jms_timestamp=1559228409838, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:3, timestamp=1559228409863}]'
+2019-05-30 17:00:09.865  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 3!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=977ed741-2b0d-d3ca-a1f2-9425eea07c4d, priority=4, jms_timestamp=1559228409840, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:4, timestamp=1559228409865}]'
+2019-05-30 17:00:09.868  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 4!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=ca3dc880-3376-3c19-6c30-8878c5a90a30, priority=4, jms_timestamp=1559228409848, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:5, timestamp=1559228409867}]'
+2019-05-30 17:00:09.869  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 5!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=99fb58ae-5662-2078-be1b-5e206760dce9, priority=4, jms_timestamp=1559228409853, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:6, timestamp=1559228409869}]'
+2019-05-30 17:00:09.894  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 6!, headers={jms_destination=integration.q, id=8937d229-febe-12ae-c753-c82b400f3013, timestamp=1559228409862}]'
+2019-05-30 17:00:09.899  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 6!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=153cabb6-9174-fd62-941d-55665db0d4fe, priority=4, jms_timestamp=1559228409862, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:7, timestamp=1559228409899}]'
+2019-05-30 17:00:09.903  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 7!, headers={jms_destination=integration.q, id=751e2a92-f51a-ddd7-78bc-bc5a4521f18a, timestamp=1559228409895}]'
+2019-05-30 17:00:09.905  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 7!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=c83b7022-139e-571a-ef81-3bcb41ae1154, priority=4, jms_timestamp=1559228409895, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:8, timestamp=1559228409905}]'
+2019-05-30 17:00:09.906  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 8!, headers={jms_destination=integration.q, id=6902e79a-b536-463e-3161-1fd2babdad9d, timestamp=1559228409903}]'
+2019-05-30 17:00:09.906  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 8!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=6b629edd-ed5c-e2e8-7d55-0cf7a9ac457d, priority=4, jms_timestamp=1559228409903, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:9, timestamp=1559228409906}]'
+2019-05-30 17:00:09.909  INFO 12020 --- [           main] c.c.jms.SpringJmsApplicationTest         : sent message='GenericMessage [payload=Hello Spring Integration JMS 9!, headers={jms_destination=integration.q, id=1e773b94-b6bd-811d-6fa4-6732cb46914f, timestamp=1559228409906}]'
+2019-05-30 17:00:09.910  INFO 12020 --- [ Session Task-1] c.c.jms.CountDownLatchHandler            : received message='GenericMessage [payload=Hello Spring Integration JMS 9!, headers={jms_redelivered=false, jms_destination=queue://integration.q, id=330fac90-f8cb-421f-546b-0fc11b1bc759, priority=4, jms_timestamp=1559228409906, jms_messageId=ID:DESKTOP-2RB3C1U-59524-1559228408439-4:1:2:1:10, timestamp=1559228409910}]'
+2019-05-30 17:00:09.998  INFO 12020 --- [           main] ishingJmsMessageListener$GatewayDelegate : stopped org.springframework.integration.jms.ChannelPublishingJmsMessageListener$GatewayDelegate@5099c59b
+2019-05-30 17:00:09.998  INFO 12020 --- [           main] o.s.i.jms.JmsMessageDrivenEndpoint       : stopped jmsMessageDrivenEndpoint
+2019-05-30 17:00:09.998  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2019-05-30 17:00:10.000  INFO 12020 --- [           main] o.s.i.channel.PublishSubscribeChannel    : Channel 'application.errorChannel' has 0 subscriber(s).
+2019-05-30 17:00:10.000  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : stopped _org.springframework.integration.errorLogger
+2019-05-30 17:00:10.000  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:consumingChannelConfig.countDownLatchHandler.serviceActivator} as a subscriber to the 'consumingChannel' channel
+2019-05-30 17:00:10.000  INFO 12020 --- [           main] o.s.integration.channel.DirectChannel    : Channel 'application.consumingChannel' has 0 subscriber(s).
+2019-05-30 17:00:10.000  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : stopped consumingChannelConfig.countDownLatchHandler.serviceActivator
+2019-05-30 17:00:10.000  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : Removing {message-handler:producingChannelConfig.jmsMessageHandler.serviceActivator} as a subscriber to the 'producingChannel' channel
+2019-05-30 17:00:10.000  INFO 12020 --- [           main] o.s.integration.channel.DirectChannel    : Channel 'application.producingChannel' has 0 subscriber(s).
+2019-05-30 17:00:10.001  INFO 12020 --- [           main] o.s.i.endpoint.EventDrivenConsumer       : stopped producingChannelConfig.jmsMessageHandler.serviceActivator
+2019-05-30 17:00:10.001  INFO 12020 --- [           main] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+2019-05-30 17:00:10.009  INFO 12020 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://localhost stopped
+2019-05-30 17:00:10.010  INFO 12020 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59524-1559228408439-0:1) is shutting down
+2019-05-30 17:00:10.019  INFO 12020 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59524-1559228408439-0:1) uptime 1.775 seconds
+2019-05-30 17:00:10.019  INFO 12020 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59524-1559228408439-0:1) is shutdown
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.699 s - in com.codenotfound.jms.SpringJmsApplicationTest
 [INFO]
 [INFO] Results:
 [INFO]
@@ -440,8 +440,8 @@ In the output logs, we see that 10 messages arrive.
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 8.520 s
-[INFO] Finished at: 2018-12-21T14:35:35+01:00
+[INFO] Total time:  8.719 s
+[INFO] Finished at: 2019-05-30T17:00:10+02:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
