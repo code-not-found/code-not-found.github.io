@@ -3,14 +3,14 @@ title: "Spring JMS Tutorials"
 permalink: /spring-jms-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use Spring JMS."
 date: 2017-05-01
-last_modified_at: 2019-01-14
+last_modified_at: 2019-05-30
 redirect_from:
   - /spring-jms/
 ---
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-tutorials.png" alt="spring jms tutorials" class="align-right title-image">
 
-These tutorials will help you get started with [Spring JMS](https://spring.io/projects/spring-batch){:target="_blank"} in no time.
+These tutorials will help you get started with [Spring JMS](https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#jms){:target="_blank"} in no time.
 
 The best part?
 
@@ -28,8 +28,6 @@ Spring JMS is developed and maintained by [Pivotal Software](https://pivotal.io/
 
 ## Tutorials
 
-_If you would like to request a new tutorial, leave a comment below._
-
 * [Spring JMS ActiveMQ Example]({{ site.url }}/spring-jms-activemq-example.html)
 * [Spring JMS Artemis Example]({{ site.url }}/spring-jms-artemis-example.html)
 * [Spring JMS JmsTemplate Example]({{ site.url }}/spring-jms-jmstemplate-example.html)
@@ -40,6 +38,8 @@ _If you would like to request a new tutorial, leave a comment below._
 * [Spring JMS Message Converter Example]({{ site.url }}/spring-jms-message-converter-example.html)
 * [Spring JMS Message Selector Example]({{ site.url }}/spring-jms-message-selector-example.html)
 * [Spring JMS Topic Example]({{ site.url }}/spring-jms-topic-example.html)
+
+_If you would like to request a new tutorial, leave a comment below._
 
 ## References
 
