@@ -3,7 +3,7 @@ title: "Spring Batch Tutorials"
 permalink: /spring-batch-tutorials
 excerpt: "Detailed step-by-step tutorials on how to use Spring Batch."
 date: 2018-10-16
-last_modified_at: 2018-11-11
+last_modified_at: 2019-05-30
 ---
 
 <img src="{{ site.url }}/assets/images/spring-batch/spring-batch-tutorials.png" alt="spring batch tutorials" class="align-right title-image">
@@ -22,15 +22,17 @@ Let's get started…
 
 Spring Batch works by first reading items from a specified source. Then in a next step, the items are processed. And finally, the processed items are written to a specified destination.
 
-Spring Batch is a [Spring main project](https://spring.io/projects){:target="_blank"}. It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
+Spring Batch is a [Spring main project](https://spring.io/projects){:target="_blank"}.
+
+It is developed and maintained by [Pivotal Software](https://pivotal.io/){:target="_blank"}.
 
 ## Tutorials
-
-_If you would like to request a new tutorial, leave a comment below._
 
 * [Spring Batch Hello World Example]({{ site.url }}/spring-batch-example.html)
 * [Spring Batch Admin Example]({{ site.url }}/spring-batch-admin-example.html)
 * [Spring Batch Tasklet Example]({{ site.url }}/spring-batch-tasklet-example.html)
+
+_If you would like to request a new tutorial, leave a comment below._
 
 ## References
 
