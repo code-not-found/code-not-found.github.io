@@ -3,7 +3,7 @@ title: "Spring JMS Listener Example"
 permalink: /spring-jms-listener-example.html
 excerpt: "A detailed step-by-step tutorial on how a Spring JMS listener works in combination with Spring Boot."
 date: 2018-12-14
-last_modified_at: 2018-12-17
+last_modified_at: 2019-05-30
 header:
   teaser: "assets/images/spring-jms/spring-jms-listener.png"
 categories: [Spring JMS]
@@ -13,7 +13,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-listener.png" alt="spring jms listener" class="align-right title-image">
 
-In this post, I will show you how to receive messages using a [Spring JMS Listener](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms-receiving){:target="_blank"}.
+In this post, I will show you how to receive messages using a [Spring JMS Listener](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/integration.html#jms-receiving){:target="_blank"}.
 
 First, I'll explain the different options available.
 
@@ -45,8 +45,8 @@ We adapt it so that an order message is sent to an order queue. A JMS listener w
 We will use the following tools/frameworks:
 * Spring JMS 5.1
 * Spring Boot 2.1
-* ActiveMQ 5.14
-* Maven 3.5
+* ActiveMQ 5.15
+* Maven 3.6
 
 Our project has the following directory structure:
 
@@ -213,7 +213,7 @@ public class StatusMessageListener implements MessageListener {
 }
 {% endhighlight %}
 
-There is even an [easier way](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms-annotated){:target="_blank"} to create a Spring JMS listener.
+There is even an [easier way](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/integration.html#jms-annotated){:target="_blank"} to create a Spring JMS listener.
 
 Simply decorate a Bean method with the `@JmsListener` annotation. This causes a listener container to be created on the specified `destination` using a `ContainerFactory`.
 
@@ -339,21 +339,21 @@ In the output logs, we can see that the order message is received by the annotat
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
  '  |____| .__|_| |_|_| |_\__, | / / / /
 =========|_|==============|___/=/_/_/_/
-:: Spring Boot ::        (v2.1.1.RELEASE)
+:: Spring Boot ::        (v2.1.5.RELEASE)
 
-2018-12-17 10:13:09.158  INFO 13652 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 13652 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-listener)
-2018-12-17 10:13:09.158  INFO 13652 --- [           main] c.codenotfound.SpringJmsApplicationTest  : No active profile set, falling back to default profiles: default
-2018-12-17 10:13:10.386  INFO 13652 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Started SpringJmsApplicationTest in 1.553 seconds (JVM running for 3.171)
-2018-12-17 10:13:10.642  INFO 13652 --- [           main] com.codenotfound.jms.Sender              : sending message='order-002'
-2018-12-17 10:13:10.673  INFO 13652 --- [enerContainer-3] com.codenotfound.jms.OrderReceiver       : received order='order-002'
-2018-12-17 10:13:10.673  INFO 13652 --- [enerContainer-3] com.codenotfound.jms.Sender              : id='DMLC' received status='Accepted'
-2018-12-17 10:13:10.673  INFO 13652 --- [ Session Task-1] com.codenotfound.jms.Sender              : id='SMLC' received status='Accepted'
-2018-12-17 10:13:11.689  INFO 13652 --- [           main] o.a.a.junit.EmbeddedActiveMQBroker       : Stopping Embedded ActiveMQ Broker: embedded-broker
-2018-12-17 10:13:11.689  INFO 13652 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://embedded-broker stopped
-2018-12-17 10:13:11.689  INFO 13652 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (embedded-broker, ID:DESKTOP-2RB3C1U-64437-1545037988454-0:1) is shutting down
-2018-12-17 10:13:11.705  INFO 13652 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (embedded-broker, ID:DESKTOP-2RB3C1U-64437-1545037988454-0:1) uptime 3.386 seconds
-2018-12-17 10:13:11.705  INFO 13652 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (embedded-broker, ID:DESKTOP-2RB3C1U-64437-1545037988454-0:1) is shutdown
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.147 s - in com.codenotfound.SpringJmsApplicationTest
+2019-05-30 14:01:04.096  INFO 11360 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 11360 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-listener)
+2019-05-30 14:01:04.098  INFO 11360 --- [           main] c.codenotfound.SpringJmsApplicationTest  : No active profile set, falling back to default profiles: default
+2019-05-30 14:01:05.298  INFO 11360 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Started SpringJmsApplicationTest in 1.501 seconds (JVM running for 3.267)
+2019-05-30 14:01:05.715  INFO 11360 --- [           main] com.codenotfound.jms.Sender              : sending message='order-002'
+2019-05-30 14:01:05.747  INFO 11360 --- [enerContainer-3] com.codenotfound.jms.OrderReceiver       : received order='order-002'
+2019-05-30 14:01:05.754  INFO 11360 --- [enerContainer-1] com.codenotfound.jms.Sender              : id='DMLC' received status='Accepted'
+2019-05-30 14:01:05.774  INFO 11360 --- [ Session Task-1] com.codenotfound.jms.Sender              : id='SMLC' received status='Accepted'
+2019-05-30 14:01:06.791  INFO 11360 --- [           main] o.a.a.junit.EmbeddedActiveMQBroker       : Stopping Embedded ActiveMQ Broker: embedded-broker
+2019-05-30 14:01:06.795  INFO 11360 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://embedded-broker stopped
+2019-05-30 14:01:06.795  INFO 11360 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-59326-1559217663431-0:1) is shutting down
+2019-05-30 14:01:06.812  INFO 11360 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-59326-1559217663431-0:1) uptime 3.666 seconds
+2019-05-30 14:01:06.812  INFO 11360 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-59326-1559217663431-0:1) is shutdown
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.394 s - in com.codenotfound.SpringJmsApplicationTest
 [INFO]
 [INFO] Results:
 [INFO]
@@ -362,8 +362,8 @@ In the output logs, we can see that the order message is received by the annotat
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 9.002 s
-[INFO] Finished at: 2018-12-17T10:13:12+01:00
+[INFO] Total time:  9.908 s
+[INFO] Finished at: 2019-05-30T14:01:07+02:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
