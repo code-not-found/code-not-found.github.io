@@ -3,7 +3,7 @@ title: "Spring JMS Message Selector Example"
 permalink: /spring-jms-message-selector-example.html
 excerpt: "A detailed step-by-step tutorial on how to implement a message selector using Spring JMS and Spring Boot."
 date: 2018-12-12
-last_modified_at: 2018-12-12
+last_modified_at: 2019-05-30
 header:
   teaser: "assets/images/spring-jms/spring-jms-message-selector.png"
 categories: [Spring JMS]
@@ -13,7 +13,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-message-selector.png" alt="spring jms message selector" class="align-right title-image">
 
-In this post I'm going to show you how to configure a [JMS message selector](https://docs.oracle.com/cd/E19798-01/821-1841/bncer/index.html){:target="_blank"} using [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"}.
+In this post I'm going to show you how to configure a [JMS message selector](https://docs.oracle.com/cd/E19798-01/821-1841/bncer/index.html){:target="_blank"} using [Spring JMS](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"}.
 
 You'll also see how to add information to a message so that you can select it.
 
@@ -37,8 +37,8 @@ We then modify the `Receiver` so that it receives high and low priority messages
 We will use the following tools/frameworks:
 * Spring JMS 5.1
 * Spring Boot 2.1
-* ActiveMQ 5.14
-* Maven 3.5
+* ActiveMQ 5.15
+* Maven 3.6
 
 Our project has the following directory structure:
 
@@ -143,7 +143,7 @@ public class Sender {
 
 We modify the existing test case so that three messages are sent.
 
-Two of them are high priority and will lower the `CountDownLatch` in the `Receiver`.
+Two of them are set with a high priority and will lower the `CountDownLatch` in the `Receiver`.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -189,34 +189,34 @@ mvn test
 In the output logs, we can see that the messages are received in the respective JMS Listeners.
 
 {% highlight plaintext %}
-.   ____          _            __ _ _
+ .   ____          _            __ _ _
 /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
- '  |____| .__|_| |_|_| |_\__, | / / / /
+'  |____| .__|_| |_|_| |_\__, | / / / /
 =========|_|==============|___/=/_/_/_/
-:: Spring Boot ::        (v2.1.1.RELEASE)
+:: Spring Boot ::        (v2.1.5.RELEASE)
 
-2018-12-12 10:45:11.263  INFO 16664 --- [           main] c.c.jms.SpringJmsApplicationTest         : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 16664 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-message-selector)
-2018-12-12 10:45:11.263  INFO 16664 --- [           main] c.c.jms.SpringJmsApplicationTest         : No active profile set, falling back to default profiles: default
-2018-12-12 10:45:12.541  INFO 16664 --- [           main] o.apache.activemq.broker.BrokerService   : Using Persistence Adapter: MemoryPersistenceAdapter
-2018-12-12 10:45:12.604  INFO 16664 --- [  JMX connector] o.a.a.broker.jmx.ManagementContext       : JMX consoles can connect to service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
-2018-12-12 10:45:12.691  INFO 16664 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-57881-1544607912557-0:1) is starting
-2018-12-12 10:45:12.707  INFO 16664 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-57881-1544607912557-0:1) started
-2018-12-12 10:45:12.707  INFO 16664 --- [           main] o.apache.activemq.broker.BrokerService   : For help or more information please see: http://activemq.apache.org
-2018-12-12 10:45:12.738  INFO 16664 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://localhost started
-2018-12-12 10:45:12.801  INFO 16664 --- [           main] c.c.jms.SpringJmsApplicationTest         : Started SpringJmsApplicationTest in 1.905 seconds (JVM running for 3.03)
-2018-12-12 10:45:13.019  INFO 16664 --- [           main] com.codenotfound.jms.Sender              : sending message='High priority 1!' with highPriority='true'
-2018-12-12 10:45:13.051  INFO 16664 --- [           main] com.codenotfound.jms.Sender              : sending message='Low priority 1!' with highPriority='false'
-2018-12-12 10:45:13.051  INFO 16664 --- [           main] com.codenotfound.jms.Sender              : sending message='High priority 2!' with highPriority='true'
-2018-12-12 10:45:13.051  INFO 16664 --- [enerContainer-1] com.codenotfound.jms.Receiver            : received high priority message='High priority 1!'
-2018-12-12 10:45:13.051  INFO 16664 --- [enerContainer-1] com.codenotfound.jms.Receiver            : received low priority message='Low priority 1!'
-2018-12-12 10:45:13.051  INFO 16664 --- [enerContainer-1] com.codenotfound.jms.Receiver            : received high priority message='High priority 2!'
-2018-12-12 10:45:14.062  INFO 16664 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://localhost stopped
-2018-12-12 10:45:14.062  INFO 16664 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-57881-1544607912557-0:1) is shutting down
-2018-12-12 10:45:14.066  INFO 16664 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-57881-1544607912557-0:1) uptime 1.742 seconds
-2018-12-12 10:45:14.066  INFO 16664 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (localhost, ID:DESKTOP-2RB3C1U-57881-1544607912557-0:1) is shutdown
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.915 s - in com.codenotfound.jms.SpringJmsApplicationTest
+2019-05-30 17:24:00.512  INFO 13808 --- [           main] c.c.jms.SpringJmsApplicationTest         : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 13808 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-message-selector)
+2019-05-30 17:24:00.514  INFO 13808 --- [           main] c.c.jms.SpringJmsApplicationTest         : No active profile set, falling back to default profiles: default
+2019-05-30 17:24:01.946  INFO 13808 --- [           main] o.apache.activemq.broker.BrokerService   : Using Persistence Adapter: MemoryPersistenceAdapter
+2019-05-30 17:24:02.024  INFO 13808 --- [  JMX connector] o.a.a.broker.jmx.ManagementContext       : JMX consoles can connect to service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+2019-05-30 17:24:02.095  INFO 13808 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59760-1559229841967-0:1) is starting
+2019-05-30 17:24:02.104  INFO 13808 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59760-1559229841967-0:1) started
+2019-05-30 17:24:02.104  INFO 13808 --- [           main] o.apache.activemq.broker.BrokerService   : For help or more information please see: http://activemq.apache.org
+2019-05-30 17:24:02.134  INFO 13808 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://localhost started
+2019-05-30 17:24:02.184  INFO 13808 --- [           main] c.c.jms.SpringJmsApplicationTest         : Started SpringJmsApplicationTest in 2.106 seconds (JVM running for 3.165)
+2019-05-30 17:24:02.515  INFO 13808 --- [           main] com.codenotfound.jms.Sender              : sending message='High priority 1!' with highPriority='true'
+2019-05-30 17:24:02.533  INFO 13808 --- [           main] com.codenotfound.jms.Sender              : sending message='Low priority 1!' with highPriority='false'
+2019-05-30 17:24:02.536  INFO 13808 --- [           main] com.codenotfound.jms.Sender              : sending message='High priority 2!' with highPriority='true'
+2019-05-30 17:24:02.539  INFO 13808 --- [enerContainer-1] com.codenotfound.jms.Receiver            : received low priority message='Low priority 1!'
+2019-05-30 17:24:02.539  INFO 13808 --- [enerContainer-1] com.codenotfound.jms.Receiver            : received high priority message='High priority 1!'
+2019-05-30 17:24:02.542  INFO 13808 --- [enerContainer-1] com.codenotfound.jms.Receiver            : received high priority message='High priority 2!'
+2019-05-30 17:24:03.558  INFO 13808 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://localhost stopped
+2019-05-30 17:24:03.558  INFO 13808 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59760-1559229841967-0:1) is shutting down
+2019-05-30 17:24:03.567  INFO 13808 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59760-1559229841967-0:1) uptime 1.885 seconds
+2019-05-30 17:24:03.568  INFO 13808 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (localhost, ID:DESKTOP-2RB3C1U-59760-1559229841967-0:1) is shutdown
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.161 s - in com.codenotfound.jms.SpringJmsApplicationTest
 [INFO]
 [INFO] Results:
 [INFO]
@@ -225,8 +225,8 @@ In the output logs, we can see that the messages are received in the respective 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 11.260 s
-[INFO] Finished at: 2018-12-12T10:45:14+01:00
+[INFO] Total time:  9.207 s
+[INFO] Finished at: 2019-05-30T17:24:04+02:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
