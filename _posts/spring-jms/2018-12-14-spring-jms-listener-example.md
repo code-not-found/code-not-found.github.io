@@ -333,7 +333,7 @@ mvn test
 In the output logs, we can see that the order message is received by the annotated listener. The status messages arrive in the DMLC and SMLC as shown below.
 
 {% highlight plaintext %}
-.   ____          _            __ _ _
+ .   ____          _            __ _ _
 /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )

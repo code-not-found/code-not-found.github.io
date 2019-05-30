@@ -315,7 +315,7 @@ A <var>TemporaryReplyChannel</var> is used to receive the response from the `Ord
 The flow ends with the status message being received by the outbound gateway.
 
 {% highlight plaintext %}
-.   ____          _            __ _ _
+ .   ____          _            __ _ _
 /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )

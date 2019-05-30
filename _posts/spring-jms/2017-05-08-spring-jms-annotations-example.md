@@ -262,7 +262,7 @@ mvn test
 The test case will be triggered resulting in following log statements:
 
 {% highlight plaintext %}
-.   ____          _            __ _ _
+ .   ____          _            __ _ _
 /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )

@@ -396,7 +396,7 @@ mvn test
 Maven will download the dependencies, compile the code and run the unit test case. The result should be a successful build as shown below:
 
 {% highlight plaintext %}
-.   ____          _            __ _ _
+ .   ____          _            __ _ _
 /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
