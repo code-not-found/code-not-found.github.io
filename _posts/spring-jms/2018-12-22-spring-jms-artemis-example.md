@@ -3,7 +3,7 @@ title: "Spring JMS Artemis Example"
 permalink: /spring-jms-artemis-example.html
 excerpt: "A detailed step-by-step tutorial on how to connect to Apache ActiveMQ Artemis using Spring JMS and Spring Boot."
 date: 2018-12-22
-last_modified_at: 2018-12-24
+last_modified_at: 2019-05-30
 header:
   teaser: "assets/images/spring-jms/spring-jms-artemis.png"
 categories: [Spring JMS]
@@ -13,7 +13,7 @@ published: true
 
 <img src="{{ site.url }}/assets/images/spring-jms/spring-jms-artemis.png" alt="spring jms artemis" class="align-right title-image">
 
-In this post I'm going to show you how to connect to [ActiveMQ Artemis](https://activemq.apache.org/artemis/){:target="_blank"} using [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"}.
+In this post I'm going to show you how to connect to [ActiveMQ Artemis](https://activemq.apache.org/artemis/){:target="_blank"} using [Spring JMS](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"}.
 
 In fact:
 
@@ -42,7 +42,7 @@ We will use the following tools/frameworks:
 * Spring JMS 5.1
 * Spring Boot 2.1
 * Artemis 2.6
-* Maven 3.5
+* Maven 3.6
 
 Our project has the following directory structure:
 
@@ -60,7 +60,7 @@ Click <var>Generate Project</var> to generate and download the Spring Boot proje
 
 To avoid having to manage the version compatibility of the different Spring dependencies, we will inherit the defaults from the `spring-boot-starter-parent` parent POM.
 
-> You can find back the exact dependency versions in Appendix F of the reference documentation. For Spring Boot 2.1.1 the [Artemis dependency is version 2.6.3](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
+> You can find back the exact dependency versions in Appendix F of the reference documentation. For Spring Boot 2.1.5 the [Artemis dependency is version 2.6.6](https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/html/appendix-dependency-versions.html#appendix-dependency-versions){:target="_blank"}.
 
 The generated project contains [Spring Boot Starters](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-project/spring-boot-starters){:target="_blank"} that manage the different Spring dependencies.
 
@@ -70,13 +70,14 @@ The `spring-boot-starter-test` includes the dependencies for testing Spring Boot
 
 We also add a dependency on `artemis-junit`. It provides tools that allow us to have access to an embedded Artemis server when running our unit test.
 
-In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}. `spring-boot-maven-plugin` allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code.
+In the plugins section, you'll find the [Spring Boot Maven Plugin](https://docs.spring.io/spring-boot/docs/2.1.5.RELEASE/reference/html/build-tool-plugins-maven-plugin.html){:target="_blank"}. `spring-boot-maven-plugin` allows us to build a single, runnable "uber-jar". This is a convenient way to execute and transport code.
 
 Also, the plugin allows you to start the example via a Maven command.
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -91,12 +92,12 @@ Also, the plugin allows you to start the example via a Maven command.
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.1.RELEASE</version>
+    <version>2.1.5.RELEASE</version>
     <relativePath /><!-- lookup parent from repository -->
   </parent>
 
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
   </properties>
 
   <dependencies>
@@ -134,7 +135,9 @@ The project is for a large part identical to a previous [Spring JMS ActiveMQ exa
 
 We still use an `ActiveMQConnectionFactory` but this time it is part of the `org.apache.activemq.artemis.jms.client` package.
 
-We pass a <var>brokerUrl</var> to the constructor as shown below. The value is specified in the <var>application.yml</var> properties file located under <var>src/main/resources</var>.
+We pass a <var>brokerUrl</var> to the constructor as shown below.
+
+The value is specified in the <var>application.yml</var> properties file located under <var>src/main/resources</var>.
 
 {% highlight java %}
 package com.codenotfound.jms;
@@ -271,7 +274,7 @@ public class SpringJmsApplicationTest {
 
 Let's run the unit test to check if everything is working.
 
-Open a command prompt in the root directory and execute following Maven command.
+Open a command prompt in the root directory and execute the following Maven command.
 
 {% highlight plaintext %}
 mvn test
@@ -286,27 +289,27 @@ In the output logs, we can see that the <var>Hello Spring JMS ActiveMQ!</var> gr
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
 '  |____| .__|_| |_|_| |_\__, | / / / /
 =========|_|==============|___/=/_/_/_/
-:: Spring Boot ::        (v2.1.1.RELEASE)
+:: Spring Boot ::        (v2.1.5.RELEASE)
 
-2018-12-27 15:37:38.629  INFO 7548 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 7548 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-artemis-hello-world)
-2018-12-27 15:37:38.629  INFO 7548 --- [           main] c.codenotfound.SpringJmsApplicationTest  : No active profile set, falling back to default profiles: default
-2018-12-27 15:37:39.926  INFO 7548 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Started SpringJmsApplicationTest in 1.688 seconds (JVM running for 2.973)
-2018-12-27 15:37:39.942  INFO 7548 --- [           main] o.a.a.artemis.junit.EmbeddedJMSResource  : Starting EmbeddedJMSResource: embedded-jms-server
-2018-12-27 15:37:39.942  INFO 7548 --- [           main] o.a.a.artemis.junit.EmbeddedJMSResource  : Starting EmbeddedJMSResource: embedded-jms-server
-2018-12-27 15:37:40.035  INFO 7548 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221000: live Message Broker is starting with configuration Broker Configuration (clustered=false,journalDirectory=data/journal,bindingsDirectory=data/bindings,largeMessagesDirectory=data/largemessages,pagingDirectory=data/paging)
-2018-12-27 15:37:40.067  INFO 7548 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221045: libaio is not available, switching the configuration into NIO
-2018-12-27 15:37:40.082  INFO 7548 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221057: Global Max Size is being adjusted to 1/2 of the JVM max size (-Xmx). being defined as 948,961,280
-2018-12-27 15:37:40.113  INFO 7548 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221043: Protocol module found: [artemis-server]. Adding protocol support for: CORE
-2018-12-27 15:37:40.176  INFO 7548 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221007: Server is now live
-2018-12-27 15:37:40.192  INFO 7548 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221001: Apache ActiveMQ Artemis Message Broker version 2.6.3 [embedded-jms-server, nodeID=f6419f7e-09e4-11e9-b444-bc5ff48510d9]
-2018-12-27 15:37:40.379  INFO 7548 --- [           main] com.codenotfound.jms.Sender              : sending message='Hello Spring JMS ActiveMQ!'
-2018-12-27 15:37:40.723  WARN 7548 --- [mpl$5@25cc7470)] org.apache.activemq.artemis.core.server  : AMQ222165: No Dead Letter Address configured for queue helloworld.q in AddressSettings
-2018-12-27 15:37:40.723  WARN 7548 --- [mpl$5@25cc7470)] org.apache.activemq.artemis.core.server  : AMQ222166: No Expiry Address configured for queue helloworld.q in AddressSettings
-2018-12-27 15:37:44.988  INFO 7548 --- [enerContainer-4] com.codenotfound.jms.Receiver            : received message='Hello Spring JMS ActiveMQ!'
-2018-12-27 15:37:45.035  INFO 7548 --- [           main] o.a.a.artemis.junit.EmbeddedJMSResource  : Stopping EmbeddedJMSResource: embedded-jms-server
-2018-12-27 15:37:45.035  INFO 7548 --- [           main] o.a.a.artemis.junit.EmbeddedJMSResource  : Stopping EmbeddedJMSResource: embedded-jms-server
-2018-12-27 15:37:45.066  INFO 7548 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221002: Apache ActiveMQ Artemis Message Broker version 2.6.3 [f6419f7e-09e4-11e9-b444-bc5ff48510d9] stopped, uptime 5.046 seconds
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.874 s - in com.codenotfound.SpringJmsApplicationTest
+2019-05-30 10:37:50.255  INFO 9420 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 9420 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-artemis-hello-world)
+2019-05-30 10:37:50.256  INFO 9420 --- [           main] c.codenotfound.SpringJmsApplicationTest  : No active profile set, falling back to default profiles: default
+2019-05-30 10:37:51.677  INFO 9420 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Started SpringJmsApplicationTest in 1.777 seconds (JVM running for 2.949)
+2019-05-30 10:37:51.689  INFO 9420 --- [           main] o.a.a.artemis.junit.EmbeddedJMSResource  : Starting EmbeddedJMSResource: embedded-jms-server
+2019-05-30 10:37:51.690  INFO 9420 --- [           main] o.a.a.artemis.junit.EmbeddedJMSResource  : Starting EmbeddedJMSResource: embedded-jms-server
+2019-05-30 10:37:51.825  INFO 9420 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221000: live Message Broker is starting with configuration Broker Configuration (clustered=false,journalDirectory=data/journal,bindingsDirectory=data/bindings,largeMessagesDirectory=data/largemessages,pagingDirectory=data/paging)
+2019-05-30 10:37:51.838  INFO 9420 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221045: libaio is not available, switching the configuration into NIO
+2019-05-30 10:37:51.853  INFO 9420 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221057: Global Max Size is being adjusted to 1/2 of the JVM max size (-Xmx). being defined as 1.067.450.368
+2019-05-30 10:37:51.871  INFO 9420 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221043: Protocol module found: [artemis-server]. Adding protocol support for: CORE
+2019-05-30 10:37:51.934  INFO 9420 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221007: Server is now live
+2019-05-30 10:37:51.935  INFO 9420 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221001: Apache ActiveMQ Artemis Message Broker version 2.6.4 [embedded-jms-server, nodeID=364c2807-82b6-11e9-83ff-bc5ff48510d9]
+2019-05-30 10:37:52.266  INFO 9420 --- [           main] com.codenotfound.jms.Sender              : sending message='Hello Spring JMS ActiveMQ!'
+2019-05-30 10:37:52.501  WARN 9420 --- [mpl$5@2373ad99)] org.apache.activemq.artemis.core.server  : AMQ222165: No Dead Letter Address configured for queue helloworld.q in AddressSettings
+2019-05-30 10:37:52.502  WARN 9420 --- [mpl$5@2373ad99)] org.apache.activemq.artemis.core.server  : AMQ222166: No Expiry Address configured for queue helloworld.q in AddressSettings
+2019-05-30 10:37:56.709  INFO 9420 --- [enerContainer-4] com.codenotfound.jms.Receiver            : received message='Hello Spring JMS ActiveMQ!'
+2019-05-30 10:37:56.750  INFO 9420 --- [           main] o.a.a.artemis.junit.EmbeddedJMSResource  : Stopping EmbeddedJMSResource: embedded-jms-server
+2019-05-30 10:37:56.751  INFO 9420 --- [           main] o.a.a.artemis.junit.EmbeddedJMSResource  : Stopping EmbeddedJMSResource: embedded-jms-server
+2019-05-30 10:37:56.785  INFO 9420 --- [           main] org.apache.activemq.artemis.core.server  : AMQ221002: Apache ActiveMQ Artemis Message Broker version 2.6.4 [364c2807-82b6-11e9-83ff-bc5ff48510d9] stopped, uptime 4.974 seconds
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.816 s - in com.codenotfound.SpringJmsApplicationTest
 [INFO]
 [INFO] Results:
 [INFO]
@@ -315,8 +318,8 @@ In the output logs, we can see that the <var>Hello Spring JMS ActiveMQ!</var> gr
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 11.223 s
-[INFO] Finished at: 2018-12-27T15:37:45+01:00
+[INFO] Total time:  12.435 s
+[INFO] Finished at: 2019-05-30T10:37:57+02:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
