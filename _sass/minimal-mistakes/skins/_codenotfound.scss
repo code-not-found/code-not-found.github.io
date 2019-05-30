@@ -40,20 +40,20 @@ ins.adsbygoogle {
 $masthead-link-color: $text-white !default;
 $masthead-link-color-hover: $text-white !default;
 
-.greedy-nav .visible-links a:before {
-  background-color: transparent !important;
-}
 .search__toggle, .greedy-nav__toggle {
   color: $text-white !important;
 }
 .greedy-nav__toggle {
-  background-color: $blue !important;
+  background-color: $$blue !important;
 }
-.greedy-nav .hidden-links {
-  background-color: $blue !important;
+.greedy-nav .navicon, .greedy-nav .navicon:before, .greedy-nav .navicon:after {
+  background-color: $text-white !important;
 }
-.greedy-nav .hidden-links a:hover {
-  background-color: $blue !important;
+.greedy-nav .hidden-links, .greedy-nav .hidden-links a:hover {
+  background-color: $$blue !important;
+}
+.greedy-nav .visible-links a:before {
+  background-color: transparent !important;
 }
 
 /* Footer */
