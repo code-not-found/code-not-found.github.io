@@ -3,7 +3,7 @@ title: "Spring JMS Topic Example"
 permalink: /spring-jms-topic-example.html
 excerpt: "A detailed step-by-step tutorial on how to publish/subscribe to a JMS topic using Spring JMS and Spring Boot."
 date: 2018-12-21
-last_modified_at: 2018-12-22
+last_modified_at: 2019-05-30
 header:
   teaser: "assets/images/spring-jms/spring-jms-topic.png"
 categories: [Spring JMS]
@@ -15,7 +15,7 @@ published: true
 
 This code sample will show you how to send a JMS message to a topic.
 
-So if you want a to know how to **publish/subscribe** with [Spring JMS](https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"}.
+So if you want a to know how to **publish/subscribe** with [Spring JMS](https://docs.spring.io/spring/docs/5.1.7.RELEASE/spring-framework-reference/integration.html#jms){:target="_blank"}.
 
 Keep reading…
 
@@ -37,8 +37,8 @@ We start from a previous [Spring JMS sample application]({{ site.url }}/spring-j
 We will use the following tools/frameworks:
 * Spring JMS 5.1
 * Spring Boot 2.1
-* ActiveMQ 5.14
-* Maven 3.5
+* ActiveMQ 5.15
+* Maven 3.6
 
 Our project has the following directory structure:
 
@@ -232,26 +232,31 @@ mvn test
 In the logs, we see that the same message is received by both subscribers.
 
 {% highlight plaintext %}
-.   ____          _            __ _ _
+ .   ____          _            __ _ _
 /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
 \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
 '  |____| .__|_| |_|_| |_\__, | / / / /
 =========|_|==============|___/=/_/_/_/
-:: Spring Boot ::        (v2.1.1.RELEASE)
+:: Spring Boot ::        (v2.1.5.RELEASE)
 
-2018-12-21 15:54:25.123  INFO 8420 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 8420 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-topic)
-2018-12-21 15:54:25.123  INFO 8420 --- [           main] c.codenotfound.SpringJmsApplicationTest  : No active profile set, falling back to default profiles: default
-2018-12-21 15:54:26.076  INFO 8420 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Started SpringJmsApplicationTest in 1.234 seconds (JVM running for 2.817)
-2018-12-21 15:54:26.264  INFO 8420 --- [           main] com.codenotfound.jms.Sender              : sending message='order-001' to destination='topic.t'
-2018-12-21 15:54:26.295  INFO 8420 --- [enerContainer-1] com.codenotfound.jms.Receiver            : 'subscriber2' received message='order-001'
-2018-12-21 15:54:26.295  INFO 8420 --- [enerContainer-1] com.codenotfound.jms.Receiver            : 'subscriber1' received message='order-001'
-2018-12-21 15:54:27.310  INFO 8420 --- [           main] o.a.a.junit.EmbeddedActiveMQBroker       : Stopping Embedded ActiveMQ Broker: embedded-broker
-2018-12-21 15:54:27.310  INFO 8420 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://embedded-broker stopped
-2018-12-21 15:54:27.310  INFO 8420 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (embedded-broker, ID:DESKTOP-2RB3C1U-61759-1545404064482-0:1) is shutting down
-2018-12-21 15:54:27.326  INFO 8420 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (embedded-broker, ID:DESKTOP-2RB3C1U-61759-1545404064482-0:1) uptime 2.969 seconds
-2018-12-21 15:54:27.326  INFO 8420 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.8 (embedded-broker, ID:DESKTOP-2RB3C1U-61759-1545404064482-0:1) is shutdown
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.625 s - in com.codenotfound.SpringJmsApplicationTest
+2019-05-30 17:41:05.154  INFO 13300 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Starting SpringJmsApplicationTest on DESKTOP-2RB3C1U with PID 13300 (started by Codenotfound in C:\Users\Codenotfound\repos\spring-jms\spring-jms-topic)
+2019-05-30 17:41:05.156  INFO 13300 --- [           main] c.codenotfound.SpringJmsApplicationTest  : No active profile set, falling back to default profiles: default
+2019-05-30 17:41:06.573  INFO 13300 --- [           main] o.apache.activemq.broker.BrokerService   : Using Persistence Adapter: MemoryPersistenceAdapter
+2019-05-30 17:41:06.632  INFO 13300 --- [  JMX connector] o.a.a.broker.jmx.ManagementContext       : JMX consoles can connect to service:jmx:rmi:///jndi/rmi://localhost:1099/jmxrmi
+2019-05-30 17:41:06.734  INFO 13300 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-59830-1559230866604-0:1) is starting
+2019-05-30 17:41:06.741  INFO 13300 --- [           main] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-59830-1559230866604-0:1) started
+2019-05-30 17:41:06.741  INFO 13300 --- [           main] o.apache.activemq.broker.BrokerService   : For help or more information please see: http://activemq.apache.org
+2019-05-30 17:41:06.780  INFO 13300 --- [           main] o.a.activemq.broker.TransportConnector   : Connector vm://embedded-broker started
+2019-05-30 17:41:06.836  INFO 13300 --- [           main] c.codenotfound.SpringJmsApplicationTest  : Started SpringJmsApplicationTest in 2.088 seconds (JVM running for 3.197)
+2019-05-30 17:41:07.172  INFO 13300 --- [           main] com.codenotfound.jms.Sender              : sending message='order-001' to destination='topic.t'
+2019-05-30 17:41:07.206  INFO 13300 --- [enerContainer-1] com.codenotfound.jms.Receiver            : 'subscriber2' received message='order-001'
+2019-05-30 17:41:07.206  INFO 13300 --- [enerContainer-1] com.codenotfound.jms.Receiver            : 'subscriber1' received message='order-001'
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.213 s - in com.codenotfound.SpringJmsApplicationTest
+2019-05-30 17:41:07.291  INFO 13300 --- [MQ ShutdownHook] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-59830-1559230866604-0:1) is shutting down
+2019-05-30 17:41:07.305  INFO 13300 --- [MQ ShutdownHook] o.a.activemq.broker.TransportConnector   : Connector vm://embedded-broker stopped
+2019-05-30 17:41:07.318  INFO 13300 --- [MQ ShutdownHook] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-59830-1559230866604-0:1) uptime 0.998 seconds
+2019-05-30 17:41:07.318  INFO 13300 --- [MQ ShutdownHook] o.apache.activemq.broker.BrokerService   : Apache ActiveMQ 5.15.9 (embedded-broker, ID:DESKTOP-2RB3C1U-59830-1559230866604-0:1) is shutdown
 [INFO]
 [INFO] Results:
 [INFO]
@@ -260,8 +265,8 @@ In the logs, we see that the same message is received by both subscribers.
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 6.905 s
-[INFO] Finished at: 2018-12-21T15:54:27+01:00
+[INFO] Total time:  8.267 s
+[INFO] Finished at: 2019-05-30T17:41:07+02:00
 [INFO] ------------------------------------------------------------------------
 {% endhighlight %}
 
