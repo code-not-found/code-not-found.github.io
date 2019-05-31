@@ -3,7 +3,7 @@ title: "Spring Batch Admin Example"
 permalink: /spring-batch-admin-example.html
 excerpt: "A detailed step-by-step tutorial on how to use a Spring Boot admin UI to manage Spring Batch jobs."
 date: 2018-11-11
-last_modified_at: 2019-05-30
+last_modified_at: 2019-05-31
 header:
   teaser: "assets/images/spring-batch/spring-batch-admin.png"
 categories: [Spring Batch]
